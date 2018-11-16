@@ -9,12 +9,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Biob.Data.Data\Biob.Data.Data.csproj" />
+    <ProjectReference Include="..\Biob.Data.Models\Biob.Data.Models.csproj" />
+    <ProjectReference Include="..\Biob.Services.Data\Biob.Services.Data.csproj" />
+    <ProjectReference Include="..\Biob.Services.Web\Biob.Services.Web.csproj" />
   </ItemGroup>
 
 </Project>

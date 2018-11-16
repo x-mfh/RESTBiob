@@ -12,6 +12,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using AutoMapper;
+using Biob.Data.Models;
+using Biob.Services.Data.DtoModels;
+using Biob.Web.Helpers;
+using Biob.Services.Data.Repositories;
 
 namespace Biob.Web
 {
@@ -31,6 +36,7 @@ namespace Biob.Web
 
             var connectionString = Configuration.GetConnectionString("BiobDB");
             services.AddDbContext<BiobDataContext>(options => options.UseSqlServer(connectionString));
+            services.AddScoped<IMovieRepository, MovieRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +50,12 @@ namespace Biob.Web
             {
                 app.UseHsts();
             }
+
+            Mapper.Initialize(config => 
+            {
+                config.CreateMap<Movie, MovieDto>()
+                .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.LengthInSeconds.CalculateFromSeconds()));
+            });
 
             app.UseHttpsRedirection();
             app.UseMvc();

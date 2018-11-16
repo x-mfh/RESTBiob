@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Biob.Data.Data\Biob.Data.Data.csproj" />
+    <ProjectReference Include="..\Biob.Data.Models\Biob.Data.Models.csproj" />
+  </ItemGroup>
+
 </Project>
