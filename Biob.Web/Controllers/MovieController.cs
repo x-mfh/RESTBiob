@@ -81,7 +81,7 @@ namespace Biob.Web.Controllers
             return CreatedAtRoute("GetMovie", new { movieId = movieToAdd.Id }, movieToAdd);
         }
 
-        [HttpPut("movieId")]
+        [HttpPut("{movieId}")]
         public async Task<IActionResult> UpdateMovie([FromRoute] Guid movieId, [FromBody] MovieToUpdateDto movieToUpdate)
         {
             if (movieToUpdate == null)
@@ -124,7 +124,7 @@ namespace Biob.Web.Controllers
             return NoContent();
         }
 
-        [HttpPatch("movieId")]
+        [HttpPatch("{movieId}")]
         public async Task<IActionResult> PartiuallyUpdateMovie([FromRoute] Guid movieId, JsonPatchDocument<MovieToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
