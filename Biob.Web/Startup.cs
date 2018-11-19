@@ -55,6 +55,7 @@ namespace Biob.Web
             {
                 config.CreateMap<Movie, MovieDto>()
                 .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.LengthInSeconds.CalculateFromSeconds()));
+                config.CreateMap<MovieToCreateDto, Movie>();
             });
 
             app.UseHttpsRedirection();

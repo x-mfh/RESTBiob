@@ -1,8 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Biob.Services.Data.DtoModels
 {
-    public class MovieDto
+    public class MovieToCreateDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
