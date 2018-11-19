@@ -4,14 +4,16 @@ using Biob.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Biob.Data.Data.Migrations
 {
     [DbContext(typeof(BiobDataContext))]
-    partial class BiobDataContextModelSnapshot : ModelSnapshot
+    [Migration("20181119075600_AddedMovieSeedData")]
+    partial class AddedMovieSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
