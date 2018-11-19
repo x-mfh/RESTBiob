@@ -29,7 +29,7 @@ namespace Biob.Data.Data
                     Producer = "Kevin De La Noy",
                     Actors = "Christopher Nolan",
                     Genre = "Action",
-                    Released = new DateTime(2005,5,12,0,0,0),
+                    Released = new DateTimeOffset(new DateTime(2005,5,12,0,0,0)),
                     ThreeDee = false,
                     AgeRestriction = 16,
                 }
