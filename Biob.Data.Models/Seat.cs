@@ -12,8 +12,9 @@ namespace Biob.Data.Models
         [Key]
         public int SeatId { get; set; }
         [Required]
-        public int RowNr { get; set; }
+        public int RowNo { get; set; }
         [Required]
-        public int SeatNr { get; set; }
+        public int SeatNo { get; set; }
+        public IList<HallSeat> HallSeats { get; set; }
     }
 }

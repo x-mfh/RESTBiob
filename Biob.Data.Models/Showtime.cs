@@ -10,14 +10,11 @@ namespace Biob.Data.Models
     public class Showtime
     {
         [Key]
-        public int ShowtimeId { get; set; }
+        public Guid ShowtimeId { get; set; }
         [ForeignKey("Movie")]
-        public int MovieId { get; set; }
+        public Guid MovieId { get; set; }
         [ForeignKey("Hall")]
         public int HallId { get; set; }
-        // discuss name
-        public DateTimeOffset DateOfPlaying { get; set; }
-        // discuss name
         public DateTimeOffset TimeOfPlaying { get; set; }
         public bool ThreeDee { get; set; }
     }

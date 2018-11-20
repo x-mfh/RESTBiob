@@ -12,10 +12,9 @@ namespace Biob.Data.Models
         [Key]
         public int HallId { get; set; }
         [Required]
-        public int HallNr { get; set; }
-        // discuss if necessary
-        public int NrOfSeats { get; set; }
-        // make default false?
+        public int HallNo { get; set; }
+        public int NoOfSeats { get; set; }
         public bool ThreeDee { get; set; }
+        public IList<HallSeat> HallSeats { get; set; }
     }
 }

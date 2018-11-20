@@ -10,10 +10,9 @@ namespace Biob.Data.Models
     public class Genre
     {
         [Key]
-        public int GenreId { get; set; }
+        public Guid GenreId { get; set; }
         [Required]
         public string GenreName { get; set; }
-
         public IList<MovieGenre> MovieGenres { get; set; }
     }
 }

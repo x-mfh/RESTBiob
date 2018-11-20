@@ -26,7 +26,6 @@ namespace Biob.Data.Models
         public bool  ThreeDee { get; set; }
         [Range(0, 18)]
         public int AgeRestriction { get; set; }
-
         public IList<MovieGenre> MovieGenres { get; set; }
     }
 }
