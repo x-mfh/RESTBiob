@@ -10,7 +10,7 @@ namespace Biob.Data.Models
     public class Ticket
     {
         [Key]
-        public Guid TicketId { get; set; }
+        public Guid Id { get; set; }
         [ForeignKey("Customer")]
         public Guid CustomerId { get; set; }
         [ForeignKey("Showtime")]

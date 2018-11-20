@@ -10,7 +10,7 @@ namespace Biob.Data.Models
     public class Showtime
     {
         [Key]
-        public Guid ShowtimeId { get; set; }
+        public Guid Id { get; set; }
         [ForeignKey("Movie")]
         public Guid MovieId { get; set; }
         [ForeignKey("Hall")]
