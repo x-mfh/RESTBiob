@@ -5,14 +5,33 @@ using Biob.Data.Data;
 using Biob.Data.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Biob.Services.Web.PropertyMapping;
+using Biob.Services.Data.Helpers;
+using Biob.Services.Data.DtoModels;
 
 namespace Biob.Services.Data.Repositories
 {
     public class MovieRepository : Repository, IMovieRepository
     {
-        public MovieRepository(BiobDataContext context) : base(context)
-        {
+        private IPropertyMappingService _propertyMappingService;
 
+        public MovieRepository(IPropertyMappingService propertyMappingService ,BiobDataContext context) : base(context)
+        {
+            _propertyMappingService = propertyMappingService;
+            _propertyMappingService.AddPropertyMapping<MovieDto, Movie>(new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "Id", new PropertyMappingValue(new List<string>() { "Id" })},
+                { "Title", new PropertyMappingValue(new List<string>() { "Title" })},
+                { "Description", new PropertyMappingValue(new List<string>() { "Description" })},
+                { "Length", new PropertyMappingValue(new List<string>() { "LengthInSeconds" })},
+                { "Poster", new PropertyMappingValue(new List<string>() { "Poster" })},
+                { "Producer", new PropertyMappingValue(new List<string>() { "Producer" })},
+                { "Actors", new PropertyMappingValue(new List<string>() { "Actors" })},
+                { "Genre", new PropertyMappingValue(new List<string>() { "Genre" })},
+                { "Released", new PropertyMappingValue(new List<string>() { "Released" })},
+                { "ThreeDee", new PropertyMappingValue(new List<string>() { "ThreeDee" })},
+                { "AgeRestriction", new PropertyMappingValue(new List<string>() { "AgeRestriction" })},
+            });
         }
         public void AddMovie(Movie movieToAdd)
         {
@@ -28,10 +47,18 @@ namespace Biob.Services.Data.Repositories
             _context.Movies.Remove(movieToDelete);
         }
 
-        public async Task<IEnumerable<Movie>> GetAllMoviesAsync()
+        public async Task<PagedList<Movie>> GetAllMoviesAsync(string orderBy, string searchQuery, int pageNumber, int pageSize)
         {
-            return await _context.Movies//.OrderBy(movie => movie.Title)
-                                        .ToListAsync();
+            var collectionsBeforePaging = await _context.Movies.Applysort(orderBy, _propertyMappingService.GetPropertyMapping<MovieDto, Movie>()).ToListAsync();
+
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                string searchQueryForWhere = searchQuery.Trim().ToLowerInvariant();
+                collectionsBeforePaging = collectionsBeforePaging
+                    .Where(movie => movie.Title.ToLowerInvariant().Contains(searchQueryForWhere)).ToList();
+            }
+
+            return PagedList<Movie>.Create(collectionsBeforePaging.AsQueryable(), pageNumber, pageSize);
         }
 
         public async Task<Movie> GetMovieAsync(Guid id)

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Biob.Services.Data.Repositories;
 using AutoMapper;
@@ -8,26 +7,92 @@ using Biob.Services.Data.DtoModels;
 using Biob.Data.Models;
 using Biob.Web.Helpers;
 using Microsoft.AspNetCore.JsonPatch;
+using Biob.Web.Filters;
+using Biob.Services.Web.PropertyMapping;
+using System.Collections.Generic;
+using Biob.Services.Data.Helpers;
 
 namespace Biob.Web.Controllers
 {
-    [Route("/api/v1/Movies")]
-    [ApiController]
+    [Route("/api/v1/movies")]
     public class MovieController : ControllerBase
     {
         private readonly IMovieRepository _movieRepository;
+        private readonly IPropertyMappingService _propertyMappingService;
+        private readonly ITypeHelperService _typeHelperService;
+        private readonly IUrlHelper _urlHelper;
 
-        public MovieController(IMovieRepository movieRepository)
+        public MovieController(IMovieRepository movieRepository, IPropertyMappingService propertyMappingService,
+                                ITypeHelperService typeHelperService, IUrlHelper urlHelper)
         {
             _movieRepository = movieRepository;
+            _propertyMappingService = propertyMappingService;
+            _typeHelperService = typeHelperService;
+            _urlHelper = urlHelper;
+            _propertyMappingService.AddPropertyMapping<MovieDto, Movie>(new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "Id", new PropertyMappingValue(new List<string>() { "Id" })},
+                { "Title", new PropertyMappingValue(new List<string>() { "Title" })},
+                { "Description", new PropertyMappingValue(new List<string>() { "Description" })},
+                { "Length", new PropertyMappingValue(new List<string>() { "LengthInSeconds" })},
+                { "Poster", new PropertyMappingValue(new List<string>() { "Poster" })},
+                { "Producer", new PropertyMappingValue(new List<string>() { "Producer" })},
+                { "Actors", new PropertyMappingValue(new List<string>() { "Actors" })},
+                { "Genre", new PropertyMappingValue(new List<string>() { "Genre" })},
+                { "Released", new PropertyMappingValue(new List<string>() { "Released" })},
+                { "ThreeDee", new PropertyMappingValue(new List<string>() { "ThreeDee" })},
+                { "AgeRestriction", new PropertyMappingValue(new List<string>() { "AgeRestriction" })},
+            });
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllMovies()
+        [HttpGet(Name = "GetMovies")]
+        public async Task<IActionResult> GetAllMovies(RequestParameters requestParameters)
         {
-            var entities = await _movieRepository.GetAllMoviesAsync();
-            var mappedEntities = Mapper.Map<IEnumerable<MovieDto>>(entities);
-            return Ok(mappedEntities);
+            if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
+            {
+                requestParameters.OrderBy = "Title";
+            }
+
+            if (!_propertyMappingService.ValidMappingExistsFor<MovieDto, Movie>(requestParameters.Fields))
+            {
+                return BadRequest();
+            }
+
+            if (!_typeHelperService.TypeHasProperties<MovieDto>(requestParameters.Fields))
+            {
+                return BadRequest();
+            }
+
+            var moviesPagedList = await _movieRepository.GetAllMoviesAsync(requestParameters.OrderBy,
+                                                                    requestParameters.SearchQuery,
+                                                                    requestParameters.PageNumber, requestParameters.PageSize);
+
+            var previousPageLink = moviesPagedList.HasPrevious ? CreateUrlForResource(requestParameters, PageType.PreviousPage) : null;
+            var nextPageLink = moviesPagedList.HasNext ? CreateUrlForResource(requestParameters, PageType.NextPage) : null;
+
+
+
+            var paginationMetadata = new PaginationMetadata()
+            {
+                TotalCount = moviesPagedList.TotalCount,
+                PageSize = moviesPagedList.PageSize,
+                CurrentPage = moviesPagedList.CurrentPage,
+                TotalPages = moviesPagedList.TotalPages,
+                PreviousPageLink = previousPageLink,
+                NextPageLink = nextPageLink
+            };
+
+            Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
+
+            var movies = Mapper.Map<IEnumerable<MovieDto>>(moviesPagedList);
+
+            if (requestParameters.IncludeMetadata)
+            {
+                var moviesWithMetadata = new EntityWithPaginationMetadataDto<MovieDto>(paginationMetadata, movies);
+                return Ok(moviesWithMetadata);
+            }
+
+            return Ok(movies);
         }
 
         [HttpGet("{movieId}", Name = "GetMovie")]
@@ -45,8 +110,7 @@ namespace Biob.Web.Controllers
                 return NotFound();
             }
 
-            var movieToReturn = Mapper.Map<MovieDto>(foundMovie);
-            return Ok(movieToReturn);
+            return Ok(foundMovie);
         }
 
         [HttpPost]
@@ -57,7 +121,7 @@ namespace Biob.Web.Controllers
                 return BadRequest();
             }
 
-            if (movieToCreate.Id  == null)
+            if (movieToCreate.Id == null)
             {
                 movieToCreate.Id = Guid.NewGuid();
             }
@@ -181,6 +245,41 @@ namespace Biob.Web.Controllers
             }
 
             return NoContent();
+        }
+
+        private string CreateUrlForResource(RequestParameters requestParameters, PageType pageType)
+        {
+            switch (pageType)
+            {
+                case PageType.PreviousPage:
+                    return _urlHelper.Link("GetMovies", new
+                    {
+                        fields = requestParameters.Fields,
+                        orderBy = requestParameters.OrderBy,
+                        searchQuery = requestParameters.SearchQuery,
+                        pageNumber = requestParameters.PageNumber - 1,
+                        pageSize = requestParameters.PageSize
+
+                    });
+                case PageType.NextPage:
+                    return _urlHelper.Link("GetMovies", new
+                    {
+                        fields = requestParameters.Fields,
+                        orderBy = requestParameters.OrderBy,
+                        searchQuery = requestParameters.SearchQuery,
+                        pageNumber = requestParameters.PageNumber + 1,
+                        pageSize = requestParameters.PageSize
+                    });
+                default:
+                    return _urlHelper.Link("GetMovies", new
+                    {
+                        fields = requestParameters.Fields,
+                        orderBy = requestParameters.OrderBy,
+                        searchQuery = requestParameters.SearchQuery,
+                        pageNumber = requestParameters.PageNumber,
+                        pageSize = requestParameters.PageSize
+                    });
+            }
         }
     }
 }
