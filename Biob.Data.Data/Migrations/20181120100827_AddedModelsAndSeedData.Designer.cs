@@ -4,14 +4,16 @@ using Biob.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Biob.Data.Data.Migrations
 {
     [DbContext(typeof(BiobDataContext))]
-    partial class BiobDataContextModelSnapshot : ModelSnapshot
+    [Migration("20181120100827_AddedModelsAndSeedData")]
+    partial class AddedModelsAndSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,7 +56,9 @@ namespace Biob.Data.Data.Migrations
 
                     b.Property<int>("NoOfSeats");
 
-                    b.Property<bool>("ThreeDee");
+                    b.Property<bool>("ThreeDee")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.HasKey("HallId");
 
@@ -263,7 +267,9 @@ namespace Biob.Data.Data.Migrations
 
                     b.Property<Guid>("MovieId");
 
-                    b.Property<bool>("ThreeDee");
+                    b.Property<bool>("ThreeDee")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.Property<DateTimeOffset>("TimeOfPlaying");
 
