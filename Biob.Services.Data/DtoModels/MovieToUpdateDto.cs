@@ -2,7 +2,7 @@
 
 namespace Biob.Services.Data.DtoModels
 {
-    public class MovieDto
+    public class MovieToUpdateDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
