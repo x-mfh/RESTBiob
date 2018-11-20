@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,12 +22,11 @@ namespace Biob.Data.Models
         [MaxLength(255)]
         public string Producer { get; set; }
         public string Actors { get; set; }
-        //  TODO: change to a foreign key
-        //  to a new table (Genre)
-        public string Genre { get; set; }
         public DateTimeOffset Released { get; set; }
         public bool  ThreeDee { get; set; }
         [Range(0, 18)]
         public int AgeRestriction { get; set; }
+
+        public IList<MovieGenre> MovieGenres { get; set; }
     }
 }
