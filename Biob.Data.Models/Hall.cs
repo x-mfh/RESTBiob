@@ -10,7 +10,7 @@ namespace Biob.Data.Models
     public class Hall
     {
         [Key]
-        public int HallId { get; set; }
+        public int Id { get; set; }
         [Required]
         public int HallNo { get; set; }
         public int NoOfSeats { get; set; }

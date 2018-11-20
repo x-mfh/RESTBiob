@@ -10,7 +10,7 @@ namespace Biob.Data.Models
     public class HallSeat
     {
         [Key]
-        public int HallSeatId { get; set; }
+        public int Id { get; set; }
         [ForeignKey("Hall")]
         public int HallId { get; set; }
         public Hall Hall { get; set; }
