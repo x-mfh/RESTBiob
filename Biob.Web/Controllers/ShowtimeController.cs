@@ -80,7 +80,7 @@ namespace Biob.Web.Controllers
             return CreatedAtRoute("GetShowtime", new { showtimeId = showtimeToAdd.Id }, showtimeToAdd);
         }
 
-        [HttpPut("showtimeId")]
+        [HttpPut("{showtimeId}")]
         public async Task<IActionResult> UpdateShowtime([FromRoute] Guid showtimeId, [FromBody] ShowtimeToUpdateDto showtimeToUpdate)
         {
             if (showtimeToUpdate == null)
@@ -170,6 +170,26 @@ namespace Biob.Web.Controllers
             if (!await _showtimeRepository.SaveChangesAsync())
             {
                 throw new Exception("partially updating showtime failed");
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{showtimeId}")]
+        public async Task<IActionResult> DeleteShowtime([FromRoute] Guid showtimeId)
+        {
+            var showtimeToDelete = await _showtimeRepository.GetShowtimeAsync(showtimeId);
+
+            if (showtimeToDelete == null)
+            {
+                return NotFound();
+            }
+
+            _showtimeRepository.DeleteShowtime(showtimeToDelete);
+
+            if (!await _showtimeRepository.SaveChangesAsync())
+            {
+                throw new Exception("deleting showtime failed");
             }
 
             return NoContent();
