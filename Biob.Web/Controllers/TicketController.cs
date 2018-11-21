@@ -42,66 +42,11 @@ namespace Biob.Web.Controllers
                 { "Price", new PropertyMappingValue(new List<string>() { "Price" })},
             });
         }
-
-        //##### No need to get all tickets at once. However, all tickets for a specific customer could be useful so leaving here for inspiration.
-        //      Meaning a TODO: Make "Get all tickets by customer id" 
-        //      would be fitting
-
-        //[HttpGet(Name = "GetTickets")]
-        //public async Task<IActionResult> GetAllTickets([FromQuery]RequestParameters requestParameters)
-        //{
-        //    if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
-        //    {
-        //        requestParameters.OrderBy = "Title";
-        //    }
-
-        //    if (!_propertyMappingService.ValidMappingExistsFor<TicketDto, Ticket>(requestParameters.Fields))
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    if (!_typeHelperService.TypeHasProperties<TicketDto>(requestParameters.Fields))
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    var ticketsPagedList = await _ticketRepository.GetAllTicketsAsync(requestParameters.OrderBy,
-        //                                                            requestParameters.SearchQuery,
-        //                                                            requestParameters.PageNumber, requestParameters.PageSize);
-
-        //    var previousPageLink = ticketsPagedList.HasPrevious ? CreateUrlForResource(requestParameters, PageType.PreviousPage) : null;
-        //    var nextPageLink = ticketsPagedList.HasNext ? CreateUrlForResource(requestParameters, PageType.NextPage) : null;
-
-
-
-        //    var paginationMetadata = new PaginationMetadata()
-        //    {
-        //        TotalCount = ticketsPagedList.TotalCount,
-        //        PageSize = ticketsPagedList.PageSize,
-        //        CurrentPage = ticketsPagedList.CurrentPage,
-        //        TotalPages = ticketsPagedList.TotalPages,
-        //        PreviousPageLink = previousPageLink,
-        //        NextPageLink = nextPageLink
-        //    };
-
-        //    Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
-
-        //    var tickets = Mapper.Map<IEnumerable<TicketDto>>(ticketsPagedList);
-
-        //    var shapedTickets = tickets.ShapeData(requestParameters.Fields);
-
-        //    if (requestParameters.IncludeMetadata)
-        //    {
-        //        var ticketsWithMetadata = new EntityWithPaginationMetadataDto<ExpandoObject>(paginationMetadata, shapedTickets);
-        //        return Ok(ticketsWithMetadata);
-        //    }
-
-        //    return Ok(tickets.ShapeData(requestParameters.Fields));
-        //}
-
-
-
-        [HttpGet("/CustomerId={customerId}", Name = "GetTicketsFromCustomer")]
+        
+        
+        [HttpGet(Name = "GetTicketsFromCustomer")]
+        [Route("/CustomerId/{customerId}")]
+        //HVORDAN SÆTTER JEG EN ROUTE PÅ SOM GØR AT MAN KAN FÅ TICKETS BY CustomerId ?!+ =!=!=!=!???!1111
         public async Task<IActionResult> GetTicketsByCustomerId([FromQuery]Guid customerId, [FromQuery]RequestParameters requestParameters)
         {
             if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
