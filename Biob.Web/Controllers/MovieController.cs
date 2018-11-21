@@ -100,13 +100,9 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet("{movieId}", Name = "GetMovie")]
+        [MovieParameterValidationFilter]
         public async Task<IActionResult> GetOneMovie([FromRoute]Guid movieId)
         {
-            if (movieId == Guid.Empty)
-            {
-                return BadRequest();
-            }
-
             var foundMovie = await _movieRepository.GetMovieAsync(movieId);
 
             if (foundMovie == null)
@@ -118,6 +114,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPost]
+        [MovieResultFilter]
         public async Task<IActionResult> CreateMovie([FromBody] MovieToCreateDto movieToCreate)
         {
             if (movieToCreate == null)
@@ -150,6 +147,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPut("{movieId}")]
+        [MovieParameterValidationFilter]
         public async Task<IActionResult> UpdateMovie([FromRoute] Guid movieId, [FromBody] MovieToUpdateDto movieToUpdate)
         {
             if (movieToUpdate == null)
@@ -193,6 +191,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPatch("{movieId}")]
+        [MovieParameterValidationFilter]
         public async Task<IActionResult> PartiuallyUpdateMovie([FromRoute] Guid movieId, JsonPatchDocument<MovieToUpdateDto> patchDoc)
         {
             if (patchDoc == null)

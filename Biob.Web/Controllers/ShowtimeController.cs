@@ -174,5 +174,25 @@ namespace Biob.Web.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("{showtimeId}")]
+        public async Task<IActionResult> DeleteShowtime([FromRoute] Guid showtimeId)
+        {
+            var showtimeToDelete = await _showtimeRepository.GetShowtimeAsync(showtimeId);
+
+            if (showtimeToDelete == null)
+            {
+                return NotFound();
+            }
+
+            _showtimeRepository.DeleteShowtime(showtimeToDelete);
+
+            if (!await _showtimeRepository.SaveChangesAsync())
+            {
+                throw new Exception("deleting showtime failed");
+            }
+
+            return NoContent();
+        }
     }
 }   
