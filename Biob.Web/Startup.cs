@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Biob.Data.Data;
+﻿using Biob.Data.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using AutoMapper;
 using Biob.Data.Models;
 using Biob.Services.Data.DtoModels;
@@ -57,6 +50,7 @@ namespace Biob.Web
             services.AddDbContext<BiobDataContext>(options => options.UseSqlServer(connectionString));
             services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<IHallRepository, HallRepository>();
+            services.AddScoped<ISeatRepository, SeatRepository>();
             services.AddScoped<IShowtimeRepository, ShowtimeRepository>();
 
 
@@ -97,7 +91,12 @@ namespace Biob.Web
                 config.CreateMap<HallToCreateDto, Hall>();
                 config.CreateMap<HallToUpdateDto, Hall>();
                 config.CreateMap<Hall, HallToUpdateDto>();
-              
+
+                config.CreateMap<Seat, SeatDto>();
+                config.CreateMap<SeatToCreateDto, Seat>();
+                config.CreateMap<SeatToUpdateDto, Seat>();
+                config.CreateMap<Seat, SeatToUpdateDto>();
+
                 config.CreateMap<Showtime, ShowtimeDto>();
                 config.CreateMap<ShowtimeToCreateDto, Showtime>();
                 config.CreateMap<ShowtimeToUpdateDto, Showtime>();
