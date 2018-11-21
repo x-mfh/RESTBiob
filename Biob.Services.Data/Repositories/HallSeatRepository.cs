@@ -18,9 +18,9 @@ namespace Biob.Services.Data.Repositories
             return  await _context.HallSeats.ToListAsync();
         }
 
-        public async Task<HallSeat> GetHallSeatAsync(int hallId, int seatId)
+        public async Task<HallSeat> GetHallSeatAsync(int hallSeatId)
         {
-            return await _context.HallSeats.Where(hallseat => hallseat.HallId == hallId && hallseat.SeatId == seatId).FirstOrDefaultAsync();
+            return await _context.HallSeats.Where(hallseat => hallseat.Id == hallSeatId).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<HallSeat>> GetAllByHallId(int hallId)
