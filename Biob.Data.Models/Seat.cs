@@ -10,7 +10,7 @@ namespace Biob.Data.Models
     public class Seat
     {
         [Key]
-        public int SeatId { get; set; }
+        public int Id { get; set; }
         [Required]
         public int RowNo { get; set; }
         [Required]

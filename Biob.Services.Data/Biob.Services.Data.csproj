@@ -5,8 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Biob.Data.Data\Biob.Data.Data.csproj" />
     <ProjectReference Include="..\Biob.Data.Models\Biob.Data.Models.csproj" />
+    <ProjectReference Include="..\Biob.Services.Web\Biob.Services.Web.csproj" />
   </ItemGroup>
 
 </Project>
