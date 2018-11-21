@@ -34,16 +34,12 @@ namespace Biob.Web.Controllers
             _propertyMappingService.AddPropertyMapping<TicketDto, Ticket>(new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
             {
                 { "Id", new PropertyMappingValue(new List<string>() { "Id" })},
-                { "Title", new PropertyMappingValue(new List<string>() { "Title" })},
-                { "Description", new PropertyMappingValue(new List<string>() { "Description" })},
-                { "Length", new PropertyMappingValue(new List<string>() { "LengthInSeconds" })},
-                { "Poster", new PropertyMappingValue(new List<string>() { "Poster" })},
-                { "Producer", new PropertyMappingValue(new List<string>() { "Producer" })},
-                { "Actors", new PropertyMappingValue(new List<string>() { "Actors" })},
-                { "Genre", new PropertyMappingValue(new List<string>() { "Genre" })},
-                { "Released", new PropertyMappingValue(new List<string>() { "Released" })},
-                { "ThreeDee", new PropertyMappingValue(new List<string>() { "ThreeDee" })},
-                { "AgeRestriction", new PropertyMappingValue(new List<string>() { "AgeRestriction" })},
+                { "CustomerId", new PropertyMappingValue(new List<string>() { "CustomerId" })},
+                { "ShowtimeId", new PropertyMappingValue(new List<string>() { "ShowtimeId" })},
+                { "HallseatId", new PropertyMappingValue(new List<string>() { "HallseatId" })},
+                { "Reserved", new PropertyMappingValue(new List<string>() { "Reserved" })},
+                { "Paid", new PropertyMappingValue(new List<string>() { "Paid" })},
+                { "Price", new PropertyMappingValue(new List<string>() { "Price" })},
             });
         }
 
