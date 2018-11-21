@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Biob.Services.Web.PropertyMapping
 {
-    public class PropertyMappingSerice : IPropertyMappingService
+    public class PropertyMappingService : IPropertyMappingService
     {
         private readonly IList<IPropertyMapping> propertyMappings = new List<IPropertyMapping>();
         public Dictionary<string, PropertyMappingValue> GetPropertyMapping<TSource, TDestination>()

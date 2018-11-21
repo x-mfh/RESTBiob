@@ -66,7 +66,7 @@ namespace Biob.Web
                 return new UrlHelper(actionContext);
             });
 
-            services.AddTransient<IPropertyMappingService, PropertyMappingSerice>();
+            services.AddTransient<IPropertyMappingService, PropertyMappingService>();
             services.AddTransient<ITypeHelperService, TypeHelperService>();
         }
 

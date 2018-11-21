@@ -11,10 +11,12 @@ using Biob.Web.Filters;
 using Biob.Services.Web.PropertyMapping;
 using System.Collections.Generic;
 using Biob.Services.Data.Helpers;
+using System.Dynamic;
 
 namespace Biob.Web.Controllers
 {
     [Route("/api/v1/movies")]
+    [ApiController]
     public class MovieController : ControllerBase
     {
         private readonly IMovieRepository _movieRepository;
@@ -46,7 +48,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet(Name = "GetMovies")]
-        public async Task<IActionResult> GetAllMovies(RequestParameters requestParameters)
+        public async Task<IActionResult> GetAllMovies([FromQuery]RequestParameters requestParameters)
         {
             if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
             {
@@ -86,13 +88,15 @@ namespace Biob.Web.Controllers
 
             var movies = Mapper.Map<IEnumerable<MovieDto>>(moviesPagedList);
 
+            var shapedMovies= movies.ShapeData(requestParameters.Fields);
+
             if (requestParameters.IncludeMetadata)
             {
-                var moviesWithMetadata = new EntityWithPaginationMetadataDto<MovieDto>(paginationMetadata, movies);
+                var moviesWithMetadata = new EntityWithPaginationMetadataDto<ExpandoObject>(paginationMetadata, shapedMovies);
                 return Ok(moviesWithMetadata);
             }
 
-            return Ok(movies);
+            return Ok(movies.ShapeData(requestParameters.Fields));
         }
 
         [HttpGet("{movieId}", Name = "GetMovie")]
