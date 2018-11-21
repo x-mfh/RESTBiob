@@ -10,6 +10,7 @@ namespace Biob.Data.Models
     public class Hall
     {
         [Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
         public int HallNo { get; set; }
