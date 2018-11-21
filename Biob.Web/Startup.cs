@@ -86,6 +86,11 @@ namespace Biob.Web
                 config.CreateMap<MovieToCreateDto, Movie>();
                 config.CreateMap<MovieToUpdateDto, Movie>();
                 config.CreateMap<Movie, MovieToUpdateDto>();
+
+                config.CreateMap<Ticket, TicketDto>();
+                config.CreateMap<TicketToCreateDto, Ticket>();
+                config.CreateMap<TicketToUpdateDto, Ticket>();
+                config.CreateMap<Ticket, TicketToUpdateDto>();
               
                 config.CreateMap<Hall, HallDto>();
                 config.CreateMap<HallToCreateDto, Hall>();
