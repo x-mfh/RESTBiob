@@ -80,7 +80,11 @@ namespace Biob.Web.Controllers
             return CreatedAtRoute("GetShowtime", new { showtimeId = showtimeToAdd.Id }, showtimeToAdd);
         }
 
+<<<<<<< HEAD
         [HttpPut("{showtimeId}")]
+=======
+        [HttpPut("showtimeId")]
+>>>>>>> cf340bab317f656f8df21dd35c151d67576a2114
         public async Task<IActionResult> UpdateShowtime([FromRoute] Guid showtimeId, [FromBody] ShowtimeToUpdateDto showtimeToUpdate)
         {
             if (showtimeToUpdate == null)
@@ -174,6 +178,7 @@ namespace Biob.Web.Controllers
 
             return NoContent();
         }
+<<<<<<< HEAD
 
         [HttpDelete("{showtimeId}")]
         public async Task<IActionResult> DeleteShowtime([FromRoute] Guid showtimeId)
@@ -194,5 +199,7 @@ namespace Biob.Web.Controllers
 
             return NoContent();
         }
+=======
+>>>>>>> cf340bab317f656f8df21dd35c151d67576a2114
     }
 }   
