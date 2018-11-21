@@ -71,7 +71,7 @@ namespace Biob.Web.Controllers
             return CreatedAtRoute("GetSeat", new { seatId = seatToAdd.Id }, seatToAdd);
         }
 
-        [HttpPut("seatId")]
+        [HttpPut("{seatId}")]
         public async Task<IActionResult> UpdateSeat([FromRoute] int seatId, [FromBody] SeatToUpdateDto seatToUpdate)
         {
             if (seatToUpdate == null)
@@ -115,7 +115,7 @@ namespace Biob.Web.Controllers
 
         }
 
-        [HttpPatch("seatId")]
+        [HttpPatch("{seatId}")]
         public async Task<IActionResult> PartiuallyUpdateSeat([FromRoute] int seatId, JsonPatchDocument<SeatToUpdateDto> patchDoc)
         {
             if (patchDoc == null)

@@ -72,7 +72,7 @@ namespace Biob.Web.Controllers
             return CreatedAtRoute("GetHall", new { hallId = hallToAdd.Id }, hallToAdd);
         }
 
-        [HttpPut("hallId")]
+        [HttpPut("{hallId}")]
         public async Task<IActionResult> UpdateHall([FromRoute] int hallId, [FromBody] HallToUpdateDto hallToUpdate)
         {
             if (hallToUpdate == null)
@@ -116,7 +116,7 @@ namespace Biob.Web.Controllers
 
         }
 
-        [HttpPatch("hallId")]
+        [HttpPatch("{hallId}")]
         public async Task<IActionResult> PartiuallyUpdateHall([FromRoute] int hallId, JsonPatchDocument<HallToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
