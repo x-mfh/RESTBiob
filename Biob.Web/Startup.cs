@@ -109,7 +109,9 @@ namespace Biob.Web
                 config.CreateMap<SeatToUpdateDto, Seat>();
                 config.CreateMap<Seat, SeatToUpdateDto>();
 
-                config.CreateMap<HallSeat, HallSeatDto>();
+                config.CreateMap<HallSeat, HallSeatDto>()
+                .ForMember(dest => dest.RowNo, opt => opt.MapFrom(src => src.Seat.RowNo))
+                .ForMember(dest => dest.SeatNo, opt => opt.MapFrom(src => src.Seat.SeatNo));
                 config.CreateMap<HallSeatToCreateDto, HallSeat>();
                 config.CreateMap<HallSeatToUpdateDto, HallSeat>();
                 config.CreateMap<HallSeat, HallSeatToUpdateDto>();
