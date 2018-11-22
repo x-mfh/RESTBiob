@@ -9,46 +9,50 @@ using Biob.Services.Data.DtoModels;
 using Biob.Web.Helpers;
 using Biob.Data.Models;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.Extensions.Logging;
 
 namespace Biob.Web.Controllers
 {
-    [Route("/api/v1/movies/{movieId}/showtimes/{showtimeId}/tickets/{ticketId}/seats")]
-    [Route("api/v1/movies/{movieId}/showtimes/{showtimeId}/halls/{hallId}/seats")]
+    [Route("api/v1/halls/{hallId}/seats")]
     [ApiController]
     public class HallSeatController : ControllerBase
     {
         private readonly IHallSeatRepository _hallSeatRepository;
+        private readonly ISeatRepository _seatRepository;
+        private readonly ILogger _logger;
 
-        public HallSeatController(IHallSeatRepository hallSeatRepository)
+        public HallSeatController(IHallSeatRepository hallSeatRepository, ISeatRepository seatRepository)
         {
             _hallSeatRepository = hallSeatRepository;
+            _seatRepository = seatRepository;
+            //_logger = logger;
         }
+
+        //[HttpGet]
+        //public async Task<IActionResult> GetAllHallSeatsAsync()
+        //{
+        //    var entities = await _hallSeatRepository.GetAllHallSeatsAsync();
+        //    var mappedEntities = Mapper.Map<IEnumerable<HallSeatDto>>(entities);
+
+        //    return Ok(mappedEntities);
+        //}
+
+        //[HttpGet("{hallSeatId}", Name = "GetHallSeat")]
+        //public async Task<IActionResult> GetOneHallSeat([FromRoute] int hallSeatId)
+        //{
+        //    var foundHallSeat = await _hallSeatRepository.GetHallSeatAsync(hallSeatId);
+
+        //    if (foundHallSeat == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var hallSeatToReturn = Mapper.Map<HallSeatDto>(foundHallSeat);
+        //    return Ok(hallSeatToReturn);
+        //}
 
         [HttpGet]
-        public async Task<IActionResult> GetAllHallSeatsAsync()
-        {
-            var entities = await _hallSeatRepository.GetAllHallSeatsAsync();
-            var mappedEntities = Mapper.Map<IEnumerable<HallSeatDto>>(entities);
-
-            return Ok(mappedEntities);
-        }
-
-        [HttpGet("{hallSeatId}", Name = "GetHallSeat")]
-        public async Task<IActionResult> GetOneHallSeat([FromRoute] int hallSeatId)
-        {
-            var foundHallSeat = await _hallSeatRepository.GetHallSeatAsync(hallSeatId);
-
-            if (foundHallSeat == null)
-            {
-                return NotFound();
-            }
-
-            var hallSeatToReturn = Mapper.Map<HallSeatDto>(foundHallSeat);
-            return Ok(hallSeatToReturn);
-        }
-
-        [HttpGet("hall/{hallId}")]
-        public async Task<IActionResult> GetHallSeatByHallId([FromRoute] int hallId)
+        public async Task<IActionResult> GetHallSeatByHallIdAsync([FromRoute] int hallId)
         {
             var foundHallSeat = await _hallSeatRepository.GetAllByHallId(hallId);
 
@@ -61,10 +65,10 @@ namespace Biob.Web.Controllers
             return Ok(hallSeatToReturn);
         }
 
-        [HttpGet("seat/{seatId}")]
-        public async Task<IActionResult> GetHallSeatBySeatId([FromRoute] int seatId)
+        [HttpGet("{seatId}")]
+        public async Task<IActionResult> GetHallSeatByHallIdSeatIdAsync([FromRoute] int hallId, [FromRoute] int seatId)
         {
-            var foundHallSeat = await _hallSeatRepository.GetAllBySeatId(seatId);
+            var foundHallSeat = await _hallSeatRepository.GetHallSeatByHallIdSeatIdAsync(hallId, seatId);
 
             if (foundHallSeat == null)
             {
@@ -76,7 +80,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateHallSeat([FromBody] HallSeatToCreateDto hallSeatToCreate)
+        public async Task<IActionResult> CreateHallSeat([FromRoute] int hallId, [FromBody] HallSeatToCreateDto hallSeatToCreate)
         {
             if (hallSeatToCreate == null)
             {
@@ -101,7 +105,7 @@ namespace Biob.Web.Controllers
             return CreatedAtRoute("GetHallSeat", new { hallSeatId = hallSeatToAdd.Id }, hallSeatToAdd);
         }
 
-        [HttpPut("{hallSeatId}")]
+        [HttpPut("{seatId}")]
         public async Task<IActionResult> UpdateHallSeat([FromRoute] int hallSeatId, [FromBody] HallSeatToUpdateDto hallSeatToUpdate)
         {
             if (hallSeatToUpdate == null)
@@ -145,7 +149,7 @@ namespace Biob.Web.Controllers
 
         }
 
-        [HttpPatch("{hallSeatId}")]
+        [HttpPatch("{seatId}")]
         public async Task<IActionResult> PartiuallyUpdateHallSeat([FromRoute] int hallSeatId, JsonPatchDocument<HallSeatToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
@@ -201,10 +205,10 @@ namespace Biob.Web.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{hallSeatId}")]
-        public async Task<IActionResult> DeleteHallSeatById([FromRoute]int hallSeatId)
+        [HttpDelete("{seatId}")]
+        public async Task<IActionResult> DeleteHallSeatByHallIdSeatId([FromRoute]int hallId, [FromRoute] int seatId)
         {
-            var hallSeatToDelete = await _hallSeatRepository.GetHallSeatAsync(hallSeatId);
+            var hallSeatToDelete = await _hallSeatRepository.GetHallSeatByHallIdSeatIdAsync(hallId, seatId);
 
             if (hallSeatToDelete == null)
             {
@@ -215,7 +219,7 @@ namespace Biob.Web.Controllers
 
             if (!await _hallSeatRepository.SaveChangesAsync())
             {
-                throw new Exception("failed to delete hallSeat");
+                _logger.LogError($"Deleting seat {seatId} from hall {hallId} failed on save");
             }
 
             return NoContent();

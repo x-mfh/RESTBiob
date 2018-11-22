@@ -10,6 +10,7 @@ namespace Biob.Services.Data.Repositories
         Task<HallSeat> GetHallSeatAsync(int hallSeatId);
         Task<IEnumerable<HallSeat>> GetAllByHallId(int hallId);
         Task<IEnumerable<HallSeat>> GetAllBySeatId(int seatId);
+        Task<HallSeat> GetHallSeatByHallIdSeatIdAsync(int hallId, int seatId);
         void AddHallSeat(HallSeat hallSeatToAdd);
         void UpdateHallSeat(HallSeat hallSeat);
         void DeleteHallSeat(HallSeat hallSeat);

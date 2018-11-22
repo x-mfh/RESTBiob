@@ -7,6 +7,9 @@ namespace Biob.Services.Data.Repositories
     public interface ISeatRepository : IRepository
     {
         Task<IEnumerable<Seat>> GetAllSeatsAsync();
+        Task<Seat> GetSeatByRowNoSeatNoAsync(int rowNo, int seatNo);
+        Task<IEnumerable<Seat>> GetSeatsByRowNoAsync(int rowNo);
+        Task<IEnumerable<Seat>> GetSeatsBySeatNoAsync(int seatNo);
         Task<Seat> GetSeatAsync(int id);
         void AddSeat(Seat seatToAdd);
         void UpdateSeat(Seat seatToUpdate);
