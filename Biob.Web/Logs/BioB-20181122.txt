@@ -1,0 +1,30 @@
+2018-11-22T10:44:33.3308828+01:00 0HLIGBSDGOCN6:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-22T10:44:33.6775858+01:00 0HLIGBSDGOCN6:00000001 [INF] Request finished in 346.1958ms 200  (791a596a)
+2018-11-22T10:45:04.3073384+01:00 0HLIGBSDGOCN6:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/x-www-form-urlencoded  (ca22a1cb)
+2018-11-22T10:45:05.2791012+01:00 0HLIGBSDGOCN6:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-11-22T10:45:06.1476078+01:00 0HLIGBSDGOCN6:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
+2018-11-22T10:45:06.6602008+01:00 0HLIGBSDGOCN6:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-22T10:45:11.3520340+01:00 0HLIGBSDGOCN6:00000002 [INF] Executed DbCommand ("306"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [m].[Id], [m].[Actors], [m].[AgeRestriction], [m].[Description], [m].[LengthInSeconds], [m].[Poster], [m].[Producer], [m].[Released], [m].[ThreeDee], [m].[Title]
+FROM [Movies] AS [m]
+ORDER BY [m].[Title]" (0723d8ff)
+2018-11-22T10:45:11.6135953+01:00 0HLIGBSDGOCN6:00000002 [INF] Executed action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 5452.9068ms. (50a9e262)
+2018-11-22T10:45:11.6368019+01:00 0HLIGBSDGOCN6:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-11-22T10:45:11.6858969+01:00 0HLIGBSDGOCN6:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 6389.4345ms (afa2e885)
+2018-11-22T10:45:11.7134766+01:00 0HLIGBSDGOCN6:00000002 [INF] Request finished in 7401.1201ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-22T10:45:34.3045248+01:00 0HLIGBSDGOCN6:00000003 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9d90a452-9547-4d04-98ed-7d617e64ae1e/showtime application/x-www-form-urlencoded  (ca22a1cb)
+2018-11-22T10:45:34.3674206+01:00 0HLIGBSDGOCN6:00000003 [INF] Route matched with "{action = \"GetAllShowtimeForMovie\", controller = \"Showtime\"}". Executing action "Biob.Web.Controllers.ShowtimeController.GetAllShowtimeForMovie (Biob.Web)" (a44c0341)
+2018-11-22T10:45:34.4259838+01:00 0HLIGBSDGOCN6:00000003 [INF] Executing action method "Biob.Web.Controllers.ShowtimeController.GetAllShowtimeForMovie (Biob.Web)" with arguments (["9d90a452-9547-4d04-98ed-7d617e64ae1e"]) - Validation state: Valid (4e3479ed)
+2018-11-22T10:45:34.4520608+01:00 0HLIGBSDGOCN6:00000003 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-22T10:45:34.6323127+01:00 0HLIGBSDGOCN6:00000003 [INF] Executed DbCommand ("83"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[Description], [movie].[LengthInSeconds], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[Id] = @__id_0" (0723d8ff)
+2018-11-22T10:45:34.8391660+01:00 0HLIGBSDGOCN6:00000003 [INF] Executed DbCommand ("156"ms) [Parameters=["@__movieId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [showtime].[Id], [showtime].[HallId], [showtime].[MovieId], [showtime].[ThreeDee], [showtime].[TimeOfPlaying]
+FROM [Showtimes] AS [showtime]
+WHERE [showtime].[MovieId] = @__movieId_0" (0723d8ff)
+2018-11-22T10:45:34.8684718+01:00 0HLIGBSDGOCN6:00000003 [INF] Executed action method "Biob.Web.Controllers.ShowtimeController.GetAllShowtimeForMovie (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 432.2037ms. (50a9e262)
+2018-11-22T10:45:34.8778498+01:00 0HLIGBSDGOCN6:00000003 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Services.Data.DtoModels.ShowtimeDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-11-22T10:45:34.8925867+01:00 0HLIGBSDGOCN6:00000003 [INF] Executed action "Biob.Web.Controllers.ShowtimeController.GetAllShowtimeForMovie (Biob.Web)" in 515.0837ms (afa2e885)
+2018-11-22T10:45:34.9318983+01:00 0HLIGBSDGOCN6:00000003 [INF] Request finished in 612.1054ms 200 application/json; charset=utf-8 (791a596a)

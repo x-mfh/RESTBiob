@@ -5,23 +5,47 @@ using Biob.Services.Data.Repositories;
 using Biob.Web.Helpers;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Biob.Web.Controllers
-{   
+{
     [Route("/api/v1/Showtime")]
     [ApiController]
     public class ShowtimeController : ControllerBase
     {
+        private readonly ILogger _logger;
         private readonly IShowtimeRepository _showtimeRepository;
 
-        public ShowtimeController(IShowtimeRepository showtimeRepository)
+        public ShowtimeController(IShowtimeRepository showtimeRepository, ILogger logger)
         {
+            _logger = logger;
             _showtimeRepository = showtimeRepository;
         }
+
+        [HttpGet]
+        [Route("/api/v1/movies/{movieId}/showtime")]
+        public async Task<IActionResult> GetAllShowtimeForMovie(Guid movieId)
+        {
+            if (movieId == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            if (!await _showtimeRepository.MovieExists(movieId))
+            {
+                return NotFound();
+            }
+
+            var showtimeForMovie = await _showtimeRepository.GetShowtimesForMovieAsync(movieId);
+            var mappedEntities = Mapper.Map<IEnumerable<ShowtimeDto>>(showtimeForMovie);
+            return Ok(mappedEntities);
+
+        }
+
+
 
         [HttpGet]
         public async Task<IActionResult> GetAllShowtime()
@@ -73,14 +97,13 @@ namespace Biob.Web.Controllers
 
             if (!await _showtimeRepository.SaveChangesAsync())
             {
-                //TODO: add logging
-                throw new Exception("Failed to create a new showtime");
+                _logger.LogError("Saving changes to database while creating a showtime failed");
             }
 
             return CreatedAtRoute("GetShowtime", new { showtimeId = showtimeToAdd.Id }, showtimeToAdd);
         }
 
-        [HttpPut("showtimeId")]
+        [HttpPut("{showtimeId}")]
         public async Task<IActionResult> UpdateShowtime([FromRoute] Guid showtimeId, [FromBody] ShowtimeToUpdateDto showtimeToUpdate)
         {
             if (showtimeToUpdate == null)
@@ -99,7 +122,8 @@ namespace Biob.Web.Controllers
                 if (!await _showtimeRepository.SaveChangesAsync())
                 {
                     // TODO: add logging
-                    throw new Exception("Failed to upsert a new showtime");
+                    _logger.LogError($"Upserting showtime: {showtimeId} failed on save");
+
                 }
 
                 var showtimeToReturn = Mapper.Map<ShowtimeDto>(showtimeEntity);
@@ -111,14 +135,14 @@ namespace Biob.Web.Controllers
 
             if (!await _showtimeRepository.SaveChangesAsync())
             {
-                // TODO: add logging
-                throw new Exception("Failed to update showtime");
+                _logger.LogError($"updating showtime: {showtimeId} failed on save");
+
             }
 
             return NoContent();
         }
 
-        [HttpPatch("showtimeId")]
+        [HttpPatch("{showtimeId}")]
         public async Task<IActionResult> PartiuallyUpdateShowtime([FromRoute] Guid showtimeId, JsonPatchDocument<ShowtimeToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
