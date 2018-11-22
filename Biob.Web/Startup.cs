@@ -50,6 +50,7 @@ namespace Biob.Web
             var connectionString = Configuration.GetConnectionString("BiobDB");
             services.AddDbContext<BiobDataContext>(options => options.UseSqlServer(connectionString));
             services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IHallRepository, HallRepository>();
             services.AddScoped<ISeatRepository, SeatRepository>();
             services.AddScoped<IHallSeatRepository, HallSeatRepository>();
@@ -92,6 +93,11 @@ namespace Biob.Web
                 config.CreateMap<MovieToCreateDto, Movie>();
                 config.CreateMap<MovieToUpdateDto, Movie>();
                 config.CreateMap<Movie, MovieToUpdateDto>();
+
+                config.CreateMap<Ticket, TicketDto>();
+                config.CreateMap<TicketToCreateDto, Ticket>();
+                config.CreateMap<TicketToUpdateDto, Ticket>();
+                config.CreateMap<Ticket, TicketToUpdateDto>();
               
                 config.CreateMap<Hall, HallDto>();
                 config.CreateMap<HallToCreateDto, Hall>();
