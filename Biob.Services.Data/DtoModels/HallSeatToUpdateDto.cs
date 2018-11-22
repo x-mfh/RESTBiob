@@ -2,8 +2,9 @@
 {
     public class HallSeatToUpdateDto
     {
-        public int Id { get; set; }
         public int HallId { get; set; }
         public int SeatId { get; set; }
+        public int RowNo { get; set; }
+        public int SeatNo { get; set; }
     }
 }
