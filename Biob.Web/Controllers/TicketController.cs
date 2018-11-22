@@ -15,7 +15,7 @@ using System.Dynamic;
 
 namespace Biob.Web.Controllers
 {
-    [Route("/api/v1/tickets")]
+    [Route("/api/v1/movies/{movieId}/showtime/{showtimeId}/tickets")]
     [ApiController]
     public class TicketController : ControllerBase
     {
@@ -45,7 +45,6 @@ namespace Biob.Web.Controllers
         
         
         [HttpGet(Name = "GetTicketsFromCustomer")]
-        [Route("/CustomerId/{customerId}")]
         //HVORDAN SÆTTER JEG EN ROUTE PÅ SOM GØR AT MAN KAN FÅ TICKETS BY CustomerId ?!+ =!=!=!=!???!1111
         public async Task<IActionResult> GetTicketsByCustomerId([FromQuery]Guid customerId, [FromQuery]RequestParameters requestParameters)
         {
