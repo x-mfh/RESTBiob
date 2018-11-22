@@ -26,6 +26,9 @@ namespace Biob.Data.Data
             modelBuilder.Entity<MovieGenre>().HasKey(moviegenre => new { moviegenre.MovieId, moviegenre.GenreId });
             modelBuilder.Entity<HallSeat>().HasKey(hallseat => new { hallseat.HallId, hallseat.SeatId });
 
+            // constraints
+            //modelBuilder.Entity<Hall>().HasIndex(hall => hall.HallNo).IsUnique();
+
             // default values
             //modelBuilder.Entity<Movie>()
             //    .Property(movie => movie.ThreeDee)
