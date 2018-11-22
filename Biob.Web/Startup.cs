@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Biob.Services.Web.PropertyMapping;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Logging;
 
 namespace Biob.Web
 {
@@ -49,6 +50,7 @@ namespace Biob.Web
             var connectionString = Configuration.GetConnectionString("BiobDB");
             services.AddDbContext<BiobDataContext>(options => options.UseSqlServer(connectionString));
             services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IHallRepository, HallRepository>();
             services.AddScoped<ISeatRepository, SeatRepository>();
             services.AddScoped<IHallSeatRepository, HallSeatRepository>();
@@ -69,7 +71,7 @@ namespace Biob.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -80,6 +82,10 @@ namespace Biob.Web
                 app.UseHsts();
             }
 
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+            loggerFactory.AddFile("Logs/BioB-{Date}.txt");
+
             Mapper.Initialize(config => 
             {
                 config.CreateMap<Movie, MovieDto>()
@@ -87,6 +93,11 @@ namespace Biob.Web
                 config.CreateMap<MovieToCreateDto, Movie>();
                 config.CreateMap<MovieToUpdateDto, Movie>();
                 config.CreateMap<Movie, MovieToUpdateDto>();
+
+                config.CreateMap<Ticket, TicketDto>();
+                config.CreateMap<TicketToCreateDto, Ticket>();
+                config.CreateMap<TicketToUpdateDto, Ticket>();
+                config.CreateMap<Ticket, TicketToUpdateDto>();
               
                 config.CreateMap<Hall, HallDto>();
                 config.CreateMap<HallToCreateDto, Hall>();

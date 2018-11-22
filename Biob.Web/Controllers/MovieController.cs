@@ -12,6 +12,7 @@ using Biob.Services.Web.PropertyMapping;
 using System.Collections.Generic;
 using Biob.Services.Data.Helpers;
 using System.Dynamic;
+using Microsoft.Extensions.Logging;
 
 namespace Biob.Web.Controllers
 {
@@ -23,14 +24,16 @@ namespace Biob.Web.Controllers
         private readonly IPropertyMappingService _propertyMappingService;
         private readonly ITypeHelperService _typeHelperService;
         private readonly IUrlHelper _urlHelper;
+        private readonly ILogger<MovieController> _logger;
 
         public MovieController(IMovieRepository movieRepository, IPropertyMappingService propertyMappingService,
-                                ITypeHelperService typeHelperService, IUrlHelper urlHelper)
+                                ITypeHelperService typeHelperService, IUrlHelper urlHelper, ILogger<MovieController> logger)
         {
             _movieRepository = movieRepository;
             _propertyMappingService = propertyMappingService;
             _typeHelperService = typeHelperService;
             _urlHelper = urlHelper;
+            _logger = logger;
             _propertyMappingService.AddPropertyMapping<MovieDto, Movie>(new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
             {
                 { "Id", new PropertyMappingValue(new List<string>() { "Id" })},
@@ -50,6 +53,7 @@ namespace Biob.Web.Controllers
         [HttpGet(Name = "GetMovies")]
         public async Task<IActionResult> GetAllMovies([FromQuery]RequestParameters requestParameters)
         {
+
             if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
             {
                 requestParameters.OrderBy = "Title";
@@ -138,9 +142,7 @@ namespace Biob.Web.Controllers
 
             if (!await _movieRepository.SaveChangesAsync())
             {
-                //  TODO: consider adding logging
-                //  instead of using expensive exceptions
-                throw new Exception("Failed to create a new movie");
+                _logger.LogError("Saving changes to database while creating a movie failed");
             }
 
             return CreatedAtRoute("GetMovie", new { movieId = movieToAdd.Id }, movieToAdd);
@@ -166,9 +168,7 @@ namespace Biob.Web.Controllers
 
                 if (!await _movieRepository.SaveChangesAsync())
                 {
-                    //  TODO: consider adding logging
-                    //  instead of using expensive exceptions
-                    throw new Exception("Failed to upsert a new movie");
+                    _logger.LogError($"Upserting movie: {movieId} failed on save");
                 }
 
                 var movieToReturn = Mapper.Map<MovieDto>(movieEntity);
@@ -182,9 +182,7 @@ namespace Biob.Web.Controllers
 
             if (!await _movieRepository.SaveChangesAsync())
             {
-                //  TODO: consider adding logging
-                //  instead of using expensive exceptions
-                throw new Exception("Failed to update a movie");
+                _logger.LogError($"Updating movie: {movieId} failed on save");
             }
 
             return NoContent();
@@ -221,7 +219,7 @@ namespace Biob.Web.Controllers
 
                 if (!await _movieRepository.SaveChangesAsync())
                 {
-                    throw new Exception("Upserting movie failed");
+                    _logger.LogError($"Upserting movie: {movieId} failed on save");
                 }
 
                 var movieToReturn = Mapper.Map<MovieDto>(movieToAddToDb);
@@ -244,12 +242,34 @@ namespace Biob.Web.Controllers
 
             if (!await _movieRepository.SaveChangesAsync())
             {
-                throw new Exception("partially updating movie failed");
+                _logger.LogError($"Partially updating movie: {movieId} failed on save");
             }
 
             return NoContent();
         }
 
+        [HttpDelete("{movieId}")]
+        [MovieParameterValidationFilter]
+        public async Task<IActionResult> DeleteMovie([FromRoute] Guid movieId)
+        {
+            var movieFromDb = await _movieRepository.GetMovieAsync(movieId);
+
+            if (movieFromDb == null)
+            {
+                return NotFound();
+            }
+
+            _movieRepository.DeleteMovie(movieFromDb);
+
+            if (!await _movieRepository.SaveChangesAsync())
+            {
+                _logger.LogError($"Deleting movie: {movieId} failed on save");
+            }
+
+            return NoContent();
+        }
+
+        //  TODO: consider making this a helper method instead, and reuseable
         private string CreateUrlForResource(RequestParameters requestParameters, PageType pageType)
         {
             switch (pageType)
