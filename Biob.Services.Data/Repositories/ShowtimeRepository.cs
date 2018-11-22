@@ -39,6 +39,11 @@ namespace Biob.Services.Data.Repositories
             return await _context.Showtimes.Where(showtime => showtime.Id == id).FirstOrDefaultAsync();
         }
 
+        public async Task<IEnumerable<Showtime>> GetShowtimesForMovieAsync(Guid movieId)
+        {
+            return await _context.Showtimes.Where(showtime => showtime.MovieId == movieId).ToListAsync();
+        }
+
         public void UpdateShowtime(Showtime showtimeToUpdate)
         {
             _context.Showtimes.Update(showtimeToUpdate);
