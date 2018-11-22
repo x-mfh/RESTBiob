@@ -52,6 +52,7 @@ namespace Biob.Web
             services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<IHallRepository, HallRepository>();
             services.AddScoped<ISeatRepository, SeatRepository>();
+            services.AddScoped<IHallSeatRepository, HallSeatRepository>();
             services.AddScoped<IShowtimeRepository, ShowtimeRepository>();
 
 
@@ -101,6 +102,11 @@ namespace Biob.Web
                 config.CreateMap<SeatToCreateDto, Seat>();
                 config.CreateMap<SeatToUpdateDto, Seat>();
                 config.CreateMap<Seat, SeatToUpdateDto>();
+
+                config.CreateMap<HallSeat, HallSeatDto>();
+                config.CreateMap<HallSeatToCreateDto, HallSeat>();
+                config.CreateMap<HallSeatToUpdateDto, HallSeat>();
+                config.CreateMap<HallSeat, HallSeatToUpdateDto>();
 
                 config.CreateMap<Showtime, ShowtimeDto>();
                 config.CreateMap<ShowtimeToCreateDto, Showtime>();
