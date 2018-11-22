@@ -25,12 +25,12 @@ namespace Biob.Services.Data.Repositories
 
         public async Task<IEnumerable<HallSeat>> GetAllByHallId(int hallId)
         {
-            return await _context.HallSeats.Include(hallseat => hallseat.Seat).Where(hall => hall.HallId == hallId).ToListAsync();
+            return await _context.HallSeats.Where(hall => hall.HallId == hallId).ToListAsync();
         }
 
         public async Task<IEnumerable<HallSeat>> GetAllBySeatId(int seatId)
         {
-            return await _context.HallSeats.Include(hallseat => hallseat.Hall).Where(seat => seat.SeatId == seatId).ToListAsync();
+            return await _context.HallSeats.Where(seat => seat.SeatId == seatId).ToListAsync();
         }
 
         public void AddHallSeat(HallSeat hallSeatToAdd)
