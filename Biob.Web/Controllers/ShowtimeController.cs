@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Biob.Web.Controllers
 {
-    [Route("/api/v1/Showtime")]
+    [Route("/api/v1/movies/{movieId}/Showtimes")]
     [ApiController]
     public class ShowtimeController : ControllerBase
     {
@@ -26,7 +26,6 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet]
-        [Route("/api/v1/movies/{movieId}/showtime")]
         public async Task<IActionResult> GetAllShowtimeForMovie(Guid movieId)
         {
             if (movieId == Guid.Empty)
@@ -47,6 +46,7 @@ namespace Biob.Web.Controllers
 
 
 
+        //  TODO: cant be used, use the above
         [HttpGet]
         public async Task<IActionResult> GetAllShowtime()
         {

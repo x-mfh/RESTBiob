@@ -12,7 +12,8 @@ using Microsoft.AspNetCore.JsonPatch;
 
 namespace Biob.Web.Controllers
 {
-    [Route("/api/v1/hallSeats")]
+    [Route("/api/v1/movies/{movieId}/showtimes/{showtimeId}/tickets/{ticketId}/seats")]
+    [Route("api/v1/movies/{movieId}/showtimes/{showtimeId}/halls/{hallId}/seats")]
     [ApiController]
     public class HallSeatController : ControllerBase
     {
