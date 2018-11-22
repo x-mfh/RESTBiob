@@ -11,6 +11,7 @@ namespace Biob.Data.Models
     {
         [Key]
         public int Id { get; set; }
+        // add unique constraint for rowno & seatno together, so you can't have two RowNo = 1; SeatNo = 1;
         [Required]
         public int RowNo { get; set; }
         [Required]
