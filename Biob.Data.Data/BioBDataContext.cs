@@ -1,4 +1,4 @@
-﻿using Biob.Data.Common.models;
+﻿using Biob.Data.Common.Models;
 using Biob.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;

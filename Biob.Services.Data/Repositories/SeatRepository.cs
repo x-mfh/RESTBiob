@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Biob.Data.Data;
@@ -52,7 +53,8 @@ namespace Biob.Services.Data.Repositories
 
         public void DeleteSeat(Seat seatToDelete)
         {
-            _context.Seats.Remove(seatToDelete);
+            seatToDelete.IsDeleted = true;
+            seatToDelete.DeletedOn = DateTimeOffset.Now;
         }
 
     }

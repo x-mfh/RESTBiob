@@ -17,16 +17,16 @@ namespace Biob.Web.Controllers
     public class SeatController : ControllerBase
     {
         private readonly ISeatRepository _seatRepository;
-        private readonly ILogger _logger;
+        private readonly ILogger<SeatController> _logger;
 
-        public SeatController(ISeatRepository seatRepository, ILogger logger)
+        public SeatController(ISeatRepository seatRepository, ILogger<SeatController> logger)
         {
             _seatRepository = seatRepository;
             _logger = logger;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllSeatsAsync()
+        public async Task<IActionResult> GetAllSeats()
         {
             var entities = await _seatRepository.GetAllSeatsAsync();
             var mappedEntities = Mapper.Map<IEnumerable<SeatDto>>(entities);
@@ -117,7 +117,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPut("{seatId}")]
-        public async Task<IActionResult> UpdateSeat([FromRoute] int seatId, [FromBody] SeatToUpdateDto seatToUpdate)
+        public async Task<IActionResult> UpdateSeatById([FromRoute] int seatId, [FromBody] SeatToUpdateDto seatToUpdate)
         {
             if (seatToUpdate == null)
             {
@@ -157,7 +157,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPatch("{seatId}")]
-        public async Task<IActionResult> PartiuallyUpdateSeat([FromRoute] int seatId, JsonPatchDocument<SeatToUpdateDto> patchDoc)
+        public async Task<IActionResult> PartiuallyUpdateSeatById([FromRoute] int seatId, JsonPatchDocument<SeatToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
             {
@@ -226,7 +226,7 @@ namespace Biob.Web.Controllers
 
             if (!await _seatRepository.SaveChangesAsync())
             {
-                _logger.LogError($"Deleting movie: {seatId} failed on save");
+                _logger.LogError($"Deleting seat: {seatId} failed on save");
             }
 
             return NoContent();

@@ -9,6 +9,7 @@ using Biob.Services.Data.DtoModels;
 using Biob.Web.Helpers;
 using Biob.Data.Models;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.Extensions.Logging;
 
 namespace Biob.Web.Controllers
 {
@@ -17,14 +18,16 @@ namespace Biob.Web.Controllers
     public class HallController : ControllerBase
     {
         private readonly IHallRepository _hallRepository;
+        private readonly ILogger<HallController> _logger;
 
-        public HallController(IHallRepository hallRepository)
+        public HallController(IHallRepository hallRepository, ILogger<HallController> logger)
         {
             _hallRepository = hallRepository;
+            _logger = logger;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllHallsAsync()
+        public async Task<IActionResult> GetAllHalls()
         {
             var entities = await _hallRepository.GetAllHallsAsync();
             var mappedEntities = Mapper.Map<IEnumerable<HallDto>>(entities);
@@ -64,16 +67,14 @@ namespace Biob.Web.Controllers
 
             if (!await _hallRepository.SaveChangesAsync())
             {
-                // TODO: consider adding logging
-                // instead of using expensive exceptions
-                throw new Exception("Failed to create new hall");
+                _logger.LogError("Saving changes to database while creating a hall failed");
             }
 
             return CreatedAtRoute("GetHall", new { hallId = hallToAdd.Id }, hallToAdd);
         }
 
         [HttpPut("{hallId}")]
-        public async Task<IActionResult> UpdateHall([FromRoute] int hallId, [FromBody] HallToUpdateDto hallToUpdate)
+        public async Task<IActionResult> UpdateHallById([FromRoute] int hallId, [FromBody] HallToUpdateDto hallToUpdate)
         {
             if (hallToUpdate == null)
             {
@@ -91,9 +92,7 @@ namespace Biob.Web.Controllers
 
                 if (!await _hallRepository.SaveChangesAsync())
                 {
-                    //  TODO: consider adding logging
-                    //  instead of using expensive exceptions
-                    throw new Exception("Failed to upsert a new hall");
+                    _logger.LogError($"Upserting hall: {hallId} failed on save");
                 }
 
                 var hallToReturn = Mapper.Map<HallDto>(hallEntity);
@@ -107,9 +106,7 @@ namespace Biob.Web.Controllers
 
             if (!await _hallRepository.SaveChangesAsync())
             {
-                //  TODO: consider adding logging
-                //  instead of using expensive exceptions
-                throw new Exception("Failed to upsert a new hall");
+                _logger.LogError($"Updating hall: {hallId} failed on save");
             }
 
             return NoContent();
@@ -117,7 +114,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPatch("{hallId}")]
-        public async Task<IActionResult> PartiuallyUpdateHall([FromRoute] int hallId, JsonPatchDocument<HallToUpdateDto> patchDoc)
+        public async Task<IActionResult> PartiuallyUpdateHallById([FromRoute] int hallId, JsonPatchDocument<HallToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
             {
@@ -144,7 +141,7 @@ namespace Biob.Web.Controllers
 
                 if (!await _hallRepository.SaveChangesAsync())
                 {
-                    throw new Exception("Upserting hall failed");
+                    _logger.LogError($"Upserting hall: {hallId} failed on save");
                 }
 
                 var hallToReturn = Mapper.Map<HallDto>(hallToAddToDb);
@@ -166,7 +163,7 @@ namespace Biob.Web.Controllers
 
             if (!await _hallRepository.SaveChangesAsync())
             {
-                throw new Exception("partially updating hall failed");
+                _logger.LogError($"Partially updating hall: {hallId} failed on save");
             }
 
             return NoContent();
@@ -186,7 +183,7 @@ namespace Biob.Web.Controllers
 
             if (!await _hallRepository.SaveChangesAsync())
             {
-                throw new Exception("failed to delete hall");
+                _logger.LogError($"Deleting hall: {hallId} failed on save");
             }
 
             return NoContent();
