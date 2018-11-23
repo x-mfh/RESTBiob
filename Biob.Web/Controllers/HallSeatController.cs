@@ -52,7 +52,7 @@ namespace Biob.Web.Controllers
         //}
 
         [HttpGet]
-        public async Task<IActionResult> GetHallSeatByHallIdAsync([FromRoute] int hallId)
+        public async Task<IActionResult> GetHallSeatByHallId([FromRoute] int hallId)
         {
             var foundHallSeat = await _hallSeatRepository.GetAllByHallId(hallId);
 
@@ -66,7 +66,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet("{seatId}")]
-        public async Task<IActionResult> GetHallSeatByHallIdSeatIdAsync([FromRoute] int hallId, [FromRoute] int seatId)
+        public async Task<IActionResult> GetHallSeatByHallIdSeatId([FromRoute] int hallId, [FromRoute] int seatId)
         {
             var foundHallSeat = await _hallSeatRepository.GetHallSeatByHallIdSeatIdAsync(hallId, seatId);
 
@@ -106,7 +106,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPut("{seatId}")]
-        public async Task<IActionResult> UpdateHallSeat([FromRoute] int hallSeatId, [FromBody] HallSeatToUpdateDto hallSeatToUpdate)
+        public async Task<IActionResult> UpdateHallSeatById([FromRoute] int hallSeatId, [FromBody] HallSeatToUpdateDto hallSeatToUpdate)
         {
             if (hallSeatToUpdate == null)
             {
@@ -150,7 +150,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPatch("{seatId}")]
-        public async Task<IActionResult> PartiuallyUpdateHallSeat([FromRoute] int hallSeatId, JsonPatchDocument<HallSeatToUpdateDto> patchDoc)
+        public async Task<IActionResult> PartiuallyUpdateHallSeatById([FromRoute] int hallSeatId, JsonPatchDocument<HallSeatToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
             {

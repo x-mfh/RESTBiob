@@ -1,4 +1,4 @@
-﻿using Biob.Data.Common.models;
+﻿using Biob.Data.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

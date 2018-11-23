@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Biob.Data.Data;
 using Biob.Data.Models;
@@ -37,7 +36,8 @@ namespace Biob.Services.Data.Repositories
 
         public void DeleteHall(Hall hallToDelete)
         {
-            _context.Halls.Remove(hallToDelete);
+            hallToDelete.IsDeleted = true;
+            hallToDelete.DeletedOn = DateTimeOffset.Now;
         }
     }
 }
