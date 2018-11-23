@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Biob.Data.Data;
@@ -25,7 +26,8 @@ namespace Biob.Services.Data.Repositories
 
         public async Task<IEnumerable<HallSeat>> GetAllByHallId(int hallId)
         {
-            return await _context.HallSeats.Where(hall => hall.HallId == hallId).ToListAsync();
+            return await _context.HallSeats.Include(hallseat => hallseat.Seat)
+                                           .Where(hall => hall.HallId == hallId).ToListAsync();
         }
 
         public async Task<IEnumerable<HallSeat>> GetAllBySeatId(int seatId)
@@ -33,20 +35,26 @@ namespace Biob.Services.Data.Repositories
             return await _context.HallSeats.Where(seat => seat.SeatId == seatId).ToListAsync();
         }
 
+        public async Task<HallSeat> GetHallSeatByHallIdSeatIdAsync(int hallId, int seatId)
+        {
+            return await _context.HallSeats.Where(hallseat => hallseat.HallId == hallId && hallseat.SeatId == seatId).FirstOrDefaultAsync();
+        }
+
         public void AddHallSeat(HallSeat hallSeatToAdd)
         {
             _context.HallSeats.Add(hallSeatToAdd);
         }
 
-        public void UpdateHallSeat(HallSeat hallSeat)
+        public void UpdateHallSeat(HallSeat hallSeatToUpdate)
         {
             //_context.Attach(hallSeat).State = EntityState.Modified;
-            _context.HallSeats.Update(hallSeat);
+            _context.HallSeats.Update(hallSeatToUpdate);
         }
 
-        public void DeleteHallSeat(HallSeat hallSeat)
+        public void DeleteHallSeat(HallSeat hallSeatToDelete)
         {
-            _context.HallSeats.Remove(hallSeat);
+            hallSeatToDelete.IsDeleted = true;
+            hallSeatToDelete.DeletedOn = DateTimeOffset.Now;
         }
     }
 }
