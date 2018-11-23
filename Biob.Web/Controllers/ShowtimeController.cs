@@ -16,12 +16,12 @@ namespace Biob.Web.Controllers
     [ApiController]
     public class ShowtimeController : ControllerBase
     {
-        //private readonly ILogger _logger;
+        private readonly ILogger<ShowtimeController> _logger;
         private readonly IShowtimeRepository _showtimeRepository;
 
-        public ShowtimeController(IShowtimeRepository showtimeRepository/*, ILogger logger*/)
+        public ShowtimeController(IShowtimeRepository showtimeRepository, ILogger<ShowtimeController> logger)
         {
-            //_logger = logger;
+            _logger = logger;
             _showtimeRepository = showtimeRepository;
         }
 
@@ -90,7 +90,7 @@ namespace Biob.Web.Controllers
 
             if (!await _showtimeRepository.SaveChangesAsync())
             {
-                //_logger.LogError("Saving changes to database while creating a showtime failed");
+                _logger.LogError("Saving changes to database while creating a showtime failed");
             }
 
             return CreatedAtRoute("GetShowtime", new { movieId, showtimeId = showtimeToAdd.Id }, showtimeToAdd);
@@ -114,7 +114,7 @@ namespace Biob.Web.Controllers
 
                 if (!await _showtimeRepository.SaveChangesAsync())
                 {
-                    //_logger.LogError($"Upserting showtime: {showtimeId} failed on save");
+                    _logger.LogError($"Upserting showtime: {showtimeId} failed on save");
                 }
 
                 var showtimeToReturn = Mapper.Map<ShowtimeDto>(showtimeEntity);
@@ -128,7 +128,7 @@ namespace Biob.Web.Controllers
 
             if (!await _showtimeRepository.SaveChangesAsync())
             {
-                //_logger.LogError($"Updating showtime: {showtimeId} failed on save");
+                _logger.LogError($"Updating showtime: {showtimeId} failed on save");
             }
 
             return NoContent();
@@ -162,7 +162,7 @@ namespace Biob.Web.Controllers
 
                 if (!await _showtimeRepository.SaveChangesAsync())
                 {
-                    //_logger.LogError($"Upserting showtime: {showtimeId} failed on save");
+                    _logger.LogError($"Upserting showtime: {showtimeId} failed on save");
                 }
 
                 var showtimeToReturn = Mapper.Map<ShowtimeDto>(showtimeToAddToDb);
@@ -185,7 +185,7 @@ namespace Biob.Web.Controllers
 
             if (!await _showtimeRepository.SaveChangesAsync())
             {
-                //_logger.LogError($"Partially updating {showtimeId} failed");
+                _logger.LogError($"Partially updating {showtimeId} failed");
             }
 
             return NoContent();
@@ -205,7 +205,7 @@ namespace Biob.Web.Controllers
 
             if (!await _showtimeRepository.SaveChangesAsync())
             {
-                //_logger.LogError($"Deleting {showtimeId} failed");
+                _logger.LogError($"Deleting {showtimeId} failed");
             }
 
             return NoContent();
