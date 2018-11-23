@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Biob.Data.Common.models
+namespace Biob.Data.Common.Models
 {
     public interface IAudit
     {

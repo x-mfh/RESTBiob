@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Biob.Data.Data;
@@ -44,15 +45,16 @@ namespace Biob.Services.Data.Repositories
             _context.HallSeats.Add(hallSeatToAdd);
         }
 
-        public void UpdateHallSeat(HallSeat hallSeat)
+        public void UpdateHallSeat(HallSeat hallSeatToUpdate)
         {
             //_context.Attach(hallSeat).State = EntityState.Modified;
-            _context.HallSeats.Update(hallSeat);
+            _context.HallSeats.Update(hallSeatToUpdate);
         }
 
-        public void DeleteHallSeat(HallSeat hallSeat)
+        public void DeleteHallSeat(HallSeat hallSeatToDelete)
         {
-            _context.HallSeats.Remove(hallSeat);
+            hallSeatToDelete.IsDeleted = true;
+            hallSeatToDelete.DeletedOn = DateTimeOffset.Now;
         }
     }
 }

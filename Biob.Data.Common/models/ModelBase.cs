@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Biob.Data.Common.models
+namespace Biob.Data.Common.Models
 {
     public abstract class ModelBase<TKey> : IAudit
     {

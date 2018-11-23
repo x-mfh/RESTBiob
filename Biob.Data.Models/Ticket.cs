@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Biob.Data.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,10 +8,8 @@ using System.Text;
 namespace Biob.Data.Models
 {
     [Table("Tickets")]
-    public class Ticket
+    public class Ticket : DeleteableModelBase<Guid>
     {
-        [Key]
-        public Guid Id { get; set; }
         [ForeignKey("Customer")]
         public Guid CustomerId { get; set; }
         [ForeignKey("Showtime")]

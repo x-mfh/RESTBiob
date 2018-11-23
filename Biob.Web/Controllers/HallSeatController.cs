@@ -19,12 +19,15 @@ namespace Biob.Web.Controllers
     {
         private readonly IHallSeatRepository _hallSeatRepository;
         private readonly ISeatRepository _seatRepository;
+        private readonly IHallRepository _hallRepository;
         private readonly ILogger<HallSeatController> _logger;
 
-        public HallSeatController(IHallSeatRepository hallSeatRepository, ISeatRepository seatRepository, ILogger<HallSeatController> logger)
+        public HallSeatController(IHallSeatRepository hallSeatRepository, ISeatRepository seatRepository, 
+                                  IHallRepository hallRepository, ILogger<HallSeatController> logger)
         {
             _hallSeatRepository = hallSeatRepository;
             _seatRepository = seatRepository;
+            _hallRepository = hallRepository;
             _logger = logger;
         }
 
@@ -52,8 +55,15 @@ namespace Biob.Web.Controllers
         //}
 
         [HttpGet]
-        public async Task<IActionResult> GetHallSeatByHallIdAsync([FromRoute] int hallId)
+        public async Task<IActionResult> GetHallSeatsByHallId([FromRoute] int hallId)
         {
+            var hallExists = _hallRepository.GetHallAsync(hallId);
+
+            if (hallExists == null)
+            {
+                return BadRequest();
+            }
+
             var foundHallSeat = await _hallSeatRepository.GetAllByHallId(hallId);
 
             if (foundHallSeat == null)
@@ -66,8 +76,15 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet("{seatId}")]
-        public async Task<IActionResult> GetHallSeatByHallIdSeatIdAsync([FromRoute] int hallId, [FromRoute] int seatId)
+        public async Task<IActionResult> GetHallSeatByHallIdSeatId([FromRoute] int hallId, [FromRoute] int seatId)
         {
+            var hallExists = _hallRepository.GetHallAsync(hallId);
+
+            if (hallExists == null)
+            {
+                return BadRequest();
+            }
+
             var foundHallSeat = await _hallSeatRepository.GetHallSeatByHallIdSeatIdAsync(hallId, seatId);
 
             if (foundHallSeat == null)
@@ -87,27 +104,72 @@ namespace Biob.Web.Controllers
                 return BadRequest();
             }
 
+            var hallExists = _hallRepository.GetHallAsync(hallId);
+
+            if (hallExists == null)
+            {
+                return BadRequest();
+            }
+
             if (!ModelState.IsValid)
             {
                 return new ProccessingEntityObjectResultErrors(ModelState);
             }
 
-            var hallSeatToAdd = Mapper.Map<HallSeat>(hallSeatToCreate);
-            _hallSeatRepository.AddHallSeat(hallSeatToAdd);
+            // check if seat combination already exists
+            var seatToAdd = await _seatRepository.GetSeatByRowNoSeatNoAsync(hallSeatToCreate.RowNo, hallSeatToCreate.SeatNo);
 
-            if (!await _hallSeatRepository.SaveChangesAsync())
+            // upserting if seat doesn't exist
+            if (seatToAdd == null)
             {
-                // TODO: consider adding logging
-                // instead of using expensive exceptions
-                throw new Exception("Failed to create new hallSeat");
+                // use mapping instead
+                //seatToAdd.RowNo = hallSeatToCreate.RowNo;
+                //seatToAdd.SeatNo = hallSeatToCreate.SeatNo;
+                seatToAdd = Mapper.Map<Seat>(hallSeatToCreate);
+
+                _seatRepository.AddSeat(seatToAdd);
             }
 
-            return CreatedAtRoute("GetHallSeat", new { hallSeatId = hallSeatToAdd.Id }, hallSeatToAdd);
+            // check if seat combination exist in hall
+            var seatExistsInHall = await _hallSeatRepository.GetHallSeatByHallIdSeatIdAsync(hallId, seatToAdd.Id);
+
+            // add new seat to hall
+            if (seatExistsInHall == null)
+            {
+                // create hallseat object with seatToAdd id and hallId from route
+                HallSeat hallSeatToAdd = new HallSeat { HallId = hallId, SeatId = seatToAdd.Id };
+
+                //var hallSeatToAdd = Mapper.Map<HallSeat>();
+                _hallSeatRepository.AddHallSeat(hallSeatToAdd);
+
+                if (!await _hallSeatRepository.SaveChangesAsync())
+                {
+                    _logger.LogError("Saving changes to database while creating a hallseat failed");
+                }
+
+                return CreatedAtRoute("GetHallSeat", new { hallSeatId = hallSeatToAdd.Id }, hallSeatToAdd);
+            }
+
+            // return something if seat already exists in hall
+            // maybe redirect to existing object
+            return Conflict(); 
+
         }
 
+
+        // TODO
+        // check if hall exists, check if seat exists, upsert if not, take id from seat, update only seatId on hallseat
+
         [HttpPut("{seatId}")]
-        public async Task<IActionResult> UpdateHallSeat([FromRoute] int hallSeatId, [FromBody] HallSeatToUpdateDto hallSeatToUpdate)
+        public async Task<IActionResult> UpdateHallSeatById([FromRoute] int hallId, [FromRoute] int seatId, [FromRoute] int hallSeatId, [FromBody] HallSeatToUpdateDto hallSeatToUpdate)
         {
+            var hallExists = _hallRepository.GetHallAsync(hallId);
+
+            if (hallExists == null)
+            {
+                return BadRequest();
+            }
+
             if (hallSeatToUpdate == null)
             {
                 return BadRequest();
@@ -115,7 +177,7 @@ namespace Biob.Web.Controllers
 
             var hallSeatFromDb = await _hallSeatRepository.GetHallSeatAsync(hallSeatId);
 
-            // upserting if movie does not already exist
+            // upserting if hallseat does not already exist
             if (hallSeatFromDb == null)
             {
                 var hallSeatEntity = Mapper.Map<HallSeat>(hallSeatToUpdate);
@@ -150,7 +212,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPatch("{seatId}")]
-        public async Task<IActionResult> PartiuallyUpdateHallSeat([FromRoute] int hallSeatId, JsonPatchDocument<HallSeatToUpdateDto> patchDoc)
+        public async Task<IActionResult> PartiuallyUpdateHallSeatById([FromRoute] int hallSeatId, JsonPatchDocument<HallSeatToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
             {
@@ -159,7 +221,7 @@ namespace Biob.Web.Controllers
 
             var hallSeatFromDb = await _hallSeatRepository.GetHallSeatAsync(hallSeatId);
 
-            //  upserting if movie does not already exist
+            //  upserting if hallseat does not already exist
             //  TODO: research if upserting is neccesary in patching
             if (hallSeatFromDb == null)
             {
