@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Biob.Data.Data;
@@ -23,6 +24,23 @@ namespace Biob.Services.Data.Repositories
             return await _context.Seats.Where(seat => seat.Id == id).FirstOrDefaultAsync();
         }
 
+        public async Task<Seat> GetSeatByRowNoSeatNoAsync(int rowNo, int seatNo)
+        {
+            return await _context.Seats.Where(seat => seat.RowNo == rowNo && seat.SeatNo == seatNo).FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Seat>> GetSeatsByRowNoAsync(int rowNo)
+        {
+            return await _context.Seats.Where(seat => seat.RowNo == rowNo).ToListAsync();
+
+        }
+
+        public async Task<IEnumerable<Seat>> GetSeatsBySeatNoAsync(int seatNo)
+        {
+            return await _context.Seats.Where(seat =>  seat.SeatNo == seatNo).ToListAsync();
+
+        }
+
         public void AddSeat(Seat seatToAdd)
         {
             _context.Seats.Add(seatToAdd);
@@ -35,7 +53,9 @@ namespace Biob.Services.Data.Repositories
 
         public void DeleteSeat(Seat seatToDelete)
         {
-            _context.Seats.Remove(seatToDelete);
+            seatToDelete.IsDeleted = true;
+            seatToDelete.DeletedOn = DateTimeOffset.Now;
         }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Biob.Data.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,11 +7,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Biob.Data.Models
 {
     [Table("Movies")]
-    public class Movie
+    public class Movie : DeleteableModelBase<Guid>
     {
-        [Required]
-        [Key]
-        public Guid Id { get; set; }
+        
         [Required]
         [MaxLength(255)]
         public string Title { get; set; }

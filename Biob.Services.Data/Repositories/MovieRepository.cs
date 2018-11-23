@@ -44,7 +44,8 @@ namespace Biob.Services.Data.Repositories
 
         public void DeleteMovie(Movie movieToDelete)
         {
-            _context.Movies.Remove(movieToDelete);
+            movieToDelete.IsDeleted = true;
+            movieToDelete.DeletedOn = DateTimeOffset.Now;
         }
 
         public async Task<PagedList<Movie>> GetAllMoviesAsync(string orderBy, string searchQuery, int pageNumber, int pageSize)
@@ -66,6 +67,7 @@ namespace Biob.Services.Data.Repositories
             return await _context.Movies.Where(movie => movie.Id == id).FirstOrDefaultAsync();
         }
 
+        
 
         public void UpdateMovie(Movie movieToUpdate)
         {
