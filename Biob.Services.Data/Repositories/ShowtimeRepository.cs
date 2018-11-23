@@ -15,11 +15,15 @@ namespace Biob.Services.Data.Repositories
 
         }
 
-        public void AddShowtime(Showtime showtimeToAdd)
+        public void AddShowtime(Guid movieId, Showtime showtimeToAdd)
         {
             if (showtimeToAdd.Id == Guid.Empty)
             {
                 showtimeToAdd.Id = Guid.NewGuid();
+            }
+            if (showtimeToAdd.MovieId == Guid.Empty)
+            {
+                showtimeToAdd.MovieId = movieId;
             }
             _context.Showtimes.Add(showtimeToAdd);
         }
@@ -29,23 +33,26 @@ namespace Biob.Services.Data.Repositories
             _context.Showtimes.Remove(showtimeToDelete);
         }
 
-        public async Task<IEnumerable<Showtime>> GetAllShowtimesAsync()
-        {
-            return await _context.Showtimes.ToListAsync();
-        }
-
-        public async Task<Showtime> GetShowtimeAsync(Guid id)
-        {
-            return await _context.Showtimes.Where(showtime => showtime.Id == id).FirstOrDefaultAsync();
-        }
-
-        public async Task<IEnumerable<Showtime>> GetShowtimesForMovieAsync(Guid movieId)
+        public async Task<IEnumerable<Showtime>> GetAllShowtimesAsync(Guid movieId)
         {
             return await _context.Showtimes.Where(showtime => showtime.MovieId == movieId).ToListAsync();
         }
 
-        public void UpdateShowtime(Showtime showtimeToUpdate)
+        public async Task<Showtime> GetShowtimeAsync( Guid showtimeId, Guid movieId)
         {
+            return await _context.Showtimes.Where(showtime => showtime.MovieId == movieId && showtime.Id == showtime.Id).FirstOrDefaultAsync();
+        }
+
+        public void UpdateShowtime(Guid movieId, Showtime showtimeToUpdate)
+        {
+            if (showtimeToUpdate.Id == Guid.Empty)
+            {
+                showtimeToUpdate.Id = showtimeToUpdate.Id;
+            }
+            if (showtimeToUpdate.MovieId == Guid.Empty)
+            {
+                showtimeToUpdate.MovieId = movieId;
+            }
             _context.Showtimes.Update(showtimeToUpdate);
         }
     }

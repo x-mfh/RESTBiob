@@ -12,21 +12,21 @@ using System.Threading.Tasks;
 
 namespace Biob.Web.Controllers
 {
-    [Route("/api/v1/movies/{movieId}/Showtimes")]
+    [Route("/api/v1/movies/{movieId}/showtimes")]
     [ApiController]
     public class ShowtimeController : ControllerBase
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<ShowtimeController> _logger;
         private readonly IShowtimeRepository _showtimeRepository;
 
-        public ShowtimeController(IShowtimeRepository showtimeRepository, ILogger logger)
+        public ShowtimeController(IShowtimeRepository showtimeRepository, ILogger<ShowtimeController> logger)
         {
             _logger = logger;
             _showtimeRepository = showtimeRepository;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllShowtimeForMovie(Guid movieId)
+        public async Task<IActionResult> GetAllShowtimes(Guid movieId)
         {
             if (movieId == Guid.Empty)
             {
@@ -38,32 +38,25 @@ namespace Biob.Web.Controllers
                 return NotFound();
             }
 
-            var showtimeForMovie = await _showtimeRepository.GetShowtimesForMovieAsync(movieId);
-            var mappedEntities = Mapper.Map<IEnumerable<ShowtimeDto>>(showtimeForMovie);
-            return Ok(mappedEntities);
-
-        }
-
-
-
-        //  TODO: cant be used, use the above
-        [HttpGet]
-        public async Task<IActionResult> GetAllShowtime()
-        {
-            var entities = await _showtimeRepository.GetAllShowtimesAsync();
-            var mappedEntities = Mapper.Map<IEnumerable<ShowtimeDto>>(entities);
+            var showtimes = await _showtimeRepository.GetAllShowtimesAsync(movieId);
+            var mappedEntities = Mapper.Map<IEnumerable<ShowtimeDto>>(showtimes);
             return Ok(mappedEntities);
         }
 
         [HttpGet("{showtimeId}", Name = "GetShowtime")]
-        public async Task<IActionResult> GetOneShowtime([FromRoute]Guid showtimeId)
+        public async Task<IActionResult> GetOneShowtime([FromRoute]Guid showtimeId, [FromRoute]Guid movieId)
         {
             if (showtimeId == Guid.Empty)
             {
                 return BadRequest();
             }
 
-            var foundShowtime = await _showtimeRepository.GetShowtimeAsync(showtimeId);
+            if (!await _showtimeRepository.MovieExists(movieId))
+            {
+                return NotFound();
+            }
+
+            var foundShowtime = await _showtimeRepository.GetShowtimeAsync(showtimeId, movieId);
 
             if (foundShowtime == null)
             {
@@ -75,7 +68,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateShowtime([FromBody] ShowtimeToCreateDto showtimeToCreate)
+        public async Task<IActionResult> CreateShowtime([FromRoute]Guid movieId, [FromBody] ShowtimeToCreateDto showtimeToCreate)
         {
             if (showtimeToCreate == null)
             {
@@ -93,64 +86,63 @@ namespace Biob.Web.Controllers
             }
 
             var showtimeToAdd = Mapper.Map<Showtime>(showtimeToCreate);
-            _showtimeRepository.AddShowtime(showtimeToAdd);
+            _showtimeRepository.AddShowtime(movieId, showtimeToAdd);
 
             if (!await _showtimeRepository.SaveChangesAsync())
             {
                 _logger.LogError("Saving changes to database while creating a showtime failed");
             }
 
-            return CreatedAtRoute("GetShowtime", new { showtimeId = showtimeToAdd.Id }, showtimeToAdd);
+            return CreatedAtRoute("GetShowtime", new { movieId, showtimeId = showtimeToAdd.Id }, showtimeToAdd);
         }
 
         [HttpPut("{showtimeId}")]
-        public async Task<IActionResult> UpdateShowtime([FromRoute] Guid showtimeId, [FromBody] ShowtimeToUpdateDto showtimeToUpdate)
+        public async Task<IActionResult> UpdateShowtime([FromRoute]Guid movieId, [FromRoute] Guid showtimeId, [FromBody] ShowtimeToUpdateDto showtimeToUpdate)
         {
             if (showtimeToUpdate == null)
             {
                 return BadRequest();
             }
 
-            var showtimeFromDb = await _showtimeRepository.GetShowtimeAsync(showtimeId);
+            var showtimeFromDb = await _showtimeRepository.GetShowtimeAsync(showtimeId, movieId);
 
             if (showtimeFromDb == null)
             {
                 var showtimeEntity = Mapper.Map<Showtime>(showtimeToUpdate);
                 showtimeEntity.Id = showtimeId;
-                _showtimeRepository.AddShowtime(showtimeEntity);
+                _showtimeRepository.AddShowtime(movieId, showtimeEntity);
 
                 if (!await _showtimeRepository.SaveChangesAsync())
                 {
-                    // TODO: add logging
                     _logger.LogError($"Upserting showtime: {showtimeId} failed on save");
-
                 }
 
                 var showtimeToReturn = Mapper.Map<ShowtimeDto>(showtimeEntity);
 
-                return CreatedAtRoute("GetShowtime", new { showtimeId = showtimeToReturn.Id }, showtimeToReturn);
+                return CreatedAtRoute("GetShowtime", new { movieId, showtimeId = showtimeToReturn.Id }, showtimeToReturn);
             }
 
             Mapper.Map(showtimeToUpdate, showtimeFromDb);
 
+            _showtimeRepository.UpdateShowtime(movieId, showtimeFromDb);
+
             if (!await _showtimeRepository.SaveChangesAsync())
             {
-                _logger.LogError($"updating showtime: {showtimeId} failed on save");
-
+                _logger.LogError($"Updating showtime: {showtimeId} failed on save");
             }
 
             return NoContent();
         }
 
         [HttpPatch("{showtimeId}")]
-        public async Task<IActionResult> PartiuallyUpdateShowtime([FromRoute] Guid showtimeId, JsonPatchDocument<ShowtimeToUpdateDto> patchDoc)
+        public async Task<IActionResult> PartiuallyUpdateShowtime([FromRoute]Guid movieId, [FromRoute] Guid showtimeId, JsonPatchDocument<ShowtimeToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
             {
                 return BadRequest();
             }
 
-            var showtimeFromDb = await _showtimeRepository.GetShowtimeAsync(showtimeId);
+            var showtimeFromDb = await _showtimeRepository.GetShowtimeAsync(showtimeId, movieId);
 
             if (showtimeFromDb == null)
             {
@@ -166,16 +158,16 @@ namespace Biob.Web.Controllers
                 var showtimeToAddToDb = Mapper.Map<Showtime>(showtimeToCreate);
                 showtimeToAddToDb.Id = showtimeId;
 
-                _showtimeRepository.AddShowtime(showtimeToAddToDb);
+                _showtimeRepository.AddShowtime(movieId, showtimeToAddToDb);
 
                 if (!await _showtimeRepository.SaveChangesAsync())
                 {
-                    throw new Exception("Upserting showtime failed");
+                    _logger.LogError($"Upserting showtime: {showtimeId} failed on save");
                 }
 
                 var showtimeToReturn = Mapper.Map<ShowtimeDto>(showtimeToAddToDb);
 
-                return CreatedAtRoute("GetShowtime", new { showtimeId = showtimeToReturn.Id }, showtimeToReturn);
+                return CreatedAtRoute("GetShowtime", new { movieId, showtimeId = showtimeToReturn.Id }, showtimeToReturn);
             }
 
             var showtimeToPatch = Mapper.Map<ShowtimeToUpdateDto>(showtimeFromDb);
@@ -189,20 +181,20 @@ namespace Biob.Web.Controllers
 
             Mapper.Map(showtimeToPatch, showtimeFromDb);
 
-            _showtimeRepository.UpdateShowtime(showtimeFromDb);
+            _showtimeRepository.UpdateShowtime(movieId, showtimeFromDb);
 
             if (!await _showtimeRepository.SaveChangesAsync())
             {
-                throw new Exception("partially updating showtime failed");
+                _logger.LogError($"Partially updating {showtimeId} failed");
             }
 
             return NoContent();
         }
 
         [HttpDelete("{showtimeId}")]
-        public async Task<IActionResult> DeleteShowtime([FromRoute] Guid showtimeId)
+        public async Task<IActionResult> DeleteShowtime([FromRoute] Guid showtimeId, [FromRoute]Guid movieId)
         {
-            var showtimeToDelete = await _showtimeRepository.GetShowtimeAsync(showtimeId);
+            var showtimeToDelete = await _showtimeRepository.GetShowtimeAsync(showtimeId, movieId);
 
             if (showtimeToDelete == null)
             {
@@ -213,10 +205,10 @@ namespace Biob.Web.Controllers
 
             if (!await _showtimeRepository.SaveChangesAsync())
             {
-                throw new Exception("deleting showtime failed");
+                _logger.LogError($"Deleting {showtimeId} failed");
             }
 
             return NoContent();
         }
     }
-}   
+}
