@@ -1,6 +1,11 @@
-﻿using Biob.Data.Models;
+﻿using Biob.Data.Common.models;
+using Biob.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Biob.Data.Data
 {
@@ -19,6 +24,17 @@ namespace Biob.Data.Data
         {
 
         }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken)) => SaveChangesAsync(true, cancellationToken);
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            //  add audit information before saving
+            AddAuditInformation();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,7 +55,7 @@ namespace Biob.Data.Data
             //modelBuilder.Entity<Showtime>()
             //    .Property(showtime => showtime.ThreeDee)
             //    .HasDefaultValue(false);
-                
+               
 
             //  TODO: add seed data
             modelBuilder.Entity<Genre>().HasData(
@@ -279,7 +295,48 @@ namespace Biob.Data.Data
                     TimeOfPlaying = new DateTimeOffset(new DateTime(2018, 12, 24, 12, 0, 0))
                 }
                 );
-            base.OnModelCreating(modelBuilder);
+
+
+            //  get all the deleteable entity types
+            var deleteableEntityTypes = modelBuilder.Model.GetEntityTypes().Where(x => x.ClrType != null && typeof(IDeleteable).IsAssignableFrom(x.ClrType));
+
+            foreach (var deletedentityType in deleteableEntityTypes)
+            {
+                //  add indexer on the IsDeleted property on each of them
+                modelBuilder.Entity(deletedentityType.ClrType).HasIndex(nameof(IDeleteable.IsDeleted));
+            }
+
+        }
+
+        /// <summary>
+        /// Adds audit (createdon or modifiedon) information to entities that inherit IAduit
+        /// </summary>
+        private void AddAuditInformation()
+        {
+            //  get the changed entries from the changed tracker
+            //  where they are of type IAduit
+            //  and their state is either added or modified
+            var changedEntities = ChangeTracker.Entries()
+                .Where(x => x.Entity is IAudit && (x.State == EntityState.Added || x.State == EntityState.Modified));
+
+
+            foreach (var entry in changedEntities)
+            {
+                //  type cast the entity in the entry to IAduit
+                var entity = (IAudit)entry.Entity;
+
+                //  if the entity state is added and the createdon property on the entity is default
+                //  default of thet type which in this case is null
+                //  then assign created on, otherwise assign modified on
+                if (entry.State == EntityState.Added && entity.CreatedOn == default(DateTimeOffset))
+                {
+                    entity.CreatedOn = DateTimeOffset.Now;
+                }
+                else
+                {
+                    entity.ModifiedOn = DateTimeOffset.Now;
+                }
+            }
         }
     }
 }

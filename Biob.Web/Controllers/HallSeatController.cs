@@ -19,13 +19,13 @@ namespace Biob.Web.Controllers
     {
         private readonly IHallSeatRepository _hallSeatRepository;
         private readonly ISeatRepository _seatRepository;
-        private readonly ILogger _logger;
+        private readonly ILogger<HallSeatController> _logger;
 
-        public HallSeatController(IHallSeatRepository hallSeatRepository, ISeatRepository seatRepository)
+        public HallSeatController(IHallSeatRepository hallSeatRepository, ISeatRepository seatRepository, ILogger<HallSeatController> logger)
         {
             _hallSeatRepository = hallSeatRepository;
             _seatRepository = seatRepository;
-            //_logger = logger;
+            _logger = logger;
         }
 
         //[HttpGet]
