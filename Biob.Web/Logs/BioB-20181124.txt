@@ -1,0 +1,350 @@
+2018-11-24T14:51:17.0686467+01:00 0HLII2FJV649N:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-24T14:51:17.2280515+01:00 0HLII2FJV649N:00000001 [INF] Request finished in 159.6621ms 200  (791a596a)
+2018-11-24T14:51:27.2869848+01:00 0HLII2FJV649N:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/halls   (ca22a1cb)
+2018-11-24T14:51:27.9355595+01:00 0HLII2FJV649N:00000002 [INF] Request finished in 650.4608ms 404  (791a596a)
+2018-11-24T14:51:56.1539920+01:00 0HLII2FVKCEIJ:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-24T14:51:56.2081572+01:00 0HLII2FVKCEIJ:00000001 [INF] Request finished in 56.4833ms 200  (791a596a)
+2018-11-24T14:52:07.7487500+01:00 0HLII2FVKCEIJ:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls   (ca22a1cb)
+2018-11-24T14:52:07.9645731+01:00 0HLII2FVKCEIJ:00000002 [INF] Route matched with "{action = \"GetAllHalls\", controller = \"Hall\"}". Executing action "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" (a44c0341)
+2018-11-24T14:52:08.4172065+01:00 0HLII2FVKCEIJ:00000002 [INF] Executing action method "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" - Validation state: Valid (dad538d7)
+2018-11-24T14:52:08.8004505+01:00 0HLII2FVKCEIJ:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T14:52:12.5394231+01:00 0HLII2FVKCEIJ:00000002 [INF] Executed DbCommand ("144"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [h].[Id], [h].[CreatedOn], [h].[DeletedOn], [h].[HallNo], [h].[IsDeleted], [h].[ModifiedOn], [h].[NoOfSeats], [h].[ThreeDee]
+FROM [Halls] AS [h]" (0723d8ff)
+2018-11-24T14:52:12.6771428+01:00 0HLII2FVKCEIJ:00000002 [INF] Executed action method "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 4249.5483ms. (50a9e262)
+2018-11-24T14:52:12.6990491+01:00 0HLII2FVKCEIJ:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Services.Data.DtoModels.HallDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-11-24T14:52:12.8360517+01:00 0HLII2FVKCEIJ:00000002 [INF] Executed action "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" in 4862.9891ms (afa2e885)
+2018-11-24T14:52:12.8539027+01:00 0HLII2FVKCEIJ:00000002 [INF] Request finished in 5099.9794ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-24T14:52:32.5302711+01:00 0HLII2FVKCEIJ:00000003 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/1   (ca22a1cb)
+2018-11-24T14:52:32.5594415+01:00 0HLII2FVKCEIJ:00000003 [INF] Route matched with "{action = \"GetOneHall\", controller = \"Hall\"}". Executing action "Biob.Web.Controllers.HallController.GetOneHall (Biob.Web)" (a44c0341)
+2018-11-24T14:52:32.5917602+01:00 0HLII2FVKCEIJ:00000003 [INF] Executing action method "Biob.Web.Controllers.HallController.GetOneHall (Biob.Web)" with arguments (["1"]) - Validation state: Valid (4e3479ed)
+2018-11-24T14:52:32.6156775+01:00 0HLII2FVKCEIJ:00000003 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T14:52:32.6668602+01:00 0HLII2FVKCEIJ:00000003 [INF] Executed DbCommand ("3"ms) [Parameters=["@__id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE [hall].[Id] = @__id_0" (0723d8ff)
+2018-11-24T14:52:32.6812596+01:00 0HLII2FVKCEIJ:00000003 [INF] Executed action method "Biob.Web.Controllers.HallController.GetOneHall (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 84.5954ms. (50a9e262)
+2018-11-24T14:52:32.6884763+01:00 0HLII2FVKCEIJ:00000003 [INF] Executing ObjectResult, writing value of type '"Biob.Services.Data.DtoModels.HallDto"'. (8a1b66c8)
+2018-11-24T14:52:32.6964605+01:00 0HLII2FVKCEIJ:00000003 [INF] Executed action "Biob.Web.Controllers.HallController.GetOneHall (Biob.Web)" in 129.8183ms (afa2e885)
+2018-11-24T14:52:32.7072743+01:00 0HLII2FVKCEIJ:00000003 [INF] Request finished in 174.7107ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-24T14:52:37.3841543+01:00 0HLII2FVKCEIJ:00000004 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/1/seats   (ca22a1cb)
+2018-11-24T14:52:37.3958808+01:00 0HLII2FVKCEIJ:00000004 [INF] Route matched with "{action = \"GetAllSeatsByHallId\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" (a44c0341)
+2018-11-24T14:52:37.4057284+01:00 0HLII2FVKCEIJ:00000004 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" with arguments (["1"]) - Validation state: Valid (4e3479ed)
+2018-11-24T14:52:37.4159649+01:00 0HLII2FVKCEIJ:00000004 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T14:52:37.4286406+01:00 0HLII2FVKCEIJ:00000004 [INF] Executed DbCommand ("1"ms) [Parameters=["@__id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE [hall].[Id] = @__id_0" (0723d8ff)
+2018-11-24T14:52:37.4614451+01:00 0HLII2FVKCEIJ:00000004 [WRN] The Include operation for navigation '"[hallseat].Seat"' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information. (10efaee6)
+2018-11-24T14:52:37.5818374+01:00 0HLII2FVKCEIJ:00000004 [INF] Executed DbCommand ("29"ms) [Parameters=["@__hallId_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [hallseat.Seat].[Id], [hallseat.Seat].[CreatedOn], [hallseat.Seat].[DeletedOn], [hallseat.Seat].[IsDeleted], [hallseat.Seat].[ModifiedOn], [hallseat.Seat].[RowNo], [hallseat.Seat].[SeatNo]
+FROM [HallSeats] AS [hallseat]
+INNER JOIN [Seats] AS [hallseat.Seat] ON [hallseat].[SeatId] = [hallseat.Seat].[Id]
+WHERE (([hallseat].[IsDeleted] = 0) AND ([hallseat].[HallId] = @__hallId_0)) AND ([hallseat.Seat].[IsDeleted] = 0)" (0723d8ff)
+2018-11-24T14:52:37.6488476+01:00 0HLII2FVKCEIJ:00000004 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 236.7774ms. (50a9e262)
+2018-11-24T14:52:37.6541820+01:00 0HLII2FVKCEIJ:00000004 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Data.Models.Seat, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-11-24T14:52:37.6663379+01:00 0HLII2FVKCEIJ:00000004 [INF] Executed action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" in 263.5753ms (afa2e885)
+2018-11-24T14:52:37.6819250+01:00 0HLII2FVKCEIJ:00000004 [INF] Request finished in 294.5581ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-24T14:52:44.3516431+01:00 0HLII2FVKCEIJ:00000005 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls   (ca22a1cb)
+2018-11-24T14:52:44.3592259+01:00 0HLII2FVKCEIJ:00000005 [INF] Route matched with "{action = \"GetAllHalls\", controller = \"Hall\"}". Executing action "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" (a44c0341)
+2018-11-24T14:52:44.3767253+01:00 0HLII2FVKCEIJ:00000005 [INF] Executing action method "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" - Validation state: Valid (dad538d7)
+2018-11-24T14:52:44.3887817+01:00 0HLII2FVKCEIJ:00000005 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T14:52:44.4030495+01:00 0HLII2FVKCEIJ:00000005 [INF] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [h].[Id], [h].[CreatedOn], [h].[DeletedOn], [h].[HallNo], [h].[IsDeleted], [h].[ModifiedOn], [h].[NoOfSeats], [h].[ThreeDee]
+FROM [Halls] AS [h]" (0723d8ff)
+2018-11-24T14:52:44.4116226+01:00 0HLII2FVKCEIJ:00000005 [INF] Executed action method "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 27.3298ms. (50a9e262)
+2018-11-24T14:52:44.4186315+01:00 0HLII2FVKCEIJ:00000005 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Services.Data.DtoModels.HallDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-11-24T14:52:44.4288933+01:00 0HLII2FVKCEIJ:00000005 [INF] Executed action "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" in 59.7835ms (afa2e885)
+2018-11-24T14:52:44.4400421+01:00 0HLII2FVKCEIJ:00000005 [INF] Request finished in 91.619ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-24T14:52:48.2147175+01:00 0HLII2FVKCEIJ:00000006 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/2/   (ca22a1cb)
+2018-11-24T14:52:48.2205382+01:00 0HLII2FVKCEIJ:00000006 [INF] Route matched with "{action = \"GetOneHall\", controller = \"Hall\"}". Executing action "Biob.Web.Controllers.HallController.GetOneHall (Biob.Web)" (a44c0341)
+2018-11-24T14:52:48.2304545+01:00 0HLII2FVKCEIJ:00000006 [INF] Executing action method "Biob.Web.Controllers.HallController.GetOneHall (Biob.Web)" with arguments (["2"]) - Validation state: Valid (4e3479ed)
+2018-11-24T14:52:48.2376292+01:00 0HLII2FVKCEIJ:00000006 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T14:52:48.2462980+01:00 0HLII2FVKCEIJ:00000006 [INF] Executed DbCommand ("1"ms) [Parameters=["@__id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE [hall].[Id] = @__id_0" (0723d8ff)
+2018-11-24T14:52:48.2514054+01:00 0HLII2FVKCEIJ:00000006 [INF] Executed action method "Biob.Web.Controllers.HallController.GetOneHall (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 16.1388ms. (50a9e262)
+2018-11-24T14:52:48.2569830+01:00 0HLII2FVKCEIJ:00000006 [INF] Executing ObjectResult, writing value of type '"Biob.Services.Data.DtoModels.HallDto"'. (8a1b66c8)
+2018-11-24T14:52:48.2644623+01:00 0HLII2FVKCEIJ:00000006 [INF] Executed action "Biob.Web.Controllers.HallController.GetOneHall (Biob.Web)" in 36.4959ms (afa2e885)
+2018-11-24T14:52:48.2784809+01:00 0HLII2FVKCEIJ:00000006 [INF] Request finished in 56.2729ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-24T14:52:56.2492045+01:00 0HLII2FVKCEIJ:00000007 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/2/seats   (ca22a1cb)
+2018-11-24T14:52:56.2557278+01:00 0HLII2FVKCEIJ:00000007 [INF] Route matched with "{action = \"GetAllSeatsByHallId\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" (a44c0341)
+2018-11-24T14:52:56.2731134+01:00 0HLII2FVKCEIJ:00000007 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" with arguments (["2"]) - Validation state: Valid (4e3479ed)
+2018-11-24T14:52:56.2801057+01:00 0HLII2FVKCEIJ:00000007 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T14:52:56.2952473+01:00 0HLII2FVKCEIJ:00000007 [INF] Executed DbCommand ("1"ms) [Parameters=["@__id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE [hall].[Id] = @__id_0" (0723d8ff)
+2018-11-24T14:52:56.3037870+01:00 0HLII2FVKCEIJ:00000007 [INF] Executed DbCommand ("1"ms) [Parameters=["@__hallId_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [hallseat.Seat].[Id], [hallseat.Seat].[CreatedOn], [hallseat.Seat].[DeletedOn], [hallseat.Seat].[IsDeleted], [hallseat.Seat].[ModifiedOn], [hallseat.Seat].[RowNo], [hallseat.Seat].[SeatNo]
+FROM [HallSeats] AS [hallseat]
+INNER JOIN [Seats] AS [hallseat.Seat] ON [hallseat].[SeatId] = [hallseat.Seat].[Id]
+WHERE (([hallseat].[IsDeleted] = 0) AND ([hallseat].[HallId] = @__hallId_0)) AND ([hallseat.Seat].[IsDeleted] = 0)" (0723d8ff)
+2018-11-24T14:52:56.3096385+01:00 0HLII2FVKCEIJ:00000007 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 31.3078ms. (50a9e262)
+2018-11-24T14:52:56.3161896+01:00 0HLII2FVKCEIJ:00000007 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Data.Models.Seat, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-11-24T14:52:56.3205884+01:00 0HLII2FVKCEIJ:00000007 [INF] Executed action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" in 60.6456ms (afa2e885)
+2018-11-24T14:52:56.3358092+01:00 0HLII2FVKCEIJ:00000007 [INF] Request finished in 83.0709ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-24T15:21:05.5483809+01:00 0HLII308VSTCF:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-24T15:21:05.7810105+01:00 0HLII308VSTCF:00000001 [INF] Request finished in 220.2108ms 200  (791a596a)
+2018-11-24T15:23:44.1882178+01:00 0HLII308VSTCG:00000001 [INF] Request starting HTTP/1.1 DELETE http://localhost:44390/api/v1/halls/2/seats/1  0 (ca22a1cb)
+2018-11-24T15:23:44.4090951+01:00 0HLII308VSTCG:00000001 [INF] Route matched with "{action = \"DeleteSeatById\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.DeleteSeatById (Biob.Web)" (a44c0341)
+2018-11-24T15:23:44.5977955+01:00 0HLII308VSTCG:00000001 [INF] Executing action method "Biob.Web.Controllers.SeatController.DeleteSeatById (Biob.Web)" with arguments (["1"]) - Validation state: Valid (4e3479ed)
+2018-11-24T15:23:44.9443220+01:00 0HLII308VSTCG:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T15:23:47.1815341+01:00 0HLII308VSTCG:00000001 [INF] Executed DbCommand ("22"ms) [Parameters=["@__id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [seat].[Id], [seat].[CreatedOn], [seat].[DeletedOn], [seat].[IsDeleted], [seat].[ModifiedOn], [seat].[RowNo], [seat].[SeatNo]
+FROM [Seats] AS [seat]
+WHERE [seat].[Id] = @__id_0" (0723d8ff)
+2018-11-24T15:23:47.3286432+01:00 0HLII308VSTCG:00000001 [INF] Executed DbCommand ("37"ms) [Parameters=["@__seatToDelete_Id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [x].[HallId], [x].[SeatId], [x].[CreatedOn], [x].[DeletedOn], [x].[Id], [x].[IsDeleted], [x].[ModifiedOn]
+FROM [HallSeats] AS [x]
+WHERE [x].[SeatId] = @__seatToDelete_Id_0" (0723d8ff)
+2018-11-24T15:23:47.4308380+01:00 0HLII308VSTCG:00000001 [INF] Executed DbCommand ("17"ms) [Parameters=["@p2='?' (DbType = Int32), @p3='?' (DbType = Int32), @p0='?' (DbType = DateTimeOffset), @p1='?' (DbType = Boolean)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+UPDATE [HallSeats] SET [DeletedOn] = @p0, [IsDeleted] = @p1
+WHERE [HallId] = @p2 AND [SeatId] = @p3;
+SELECT @@ROWCOUNT;" (0723d8ff)
+2018-11-24T15:23:47.4504796+01:00 0HLII308VSTCG:00000001 [INF] Executed DbCommand ("2"ms) [Parameters=["@p3='?' (DbType = Int32), @p0='?' (DbType = DateTimeOffset), @p1='?' (DbType = Boolean), @p2='?' (DbType = DateTimeOffset)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+UPDATE [Seats] SET [DeletedOn] = @p0, [IsDeleted] = @p1, [ModifiedOn] = @p2
+WHERE [Id] = @p3;
+SELECT @@ROWCOUNT;" (0723d8ff)
+2018-11-24T15:23:47.4709658+01:00 0HLII308VSTCG:00000001 [INF] Executed action method "Biob.Web.Controllers.SeatController.DeleteSeatById (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.NoContentResult" in 2864.2831ms. (50a9e262)
+2018-11-24T15:23:47.4967755+01:00 0HLII308VSTCG:00000001 [INF] Executing HttpStatusCodeResult, setting HTTP status code 204 (e28ccfae)
+2018-11-24T15:23:47.5142379+01:00 0HLII308VSTCG:00000001 [INF] Executed action "Biob.Web.Controllers.SeatController.DeleteSeatById (Biob.Web)" in 3090.3277ms (afa2e885)
+2018-11-24T15:23:47.5477340+01:00 0HLII308VSTCG:00000001 [INF] Request finished in 3344.9416ms 204  (791a596a)
+2018-11-24T15:23:55.6977641+01:00 0HLII308VSTCG:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/2/seats   (ca22a1cb)
+2018-11-24T15:23:55.7234932+01:00 0HLII308VSTCG:00000002 [INF] Route matched with "{action = \"GetAllSeatsByHallId\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" (a44c0341)
+2018-11-24T15:23:55.7344503+01:00 0HLII308VSTCG:00000002 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" with arguments (["2"]) - Validation state: Valid (4e3479ed)
+2018-11-24T15:23:55.7517603+01:00 0HLII308VSTCG:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T15:23:55.7959288+01:00 0HLII308VSTCG:00000002 [INF] Executed DbCommand ("15"ms) [Parameters=["@__id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE [hall].[Id] = @__id_0" (0723d8ff)
+2018-11-24T15:23:55.8068088+01:00 0HLII308VSTCG:00000002 [WRN] The Include operation for navigation '"[hallseat].Seat"' is unnecessary and was ignored because the navigation is not reachable in the final query results. See https://go.microsoft.com/fwlink/?linkid=850303 for more information. (10efaee6)
+2018-11-24T15:23:55.8506588+01:00 0HLII308VSTCG:00000002 [INF] Executed DbCommand ("3"ms) [Parameters=["@__hallId_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [hallseat.Seat].[Id], [hallseat.Seat].[CreatedOn], [hallseat.Seat].[DeletedOn], [hallseat.Seat].[IsDeleted], [hallseat.Seat].[ModifiedOn], [hallseat.Seat].[RowNo], [hallseat.Seat].[SeatNo]
+FROM [HallSeats] AS [hallseat]
+INNER JOIN [Seats] AS [hallseat.Seat] ON [hallseat].[SeatId] = [hallseat.Seat].[Id]
+WHERE (([hallseat].[IsDeleted] = 0) AND ([hallseat].[HallId] = @__hallId_0)) AND ([hallseat.Seat].[IsDeleted] = 0)" (0723d8ff)
+2018-11-24T15:23:55.8996066+01:00 0HLII308VSTCG:00000002 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 160.3348ms. (50a9e262)
+2018-11-24T15:23:55.9096655+01:00 0HLII308VSTCG:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Data.Models.Seat, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-11-24T15:23:55.9917172+01:00 0HLII308VSTCG:00000002 [INF] Executed action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" in 260.5827ms (afa2e885)
+2018-11-24T15:23:56.0145657+01:00 0HLII308VSTCG:00000002 [INF] Request finished in 312.4665ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-24T15:23:59.5572998+01:00 0HLII308VSTCG:00000003 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/1/seats   (ca22a1cb)
+2018-11-24T15:23:59.5638719+01:00 0HLII308VSTCG:00000003 [INF] Route matched with "{action = \"GetAllSeatsByHallId\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" (a44c0341)
+2018-11-24T15:23:59.5791090+01:00 0HLII308VSTCG:00000003 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" with arguments (["1"]) - Validation state: Valid (4e3479ed)
+2018-11-24T15:23:59.5887582+01:00 0HLII308VSTCG:00000003 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T15:23:59.5996678+01:00 0HLII308VSTCG:00000003 [INF] Executed DbCommand ("5"ms) [Parameters=["@__id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE [hall].[Id] = @__id_0" (0723d8ff)
+2018-11-24T15:23:59.6116663+01:00 0HLII308VSTCG:00000003 [INF] Executed DbCommand ("2"ms) [Parameters=["@__hallId_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [hallseat.Seat].[Id], [hallseat.Seat].[CreatedOn], [hallseat.Seat].[DeletedOn], [hallseat.Seat].[IsDeleted], [hallseat.Seat].[ModifiedOn], [hallseat.Seat].[RowNo], [hallseat.Seat].[SeatNo]
+FROM [HallSeats] AS [hallseat]
+INNER JOIN [Seats] AS [hallseat.Seat] ON [hallseat].[SeatId] = [hallseat.Seat].[Id]
+WHERE (([hallseat].[IsDeleted] = 0) AND ([hallseat].[HallId] = @__hallId_0)) AND ([hallseat.Seat].[IsDeleted] = 0)" (0723d8ff)
+2018-11-24T15:23:59.6172858+01:00 0HLII308VSTCG:00000003 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 33.6686ms. (50a9e262)
+2018-11-24T15:23:59.6230192+01:00 0HLII308VSTCG:00000003 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Data.Models.Seat, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-11-24T15:23:59.6307273+01:00 0HLII308VSTCG:00000003 [INF] Executed action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" in 60.0102ms (afa2e885)
+2018-11-24T15:23:59.6539303+01:00 0HLII308VSTCG:00000003 [INF] Request finished in 81.9806ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-24T20:00:51.7413749+01:00 0HLII7SJLAAI4:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-24T20:00:51.7939004+01:00 0HLII7SJLAAI4:00000001 [INF] Request finished in 55.5249ms 200  (791a596a)
+2018-11-24T20:02:28.5118533+01:00 0HLII7SJLAAI5:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/   (ca22a1cb)
+2018-11-24T20:02:28.6996933+01:00 0HLII7SJLAAI5:00000001 [INF] Route matched with "{action = \"GetAllHalls\", controller = \"Hall\"}". Executing action "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" (a44c0341)
+2018-11-24T20:02:28.8613098+01:00 0HLII7SJLAAI5:00000001 [INF] Executing action method "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" - Validation state: Valid (dad538d7)
+2018-11-24T20:02:29.1600741+01:00 0HLII7SJLAAI5:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T20:02:31.4574421+01:00 0HLII7SJLAAI5:00000001 [INF] Executed DbCommand ("78"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE [hall].[IsDeleted] = 0" (0723d8ff)
+2018-11-24T20:02:32.0543326+01:00 0HLII7SJLAAI5:00000001 [ERR] An exception occurred in the database while iterating the results of a query for context type '"Biob.Data.Data.BiobDataContext"'."
+""System.InvalidOperationException: An exception occurred while reading a database value for property 'Hall.Id'. The expected type was 'System.Guid' but the actual value was of type 'System.Int32'. ---> System.InvalidCastException: Unable to cast object of type 'System.Data.SqlTypes.SqlInt32' to type 'System.Data.SqlTypes.SqlGuid'.
+   at System.Data.SqlClient.SqlBuffer.get_SqlGuid()
+   at System.Data.SqlClient.SqlDataReader.GetGuid(Int32 i)
+   at lambda_method(Closure , DbDataReader )
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Metadata.Internal.EntityMaterializerSource.ThrowReadValueException[TValue](Exception exception, Object value, IPropertyBase property)
+   at lambda_method(Closure , DbDataReader )
+   at Microsoft.EntityFrameworkCore.Storage.Internal.TypedRelationalValueBufferFactory.Create(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)" (64e2593c)
+System.InvalidOperationException: An exception occurred while reading a database value for property 'Hall.Id'. The expected type was 'System.Guid' but the actual value was of type 'System.Int32'. ---> System.InvalidCastException: Unable to cast object of type 'System.Data.SqlTypes.SqlInt32' to type 'System.Data.SqlTypes.SqlGuid'.
+   at System.Data.SqlClient.SqlBuffer.get_SqlGuid()
+   at System.Data.SqlClient.SqlDataReader.GetGuid(Int32 i)
+   at lambda_method(Closure , DbDataReader )
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Metadata.Internal.EntityMaterializerSource.ThrowReadValueException[TValue](Exception exception, Object value, IPropertyBase property)
+   at lambda_method(Closure , DbDataReader )
+   at Microsoft.EntityFrameworkCore.Storage.Internal.TypedRelationalValueBufferFactory.Create(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+2018-11-24T20:02:32.3753151+01:00 0HLII7SJLAAI5:00000001 [INF] Executed action "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" in 3664.808ms (afa2e885)
+2018-11-24T20:02:32.4524422+01:00 0HLII7SJLAAI5:00000001 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.InvalidOperationException: An exception occurred while reading a database value for property 'Hall.Id'. The expected type was 'System.Guid' but the actual value was of type 'System.Int32'. ---> System.InvalidCastException: Unable to cast object of type 'System.Data.SqlTypes.SqlInt32' to type 'System.Data.SqlTypes.SqlGuid'.
+   at System.Data.SqlClient.SqlBuffer.get_SqlGuid()
+   at System.Data.SqlClient.SqlDataReader.GetGuid(Int32 i)
+   at lambda_method(Closure , DbDataReader )
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Metadata.Internal.EntityMaterializerSource.ThrowReadValueException[TValue](Exception exception, Object value, IPropertyBase property)
+   at lambda_method(Closure , DbDataReader )
+   at Microsoft.EntityFrameworkCore.Storage.Internal.TypedRelationalValueBufferFactory.Create(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.Aggregate_[TSource,TAccumulate,TResult](IAsyncEnumerable`1 source, TAccumulate seed, Func`3 accumulator, Func`2 resultSelector, CancellationToken cancellationToken)
+   at Biob.Services.Data.Repositories.HallRepository.GetAllHallsAsync() in D:\TestProgrammeriVisualStudio\C#\C# Projects\RESTBiob\Biob.Services.Data\Repositories\HallRepository.cs:line 19
+   at Biob.Web.Controllers.HallController.GetAllHalls() in D:\TestProgrammeriVisualStudio\C#\C# Projects\RESTBiob\Biob.Web\Controllers\HallController.cs:line 32
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-24T20:02:32.6530304+01:00 0HLII7SJLAAI5:00000001 [INF] Request finished in 4099.6218ms 500 text/html; charset=utf-8 (791a596a)
+2018-11-24T20:27:11.5716156+01:00 0HLII8BAGD3T1:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-24T20:27:11.6138206+01:00 0HLII8BAGD3T1:00000001 [INF] Request finished in 43.5291ms 200  (791a596a)
+2018-11-24T20:27:28.7156174+01:00 0HLII8BAGD3T1:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/   (ca22a1cb)
+2018-11-24T20:27:28.8773589+01:00 0HLII8BAGD3T1:00000002 [INF] Route matched with "{action = \"GetAllHalls\", controller = \"Hall\"}". Executing action "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" (a44c0341)
+2018-11-24T20:27:29.0155172+01:00 0HLII8BAGD3T1:00000002 [INF] Executing action method "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" - Validation state: Valid (dad538d7)
+2018-11-24T20:27:29.2454556+01:00 0HLII8BAGD3T1:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T20:27:31.3787544+01:00 0HLII8BAGD3T1:00000002 [INF] Executed DbCommand ("18"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE [hall].[IsDeleted] = 0" (0723d8ff)
+2018-11-24T20:27:31.4770617+01:00 0HLII8BAGD3T1:00000002 [INF] Executed action method "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 2453.5252ms. (50a9e262)
+2018-11-24T20:27:31.4964800+01:00 0HLII8BAGD3T1:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Services.Data.DtoModels.HallDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-11-24T20:27:31.5730685+01:00 0HLII8BAGD3T1:00000002 [INF] Executed action "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" in 2686.6454ms (afa2e885)
+2018-11-24T20:27:31.5925536+01:00 0HLII8BAGD3T1:00000002 [INF] Request finished in 2878.4366ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-24T20:28:45.4462412+01:00 0HLII8C6FN2TV:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-24T20:28:45.4864099+01:00 0HLII8C6FN2TV:00000001 [INF] Request finished in 42.4322ms 200  (791a596a)
+2018-11-24T20:29:00.4546533+01:00 0HLII8C6FN2TV:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/   (ca22a1cb)
+2018-11-24T20:29:00.6215949+01:00 0HLII8C6FN2TV:00000002 [INF] Route matched with "{action = \"GetAllHalls\", controller = \"Hall\"}". Executing action "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" (a44c0341)
+2018-11-24T20:29:00.7431733+01:00 0HLII8C6FN2TV:00000002 [INF] Executing action method "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" - Validation state: Valid (dad538d7)
+2018-11-24T20:29:01.0040550+01:00 0HLII8C6FN2TV:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T20:29:03.4357708+01:00 0HLII8C6FN2TV:00000002 [INF] Executed DbCommand ("85"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE [hall].[IsDeleted] = 0" (0723d8ff)
+2018-11-24T20:29:03.5254189+01:00 0HLII8C6FN2TV:00000002 [INF] Executed action method "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 2775.4453ms. (50a9e262)
+2018-11-24T20:29:03.5385652+01:00 0HLII8C6FN2TV:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Services.Data.DtoModels.HallDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-11-24T20:29:03.6052128+01:00 0HLII8C6FN2TV:00000002 [INF] Executed action "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" in 2976.1184ms (afa2e885)
+2018-11-24T20:29:03.6196104+01:00 0HLII8C6FN2TV:00000002 [INF] Request finished in 3165.6505ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-24T20:29:26.1080974+01:00 0HLII8C6FN2TV:00000003 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats   (ca22a1cb)
+2018-11-24T20:29:26.1293074+01:00 0HLII8C6FN2TV:00000003 [INF] Route matched with "{action = \"GetAllSeatsByHallId\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" (a44c0341)
+2018-11-24T20:29:26.1544424+01:00 0HLII8C6FN2TV:00000003 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" with arguments (["7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e"]) - Validation state: Valid (4e3479ed)
+2018-11-24T20:29:26.1658311+01:00 0HLII8C6FN2TV:00000003 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T20:29:26.1953143+01:00 0HLII8C6FN2TV:00000003 [INF] Executed DbCommand ("3"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE ([hall].[IsDeleted] = 0) AND ([hall].[Id] = @__id_0)" (0723d8ff)
+2018-11-24T20:29:26.2496696+01:00 0HLII8C6FN2TV:00000003 [INF] Executed DbCommand ("36"ms) [Parameters=["@__hallId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [seat].[Id], [seat].[CreatedOn], [seat].[DeletedOn], [seat].[HallId], [seat].[IsDeleted], [seat].[ModifiedOn], [seat].[RowNo], [seat].[SeatNo]
+FROM [Seats] AS [seat]
+WHERE ([seat].[IsDeleted] = 0) AND ([seat].[HallId] = @__hallId_0)" (0723d8ff)
+2018-11-24T20:29:26.2647191+01:00 0HLII8C6FN2TV:00000003 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 106.4937ms. (50a9e262)
+2018-11-24T20:29:26.2684169+01:00 0HLII8C6FN2TV:00000003 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Data.Models.Seat, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-11-24T20:29:26.2778253+01:00 0HLII8C6FN2TV:00000003 [INF] Executed action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" in 144.7896ms (afa2e885)
+2018-11-24T20:29:26.2873235+01:00 0HLII8C6FN2TV:00000003 [INF] Request finished in 174.9443ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-24T20:29:32.8335447+01:00 0HLII8C6FN2TV:00000004 [INF] Request starting HTTP/1.1 DELETE http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats/  0 (ca22a1cb)
+2018-11-24T20:29:32.8482875+01:00 0HLII8C6FN2TV:00000004 [INF] Request finished in 7.3387ms 404  (791a596a)
+2018-11-24T20:29:41.9677017+01:00 0HLII8C6FN2TV:00000005 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats/   (ca22a1cb)
+2018-11-24T20:29:41.9744171+01:00 0HLII8C6FN2TV:00000005 [INF] Route matched with "{action = \"GetAllSeatsByHallId\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" (a44c0341)
+2018-11-24T20:29:41.9819482+01:00 0HLII8C6FN2TV:00000005 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" with arguments (["7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e"]) - Validation state: Valid (4e3479ed)
+2018-11-24T20:29:41.9876377+01:00 0HLII8C6FN2TV:00000005 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T20:29:41.9985277+01:00 0HLII8C6FN2TV:00000005 [INF] Executed DbCommand ("5"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE ([hall].[IsDeleted] = 0) AND ([hall].[Id] = @__id_0)" (0723d8ff)
+2018-11-24T20:29:42.0067448+01:00 0HLII8C6FN2TV:00000005 [INF] Executed DbCommand ("0"ms) [Parameters=["@__hallId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [seat].[Id], [seat].[CreatedOn], [seat].[DeletedOn], [seat].[HallId], [seat].[IsDeleted], [seat].[ModifiedOn], [seat].[RowNo], [seat].[SeatNo]
+FROM [Seats] AS [seat]
+WHERE ([seat].[IsDeleted] = 0) AND ([seat].[HallId] = @__hallId_0)" (0723d8ff)
+2018-11-24T20:29:42.0116291+01:00 0HLII8C6FN2TV:00000005 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 25.8566ms. (50a9e262)
+2018-11-24T20:29:42.0154651+01:00 0HLII8C6FN2TV:00000005 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Data.Models.Seat, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-11-24T20:29:42.0193592+01:00 0HLII8C6FN2TV:00000005 [INF] Executed action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" in 41.3125ms (afa2e885)
+2018-11-24T20:29:42.0342154+01:00 0HLII8C6FN2TV:00000005 [INF] Request finished in 62.6144ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-24T20:30:25.3614043+01:00 0HLII8C6FN2TV:00000006 [INF] Request starting HTTP/1.1 DELETE http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats/245e0e3e-ae50-4e80-b506-01436223f4aa  0 (ca22a1cb)
+2018-11-24T20:30:25.3714810+01:00 0HLII8C6FN2TV:00000006 [INF] Route matched with "{action = \"DeleteSeatById\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.DeleteSeatById (Biob.Web)" (a44c0341)
+2018-11-24T20:30:25.3770275+01:00 0HLII8C6FN2TV:00000006 [INF] Executing action method "Biob.Web.Controllers.SeatController.DeleteSeatById (Biob.Web)" with arguments (["245e0e3e-ae50-4e80-b506-01436223f4aa"]) - Validation state: Valid (4e3479ed)
+2018-11-24T20:30:25.3835548+01:00 0HLII8C6FN2TV:00000006 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T20:30:25.3944772+01:00 0HLII8C6FN2TV:00000006 [INF] Executed DbCommand ("2"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [seat].[Id], [seat].[CreatedOn], [seat].[DeletedOn], [seat].[HallId], [seat].[IsDeleted], [seat].[ModifiedOn], [seat].[RowNo], [seat].[SeatNo]
+FROM [Seats] AS [seat]
+WHERE [seat].[Id] = @__id_0" (0723d8ff)
+2018-11-24T20:30:25.4649951+01:00 0HLII8C6FN2TV:00000006 [INF] Executed DbCommand ("14"ms) [Parameters=["@p3='?' (DbType = Guid), @p0='?' (DbType = DateTimeOffset), @p1='?' (DbType = Boolean), @p2='?' (DbType = DateTimeOffset)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+UPDATE [Seats] SET [DeletedOn] = @p0, [IsDeleted] = @p1, [ModifiedOn] = @p2
+WHERE [Id] = @p3;
+SELECT @@ROWCOUNT;" (0723d8ff)
+2018-11-24T20:30:25.4783498+01:00 0HLII8C6FN2TV:00000006 [INF] Executed action method "Biob.Web.Controllers.SeatController.DeleteSeatById (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.NoContentResult" in 97.0329ms. (50a9e262)
+2018-11-24T20:30:25.4846683+01:00 0HLII8C6FN2TV:00000006 [INF] Executing HttpStatusCodeResult, setting HTTP status code 204 (e28ccfae)
+2018-11-24T20:30:25.4887628+01:00 0HLII8C6FN2TV:00000006 [INF] Executed action "Biob.Web.Controllers.SeatController.DeleteSeatById (Biob.Web)" in 113.2761ms (afa2e885)
+2018-11-24T20:30:25.4997416+01:00 0HLII8C6FN2TV:00000006 [INF] Request finished in 156.6963ms 204  (791a596a)
+2018-11-24T20:30:27.4604774+01:00 0HLII8C6FN2TV:00000007 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats/   (ca22a1cb)
+2018-11-24T20:30:27.4657441+01:00 0HLII8C6FN2TV:00000007 [INF] Route matched with "{action = \"GetAllSeatsByHallId\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" (a44c0341)
+2018-11-24T20:30:27.4731815+01:00 0HLII8C6FN2TV:00000007 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" with arguments (["7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e"]) - Validation state: Valid (4e3479ed)
+2018-11-24T20:30:27.4789740+01:00 0HLII8C6FN2TV:00000007 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T20:30:27.4912507+01:00 0HLII8C6FN2TV:00000007 [INF] Executed DbCommand ("1"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE ([hall].[IsDeleted] = 0) AND ([hall].[Id] = @__id_0)" (0723d8ff)
+2018-11-24T20:30:27.4972577+01:00 0HLII8C6FN2TV:00000007 [INF] Executed DbCommand ("0"ms) [Parameters=["@__hallId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [seat].[Id], [seat].[CreatedOn], [seat].[DeletedOn], [seat].[HallId], [seat].[IsDeleted], [seat].[ModifiedOn], [seat].[RowNo], [seat].[SeatNo]
+FROM [Seats] AS [seat]
+WHERE ([seat].[IsDeleted] = 0) AND ([seat].[HallId] = @__hallId_0)" (0723d8ff)
+2018-11-24T20:30:27.5024176+01:00 0HLII8C6FN2TV:00000007 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 24.3983ms. (50a9e262)
+2018-11-24T20:30:27.5063171+01:00 0HLII8C6FN2TV:00000007 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Data.Models.Seat, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-11-24T20:30:27.5113700+01:00 0HLII8C6FN2TV:00000007 [INF] Executed action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" in 40.7782ms (afa2e885)
+2018-11-24T20:30:27.5218822+01:00 0HLII8C6FN2TV:00000007 [INF] Request finished in 56.5953ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-24T20:30:40.4952907+01:00 0HLII8C6FN2TV:00000008 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats   (ca22a1cb)
+2018-11-24T20:30:40.5004623+01:00 0HLII8C6FN2TV:00000008 [INF] Route matched with "{action = \"GetAllSeatsByHallId\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" (a44c0341)
+2018-11-24T20:30:40.5061575+01:00 0HLII8C6FN2TV:00000008 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" with arguments (["7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e"]) - Validation state: Valid (4e3479ed)
+2018-11-24T20:30:40.5137440+01:00 0HLII8C6FN2TV:00000008 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T20:30:40.5217030+01:00 0HLII8C6FN2TV:00000008 [INF] Executed DbCommand ("1"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE ([hall].[IsDeleted] = 0) AND ([hall].[Id] = @__id_0)" (0723d8ff)
+2018-11-24T20:30:40.5330650+01:00 0HLII8C6FN2TV:00000008 [INF] Executed DbCommand ("3"ms) [Parameters=["@__hallId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [seat].[Id], [seat].[CreatedOn], [seat].[DeletedOn], [seat].[HallId], [seat].[IsDeleted], [seat].[ModifiedOn], [seat].[RowNo], [seat].[SeatNo]
+FROM [Seats] AS [seat]
+WHERE ([seat].[IsDeleted] = 0) AND ([seat].[HallId] = @__hallId_0)" (0723d8ff)
+2018-11-24T20:30:40.5374415+01:00 0HLII8C6FN2TV:00000008 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 27.2599ms. (50a9e262)
+2018-11-24T20:30:40.5430068+01:00 0HLII8C6FN2TV:00000008 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Data.Models.Seat, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-11-24T20:30:40.5484224+01:00 0HLII8C6FN2TV:00000008 [INF] Executed action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" in 42.9996ms (afa2e885)
+2018-11-24T20:30:40.5638096+01:00 0HLII8C6FN2TV:00000008 [INF] Request finished in 60.7058ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-24T20:30:52.5793504+01:00 0HLII8C6FN2TV:00000009 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/d90ac9e4-32ba-4b5c-80ea-6eda60c0131b/seats   (ca22a1cb)
+2018-11-24T20:30:52.5871157+01:00 0HLII8C6FN2TV:00000009 [INF] Route matched with "{action = \"GetAllSeatsByHallId\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" (a44c0341)
+2018-11-24T20:30:52.5947961+01:00 0HLII8C6FN2TV:00000009 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" with arguments (["d90ac9e4-32ba-4b5c-80ea-6eda60c0131b"]) - Validation state: Valid (4e3479ed)
+2018-11-24T20:30:52.6016860+01:00 0HLII8C6FN2TV:00000009 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-24T20:30:52.6091238+01:00 0HLII8C6FN2TV:00000009 [INF] Executed DbCommand ("1"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE ([hall].[IsDeleted] = 0) AND ([hall].[Id] = @__id_0)" (0723d8ff)
+2018-11-24T20:30:52.6167729+01:00 0HLII8C6FN2TV:00000009 [INF] Executed DbCommand ("1"ms) [Parameters=["@__hallId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [seat].[Id], [seat].[CreatedOn], [seat].[DeletedOn], [seat].[HallId], [seat].[IsDeleted], [seat].[ModifiedOn], [seat].[RowNo], [seat].[SeatNo]
+FROM [Seats] AS [seat]
+WHERE ([seat].[IsDeleted] = 0) AND ([seat].[HallId] = @__hallId_0)" (0723d8ff)
+2018-11-24T20:30:52.6221472+01:00 0HLII8C6FN2TV:00000009 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 22.3114ms. (50a9e262)
+2018-11-24T20:30:52.6301045+01:00 0HLII8C6FN2TV:00000009 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Data.Models.Seat, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-11-24T20:30:52.6372807+01:00 0HLII8C6FN2TV:00000009 [INF] Executed action "Biob.Web.Controllers.SeatController.GetAllSeatsByHallId (Biob.Web)" in 44.1705ms (afa2e885)
+2018-11-24T20:30:52.6520045+01:00 0HLII8C6FN2TV:00000009 [INF] Request finished in 65.4406ms 200 application/json; charset=utf-8 (791a596a)

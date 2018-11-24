@@ -53,7 +53,6 @@ namespace Biob.Web
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IHallRepository, HallRepository>();
             services.AddScoped<ISeatRepository, SeatRepository>();
-            services.AddScoped<IHallSeatRepository, HallSeatRepository>();
             services.AddScoped<IShowtimeRepository, ShowtimeRepository>();
 
 
