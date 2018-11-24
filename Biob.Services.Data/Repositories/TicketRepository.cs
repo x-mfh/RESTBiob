@@ -78,7 +78,7 @@ namespace Biob.Services.Data.Repositories
             //        .Where(ticket => ticket.Title.ToLowerInvariant().Contains(searchQueryForWhere)).ToList();
             //}
 
-            return PagedList<Ticket>.Create(collectionsBeforePaging.AsQueryable(), pageNumber, pageSize);
+            return PagedList<Ticket>.Create(collectionsBeforePaging, pageNumber, pageSize);
         }
 
 

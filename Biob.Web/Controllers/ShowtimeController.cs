@@ -51,6 +51,11 @@ namespace Biob.Web.Controllers
                 return BadRequest();
             }
 
+            if (movieId == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
             if (!await _showtimeRepository.MovieExists(movieId))
             {
                 return NotFound();
@@ -99,6 +104,21 @@ namespace Biob.Web.Controllers
         [HttpPut("{showtimeId}")]
         public async Task<IActionResult> UpdateShowtime([FromRoute]Guid movieId, [FromRoute] Guid showtimeId, [FromBody] ShowtimeToUpdateDto showtimeToUpdate)
         {
+            if (movieId == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            if (showtimeId == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            if (!await _showtimeRepository.MovieExists(movieId))
+            {
+                return NotFound();
+            }
+
             if (showtimeToUpdate == null)
             {
                 return BadRequest();
@@ -124,7 +144,7 @@ namespace Biob.Web.Controllers
 
             Mapper.Map(showtimeToUpdate, showtimeFromDb);
 
-            _showtimeRepository.UpdateShowtime(movieId, showtimeFromDb);
+            _showtimeRepository.UpdateShowtime(showtimeFromDb);
 
             if (!await _showtimeRepository.SaveChangesAsync())
             {
@@ -137,6 +157,22 @@ namespace Biob.Web.Controllers
         [HttpPatch("{showtimeId}")]
         public async Task<IActionResult> PartiuallyUpdateShowtime([FromRoute]Guid movieId, [FromRoute] Guid showtimeId, JsonPatchDocument<ShowtimeToUpdateDto> patchDoc)
         {
+
+            if (movieId == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            if (showtimeId == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            if (!await _showtimeRepository.MovieExists(movieId))
+            {
+                return NotFound();
+            }
+
             if (patchDoc == null)
             {
                 return BadRequest();
@@ -157,7 +193,6 @@ namespace Biob.Web.Controllers
 
                 var showtimeToAddToDb = Mapper.Map<Showtime>(showtimeToCreate);
                 showtimeToAddToDb.Id = showtimeId;
-
                 _showtimeRepository.AddShowtime(movieId, showtimeToAddToDb);
 
                 if (!await _showtimeRepository.SaveChangesAsync())
@@ -181,7 +216,7 @@ namespace Biob.Web.Controllers
 
             Mapper.Map(showtimeToPatch, showtimeFromDb);
 
-            _showtimeRepository.UpdateShowtime(movieId, showtimeFromDb);
+            _showtimeRepository.UpdateShowtime(showtimeFromDb);
 
             if (!await _showtimeRepository.SaveChangesAsync())
             {
@@ -194,6 +229,22 @@ namespace Biob.Web.Controllers
         [HttpDelete("{showtimeId}")]
         public async Task<IActionResult> DeleteShowtime([FromRoute] Guid showtimeId, [FromRoute]Guid movieId)
         {
+            if (movieId == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            if (showtimeId == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            if (!await _showtimeRepository.MovieExists(movieId))
+            {
+                return NotFound();
+            }
+
+
             var showtimeToDelete = await _showtimeRepository.GetShowtimeAsync(showtimeId, movieId);
 
             if (showtimeToDelete == null)

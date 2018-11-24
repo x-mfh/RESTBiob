@@ -10,7 +10,7 @@ namespace Biob.Services.Data.Repositories
         Task<IEnumerable<Showtime>> GetAllShowtimesAsync(Guid movieId);
         Task<Showtime> GetShowtimeAsync(Guid showtimeId, Guid movieId);
         void AddShowtime(Guid movieId, Showtime showtimeToAdd);
-        void UpdateShowtime(Guid movieId, Showtime showtimeToUpdate);
+        void UpdateShowtime(Showtime showtimeToUpdate);
         void DeleteShowtime(Showtime showtimeToDelete);
     }
 }
