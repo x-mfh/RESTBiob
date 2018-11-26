@@ -36,7 +36,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet("{hallId}", Name = "GetHall")]
-        public async Task<IActionResult> GetOneHall([FromRoute] int hallId)
+        public async Task<IActionResult> GetOneHall([FromRoute] Guid hallId)
         {
             var foundHall = await _hallRepository.GetHallAsync(hallId);
 
@@ -74,7 +74,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPut("{hallId}")]
-        public async Task<IActionResult> UpdateHallById([FromRoute] int hallId, [FromBody] HallToUpdateDto hallToUpdate)
+        public async Task<IActionResult> UpdateHallById([FromRoute] Guid hallId, [FromBody] HallToUpdateDto hallToUpdate)
         {
             if (hallToUpdate == null)
             {
@@ -114,7 +114,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPatch("{hallId}")]
-        public async Task<IActionResult> PartiuallyUpdateHallById([FromRoute] int hallId, JsonPatchDocument<HallToUpdateDto> patchDoc)
+        public async Task<IActionResult> PartiuallyUpdateHallById([FromRoute] Guid hallId, JsonPatchDocument<HallToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
             {
@@ -170,7 +170,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpDelete("{hallId}")]
-        public async Task<IActionResult> DeleteHallById([FromRoute]int hallId)
+        public async Task<IActionResult> DeleteHallById([FromRoute]Guid hallId)
         {
             var hallToDelete = await _hallRepository.GetHallAsync(hallId);
 
