@@ -9,7 +9,10 @@ namespace Biob.Data.Models
     [Table("Movies")]
     public class Movie : DeleteableModelBase<Guid>
     {
-        
+        public Movie()
+        {
+            Showtimes = new List<Showtime>();
+        }
         [Required]
         [MaxLength(255)]
         public string Title { get; set; }
@@ -20,6 +23,7 @@ namespace Biob.Data.Models
         public string Poster { get; set; }
         [MaxLength(255)]
         public string Producer { get; set; }
+        public ICollection<Showtime> Showtimes { get; set; }
         public string Actors { get; set; }
         public DateTimeOffset Released { get; set; }
         public bool  ThreeDee { get; set; }

@@ -7,10 +7,9 @@ namespace Biob.Services.Data.Repositories
 {
     public interface IShowtimeRepository : IRepository
     {
-        Task<IEnumerable<Showtime>> GetShowtimesForMovieAsync(Guid movieId);
-        Task<IEnumerable<Showtime>> GetAllShowtimesAsync();
-        Task<Showtime> GetShowtimeAsync(Guid showtimeId);
-        void AddShowtime(Showtime showtimeToAdd);
+        Task<IEnumerable<Showtime>> GetAllShowtimesAsync(Guid movieId);
+        Task<Showtime> GetShowtimeAsync(Guid showtimeId, Guid movieId);
+        void AddShowtime(Guid movieId, Showtime showtimeToAdd);
         void UpdateShowtime(Showtime showtimeToUpdate);
         void DeleteShowtime(Showtime showtimeToDelete);
     }

@@ -15,33 +15,38 @@ namespace Biob.Services.Data.Repositories
 
         }
 
-        public void AddShowtime(Showtime showtimeToAdd)
+        public void AddShowtime(Guid movieId, Showtime showtimeToAdd)
         {
             if (showtimeToAdd.Id == Guid.Empty)
             {
                 showtimeToAdd.Id = Guid.NewGuid();
+            }
+            if (showtimeToAdd.MovieId == Guid.Empty)
+            {
+                showtimeToAdd.MovieId = movieId;
             }
             _context.Showtimes.Add(showtimeToAdd);
         }
 
         public void DeleteShowtime(Showtime showtimeToDelete)
         {
-            _context.Showtimes.Remove(showtimeToDelete);
+            showtimeToDelete.IsDeleted = true;
+            showtimeToDelete.DeletedOn = DateTimeOffset.Now;
         }
 
-        public async Task<IEnumerable<Showtime>> GetAllShowtimesAsync()
+        public async Task<IEnumerable<Showtime>> GetAllShowtimesAsync(Guid movieId)
         {
-            return await _context.Showtimes.ToListAsync();
+            return await _context.Showtimes.Where(showtime => !showtime.IsDeleted && showtime.MovieId == movieId).ToListAsync();
         }
 
-        public async Task<Showtime> GetShowtimeAsync(Guid id)
+        public async Task<Showtime> GetShowtimeAsync( Guid showtimeId, Guid movieId)
         {
-            return await _context.Showtimes.Where(showtime => showtime.Id == id).FirstOrDefaultAsync();
-        }
-
-        public async Task<IEnumerable<Showtime>> GetShowtimesForMovieAsync(Guid movieId)
-        {
-            return await _context.Showtimes.Where(showtime => showtime.MovieId == movieId).ToListAsync();
+            var foundShowtime = await _context.Showtimes.Where(showtime => showtime.MovieId == movieId && showtime.Id == showtimeId).FirstOrDefaultAsync();
+            if (foundShowtime.IsDeleted)
+            {
+                foundShowtime = null;
+            }
+            return foundShowtime;
         }
 
         public void UpdateShowtime(Showtime showtimeToUpdate)
