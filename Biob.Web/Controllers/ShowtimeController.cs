@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
 using Biob.Data.Models;
 using Biob.Services.Data.DtoModels;
+using Biob.Services.Data.Helpers;
 using Biob.Services.Data.Repositories;
+using Biob.Services.Web.PropertyMapping;
 using Biob.Web.Helpers;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Threading.Tasks;
 
 namespace Biob.Web.Controllers
@@ -18,29 +21,75 @@ namespace Biob.Web.Controllers
     {
         private readonly ILogger<ShowtimeController> _logger;
         private readonly IShowtimeRepository _showtimeRepository;
+        private readonly ITypeHelperService _typeHelperService;
+        private readonly IUrlHelper _urlHelper;
+        private readonly IPropertyMappingService _propertyMappingService;
 
-        public ShowtimeController(IShowtimeRepository showtimeRepository, ILogger<ShowtimeController> logger)
+        public ShowtimeController(IShowtimeRepository showtimeRepository, IPropertyMappingService propertyMappingService, 
+                                    ITypeHelperService typeHelperService, IUrlHelper urlHelper, ILogger<ShowtimeController> logger)
         {
             _logger = logger;
             _showtimeRepository = showtimeRepository;
+            _typeHelperService = typeHelperService;
+            _urlHelper = urlHelper;
+            _propertyMappingService = propertyMappingService;
+
+            _propertyMappingService.AddPropertyMapping<ShowtimeDto, Showtime>(new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "Id", new PropertyMappingValue(new List<string>() { "Id" })},
+                { "MovieId", new PropertyMappingValue(new List<string>() { "MovieId" })},
+                { "HallId", new PropertyMappingValue(new List<string>() { "HallId" })},
+                { "TimeOfPlaying", new PropertyMappingValue(new List<string>() { "TimeOfPlaying" })},
+                { "ThreeDee", new PropertyMappingValue(new List<string>() { "ThreeDee" })}
+            });
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllShowtimes(Guid movieId)
+        [HttpGet(Name = "GetShowtimes")]
+        public async Task<IActionResult> GetAllShowtimes([FromQuery]RequestParameters requestParameters)
         {
-            if (movieId == Guid.Empty)
+
+            if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
+            {
+                requestParameters.OrderBy = "Id"; // MovieId?
+            }
+
+
+            if (!_propertyMappingService.ValidMappingExistsFor<ShowtimeDto, Showtime>(requestParameters.Fields))
             {
                 return BadRequest();
             }
 
-            if (!await _showtimeRepository.MovieExists(movieId))
+            if (!_typeHelperService.TypeHasProperties<ShowtimeDto>(requestParameters.Fields))
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            var showtimes = await _showtimeRepository.GetAllShowtimesAsync(movieId);
-            var mappedEntities = Mapper.Map<IEnumerable<ShowtimeDto>>(showtimes);
-            return Ok(mappedEntities);
+            var showtimesPagedList = await _showtimeRepository.GetAllShowtimesAsync(requestParameters.OrderBy, requestParameters.PageNumber, requestParameters.PageSize);
+
+            var previousPageLink = showtimesPagedList.HasPrevious ? CreateUrlForResource(requestParameters, PageType.PreviousPage) : null;
+            var nextPageLink = showtimesPagedList.HasNext ? CreateUrlForResource(requestParameters, PageType.NextPage) : null;
+
+            var paginationMetadata = new PaginationMetadata()
+            {
+                TotalCount = showtimesPagedList.TotalCount,
+                PageSize = showtimesPagedList.PageSize,
+                CurrentPage = showtimesPagedList.CurrentPage,
+                TotalPages = showtimesPagedList.TotalPages,
+                PreviousPageLink = previousPageLink,
+                NextPageLink = nextPageLink
+            };
+
+            Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
+
+            var showtimes = Mapper.Map<IEnumerable<ShowtimeDto>>(showtimesPagedList);
+
+            if (requestParameters.IncludeMetadata)
+            {
+                var showtimesWithMetadata = new EntityWithPaginationMetadataDto<ShowtimeDto>(paginationMetadata, showtimes);
+                return Ok(showtimesWithMetadata);
+            }
+
+            return Ok(showtimes);
         }
 
         [HttpGet("{showtimeId}", Name = "GetShowtime")]
@@ -260,6 +309,38 @@ namespace Biob.Web.Controllers
             }
 
             return NoContent();
+        }
+
+        private string CreateUrlForResource(RequestParameters requestParameters, PageType pageType)
+        {
+            switch (pageType)
+            {
+                case PageType.PreviousPage:
+                    return _urlHelper.Link("GetShowtimes", new
+                    {
+                        orderBy = requestParameters.OrderBy,
+                        searchQuery = requestParameters.SearchQuery,
+                        pageNumber = requestParameters.PageNumber - 1,
+                        pageSize = requestParameters.PageSize
+
+                    });
+                case PageType.NextPage:
+                    return _urlHelper.Link("GetShowtimes", new
+                    {
+                        orderBy = requestParameters.OrderBy,
+                        searchQuery = requestParameters.SearchQuery,
+                        pageNumber = requestParameters.PageNumber + 1,
+                        pageSize = requestParameters.PageSize
+                    });
+                default:
+                    return _urlHelper.Link("GetShowtimes", new
+                    {
+                        orderBy = requestParameters.OrderBy,
+                        searchQuery = requestParameters.SearchQuery,
+                        pageNumber = requestParameters.PageNumber,
+                        pageSize = requestParameters.PageSize
+                    });
+            }
         }
     }
 }
