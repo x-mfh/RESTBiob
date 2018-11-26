@@ -6,10 +6,9 @@ using System.Linq;
 
 namespace Biob.Services.Data.Repositories
 {
-    public class Repository : IRepository, IDisposable
+    public class Repository : IRepository
     {
         protected readonly BiobDataContext _context;
-        private bool disposed = false;
 
         public Repository(BiobDataContext context)
         {
@@ -25,24 +24,6 @@ namespace Biob.Services.Data.Repositories
         public async Task<bool> SaveChangesAsync()
         {
             return ( await _context.SaveChangesAsync() > 0);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
-            }
-            disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }
