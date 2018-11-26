@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Biob.Services.Data.DtoModels
 {
@@ -15,5 +16,6 @@ namespace Biob.Services.Data.DtoModels
         public DateTimeOffset Released { get; set; }
         public bool ThreeDee { get; set; }
         public int AgeRestriction { get; set; }
+        public IList<string> Genres { get; set; }
     }
 }

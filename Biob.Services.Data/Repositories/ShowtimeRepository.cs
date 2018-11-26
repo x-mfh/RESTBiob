@@ -50,13 +50,6 @@ namespace Biob.Services.Data.Repositories
         public async Task<PagedList<Showtime>> GetAllShowtimesAsync(string orderBy, int pageNumber, int pageSize)
         {
             var collectionBeforePaging = _context.Showtimes.Where(showtime => !showtime.IsDeleted).Applysort(orderBy, _propertyMappingService.GetPropertyMapping<ShowtimeDto, Showtime>());
-
-            //if (!string.IsNullOrWhiteSpace(searchQuery))
-            //{
-            //    string searchQueryForWhere = searchQuery.Trim().ToLowerInvariant();
-            //    collectionBeforePaging = collectionBeforePaging.Where(showtime => showtime.TimeOfPlaying.ToLowerInvariant().Contains(searchQueryForWhere));
-            //}
-
             var listToPage = await collectionBeforePaging.ToListAsync();
             return PagedList<Showtime>.Create(listToPage, pageNumber, pageSize);
         }
