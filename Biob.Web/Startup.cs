@@ -55,7 +55,23 @@ namespace Biob.Web
             services.AddScoped<ISeatRepository, SeatRepository>();
             services.AddScoped<IShowtimeRepository, ShowtimeRepository>();
 
+            services.Configure<CookiePolicyOptions>(options => 
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
+            });
 
+            services.AddHttpCacheHeaders(
+            (expirationOptions) => 
+            {
+                expirationOptions.MaxAge = 600;
+                
+            },
+            (validationOptions) => 
+            {
+                validationOptions.MustRevalidate = true;
+                validationOptions.Vary = new string[] { "Accept-Encoding" };
+            });
 
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
@@ -115,6 +131,7 @@ namespace Biob.Web
             });
 
             app.UseHttpsRedirection();
+            app.UseHttpCacheHeaders();
             app.UseMvc();
         }
     }
