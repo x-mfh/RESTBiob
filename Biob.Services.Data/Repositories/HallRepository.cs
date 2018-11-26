@@ -16,12 +16,12 @@ namespace Biob.Services.Data.Repositories
 
         public async Task<IEnumerable<Hall>> GetAllHallsAsync()
         {
-            return await _context.Halls.ToListAsync();
+            return await _context.Halls.Where(hall => !hall.IsDeleted).ToListAsync();
         }
 
-        public async Task<Hall> GetHallAsync(int id)
+        public async Task<Hall> GetHallAsync(Guid id)
         {
-            return await _context.Halls.Where(hall => hall.Id == id).FirstOrDefaultAsync();
+            return await _context.Halls.Where(hall => !hall.IsDeleted && hall.Id == id).FirstOrDefaultAsync();
         }
 
         public void AddHall(Hall hallToAdd)

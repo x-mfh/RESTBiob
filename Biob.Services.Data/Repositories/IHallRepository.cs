@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Biob.Data.Models;
 
@@ -8,7 +9,7 @@ namespace Biob.Services.Data.Repositories
     {
         void AddHall(Hall hallToAdd);
         void DeleteHall(Hall hallToDelete);
-        Task<Hall> GetHallAsync(int id);
+        Task<Hall> GetHallAsync(Guid id);
         Task<IEnumerable<Hall>> GetAllHallsAsync();
         void UpdateHall(Hall hallToUpdate);
     }

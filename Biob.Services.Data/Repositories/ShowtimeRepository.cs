@@ -43,10 +43,11 @@ namespace Biob.Services.Data.Repositories
 
         public void DeleteShowtime(Showtime showtimeToDelete)
         {
-            _context.Showtimes.Remove(showtimeToDelete);
+            showtimeToDelete.IsDeleted = true;
+            showtimeToDelete.DeletedOn = DateTimeOffset.Now;
         }
 
-        public async Task<PagedList<Showtime>> GetAllShowtimesAsync(string orderBy, string searchQuery, int pageNumber, int pageSize)
+        public async Task<PagedList<Showtime>> GetAllShowtimesAsync(string orderBy, int pageNumber, int pageSize)
         {
             var collectionBeforePaging = _context.Showtimes.Where(showtime => !showtime.IsDeleted).Applysort(orderBy, _propertyMappingService.GetPropertyMapping<ShowtimeDto, Showtime>());
 
@@ -57,24 +58,21 @@ namespace Biob.Services.Data.Repositories
             //}
 
             var listToPage = await collectionBeforePaging.ToListAsync();
-            return PagedList<Movie>.Create(listToPage, pageNumber, pageSize);
+            return PagedList<Showtime>.Create(listToPage, pageNumber, pageSize);
         }
 
         public async Task<Showtime> GetShowtimeAsync( Guid showtimeId, Guid movieId)
         {
-            return await _context.Showtimes.Where(showtime => showtime.MovieId == movieId && showtime.Id == showtime.Id).FirstOrDefaultAsync();
+            var foundShowtime = await _context.Showtimes.Where(showtime => showtime.MovieId == movieId && showtime.Id == showtimeId).FirstOrDefaultAsync();
+            if (foundShowtime.IsDeleted)
+            {
+                foundShowtime = null;
+            }
+            return foundShowtime;
         }
 
-        public void UpdateShowtime(Guid movieId, Showtime showtimeToUpdate)
+        public void UpdateShowtime(Showtime showtimeToUpdate)
         {
-            if (showtimeToUpdate.Id == Guid.Empty)
-            {
-                showtimeToUpdate.Id = showtimeToUpdate.Id;
-            }
-            if (showtimeToUpdate.MovieId == Guid.Empty)
-            {
-                showtimeToUpdate.MovieId = movieId;
-            }
             _context.Showtimes.Update(showtimeToUpdate);
         }
     }

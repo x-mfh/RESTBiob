@@ -3,7 +3,6 @@ using Biob.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,7 +17,6 @@ namespace Biob.Data.Data
         public DbSet<Hall> Halls { get; set; }
         public DbSet<Seat> Seats { get; set; }
         public DbSet<MovieGenre> MovieGenres { get; set; }
-        public DbSet<HallSeat> HallSeats { get; set; }
 
         public BiobDataContext(DbContextOptions<BiobDataContext> options) : base(options)
         {
@@ -40,7 +38,6 @@ namespace Biob.Data.Data
         {
             //  TODO: add many to many relationship keys
             modelBuilder.Entity<MovieGenre>().HasKey(moviegenre => new { moviegenre.MovieId, moviegenre.GenreId });
-            modelBuilder.Entity<HallSeat>().HasKey(hallseat => new { hallseat.HallId, hallseat.SeatId });
 
             // constraints
             //modelBuilder.Entity<Hall>().HasIndex(hall => hall.HallNo).IsUnique();
@@ -186,90 +183,29 @@ namespace Biob.Data.Data
                 );
 
             modelBuilder.Entity<Hall>().HasData(
-                new Hall() { Id = 1, HallNo = 1, NoOfSeats = 10, ThreeDee = true},
-                new Hall() { Id = 2, HallNo = 2, NoOfSeats = 20 },
-                new Hall() { Id = 3, HallNo = 3, NoOfSeats = 20 }
+                new Hall() { Id = Guid.Parse("7E9A2751-F1C0-4EB6-A7EC-1319C6DAE31E"), HallNo = 1, NoOfSeats = 10, ThreeDee = true},
+                new Hall() { Id = Guid.Parse("288AAD6A-F042-4B36-A5AE-F950AEA18B46"), HallNo = 2, NoOfSeats = 20 },
+                new Hall() { Id = Guid.Parse("D90AC9E4-32BA-4B5C-80EA-6EDA60C0131B"), HallNo = 3, NoOfSeats = 20 }
                 );
 
             modelBuilder.Entity<Seat>().HasData(
-                new Seat() { Id = 1, RowNo = 1, SeatNo = 1 },
-                new Seat() { Id = 2, RowNo = 1, SeatNo = 2 },
-                new Seat() { Id = 3, RowNo = 1, SeatNo = 3 },
-                new Seat() { Id = 4, RowNo = 1, SeatNo = 4 },
-                new Seat() { Id = 5, RowNo = 1, SeatNo = 5 },
-                new Seat() { Id = 6, RowNo = 1, SeatNo = 6 },
-                new Seat() { Id = 7, RowNo = 1, SeatNo = 7 },
-                new Seat() { Id = 8, RowNo = 1, SeatNo = 8 },
-                new Seat() { Id = 9, RowNo = 1, SeatNo = 9 },
-                new Seat() { Id = 10, RowNo = 1, SeatNo = 10 },
-                new Seat() { Id = 11, RowNo = 2, SeatNo = 1 },
-                new Seat() { Id = 12, RowNo = 2, SeatNo = 2 },
-                new Seat() { Id = 13, RowNo = 2, SeatNo = 3 },
-                new Seat() { Id = 14, RowNo = 2, SeatNo = 4 },
-                new Seat() { Id = 15, RowNo = 2, SeatNo = 5 },
-                new Seat() { Id = 16, RowNo = 2, SeatNo = 6 },
-                new Seat() { Id = 17, RowNo = 2, SeatNo = 7 },
-                new Seat() { Id = 18, RowNo = 2, SeatNo = 8 },
-                new Seat() { Id = 19, RowNo = 2, SeatNo = 9 },
-                new Seat() { Id = 20, RowNo = 2, SeatNo = 10 }
-                );
+                new Seat() { Id = Guid.Parse("5FD7F7C4-D90F-4D60-8878-067AF214A0DC"), HallId = Guid.Parse("7E9A2751-F1C0-4EB6-A7EC-1319C6DAE31E"), RowNo = 1, SeatNo = 1 },
+                new Seat() { Id = Guid.Parse("603AB124-4BE6-40FD-9A5E-49BB4A5730DB"), HallId = Guid.Parse("7E9A2751-F1C0-4EB6-A7EC-1319C6DAE31E"), RowNo = 1, SeatNo = 2 },
+                new Seat() { Id = Guid.Parse("F9574335-CE2F-48BE-A275-1BB2718DED0A"), HallId = Guid.Parse("7E9A2751-F1C0-4EB6-A7EC-1319C6DAE31E"), RowNo = 1, SeatNo = 3 },
+                new Seat() { Id = Guid.Parse("245E0E3E-AE50-4E80-B506-01436223F4AA"), HallId = Guid.Parse("7E9A2751-F1C0-4EB6-A7EC-1319C6DAE31E"), RowNo = 2, SeatNo = 2 },
 
-            modelBuilder.Entity<HallSeat>().HasData(
-                // Hall 1
-                new HallSeat() { Id = 1, HallId = 1, SeatId = 1 },
-                new HallSeat() { Id = 2, HallId = 1, SeatId = 2 },
-                new HallSeat() { Id = 3, HallId = 1, SeatId = 3 },
-                new HallSeat() { Id = 4, HallId = 1, SeatId = 4 },
-                new HallSeat() { Id = 5, HallId = 1, SeatId = 5 },
-                new HallSeat() { Id = 6, HallId = 1, SeatId = 11 },
-                new HallSeat() { Id = 7, HallId = 1, SeatId = 12 },
-                new HallSeat() { Id = 8, HallId = 1, SeatId = 13 },
-                new HallSeat() { Id = 9, HallId = 1, SeatId = 14 },
-                new HallSeat() { Id = 10, HallId = 1, SeatId = 15 },
+                new Seat() { Id = Guid.Parse("173595A9-917D-4DF9-9A6D-1A5D5B46104E"), HallId = Guid.Parse("288AAD6A-F042-4B36-A5AE-F950AEA18B46"), RowNo = 1, SeatNo = 4 },
+                new Seat() { Id = Guid.Parse("70FE1293-99C5-43AA-82DF-FD0BEAA8076A"), HallId = Guid.Parse("288AAD6A-F042-4B36-A5AE-F950AEA18B46"), RowNo = 1, SeatNo = 5 },
+                new Seat() { Id = Guid.Parse("A66E828E-75AF-4EFE-8E2A-225694CE0BB1"), HallId = Guid.Parse("288AAD6A-F042-4B36-A5AE-F950AEA18B46"), RowNo = 1, SeatNo = 6 },
+                new Seat() { Id = Guid.Parse("10CA7C8F-CA02-4FB5-B53C-90A554345471"), HallId = Guid.Parse("288AAD6A-F042-4B36-A5AE-F950AEA18B46"), RowNo = 2, SeatNo = 1 },
 
-                // Hall 2
-                new HallSeat() { Id =  11, HallId = 2, SeatId = 1 },
-                new HallSeat() { Id =  12, HallId = 2, SeatId = 2 },
-                new HallSeat() { Id =  13, HallId = 2, SeatId = 3 },
-                new HallSeat() { Id =  14, HallId = 2, SeatId = 4 },
-                new HallSeat() { Id =  15, HallId = 2, SeatId = 5 },
-                new HallSeat() { Id =  16, HallId = 2, SeatId = 6 },
-                new HallSeat() { Id =  17, HallId = 2, SeatId = 7 },
-                new HallSeat() { Id =  18, HallId = 2, SeatId = 8 },
-                new HallSeat() { Id =  19, HallId = 2, SeatId = 9 },
-                new HallSeat() { Id =  20, HallId = 2, SeatId = 10 },
-                new HallSeat() { Id =  21, HallId = 2, SeatId = 11 },
-                new HallSeat() { Id =  22, HallId = 2, SeatId = 12 },
-                new HallSeat() { Id =  23, HallId = 2, SeatId = 13 },
-                new HallSeat() { Id =  24, HallId = 2, SeatId = 14 },
-                new HallSeat() { Id =  25, HallId = 2, SeatId = 15 },
-                new HallSeat() { Id =  26, HallId = 2, SeatId = 16 },
-                new HallSeat() { Id =  27, HallId = 2, SeatId = 17 },
-                new HallSeat() { Id =  28, HallId = 2, SeatId = 18 },
-                new HallSeat() { Id =  29, HallId = 2, SeatId = 19 },
-                new HallSeat() { Id =  30, HallId = 2, SeatId = 20 },
+                new Seat() { Id = Guid.Parse("9C55195A-669B-4366-81CF-7796F014537D"), HallId = Guid.Parse("D90AC9E4-32BA-4B5C-80EA-6EDA60C0131B"), RowNo = 1, SeatNo = 7 },
+                new Seat() { Id = Guid.Parse("979FA768-B42A-444C-944E-4295AE64E00D"), HallId = Guid.Parse("D90AC9E4-32BA-4B5C-80EA-6EDA60C0131B"), RowNo = 1, SeatNo = 8 },
+                new Seat() { Id = Guid.Parse("CB3314DB-47A0-495A-BDDB-FF2C8F17395D"), HallId = Guid.Parse("D90AC9E4-32BA-4B5C-80EA-6EDA60C0131B"), RowNo = 1, SeatNo = 9 },
+                new Seat() { Id = Guid.Parse("F1A83A75-1770-47B3-B209-40198951D4AF"), HallId = Guid.Parse("D90AC9E4-32BA-4B5C-80EA-6EDA60C0131B"), RowNo = 1, SeatNo = 10 }
+                
+                
 
-                // Hall 3
-                new HallSeat() { Id =  31, HallId = 3, SeatId = 1 },
-                new HallSeat() { Id =  32, HallId = 3, SeatId = 2 },
-                new HallSeat() { Id =  33, HallId = 3, SeatId = 3 },
-                new HallSeat() { Id =  34, HallId = 3, SeatId = 4 },
-                new HallSeat() { Id =  35, HallId = 3, SeatId = 5 },
-                new HallSeat() { Id =  36, HallId = 3, SeatId = 6 },
-                new HallSeat() { Id =  37, HallId = 3, SeatId = 7 },
-                new HallSeat() { Id =  38, HallId = 3, SeatId = 8 },
-                new HallSeat() { Id =  39, HallId = 3, SeatId = 9 },
-                new HallSeat() { Id =  40, HallId = 3, SeatId = 10 },
-                new HallSeat() { Id =  41, HallId = 3, SeatId = 11 },
-                new HallSeat() { Id =  42, HallId = 3, SeatId = 12 },
-                new HallSeat() { Id =  43, HallId = 3, SeatId = 13 },
-                new HallSeat() { Id =  44, HallId = 3, SeatId = 14 },
-                new HallSeat() { Id =  45, HallId = 3, SeatId = 15 },
-                new HallSeat() { Id =  46, HallId = 3, SeatId = 16 },
-                new HallSeat() { Id =  47, HallId = 3, SeatId = 17 },
-                new HallSeat() { Id =  48, HallId = 3, SeatId = 18 },
-                new HallSeat() { Id =  49, HallId = 3, SeatId = 19 },
-                new HallSeat() { Id =  50, HallId = 3, SeatId = 20 }
                 );
 
             modelBuilder.Entity<Showtime>().HasData(
@@ -277,21 +213,21 @@ namespace Biob.Data.Data
                 {
                     Id = Guid.Parse("092CA7C5-AE83-4A52-A38B-CFC7C8E40E9A"),
                     MovieId = Guid.Parse("9D90A452-9547-4D04-98ED-7D617E64AE1E"),
-                    HallId = 1,
+                    HallId = Guid.Parse("7E9A2751-F1C0-4EB6-A7EC-1319C6DAE31E"),
                     TimeOfPlaying = new DateTimeOffset(new DateTime(2018, 12, 22, 10, 0, 0))
                 },
                 new Showtime()
                 {
                     Id = Guid.Parse("5E0D5AD3-22B0-4BDC-808C-62B8F50D0796"),
                     MovieId = Guid.Parse("9D90A452-9547-4D04-98ED-7D617E64AE1E"),
-                    HallId = 2,
+                    HallId = Guid.Parse("288AAD6A-F042-4B36-A5AE-F950AEA18B46"),
                     TimeOfPlaying = new DateTimeOffset(new DateTime(2018, 12, 23, 11, 0, 0))
                 },
                 new Showtime()
                 {
                     Id = Guid.Parse("CF3C5F8E-94EE-494A-B0F1-4A48D9D8291F"),
                     MovieId = Guid.Parse("9D90A452-9547-4D04-98ED-7D617E64AE1E"),
-                    HallId = 3,
+                    HallId = Guid.Parse("D90AC9E4-32BA-4B5C-80EA-6EDA60C0131B"),
                     TimeOfPlaying = new DateTimeOffset(new DateTime(2018, 12, 24, 12, 0, 0))
                 }
                 );

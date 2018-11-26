@@ -14,35 +14,26 @@ namespace Biob.Services.Data.Repositories
         {
         }
 
-        public async Task<IEnumerable<Seat>> GetAllSeatsAsync()
+        public async Task<IEnumerable<Seat>> GetAllSeatsAsync(Guid hallId)
         {
-            return await _context.Seats.ToListAsync();
+            return await _context.Seats.Where(seat => !seat.IsDeleted && seat.HallId == hallId).ToListAsync();
         }
 
-        public async Task<Seat> GetSeatAsync(int id)
+        public async Task<Seat> GetSeatAsync(Guid id)
         {
-            return await _context.Seats.Where(seat => seat.Id == id).FirstOrDefaultAsync();
+            var foundSeat = await _context.Seats.Where(seat => seat.Id == id).FirstOrDefaultAsync();
+            if (foundSeat.IsDeleted)
+            {
+                foundSeat = null;
+            }
+
+            return foundSeat;
         }
 
-        public async Task<Seat> GetSeatByRowNoSeatNoAsync(int rowNo, int seatNo)
+        public void AddSeat(Guid hallId, Seat seatToAdd)
         {
-            return await _context.Seats.Where(seat => seat.RowNo == rowNo && seat.SeatNo == seatNo).FirstOrDefaultAsync();
-        }
 
-        public async Task<IEnumerable<Seat>> GetSeatsByRowNoAsync(int rowNo)
-        {
-            return await _context.Seats.Where(seat => seat.RowNo == rowNo).ToListAsync();
-
-        }
-
-        public async Task<IEnumerable<Seat>> GetSeatsBySeatNoAsync(int seatNo)
-        {
-            return await _context.Seats.Where(seat =>  seat.SeatNo == seatNo).ToListAsync();
-
-        }
-
-        public void AddSeat(Seat seatToAdd)
-        {
+            seatToAdd.HallId = hallId;
             _context.Seats.Add(seatToAdd);
         }
 

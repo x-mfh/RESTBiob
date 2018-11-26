@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Biob.Data.Data.Migrations
 {
     [DbContext(typeof(BiobDataContext))]
-    [Migration("20181123191033_AddedGenericWrapperToAll")]
-    partial class AddedGenericWrapperToAll
+    [Migration("20181124192100_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,9 +58,8 @@ namespace Biob.Data.Data.Migrations
 
             modelBuilder.Entity("Biob.Data.Models.Hall", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTimeOffset>("CreatedOn");
 
@@ -83,89 +82,9 @@ namespace Biob.Data.Data.Migrations
                     b.ToTable("Halls");
 
                     b.HasData(
-                        new { Id = 1, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallNo = 1, IsDeleted = false, NoOfSeats = 10, ThreeDee = true },
-                        new { Id = 2, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallNo = 2, IsDeleted = false, NoOfSeats = 20, ThreeDee = false },
-                        new { Id = 3, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallNo = 3, IsDeleted = false, NoOfSeats = 20, ThreeDee = false }
-                    );
-                });
-
-            modelBuilder.Entity("Biob.Data.Models.HallSeat", b =>
-                {
-                    b.Property<int>("HallId");
-
-                    b.Property<int>("SeatId");
-
-                    b.Property<DateTimeOffset>("CreatedOn");
-
-                    b.Property<DateTimeOffset?>("DeletedOn");
-
-                    b.Property<int>("Id");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTimeOffset?>("ModifiedOn");
-
-                    b.HasKey("HallId", "SeatId");
-
-                    b.HasAlternateKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("SeatId");
-
-                    b.ToTable("HallSeats");
-
-                    b.HasData(
-                        new { HallId = 1, SeatId = 1, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 1, IsDeleted = false },
-                        new { HallId = 1, SeatId = 2, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 2, IsDeleted = false },
-                        new { HallId = 1, SeatId = 3, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 3, IsDeleted = false },
-                        new { HallId = 1, SeatId = 4, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 4, IsDeleted = false },
-                        new { HallId = 1, SeatId = 5, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 5, IsDeleted = false },
-                        new { HallId = 1, SeatId = 11, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 6, IsDeleted = false },
-                        new { HallId = 1, SeatId = 12, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 7, IsDeleted = false },
-                        new { HallId = 1, SeatId = 13, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 8, IsDeleted = false },
-                        new { HallId = 1, SeatId = 14, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 9, IsDeleted = false },
-                        new { HallId = 1, SeatId = 15, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 10, IsDeleted = false },
-                        new { HallId = 2, SeatId = 1, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 11, IsDeleted = false },
-                        new { HallId = 2, SeatId = 2, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 12, IsDeleted = false },
-                        new { HallId = 2, SeatId = 3, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 13, IsDeleted = false },
-                        new { HallId = 2, SeatId = 4, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 14, IsDeleted = false },
-                        new { HallId = 2, SeatId = 5, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 15, IsDeleted = false },
-                        new { HallId = 2, SeatId = 6, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 16, IsDeleted = false },
-                        new { HallId = 2, SeatId = 7, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 17, IsDeleted = false },
-                        new { HallId = 2, SeatId = 8, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 18, IsDeleted = false },
-                        new { HallId = 2, SeatId = 9, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 19, IsDeleted = false },
-                        new { HallId = 2, SeatId = 10, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 20, IsDeleted = false },
-                        new { HallId = 2, SeatId = 11, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 21, IsDeleted = false },
-                        new { HallId = 2, SeatId = 12, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 22, IsDeleted = false },
-                        new { HallId = 2, SeatId = 13, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 23, IsDeleted = false },
-                        new { HallId = 2, SeatId = 14, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 24, IsDeleted = false },
-                        new { HallId = 2, SeatId = 15, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 25, IsDeleted = false },
-                        new { HallId = 2, SeatId = 16, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 26, IsDeleted = false },
-                        new { HallId = 2, SeatId = 17, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 27, IsDeleted = false },
-                        new { HallId = 2, SeatId = 18, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 28, IsDeleted = false },
-                        new { HallId = 2, SeatId = 19, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 29, IsDeleted = false },
-                        new { HallId = 2, SeatId = 20, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 30, IsDeleted = false },
-                        new { HallId = 3, SeatId = 1, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 31, IsDeleted = false },
-                        new { HallId = 3, SeatId = 2, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 32, IsDeleted = false },
-                        new { HallId = 3, SeatId = 3, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 33, IsDeleted = false },
-                        new { HallId = 3, SeatId = 4, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 34, IsDeleted = false },
-                        new { HallId = 3, SeatId = 5, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 35, IsDeleted = false },
-                        new { HallId = 3, SeatId = 6, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 36, IsDeleted = false },
-                        new { HallId = 3, SeatId = 7, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 37, IsDeleted = false },
-                        new { HallId = 3, SeatId = 8, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 38, IsDeleted = false },
-                        new { HallId = 3, SeatId = 9, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 39, IsDeleted = false },
-                        new { HallId = 3, SeatId = 10, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 40, IsDeleted = false },
-                        new { HallId = 3, SeatId = 11, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 41, IsDeleted = false },
-                        new { HallId = 3, SeatId = 12, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 42, IsDeleted = false },
-                        new { HallId = 3, SeatId = 13, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 43, IsDeleted = false },
-                        new { HallId = 3, SeatId = 14, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 44, IsDeleted = false },
-                        new { HallId = 3, SeatId = 15, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 45, IsDeleted = false },
-                        new { HallId = 3, SeatId = 16, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 46, IsDeleted = false },
-                        new { HallId = 3, SeatId = 17, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 47, IsDeleted = false },
-                        new { HallId = 3, SeatId = 18, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 48, IsDeleted = false },
-                        new { HallId = 3, SeatId = 19, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 49, IsDeleted = false },
-                        new { HallId = 3, SeatId = 20, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 50, IsDeleted = false }
+                        new { Id = new Guid("7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallNo = 1, IsDeleted = false, NoOfSeats = 10, ThreeDee = true },
+                        new { Id = new Guid("288aad6a-f042-4b36-a5ae-f950aea18b46"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallNo = 2, IsDeleted = false, NoOfSeats = 20, ThreeDee = false },
+                        new { Id = new Guid("d90ac9e4-32ba-4b5c-80ea-6eda60c0131b"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallNo = 3, IsDeleted = false, NoOfSeats = 20, ThreeDee = false }
                     );
                 });
 
@@ -274,13 +193,14 @@ namespace Biob.Data.Data.Migrations
 
             modelBuilder.Entity("Biob.Data.Models.Seat", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTimeOffset>("CreatedOn");
 
                     b.Property<DateTimeOffset?>("DeletedOn");
+
+                    b.Property<Guid>("HallId");
 
                     b.Property<bool>("IsDeleted");
 
@@ -292,31 +212,25 @@ namespace Biob.Data.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("HallId");
+
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Seats");
 
                     b.HasData(
-                        new { Id = 1, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 1, SeatNo = 1 },
-                        new { Id = 2, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 1, SeatNo = 2 },
-                        new { Id = 3, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 1, SeatNo = 3 },
-                        new { Id = 4, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 1, SeatNo = 4 },
-                        new { Id = 5, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 1, SeatNo = 5 },
-                        new { Id = 6, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 1, SeatNo = 6 },
-                        new { Id = 7, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 1, SeatNo = 7 },
-                        new { Id = 8, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 1, SeatNo = 8 },
-                        new { Id = 9, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 1, SeatNo = 9 },
-                        new { Id = 10, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 1, SeatNo = 10 },
-                        new { Id = 11, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 2, SeatNo = 1 },
-                        new { Id = 12, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 2, SeatNo = 2 },
-                        new { Id = 13, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 2, SeatNo = 3 },
-                        new { Id = 14, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 2, SeatNo = 4 },
-                        new { Id = 15, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 2, SeatNo = 5 },
-                        new { Id = 16, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 2, SeatNo = 6 },
-                        new { Id = 17, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 2, SeatNo = 7 },
-                        new { Id = 18, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 2, SeatNo = 8 },
-                        new { Id = 19, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 2, SeatNo = 9 },
-                        new { Id = 20, CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), IsDeleted = false, RowNo = 2, SeatNo = 10 }
+                        new { Id = new Guid("5fd7f7c4-d90f-4d60-8878-067af214a0dc"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = new Guid("7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e"), IsDeleted = false, RowNo = 1, SeatNo = 1 },
+                        new { Id = new Guid("603ab124-4be6-40fd-9a5e-49bb4a5730db"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = new Guid("7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e"), IsDeleted = false, RowNo = 1, SeatNo = 2 },
+                        new { Id = new Guid("f9574335-ce2f-48be-a275-1bb2718ded0a"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = new Guid("7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e"), IsDeleted = false, RowNo = 1, SeatNo = 3 },
+                        new { Id = new Guid("245e0e3e-ae50-4e80-b506-01436223f4aa"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = new Guid("7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e"), IsDeleted = false, RowNo = 2, SeatNo = 2 },
+                        new { Id = new Guid("173595a9-917d-4df9-9a6d-1a5d5b46104e"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = new Guid("288aad6a-f042-4b36-a5ae-f950aea18b46"), IsDeleted = false, RowNo = 1, SeatNo = 4 },
+                        new { Id = new Guid("70fe1293-99c5-43aa-82df-fd0beaa8076a"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = new Guid("288aad6a-f042-4b36-a5ae-f950aea18b46"), IsDeleted = false, RowNo = 1, SeatNo = 5 },
+                        new { Id = new Guid("a66e828e-75af-4efe-8e2a-225694ce0bb1"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = new Guid("288aad6a-f042-4b36-a5ae-f950aea18b46"), IsDeleted = false, RowNo = 1, SeatNo = 6 },
+                        new { Id = new Guid("10ca7c8f-ca02-4fb5-b53c-90a554345471"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = new Guid("288aad6a-f042-4b36-a5ae-f950aea18b46"), IsDeleted = false, RowNo = 2, SeatNo = 1 },
+                        new { Id = new Guid("9c55195a-669b-4366-81cf-7796f014537d"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = new Guid("d90ac9e4-32ba-4b5c-80ea-6eda60c0131b"), IsDeleted = false, RowNo = 1, SeatNo = 7 },
+                        new { Id = new Guid("979fa768-b42a-444c-944e-4295ae64e00d"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = new Guid("d90ac9e4-32ba-4b5c-80ea-6eda60c0131b"), IsDeleted = false, RowNo = 1, SeatNo = 8 },
+                        new { Id = new Guid("cb3314db-47a0-495a-bddb-ff2c8f17395d"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = new Guid("d90ac9e4-32ba-4b5c-80ea-6eda60c0131b"), IsDeleted = false, RowNo = 1, SeatNo = 9 },
+                        new { Id = new Guid("f1a83a75-1770-47b3-b209-40198951d4af"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = new Guid("d90ac9e4-32ba-4b5c-80ea-6eda60c0131b"), IsDeleted = false, RowNo = 1, SeatNo = 10 }
                     );
                 });
 
@@ -329,7 +243,7 @@ namespace Biob.Data.Data.Migrations
 
                     b.Property<DateTimeOffset?>("DeletedOn");
 
-                    b.Property<int>("HallId");
+                    b.Property<Guid>("HallId");
 
                     b.Property<bool>("IsDeleted");
 
@@ -345,12 +259,14 @@ namespace Biob.Data.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
+                    b.HasIndex("MovieId");
+
                     b.ToTable("Showtimes");
 
                     b.HasData(
-                        new { Id = new Guid("092ca7c5-ae83-4a52-a38b-cfc7c8e40e9a"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = 1, IsDeleted = false, MovieId = new Guid("9d90a452-9547-4d04-98ed-7d617e64ae1e"), ThreeDee = false, TimeOfPlaying = new DateTimeOffset(new DateTime(2018, 12, 22, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 1, 0, 0, 0)) },
-                        new { Id = new Guid("5e0d5ad3-22b0-4bdc-808c-62b8f50d0796"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = 2, IsDeleted = false, MovieId = new Guid("9d90a452-9547-4d04-98ed-7d617e64ae1e"), ThreeDee = false, TimeOfPlaying = new DateTimeOffset(new DateTime(2018, 12, 23, 11, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 1, 0, 0, 0)) },
-                        new { Id = new Guid("cf3c5f8e-94ee-494a-b0f1-4a48d9d8291f"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = 3, IsDeleted = false, MovieId = new Guid("9d90a452-9547-4d04-98ed-7d617e64ae1e"), ThreeDee = false, TimeOfPlaying = new DateTimeOffset(new DateTime(2018, 12, 24, 12, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 1, 0, 0, 0)) }
+                        new { Id = new Guid("092ca7c5-ae83-4a52-a38b-cfc7c8e40e9a"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = new Guid("7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e"), IsDeleted = false, MovieId = new Guid("9d90a452-9547-4d04-98ed-7d617e64ae1e"), ThreeDee = false, TimeOfPlaying = new DateTimeOffset(new DateTime(2018, 12, 22, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 1, 0, 0, 0)) },
+                        new { Id = new Guid("5e0d5ad3-22b0-4bdc-808c-62b8f50d0796"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = new Guid("288aad6a-f042-4b36-a5ae-f950aea18b46"), IsDeleted = false, MovieId = new Guid("9d90a452-9547-4d04-98ed-7d617e64ae1e"), ThreeDee = false, TimeOfPlaying = new DateTimeOffset(new DateTime(2018, 12, 23, 11, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 1, 0, 0, 0)) },
+                        new { Id = new Guid("cf3c5f8e-94ee-494a-b0f1-4a48d9d8291f"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), HallId = new Guid("d90ac9e4-32ba-4b5c-80ea-6eda60c0131b"), IsDeleted = false, MovieId = new Guid("9d90a452-9547-4d04-98ed-7d617e64ae1e"), ThreeDee = false, TimeOfPlaying = new DateTimeOffset(new DateTime(2018, 12, 24, 12, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 1, 0, 0, 0)) }
                     );
                 });
 
@@ -386,19 +302,6 @@ namespace Biob.Data.Data.Migrations
                     b.ToTable("Tickets");
                 });
 
-            modelBuilder.Entity("Biob.Data.Models.HallSeat", b =>
-                {
-                    b.HasOne("Biob.Data.Models.Hall", "Hall")
-                        .WithMany("HallSeats")
-                        .HasForeignKey("HallId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Biob.Data.Models.Seat", "Seat")
-                        .WithMany("HallSeats")
-                        .HasForeignKey("SeatId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("Biob.Data.Models.MovieGenre", b =>
                 {
                     b.HasOne("Biob.Data.Models.Genre", "Genre")
@@ -408,6 +311,22 @@ namespace Biob.Data.Data.Migrations
 
                     b.HasOne("Biob.Data.Models.Movie", "Movie")
                         .WithMany("MovieGenres")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Biob.Data.Models.Seat", b =>
+                {
+                    b.HasOne("Biob.Data.Models.Hall")
+                        .WithMany("Seats")
+                        .HasForeignKey("HallId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Biob.Data.Models.Showtime", b =>
+                {
+                    b.HasOne("Biob.Data.Models.Movie")
+                        .WithMany("Showtimes")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -12,30 +12,47 @@ using Microsoft.Extensions.Logging;
 
 namespace Biob.Web.Controllers
 {
-    [Route("/api/v1/seats")]
+    //[Route("/api/v1/seats")]
+    [Route("api/v1/halls/{hallId}/seats")]
     [ApiController]
     public class SeatController : ControllerBase
     {
         private readonly ISeatRepository _seatRepository;
         private readonly ILogger<SeatController> _logger;
+        private readonly IHallRepository _hallRepository;
 
-        public SeatController(ISeatRepository seatRepository, ILogger<SeatController> logger)
+        public SeatController(ISeatRepository seatRepository, ILogger<SeatController> logger,
+                              IHallRepository hallRepository)
         {
             _seatRepository = seatRepository;
             _logger = logger;
+            _hallRepository = hallRepository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllSeats()
-        {
-            var entities = await _seatRepository.GetAllSeatsAsync();
-            var mappedEntities = Mapper.Map<IEnumerable<SeatDto>>(entities);
 
-            return Ok(mappedEntities);
+        [HttpGet]
+        public async Task<IActionResult> GetAllSeatsByHallId([FromRoute] Guid hallId)
+        {
+            if (hallId == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            var hallExists = _hallRepository.GetHallAsync(hallId);
+
+            if (hallExists == null)
+            {
+                return BadRequest();
+            }
+
+            var foundSeats = await _seatRepository.GetAllSeatsAsync(hallId);
+
+            var seatsToReturn = Mapper.Map<IEnumerable<Seat>>(foundSeats);
+            return Ok(seatsToReturn);
         }
 
         [HttpGet("{seatId}", Name = "GetSeat")]
-        public async Task<IActionResult> GetOneSeat([FromRoute] int seatId)
+        public async Task<IActionResult> GetOneSeat([FromRoute] Guid seatId)
         {
             var foundSeat = await _seatRepository.GetSeatAsync(seatId);
 
@@ -48,52 +65,8 @@ namespace Biob.Web.Controllers
             return Ok(seatToReturn);
         }
 
-        [HttpGet("seat/{seatNo}")]
-        public async Task<IActionResult> GetSeatsBySeatNo([FromRoute] int seatNo)
-        {
-            var foundSeats = await _seatRepository.GetSeatsBySeatNoAsync(seatNo);
-
-            if (foundSeats == null)
-            {
-                return NotFound();
-            }
-
-            var seatToReturn = Mapper.Map<IEnumerable<SeatDto>>(foundSeats);
-            return Ok(seatToReturn);
-        }
-
-        [HttpGet("row/{rowNo}")]
-        public async Task<IActionResult> GetSeatsByRowNo([FromRoute] int rowNo)
-        {
-            var foundSeats = await _seatRepository.GetSeatsByRowNoAsync(rowNo);
-
-            if (foundSeats == null)
-            {
-                return NotFound();
-            }
-
-            var seatToReturn = Mapper.Map<IEnumerable<SeatDto>>(foundSeats);
-            return Ok(seatToReturn);
-        }
-
-        // change so you can search with query
-        [HttpGet("row/{rowNo}/seat/{seatNo}")]
-        [HttpGet("seat/{seatNo}/row/{rowNo}")]
-        public async Task<IActionResult> GetSeatByRowNoSeatNo([FromRoute] int rowNo, [FromRoute] int seatNo)
-        {
-            var foundSeat = await _seatRepository.GetSeatByRowNoSeatNoAsync(rowNo, seatNo);
-
-            if (foundSeat == null)
-            {
-                return NotFound();
-            }
-
-            var seatToReturn = Mapper.Map<SeatDto>(foundSeat);
-            return Ok(seatToReturn);
-        }
-
         [HttpPost]
-        public async Task<IActionResult> CreateSeat([FromBody] SeatToCreateDto seatToCreate)
+        public async Task<IActionResult> CreateSeat([FromRoute] Guid hallId, [FromBody] SeatToCreateDto seatToCreate)
         {
             if (seatToCreate == null)
             {
@@ -104,9 +77,9 @@ namespace Biob.Web.Controllers
             {
                 return new ProccessingEntityObjectResultErrors(ModelState);
             }
-
+            //  TODO: add id to seatoadd or else this will bug out
             var seatToAdd = Mapper.Map<Seat>(seatToCreate);
-            _seatRepository.AddSeat(seatToAdd);
+            _seatRepository.AddSeat(hallId, seatToAdd);
 
             if (!await _seatRepository.SaveChangesAsync())
             {
@@ -117,7 +90,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPut("{seatId}")]
-        public async Task<IActionResult> UpdateSeatById([FromRoute] int seatId, [FromBody] SeatToUpdateDto seatToUpdate)
+        public async Task<IActionResult> UpdateSeatById([FromRoute] Guid hallId ,[FromRoute] Guid seatId, [FromBody] SeatToUpdateDto seatToUpdate)
         {
             if (seatToUpdate == null)
             {
@@ -131,7 +104,7 @@ namespace Biob.Web.Controllers
             {
                 var seatEntity = Mapper.Map<Seat>(seatToUpdate);
                 seatEntity.Id = seatId;
-                _seatRepository.AddSeat(seatEntity);
+                _seatRepository.AddSeat(hallId, seatEntity);
 
                 if (!await _seatRepository.SaveChangesAsync())
                 {
@@ -157,7 +130,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPatch("{seatId}")]
-        public async Task<IActionResult> PartiuallyUpdateSeatById([FromRoute] int seatId, JsonPatchDocument<SeatToUpdateDto> patchDoc)
+        public async Task<IActionResult> PartiuallyUpdateSeatById([FromRoute] Guid hallId, [FromRoute] Guid seatId, JsonPatchDocument<SeatToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
             {
@@ -180,7 +153,7 @@ namespace Biob.Web.Controllers
 
                 var seatToAddToDb = Mapper.Map<Seat>(seatToCreate);
                 seatToAddToDb.Id = seatId;
-                _seatRepository.AddSeat(seatToAddToDb);
+                _seatRepository.AddSeat(hallId, seatToAddToDb);
 
                 if (!await _seatRepository.SaveChangesAsync())
                 {
@@ -213,7 +186,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpDelete("{seatId}")]
-        public async Task<IActionResult> DeleteSeatById([FromRoute]int seatId)
+        public async Task<IActionResult> DeleteSeatById([FromRoute]Guid seatId)
         {
             var seatToDelete = await _seatRepository.GetSeatAsync(seatId);
 

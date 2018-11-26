@@ -53,10 +53,25 @@ namespace Biob.Web
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IHallRepository, HallRepository>();
             services.AddScoped<ISeatRepository, SeatRepository>();
-            services.AddScoped<IHallSeatRepository, HallSeatRepository>();
             services.AddScoped<IShowtimeRepository, ShowtimeRepository>();
 
+            services.Configure<CookiePolicyOptions>(options => 
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
+            });
 
+            services.AddHttpCacheHeaders(
+            (expirationOptions) => 
+            {
+                expirationOptions.MaxAge = 600;
+                
+            },
+            (validationOptions) => 
+            {
+                validationOptions.MustRevalidate = true;
+                validationOptions.Vary = new string[] { "Accept-Encoding" };
+            });
 
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
@@ -109,17 +124,6 @@ namespace Biob.Web
                 config.CreateMap<SeatToUpdateDto, Seat>();
                 config.CreateMap<Seat, SeatToUpdateDto>();
 
-
-                // remove unnecesassry
-                config.CreateMap<HallSeat, HallSeatDto>()
-                .ForMember(dest => dest.RowNo, opt => opt.MapFrom(src => src.Seat.RowNo))
-                .ForMember(dest => dest.SeatNo, opt => opt.MapFrom(src => src.Seat.SeatNo));
-                config.CreateMap<HallSeatToCreateDto, HallSeat>();
-                config.CreateMap<HallSeatToUpdateDto, HallSeat>();
-                config.CreateMap<HallSeat, HallSeatToUpdateDto>();
-
-                config.CreateMap<HallSeatToCreateDto, Seat>();
-
                 config.CreateMap<Showtime, ShowtimeDto>();
                 config.CreateMap<ShowtimeToCreateDto, Showtime>();
                 config.CreateMap<ShowtimeToUpdateDto, Showtime>();
@@ -127,6 +131,7 @@ namespace Biob.Web
             });
 
             app.UseHttpsRedirection();
+            app.UseHttpCacheHeaders();
             app.UseMvc();
         }
     }
