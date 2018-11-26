@@ -19,6 +19,7 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using AspNetCoreRateLimit;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Biob.Web
 {
@@ -123,9 +124,10 @@ namespace Biob.Web
 
             Mapper.Initialize(config => 
             {
-                config.CreateMap<Movie, MovieDto>()
-                .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.LengthInSeconds.CalculateFromSeconds()))
-                .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.MovieGenres.Select(moviegenre => moviegenre.Genre.GenreName)));
+            config.CreateMap<Movie, MovieDto>()
+            .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.LengthInSeconds.CalculateFromSeconds()))
+            .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.MovieGenres.Select(moviegenre => moviegenre.Genre.GenreName).ConvertIEnumerableToString()));
+
                 config.CreateMap<MovieToCreateDto, Movie>();
                 config.CreateMap<MovieToUpdateDto, Movie>();
                 config.CreateMap<Movie, MovieToUpdateDto>();
