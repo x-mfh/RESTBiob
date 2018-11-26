@@ -44,7 +44,7 @@ namespace Biob.Web.Controllers
             });
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetShowtimes")]
         public async Task<IActionResult> GetAllShowtimes([FromQuery]RequestParameters requestParameters)
         {
 
@@ -316,9 +316,8 @@ namespace Biob.Web.Controllers
             switch (pageType)
             {
                 case PageType.PreviousPage:
-                    return _urlHelper.Link("GetMovies", new
+                    return _urlHelper.Link("GetShowtimes", new
                     {
-                        fields = requestParameters.Fields,
                         orderBy = requestParameters.OrderBy,
                         searchQuery = requestParameters.SearchQuery,
                         pageNumber = requestParameters.PageNumber - 1,
@@ -326,18 +325,16 @@ namespace Biob.Web.Controllers
 
                     });
                 case PageType.NextPage:
-                    return _urlHelper.Link("GetMovies", new
+                    return _urlHelper.Link("GetShowtimes", new
                     {
-                        fields = requestParameters.Fields,
                         orderBy = requestParameters.OrderBy,
                         searchQuery = requestParameters.SearchQuery,
                         pageNumber = requestParameters.PageNumber + 1,
                         pageSize = requestParameters.PageSize
                     });
                 default:
-                    return _urlHelper.Link("GetMovies", new
+                    return _urlHelper.Link("GetShowtimes", new
                     {
-                        fields = requestParameters.Fields,
                         orderBy = requestParameters.OrderBy,
                         searchQuery = requestParameters.SearchQuery,
                         pageNumber = requestParameters.PageNumber,
