@@ -16,6 +16,7 @@ using Biob.Services.Web.PropertyMapping;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 using AspNetCoreRateLimit;
 using System.Collections.Generic;
 
@@ -52,6 +53,8 @@ namespace Biob.Web
             var connectionString = Configuration.GetConnectionString("BiobDB");
             services.AddDbContext<BiobDataContext>(options => options.UseSqlServer(connectionString));
             services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<IMovieGenreRepository, MovieGenreRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IHallRepository, HallRepository>();
             services.AddScoped<ISeatRepository, SeatRepository>();
@@ -121,10 +124,14 @@ namespace Biob.Web
             Mapper.Initialize(config => 
             {
                 config.CreateMap<Movie, MovieDto>()
-                .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.LengthInSeconds.CalculateFromSeconds()));
+                .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.LengthInSeconds.CalculateFromSeconds()))
+                .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.MovieGenres.Select(moviegenre => moviegenre.Genre.GenreName)));
                 config.CreateMap<MovieToCreateDto, Movie>();
                 config.CreateMap<MovieToUpdateDto, Movie>();
                 config.CreateMap<Movie, MovieToUpdateDto>();
+
+                config.CreateMap<MovieGenre, MovieGenreDto>()
+                .ForMember(dest => dest.GenreName, opt => opt.MapFrom(src => src.Genre.GenreName));
 
                 config.CreateMap<Ticket, TicketDto>();
                 config.CreateMap<TicketToCreateDto, Ticket>();

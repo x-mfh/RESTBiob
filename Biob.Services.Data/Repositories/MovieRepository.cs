@@ -50,7 +50,8 @@ namespace Biob.Services.Data.Repositories
 
         public async Task<PagedList<Movie>> GetAllMoviesAsync(string orderBy, string searchQuery, int pageNumber, int pageSize)
         {
-            var collectionsBeforePaging = _context.Movies.Where(movie => !movie.IsDeleted).Applysort(orderBy, _propertyMappingService.GetPropertyMapping<MovieDto, Movie>());
+            var collectionsBeforePaging = _context.Movies.Include(movie => movie.MovieGenres)
+                                                         .Where(movie => !movie.IsDeleted).Applysort(orderBy, _propertyMappingService.GetPropertyMapping<MovieDto, Movie>());
 
             if (!string.IsNullOrWhiteSpace(searchQuery))
             {
