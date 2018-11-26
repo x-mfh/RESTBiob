@@ -20,6 +20,7 @@ using System.Linq;
 using AspNetCoreRateLimit;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Biob.Web
 {
@@ -50,6 +51,14 @@ namespace Biob.Web
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => 
+                {
+                    //  needs to  be configured
+                    options.Authority = "";
+                    options.Audience = "";
+                });
 
             var connectionString = Configuration.GetConnectionString("BiobDB");
             services.AddDbContext<BiobDataContext>(options => options.UseSqlServer(connectionString));
@@ -117,6 +126,8 @@ namespace Biob.Web
             {
                 app.UseHsts();
             }
+
+            app.UseAuthentication();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
