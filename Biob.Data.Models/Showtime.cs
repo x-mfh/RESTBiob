@@ -11,6 +11,7 @@ namespace Biob.Data.Models
         public Guid MovieId { get; set; }
         [ForeignKey("Hall")]
         public Guid HallId { get; set; }
+        public Hall Hall { get; set; }
         public DateTimeOffset TimeOfPlaying { get; set; }
         public bool ThreeDee { get; set; }
     }
