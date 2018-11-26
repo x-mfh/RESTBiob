@@ -27,6 +27,6 @@ namespace Biob.Services.Data.DtoModels
         public bool Paid { get; set; }
 
         //Not sure if Price should be changeable either...
-        //public int Price { get; set; }
+        public int Price { get; set; }
     }
 }

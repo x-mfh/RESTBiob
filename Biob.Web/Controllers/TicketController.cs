@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using AutoMapper;
 using Biob.Services.Data.Helpers;
 using System.Dynamic;
+using Microsoft.Extensions.Logging;
 
 namespace Biob.Web.Controllers
 {
@@ -23,81 +24,13 @@ namespace Biob.Web.Controllers
         private readonly IPropertyMappingService _propertyMappingService;
         private readonly ITypeHelperService _typeHelperService;
         private readonly IUrlHelper _urlHelper;
+        private readonly ILogger<TicketController> _logger;
 
-        public TicketController(ITicketRepository ticketRepository, IPropertyMappingService propertyMappingService,
-                                ITypeHelperService typeHelperService, IUrlHelper urlHelper)
+        public TicketController(ITicketRepository ticketRepository, ILogger<TicketController> logger)
         {
+            _logger = logger;
             _ticketRepository = ticketRepository;
-            _propertyMappingService = propertyMappingService;
-            _typeHelperService = typeHelperService;
-            _urlHelper = urlHelper;
-            _propertyMappingService.AddPropertyMapping<TicketDto, Ticket>(new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
-            {
-                { "Id", new PropertyMappingValue(new List<string>() { "Id" })},
-                { "CustomerId", new PropertyMappingValue(new List<string>() { "CustomerId" })},
-                { "ShowtimeId", new PropertyMappingValue(new List<string>() { "ShowtimeId" })},
-                { "HallseatId", new PropertyMappingValue(new List<string>() { "HallseatId" })},
-                { "Reserved", new PropertyMappingValue(new List<string>() { "Reserved" })},
-                { "Paid", new PropertyMappingValue(new List<string>() { "Paid" })},
-                { "Price", new PropertyMappingValue(new List<string>() { "Price" })},
-            });
         }
-        
-        
-        [HttpGet(Name = "GetTicketsFromCustomer")]
-        //HVORDAN SÆTTER JEG EN ROUTE PÅ SOM GØR AT MAN KAN FÅ TICKETS BY CustomerId ?!+ =!=!=!=!???!1111
-        public async Task<IActionResult> GetTicketsByCustomerId([FromQuery]Guid customerId, [FromQuery]RequestParameters requestParameters)
-        {
-            if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
-            {
-                requestParameters.OrderBy = "Title";
-            }
-
-            if (!_propertyMappingService.ValidMappingExistsFor<TicketDto, Ticket>(requestParameters.Fields))
-            {
-                return BadRequest();
-            }
-
-            if (!_typeHelperService.TypeHasProperties<TicketDto>(requestParameters.Fields))
-            {
-                return BadRequest();
-            }
-
-            var ticketsPagedList = await _ticketRepository.GetTicketsByCustomerIdAsync(customerId,
-                                                                    requestParameters.OrderBy,
-                                                                    requestParameters.SearchQuery,
-                                                                    requestParameters.PageNumber, requestParameters.PageSize);
-
-            var previousPageLink = ticketsPagedList.HasPrevious ? CreateUrlForResource(requestParameters, PageType.PreviousPage) : null;
-            var nextPageLink = ticketsPagedList.HasNext ? CreateUrlForResource(requestParameters, PageType.NextPage) : null;
-
-
-
-            var paginationMetadata = new PaginationMetadata()
-            {
-                TotalCount = ticketsPagedList.TotalCount,
-                PageSize = ticketsPagedList.PageSize,
-                CurrentPage = ticketsPagedList.CurrentPage,
-                TotalPages = ticketsPagedList.TotalPages,
-                PreviousPageLink = previousPageLink,
-                NextPageLink = nextPageLink
-            };
-
-            Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
-
-            var tickets = Mapper.Map<IEnumerable<TicketDto>>(ticketsPagedList);
-
-            var shapedTickets = tickets.ShapeData(requestParameters.Fields);
-
-            if (requestParameters.IncludeMetadata)
-            {
-                var ticketsWithMetadata = new EntityWithPaginationMetadataDto<ExpandoObject>(paginationMetadata, shapedTickets);
-                return Ok(ticketsWithMetadata);
-            }
-
-            return Ok(tickets.ShapeData(requestParameters.Fields));
-        }
-
 
         [HttpGet("{ticketId}", Name = "GetTicket")]
         public async Task<IActionResult> GetOneTicket([FromRoute]Guid ticketId)
@@ -141,9 +74,7 @@ namespace Biob.Web.Controllers
 
             if (!await _ticketRepository.SaveChangesAsync())
             {
-                //  TODO: consider adding logging
-                //  instead of using expensive exceptions
-                throw new Exception("Failed to create a new ticket");
+                _logger.LogError("Saving changes to database while creating a showtime failed");
             }
 
             return CreatedAtRoute("GetTicket", new { ticketId = ticketToAdd.Id }, ticketToAdd);
@@ -168,9 +99,7 @@ namespace Biob.Web.Controllers
 
                 if (!await _ticketRepository.SaveChangesAsync())
                 {
-                    //  TODO: consider adding logging
-                    //  instead of using expensive exceptions
-                    throw new Exception("Failed to upsert a new ticket");
+                    _logger.LogError("Failed to upsert a new ticket");
                 }
 
                 var ticketToReturn = Mapper.Map<TicketDto>(ticketEntity);
@@ -184,9 +113,7 @@ namespace Biob.Web.Controllers
 
             if (!await _ticketRepository.SaveChangesAsync())
             {
-                //  TODO: consider adding logging
-                //  instead of using expensive exceptions
-                throw new Exception("Failed to update a ticket");
+                _logger.LogError("Failed to update a ticket");
             }
 
             return NoContent();
@@ -222,7 +149,7 @@ namespace Biob.Web.Controllers
 
                 if (!await _ticketRepository.SaveChangesAsync())
                 {
-                    throw new Exception("Upserting ticket failed");
+                    _logger.LogError("Upserting ticket failed");
                 }
 
                 var ticketToReturn = Mapper.Map<TicketDto>(ticketToAddToDb);
@@ -245,7 +172,7 @@ namespace Biob.Web.Controllers
 
             if (!await _ticketRepository.SaveChangesAsync())
             {
-                throw new Exception("partially updating ticket failed");
+                _logger.LogError("partially updating ticket failed");
             }
 
             return NoContent();
