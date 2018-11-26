@@ -16,6 +16,10 @@ using Biob.Services.Web.PropertyMapping;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.Logging;
+using System.Linq;
+using AspNetCoreRateLimit;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Biob.Web
 {
@@ -50,28 +54,14 @@ namespace Biob.Web
             var connectionString = Configuration.GetConnectionString("BiobDB");
             services.AddDbContext<BiobDataContext>(options => options.UseSqlServer(connectionString));
             services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<IMovieGenreRepository, MovieGenreRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IHallRepository, HallRepository>();
             services.AddScoped<ISeatRepository, SeatRepository>();
             services.AddScoped<IShowtimeRepository, ShowtimeRepository>();
 
-            services.Configure<CookiePolicyOptions>(options => 
-            {
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
-            });
-
-            services.AddHttpCacheHeaders(
-            (expirationOptions) => 
-            {
-                expirationOptions.MaxAge = 600;
-                
-            },
-            (validationOptions) => 
-            {
-                validationOptions.MustRevalidate = true;
-                validationOptions.Vary = new string[] { "Accept-Encoding" };
-            });
+            
 
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
@@ -83,6 +73,37 @@ namespace Biob.Web
 
             services.AddTransient<IPropertyMappingService, PropertyMappingService>();
             services.AddTransient<ITypeHelperService, TypeHelperService>();
+
+            services.AddHttpCacheHeaders(
+            (expirationOptions) =>
+            {
+                expirationOptions.MaxAge = 600;
+
+            },
+            (validationOptions) =>
+            {
+                validationOptions.MustRevalidate = true;
+                validationOptions.Vary = new string[] { "Accept-Encoding" };
+            });
+
+            services.AddMemoryCache();
+
+            services.Configure<IpRateLimitOptions>(options => 
+            {
+                options.GeneralRules = new List<RateLimitRule>()
+                {
+                    //  can add more rules but this is fine for now
+                    new RateLimitRule()
+                    {
+                        Endpoint = "*",
+                        Limit = 1000,
+                        Period = "15m"
+                    }
+                };
+            });
+
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,11 +124,16 @@ namespace Biob.Web
 
             Mapper.Initialize(config => 
             {
-                config.CreateMap<Movie, MovieDto>()
-                .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.LengthInSeconds.CalculateFromSeconds()));
+            config.CreateMap<Movie, MovieDto>()
+            .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.LengthInSeconds.CalculateFromSeconds()))
+            .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.MovieGenres.Select(moviegenre => moviegenre.Genre.GenreName).ConvertIEnumerableToString()));
+
                 config.CreateMap<MovieToCreateDto, Movie>();
                 config.CreateMap<MovieToUpdateDto, Movie>();
                 config.CreateMap<Movie, MovieToUpdateDto>();
+
+                config.CreateMap<MovieGenre, MovieGenreDto>()
+                .ForMember(dest => dest.GenreName, opt => opt.MapFrom(src => src.Genre.GenreName));
 
                 config.CreateMap<Ticket, TicketDto>();
                 config.CreateMap<TicketToCreateDto, Ticket>();
@@ -131,6 +157,7 @@ namespace Biob.Web
             });
 
             app.UseHttpsRedirection();
+            app.UseIpRateLimiting();
             app.UseHttpCacheHeaders();
             app.UseMvc();
         }
