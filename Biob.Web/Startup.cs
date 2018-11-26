@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using AspNetCoreRateLimit;
+using System.Collections.Generic;
 
 namespace Biob.Web
 {
@@ -58,7 +60,7 @@ namespace Biob.Web
             services.AddScoped<ISeatRepository, SeatRepository>();
             services.AddScoped<IShowtimeRepository, ShowtimeRepository>();
 
-
+            
 
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
@@ -70,6 +72,37 @@ namespace Biob.Web
 
             services.AddTransient<IPropertyMappingService, PropertyMappingService>();
             services.AddTransient<ITypeHelperService, TypeHelperService>();
+
+            services.AddHttpCacheHeaders(
+            (expirationOptions) =>
+            {
+                expirationOptions.MaxAge = 600;
+
+            },
+            (validationOptions) =>
+            {
+                validationOptions.MustRevalidate = true;
+                validationOptions.Vary = new string[] { "Accept-Encoding" };
+            });
+
+            services.AddMemoryCache();
+
+            services.Configure<IpRateLimitOptions>(options => 
+            {
+                options.GeneralRules = new List<RateLimitRule>()
+                {
+                    //  can add more rules but this is fine for now
+                    new RateLimitRule()
+                    {
+                        Endpoint = "*",
+                        Limit = 1000,
+                        Period = "15m"
+                    }
+                };
+            });
+
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -122,6 +155,8 @@ namespace Biob.Web
             });
 
             app.UseHttpsRedirection();
+            app.UseIpRateLimiting();
+            app.UseHttpCacheHeaders();
             app.UseMvc();
         }
     }

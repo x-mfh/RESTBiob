@@ -1,340 +1,105 @@
-2018-11-26T10:08:25.2812260+01:00 0HLIJFQSD32PP:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies application/json  (ca22a1cb)
-2018-11-26T10:08:27.1554096+01:00 0HLIJFQSD32PP:00000001 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
-2018-11-26T10:08:27.4085186+01:00 0HLIJFQSD32PP:00000001 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
-2018-11-26T10:08:27.9440909+01:00 0HLIJFQSD32PP:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
-2018-11-26T10:08:29.0182321+01:00 0HLIJFQSD32PP:00000001 [INF] Executed DbCommand ("81"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+2018-11-26T09:23:06.8132710+01:00 0HLIJF1I0KLEA:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-26T09:23:07.4220029+01:00 0HLIJF1I0KLEA:00000001 [INF] Request finished in 634.1092ms 200  (791a596a)
+2018-11-26T09:23:30.0364649+01:00 0HLIJF1I0KLEA:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/x-www-form-urlencoded  (ca22a1cb)
+2018-11-26T09:23:31.2817510+01:00 0HLIJF1I0KLEA:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-11-26T09:23:32.1925357+01:00 0HLIJF1I0KLEA:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
+2018-11-26T09:23:32.6664183+01:00 0HLIJF1I0KLEA:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-26T09:25:09.7421163+01:00 0HLIJF2MREGB2:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-26T09:25:09.8537852+01:00 0HLIJF2MREGB2:00000001 [INF] Request finished in 115.8474ms 200  (791a596a)
+2018-11-26T09:25:15.4309670+01:00 0HLIJF2MREGB2:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/x-www-form-urlencoded  (ca22a1cb)
+2018-11-26T09:25:15.8215008+01:00 0HLIJF2MREGB2:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-11-26T09:25:16.2697092+01:00 0HLIJF2MREGB2:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
+2018-11-26T09:25:16.6966346+01:00 0HLIJF2MREGB2:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-26T09:25:17.4710723+01:00 0HLIJF2MREGB2:00000002 [INF] Executed DbCommand ("138"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
 ""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
 FROM [Movies] AS [movie]
 WHERE [movie].[IsDeleted] = 0
 ORDER BY [movie].[Title]" (0723d8ff)
-2018-11-26T10:08:29.4900359+01:00 0HLIJFQSD32PP:00000001 [INF] Executed action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 2076.415ms. (50a9e262)
-2018-11-26T10:08:29.5043936+01:00 0HLIJFQSD32PP:00000001 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
-2018-11-26T10:08:29.5768374+01:00 0HLIJFQSD32PP:00000001 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 2413.1724ms (afa2e885)
-2018-11-26T10:08:29.5922001+01:00 0HLIJFQSD32PP:00000001 [INF] Request finished in 4317.1263ms 200 application/json; charset=utf-8 (791a596a)
-2018-11-26T10:10:05.3671370+01:00 0HLIJFQSD32PQ:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/45c0c223-de18-4e6e-99ea-aed94e7469f1/genres application/json  (ca22a1cb)
-2018-11-26T10:10:05.3875610+01:00 0HLIJFQSD32PQ:00000001 [INF] Route matched with "{action = \"GetMovieGenresByMovieId\", controller = \"MovieGenre\"}". Executing action "Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId (Biob.Web)" (a44c0341)
-2018-11-26T10:10:05.4319887+01:00 0HLIJFQSD32PQ:00000001 [INF] Executed action "Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId (Biob.Web)" in 43.7041ms (afa2e885)
-2018-11-26T10:10:05.9366001+01:00 0HLIJFQSD32PQ:00000001 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
-System.InvalidOperationException: Unable to resolve service for type 'Biob.Services.Data.Repositories.IMovieGenreRepository' while attempting to activate 'Biob.Web.Controllers.MovieGenreController'.
-   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
-   at lambda_method(Closure , IServiceProvider , Object[] )
-   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
-   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
-2018-11-26T10:10:06.0332367+01:00 0HLIJFQSD32PQ:00000001 [INF] Request finished in 669.1048ms 500 text/html; charset=utf-8 (791a596a)
-2018-11-26T10:11:36.8732735+01:00 0HLIJFSLE8S2U:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/45c0c223-de18-4e6e-99ea-aed94e7469f1/genres application/json  (ca22a1cb)
-2018-11-26T10:11:36.8732739+01:00 0HLIJFSLE8S2T:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
-2018-11-26T10:11:36.9671102+01:00 0HLIJFSLE8S2T:00000001 [INF] Request finished in 94.0031ms 200  (791a596a)
-2018-11-26T10:11:37.4815889+01:00 0HLIJFSLE8S2U:00000001 [INF] Route matched with "{action = \"GetMovieGenresByMovieId\", controller = \"MovieGenre\"}". Executing action "Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId (Biob.Web)" (a44c0341)
-2018-11-26T10:11:38.0508249+01:00 0HLIJFSLE8S2U:00000001 [INF] Executing action method "Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId (Biob.Web)" with arguments (["45c0c223-de18-4e6e-99ea-aed94e7469f1"]) - Validation state: Valid (4e3479ed)
-2018-11-26T10:11:38.4565601+01:00 0HLIJFSLE8S2U:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
-2018-11-26T10:11:39.4872138+01:00 0HLIJFSLE8S2U:00000001 [INF] Executed DbCommand ("165"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
-""SELECT TOP(1) [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
-FROM [Movies] AS [movie]
-WHERE [movie].[Id] = @__id_0" (0723d8ff)
-2018-11-26T10:11:39.9197646+01:00 0HLIJFSLE8S2U:00000001 [INF] Executed DbCommand ("152"ms) [Parameters=["@__movieId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
-""SELECT [moviegenre].[MovieId], [moviegenre].[GenreId], [moviegenre].[CreatedOn], [moviegenre].[DeletedOn], [moviegenre].[Id], [moviegenre].[IsDeleted], [moviegenre].[ModifiedOn], [moviegenre.Genre].[Id], [moviegenre.Genre].[CreatedOn], [moviegenre.Genre].[DeletedOn], [moviegenre.Genre].[GenreName], [moviegenre.Genre].[IsDeleted], [moviegenre.Genre].[ModifiedOn]
-FROM [MovieGenres] AS [moviegenre]
-INNER JOIN [Genres] AS [moviegenre.Genre] ON [moviegenre].[GenreId] = [moviegenre.Genre].[Id]
-WHERE [moviegenre].[MovieId] = @__movieId_0" (0723d8ff)
-2018-11-26T10:11:40.4808756+01:00 0HLIJFSLE8S2U:00000001 [INF] Executed action "Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId (Biob.Web)" in 2985.9181ms (afa2e885)
-2018-11-26T10:11:40.7437557+01:00 0HLIJFSLE8S2U:00000001 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
-AutoMapper.AutoMapperMappingException: Error mapping types.
-
-Mapping types:
-List`1 -> IEnumerable`1
-System.Collections.Generic.List`1[[Biob.Data.Models.MovieGenre, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieGenreDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperConfigurationException: 
-Unmapped members were found. Review the types and members below.
-Add a custom mapping expression, ignore, add a custom resolver, or modify the source/destination type
-For no matching constructor, add a no-arg ctor, add optional arguments, or map all of the constructor parameters
-==========================================================================
-AutoMapper created this type map for you, but your types cannot be mapped using the current configuration.
-MovieGenre -> MovieGenreDto (Destination member list)
-Biob.Data.Models.MovieGenre -> Biob.Services.Data.DtoModels.MovieGenreDto (Destination member list)
-
-Unmapped properties:
-GenreName
-
-   at AutoMapper.ConfigurationValidator.AssertConfigurationIsValid(IEnumerable`1 typeMaps) in C:\projects\automapper\src\AutoMapper\ConfigurationValidator.cs:line 48
-   at lambda_method(Closure , List`1 , IEnumerable`1 , ResolutionContext )
-   --- End of inner exception stack trace ---
-   at lambda_method(Closure , List`1 , IEnumerable`1 , ResolutionContext )
-   at lambda_method(Closure , Object , Object , ResolutionContext )
-   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
-   at Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId(Guid movieId) in C:\Users\tec\Desktop\H3\ServerSide\BioB\RESTBiob\Biob.Web\Controllers\MovieGenreController.cs:line 73
-   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
-   at System.Threading.Tasks.ValueTask`1.get_Result()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
-2018-11-26T10:11:40.9011723+01:00 0HLIJFSLE8S2U:00000001 [INF] Request finished in 4035.5363ms 500 text/html; charset=utf-8 (791a596a)
-2018-11-26T10:13:53.0421106+01:00 0HLIJFTU2P4PT:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
-2018-11-26T10:13:53.1436833+01:00 0HLIJFTU2P4PT:00000001 [INF] Request finished in 101.4721ms 200  (791a596a)
-2018-11-26T10:13:56.3322353+01:00 0HLIJFTU2P4PT:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/45c0c223-de18-4e6e-99ea-aed94e7469f1/genres application/json  (ca22a1cb)
-2018-11-26T10:13:56.6963823+01:00 0HLIJFTU2P4PT:00000002 [INF] Route matched with "{action = \"GetMovieGenresByMovieId\", controller = \"MovieGenre\"}". Executing action "Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId (Biob.Web)" (a44c0341)
-2018-11-26T10:13:57.0879338+01:00 0HLIJFTU2P4PT:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId (Biob.Web)" with arguments (["45c0c223-de18-4e6e-99ea-aed94e7469f1"]) - Validation state: Valid (4e3479ed)
-2018-11-26T10:13:57.5198414+01:00 0HLIJFTU2P4PT:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
-2018-11-26T10:13:58.2440888+01:00 0HLIJFTU2P4PT:00000002 [INF] Executed DbCommand ("127"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
-""SELECT TOP(1) [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
-FROM [Movies] AS [movie]
-WHERE [movie].[Id] = @__id_0" (0723d8ff)
-2018-11-26T10:13:58.5432007+01:00 0HLIJFTU2P4PT:00000002 [INF] Executed DbCommand ("117"ms) [Parameters=["@__movieId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
-""SELECT [moviegenre].[MovieId], [moviegenre].[GenreId], [moviegenre].[CreatedOn], [moviegenre].[DeletedOn], [moviegenre].[Id], [moviegenre].[IsDeleted], [moviegenre].[ModifiedOn], [moviegenre.Genre].[Id], [moviegenre.Genre].[CreatedOn], [moviegenre.Genre].[DeletedOn], [moviegenre.Genre].[GenreName], [moviegenre.Genre].[IsDeleted], [moviegenre.Genre].[ModifiedOn]
-FROM [MovieGenres] AS [moviegenre]
-INNER JOIN [Genres] AS [moviegenre.Genre] ON [moviegenre].[GenreId] = [moviegenre.Genre].[Id]
-WHERE [moviegenre].[MovieId] = @__movieId_0" (0723d8ff)
-2018-11-26T10:13:58.9334992+01:00 0HLIJFTU2P4PT:00000002 [INF] Executed action "Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId (Biob.Web)" in 2224.1277ms (afa2e885)
-2018-11-26T10:13:59.0695592+01:00 0HLIJFTU2P4PT:00000002 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
-AutoMapper.AutoMapperMappingException: Error mapping types.
-
-Mapping types:
-List`1 -> IEnumerable`1
-System.Collections.Generic.List`1[[Biob.Data.Models.MovieGenre, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieGenreDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperConfigurationException: 
-Unmapped members were found. Review the types and members below.
-Add a custom mapping expression, ignore, add a custom resolver, or modify the source/destination type
-For no matching constructor, add a no-arg ctor, add optional arguments, or map all of the constructor parameters
-==========================================================================
-AutoMapper created this type map for you, but your types cannot be mapped using the current configuration.
-MovieGenre -> MovieGenreDto (Destination member list)
-Biob.Data.Models.MovieGenre -> Biob.Services.Data.DtoModels.MovieGenreDto (Destination member list)
-
-Unmapped properties:
-GenreName
-
-   at AutoMapper.ConfigurationValidator.AssertConfigurationIsValid(IEnumerable`1 typeMaps) in C:\projects\automapper\src\AutoMapper\ConfigurationValidator.cs:line 48
-   at lambda_method(Closure , List`1 , IEnumerable`1 , ResolutionContext )
-   --- End of inner exception stack trace ---
-   at lambda_method(Closure , List`1 , IEnumerable`1 , ResolutionContext )
-   at lambda_method(Closure , Object , Object , ResolutionContext )
-   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
-   at Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId(Guid movieId) in C:\Users\tec\Desktop\H3\ServerSide\BioB\RESTBiob\Biob.Web\Controllers\MovieGenreController.cs:line 73
-   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
-   at System.Threading.Tasks.ValueTask`1.get_Result()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
-2018-11-26T10:13:59.1836664+01:00 0HLIJFTU2P4PT:00000002 [INF] Request finished in 2847.6433ms 500 text/html; charset=utf-8 (791a596a)
-2018-11-26T10:15:53.8842612+01:00 0HLIJFV233FPK:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
-2018-11-26T10:15:53.9724008+01:00 0HLIJFV233FPK:00000001 [INF] Request finished in 92.7377ms 200  (791a596a)
-2018-11-26T10:15:57.5398372+01:00 0HLIJFV233FPK:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/45c0c223-de18-4e6e-99ea-aed94e7469f1/genres application/json  (ca22a1cb)
-2018-11-26T10:15:57.8598195+01:00 0HLIJFV233FPK:00000002 [INF] Route matched with "{action = \"GetMovieGenresByMovieId\", controller = \"MovieGenre\"}". Executing action "Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId (Biob.Web)" (a44c0341)
-2018-11-26T10:15:58.2440174+01:00 0HLIJFV233FPK:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId (Biob.Web)" with arguments (["45c0c223-de18-4e6e-99ea-aed94e7469f1"]) - Validation state: Valid (4e3479ed)
-2018-11-26T10:15:58.6274384+01:00 0HLIJFV233FPK:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
-2018-11-26T10:15:59.3866547+01:00 0HLIJFV233FPK:00000002 [INF] Executed DbCommand ("94"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
-""SELECT TOP(1) [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
-FROM [Movies] AS [movie]
-WHERE [movie].[Id] = @__id_0" (0723d8ff)
-2018-11-26T10:15:59.7067050+01:00 0HLIJFV233FPK:00000002 [INF] Executed DbCommand ("104"ms) [Parameters=["@__movieId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
-""SELECT [moviegenre].[MovieId], [moviegenre].[GenreId], [moviegenre].[CreatedOn], [moviegenre].[DeletedOn], [moviegenre].[Id], [moviegenre].[IsDeleted], [moviegenre].[ModifiedOn], [moviegenre.Genre].[Id], [moviegenre.Genre].[CreatedOn], [moviegenre.Genre].[DeletedOn], [moviegenre.Genre].[GenreName], [moviegenre.Genre].[IsDeleted], [moviegenre.Genre].[ModifiedOn]
-FROM [MovieGenres] AS [moviegenre]
-INNER JOIN [Genres] AS [moviegenre.Genre] ON [moviegenre].[GenreId] = [moviegenre.Genre].[Id]
-WHERE [moviegenre].[MovieId] = @__movieId_0" (0723d8ff)
-2018-11-26T10:15:59.8364576+01:00 0HLIJFV233FPK:00000002 [INF] Executed action method "Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 1576.8315ms. (50a9e262)
-2018-11-26T10:15:59.8643735+01:00 0HLIJFV233FPK:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Services.Data.DtoModels.MovieGenreDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
-2018-11-26T10:16:00.0987616+01:00 0HLIJFV233FPK:00000002 [INF] Executed action "Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId (Biob.Web)" in 2219.8922ms (afa2e885)
-2018-11-26T10:16:00.1495412+01:00 0HLIJFV233FPK:00000002 [INF] Request finished in 2596.466ms 200 application/json; charset=utf-8 (791a596a)
-2018-11-26T10:18:31.9859091+01:00 0HLIJG0H6DD7H:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
-2018-11-26T10:18:32.0603873+01:00 0HLIJG0H6DD7H:00000001 [INF] Request finished in 85.3482ms 200  (791a596a)
-2018-11-26T10:18:37.5736484+01:00 0HLIJG0H6DD7H:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/45c0c223-de18-4e6e-99ea-aed94e7469f1/genres application/json  (ca22a1cb)
-2018-11-26T10:18:38.0065229+01:00 0HLIJG0H6DD7H:00000002 [INF] Route matched with "{action = \"GetMovieGenresByMovieId\", controller = \"MovieGenre\"}". Executing action "Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId (Biob.Web)" (a44c0341)
-2018-11-26T10:18:38.3981625+01:00 0HLIJG0H6DD7H:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId (Biob.Web)" with arguments (["45c0c223-de18-4e6e-99ea-aed94e7469f1"]) - Validation state: Valid (4e3479ed)
-2018-11-26T10:18:38.9165615+01:00 0HLIJG0H6DD7H:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
-2018-11-26T10:18:39.6996868+01:00 0HLIJG0H6DD7H:00000002 [INF] Executed DbCommand ("161"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
-""SELECT TOP(1) [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
-FROM [Movies] AS [movie]
-WHERE [movie].[Id] = @__id_0" (0723d8ff)
-2018-11-26T10:18:40.0596538+01:00 0HLIJG0H6DD7H:00000002 [INF] Executed DbCommand ("163"ms) [Parameters=["@__movieId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
-""SELECT [moviegenre].[MovieId], [moviegenre].[GenreId], [moviegenre].[CreatedOn], [moviegenre].[DeletedOn], [moviegenre].[Id], [moviegenre].[IsDeleted], [moviegenre].[ModifiedOn], [moviegenre.Genre].[Id], [moviegenre.Genre].[CreatedOn], [moviegenre.Genre].[DeletedOn], [moviegenre.Genre].[GenreName], [moviegenre.Genre].[IsDeleted], [moviegenre.Genre].[ModifiedOn]
-FROM [MovieGenres] AS [moviegenre]
-INNER JOIN [Genres] AS [moviegenre.Genre] ON [moviegenre].[GenreId] = [moviegenre.Genre].[Id]
-WHERE [moviegenre].[MovieId] = @__movieId_0" (0723d8ff)
-2018-11-26T10:18:40.2344730+01:00 0HLIJG0H6DD7H:00000002 [INF] Executed action method "Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 1817.5835ms. (50a9e262)
-2018-11-26T10:18:40.2688197+01:00 0HLIJG0H6DD7H:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Services.Data.DtoModels.MovieGenreDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
-2018-11-26T10:18:40.4040329+01:00 0HLIJG0H6DD7H:00000002 [INF] Executed action "Biob.Web.Controllers.MovieGenreController.GetMovieGenresByMovieId (Biob.Web)" in 2383.2229ms (afa2e885)
-2018-11-26T10:18:40.4584182+01:00 0HLIJG0H6DD7H:00000002 [INF] Request finished in 2861.3993ms 200 application/json; charset=utf-8 (791a596a)
-2018-11-26T10:27:21.6448294+01:00 0HLIJG5F19G0L:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
-2018-11-26T10:27:21.9001113+01:00 0HLIJG5F19G0L:00000001 [INF] Request finished in 294.1882ms 200  (791a596a)
-2018-11-26T10:27:35.3493877+01:00 0HLIJG5F19G0L:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/json  (ca22a1cb)
-2018-11-26T10:27:35.7853469+01:00 0HLIJG5F19G0L:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
-2018-11-26T10:27:36.1708826+01:00 0HLIJG5F19G0L:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
-2018-11-26T10:27:36.6110840+01:00 0HLIJG5F19G0L:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
-2018-11-26T10:27:40.2511306+01:00 0HLIJG5F19G0L:00000002 [INF] Executed DbCommand ("132"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+2018-11-26T09:25:17.7389924+01:00 0HLIJF2MREGB2:00000002 [INF] Executed action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 1455.5751ms. (50a9e262)
+2018-11-26T09:25:17.7762452+01:00 0HLIJF2MREGB2:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-11-26T09:25:17.9077679+01:00 0HLIJF2MREGB2:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 2072.6818ms (afa2e885)
+2018-11-26T09:25:17.9196049+01:00 0HLIJF2MREGB2:00000002 [INF] The response has been cached. (fd8e3e95)
+2018-11-26T09:25:17.9540421+01:00 0HLIJF2MREGB2:00000002 [INF] Request finished in 2515.8969ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-26T09:26:21.4986239+01:00  [FTL] Application startup exception (6c57a5ba)
+System.InvalidOperationException: Unable to resolve service for type 'Microsoft.AspNetCore.ResponseCaching.Internal.IResponseCachingPolicyProvider' while attempting to activate 'Microsoft.AspNetCore.ResponseCaching.ResponseCachingMiddleware'.
+   at Microsoft.Extensions.Internal.ActivatorUtilities.ConstructorMatcher.CreateInstance(IServiceProvider provider)
+   at Microsoft.Extensions.Internal.ActivatorUtilities.CreateInstance(IServiceProvider provider, Type instanceType, Object[] parameters)
+   at Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.<>c__DisplayClass4_0.<UseMiddleware>b__0(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.Internal.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.Internal.WebHost.BuildApplication()
+2018-11-26T09:26:22.0757659+01:00 0HLIJF3CDI3DQ:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-26T09:26:22.1457868+01:00 0HLIJF3CDI3DQ:00000001 [INF] Request finished in 73.8963ms 500 text/html; charset=utf-8 (791a596a)
+2018-11-26T09:26:24.4613607+01:00 0HLIJF3CDI3DR:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/x-www-form-urlencoded  (ca22a1cb)
+2018-11-26T09:26:24.5033413+01:00 0HLIJF3CDI3DR:00000001 [INF] Request finished in 19.0874ms 500 text/html; charset=utf-8 (791a596a)
+2018-11-26T09:26:56.1902559+01:00 0HLIJF3MIJK5L:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-26T09:26:56.2876475+01:00 0HLIJF3MIJK5L:00000001 [INF] Request finished in 102.5444ms 200  (791a596a)
+2018-11-26T09:29:00.4399374+01:00 0HLIJF3MIJK5M:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/x-www-form-urlencoded  (ca22a1cb)
+2018-11-26T09:29:00.8134827+01:00 0HLIJF3MIJK5M:00000001 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-11-26T09:29:01.2096547+01:00 0HLIJF3MIJK5M:00000001 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
+2018-11-26T09:29:01.6892473+01:00 0HLIJF3MIJK5M:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-26T09:29:02.5447292+01:00 0HLIJF3MIJK5M:00000001 [INF] Executed DbCommand ("145"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
 ""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
 FROM [Movies] AS [movie]
 WHERE [movie].[IsDeleted] = 0
-ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
-2018-11-26T10:27:40.4915431+01:00 0HLIJG5F19G0L:00000002 [INF] Executed DbCommand ("150"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
-""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn]
-FROM [MovieGenres] AS [movie.MovieGenres]
-INNER JOIN (
-    SELECT [movie0].[Id], [movie0].[Title]
-    FROM [Movies] AS [movie0]
-    WHERE [movie0].[IsDeleted] = 0
-) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
-ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
-2018-11-26T10:27:40.7065506+01:00 0HLIJG5F19G0L:00000002 [INF] Executed action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 4520.8746ms. (50a9e262)
-2018-11-26T10:27:40.7315671+01:00 0HLIJG5F19G0L:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
-2018-11-26T10:27:40.7848251+01:00 0HLIJG5F19G0L:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 4982.1685ms (afa2e885)
-2018-11-26T10:27:40.8241252+01:00 0HLIJG5F19G0L:00000002 [INF] Request finished in 5464.8305ms 200 application/json; charset=utf-8 (791a596a)
-2018-11-26T10:30:35.6482784+01:00 0HLIJG78RFROD:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
-2018-11-26T10:30:35.7393004+01:00 0HLIJG78RFROD:00000001 [INF] Request finished in 128.7047ms 200  (791a596a)
-2018-11-26T10:30:36.4196834+01:00 0HLIJG78RFROD:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/json  (ca22a1cb)
-2018-11-26T10:30:36.8464980+01:00 0HLIJG78RFROD:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
-2018-11-26T10:30:37.2272850+01:00 0HLIJG78RFROD:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
-2018-11-26T10:30:37.6400166+01:00 0HLIJG78RFROD:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
-2018-11-26T10:30:41.4578412+01:00 0HLIJG78RFROD:00000002 [INF] Executed DbCommand ("133"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+ORDER BY [movie].[Title]" (0723d8ff)
+2018-11-26T09:29:02.7874904+01:00 0HLIJF3MIJK5M:00000001 [INF] Executed action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 1566.0854ms. (50a9e262)
+2018-11-26T09:29:02.8094174+01:00 0HLIJF3MIJK5M:00000001 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-11-26T09:29:02.8901494+01:00 0HLIJF3MIJK5M:00000001 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 2060.4705ms (afa2e885)
+2018-11-26T09:29:02.9025761+01:00 0HLIJF3MIJK5M:00000001 [INF] The response has been cached. (fd8e3e95)
+2018-11-26T09:29:02.9405094+01:00 0HLIJF3MIJK5M:00000001 [INF] Request finished in 2488.6015ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-26T09:44:04.8061502+01:00 0HLIJFD94EJOJ:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-26T09:44:04.8975923+01:00 0HLIJFD94EJOJ:00000001 [INF] Request finished in 97.2055ms 200  (791a596a)
+2018-11-26T09:44:20.0192245+01:00 0HLIJFD94EJOJ:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/x-www-form-urlencoded  (ca22a1cb)
+2018-11-26T09:44:20.2017872+01:00 0HLIJFD94EJOJ:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-26T09:44:20.2250148+01:00 0HLIJFD94EJOJ:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-26T09:44:20.2326235+01:00 0HLIJFD94EJOJ:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-26T09:44:20.2483244+01:00 0HLIJFD94EJOJ:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-26T09:44:20.2556544+01:00 0HLIJFD94EJOJ:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-26T09:44:20.2628137+01:00 0HLIJFD94EJOJ:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-26T09:44:20.6827003+01:00 0HLIJFD94EJOJ:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-11-26T09:44:21.0781547+01:00 0HLIJFD94EJOJ:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
+2018-11-26T09:44:21.4826194+01:00 0HLIJFD94EJOJ:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-26T09:44:24.7421912+01:00 0HLIJFD94EJOJ:00000002 [INF] Executed DbCommand ("96"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
 ""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
 FROM [Movies] AS [movie]
 WHERE [movie].[IsDeleted] = 0
-ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
-2018-11-26T10:30:41.6324582+01:00 0HLIJG78RFROD:00000002 [INF] Executed DbCommand ("80"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
-""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn]
-FROM [MovieGenres] AS [movie.MovieGenres]
-INNER JOIN (
-    SELECT [movie0].[Id], [movie0].[Title]
-    FROM [Movies] AS [movie0]
-    WHERE [movie0].[IsDeleted] = 0
-) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
-ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
-2018-11-26T10:30:41.8408269+01:00 0HLIJG78RFROD:00000002 [INF] Executed action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 4601.4866ms. (50a9e262)
-2018-11-26T10:30:41.8629576+01:00 0HLIJG78RFROD:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
-2018-11-26T10:30:41.9070380+01:00 0HLIJG78RFROD:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 5048.2834ms (afa2e885)
-2018-11-26T10:30:41.9443107+01:00 0HLIJG78RFROD:00000002 [INF] Request finished in 5511.4324ms 200 application/json; charset=utf-8 (791a596a)
-2018-11-26T10:32:21.0099831+01:00 0HLIJG88907AH:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
-2018-11-26T10:32:21.0929926+01:00 0HLIJG88907AH:00000001 [INF] Request finished in 91.0579ms 200  (791a596a)
-2018-11-26T10:32:22.9339846+01:00 0HLIJG88907AH:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/json  (ca22a1cb)
-2018-11-26T10:32:23.2937323+01:00 0HLIJG88907AH:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
-2018-11-26T10:32:23.6995247+01:00 0HLIJG88907AH:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
-2018-11-26T10:32:24.0972015+01:00 0HLIJG88907AH:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
-2018-11-26T10:32:28.4912591+01:00 0HLIJG88907AH:00000002 [INF] Executed DbCommand ("263"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+ORDER BY [movie].[Title]" (0723d8ff)
+2018-11-26T09:44:24.9847455+01:00 0HLIJFD94EJOJ:00000002 [INF] Executed action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 3891.7331ms. (50a9e262)
+2018-11-26T09:44:25.0146598+01:00 0HLIJFD94EJOJ:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-11-26T09:44:25.0562503+01:00 0HLIJFD94EJOJ:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 4360.14ms (afa2e885)
+2018-11-26T09:44:25.0737862+01:00 0HLIJFD94EJOJ:00000002 [INF] Generating expiration headers. (97875003)
+2018-11-26T09:44:25.0843147+01:00 0HLIJFD94EJOJ:00000002 [INF] Expiration headers generated. Expires: Mon, 26 Nov 2018 08:54:25 GMT. Cache-Control: public,max-age=600,must-revalidate. (7afae084)
+2018-11-26T09:44:25.1019019+01:00 0HLIJFD94EJOJ:00000002 [INF] Generating Validation headers. (20c08f55)
+2018-11-26T09:44:25.1580895+01:00 0HLIJFD94EJOJ:00000002 [INF] Validation headers generated. ETag: Strong, "A56F59C984D02B6E21F6630B3D452AD9". Last-Modified: Mon, 26 Nov 2018 08:44:25 GMT (cbe61bd0)
+2018-11-26T09:44:25.1751324+01:00 0HLIJFD94EJOJ:00000002 [INF] Generating Vary header. (c1174e38)
+2018-11-26T09:44:25.1849180+01:00 0HLIJFD94EJOJ:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-26T09:44:25.2357963+01:00 0HLIJFD94EJOJ:00000002 [INF] Request finished in 5204.6282ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-26T09:52:31.8745302+01:00 0HLIJFI08E8BF:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-26T09:52:31.9678377+01:00 0HLIJFI08E8BF:00000001 [INF] Request finished in 102.6637ms 200  (791a596a)
+2018-11-26T10:14:11.0227690+01:00 0HLIJFU3DOI6S:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-26T10:14:11.0967821+01:00 0HLIJFU3DOI6S:00000001 [INF] Request finished in 78.6565ms 200  (791a596a)
+2018-11-26T10:14:26.2330555+01:00 0HLIJFU3DOI6S:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/x-www-form-urlencoded  (ca22a1cb)
+2018-11-26T10:14:26.4004402+01:00 0HLIJFU3DOI6S:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-26T10:14:26.4101762+01:00 0HLIJFU3DOI6S:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-26T10:14:26.4188900+01:00 0HLIJFU3DOI6S:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-26T10:14:26.4471451+01:00 0HLIJFU3DOI6S:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-26T10:14:26.4615929+01:00 0HLIJFU3DOI6S:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-26T10:14:26.4759300+01:00 0HLIJFU3DOI6S:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-26T10:14:26.8378722+01:00 0HLIJFU3DOI6S:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-11-26T10:14:27.2270730+01:00 0HLIJFU3DOI6S:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
+2018-11-26T10:14:27.6654450+01:00 0HLIJFU3DOI6S:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-26T10:14:30.5351775+01:00 0HLIJFU3DOI6S:00000002 [INF] Executed DbCommand ("87"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
 ""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
 FROM [Movies] AS [movie]
 WHERE [movie].[IsDeleted] = 0
-ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
-2018-11-26T10:32:28.6620493+01:00 0HLIJG88907AH:00000002 [INF] Executed DbCommand ("61"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
-""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn]
-FROM [MovieGenres] AS [movie.MovieGenres]
-INNER JOIN (
-    SELECT [movie0].[Id], [movie0].[Title]
-    FROM [Movies] AS [movie0]
-    WHERE [movie0].[IsDeleted] = 0
-) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
-ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
-2018-11-26T10:32:28.8936178+01:00 0HLIJG88907AH:00000002 [INF] Executed action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 5177.9714ms. (50a9e262)
-2018-11-26T10:32:28.9222130+01:00 0HLIJG88907AH:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
-2018-11-26T10:32:28.9702407+01:00 0HLIJG88907AH:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 5662.2038ms (afa2e885)
-2018-11-26T10:32:29.0072529+01:00 0HLIJG88907AH:00000002 [INF] Request finished in 6105.8158ms 200 application/json; charset=utf-8 (791a596a)
-2018-11-26T10:36:51.7670483+01:00 0HLIJGAOUDUU9:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/json  (ca22a1cb)
-2018-11-26T10:36:51.7670483+01:00 0HLIJGAOUDUU8:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
-2018-11-26T10:36:51.8798469+01:00 0HLIJGAOUDUU8:00000001 [INF] Request finished in 98.7159ms 200  (791a596a)
-2018-11-26T10:36:52.2323822+01:00 0HLIJGAOUDUU9:00000001 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
-2018-11-26T10:36:52.6963091+01:00 0HLIJGAOUDUU9:00000001 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
-2018-11-26T10:36:53.1068442+01:00 0HLIJGAOUDUU9:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
-2018-11-26T10:36:56.5453228+01:00 0HLIJGAOUDUU9:00000001 [INF] Executed DbCommand ("87"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
-""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
-FROM [Movies] AS [movie]
-WHERE [movie].[IsDeleted] = 0
-ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
-2018-11-26T10:36:56.7048092+01:00 0HLIJGAOUDUU9:00000001 [INF] Executed DbCommand ("56"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
-""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn]
-FROM [MovieGenres] AS [movie.MovieGenres]
-INNER JOIN (
-    SELECT [movie0].[Id], [movie0].[Title]
-    FROM [Movies] AS [movie0]
-    WHERE [movie0].[IsDeleted] = 0
-) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
-ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
-2018-11-26T10:36:57.1089915+01:00 0HLIJGAOUDUU9:00000001 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 4861.3454ms (afa2e885)
-2018-11-26T10:36:57.2109204+01:00 0HLIJGAOUDUU9:00000001 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
-AutoMapper.AutoMapperMappingException: Error mapping types.
-
-Mapping types:
-PagedList`1 -> IEnumerable`1
-Biob.Services.Data.Helpers.PagedList`1[[Biob.Data.Models.Movie, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperMappingException: Error mapping types.
-
-Mapping types:
-Movie -> MovieDto
-Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
-
-Type Map configuration:
-Movie -> MovieDto
-Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
-
-Destination Member:
-Genres
- ---> System.NullReferenceException: Object reference not set to an instance of an object.
-   at lambda_method(Closure , MovieGenre )
-   at System.Linq.Enumerable.SelectListIterator`2.MoveNext()
-   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
-   --- End of inner exception stack trace ---
-   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
-   --- End of inner exception stack trace ---
-   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
-   at lambda_method(Closure , Object , Object , ResolutionContext )
-   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
-   at Biob.Web.Controllers.MovieController.GetAllMovies(RequestParameters requestParameters) in C:\Users\tec\Desktop\H3\ServerSide\BioB\RESTBiob\Biob.Web\Controllers\MovieController.cs:line 93
-   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
-   at System.Threading.Tasks.ValueTask`1.get_Result()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
-   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
-   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
-2018-11-26T10:36:57.3935913+01:00 0HLIJGAOUDUU9:00000001 [INF] Request finished in 5557.0478ms 500 text/html; charset=utf-8 (791a596a)
-2018-11-26T10:38:24.8966773+01:00 0HLIJGBKNCA9K:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/json  (ca22a1cb)
-2018-11-26T10:38:24.8966773+01:00 0HLIJGBKNCA9L:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
-2018-11-26T10:38:24.9809176+01:00 0HLIJGBKNCA9L:00000001 [INF] Request finished in 94.5082ms 200  (791a596a)
-2018-11-26T10:38:25.2674940+01:00 0HLIJGBKNCA9K:00000001 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
-2018-11-26T10:38:25.6467547+01:00 0HLIJGBKNCA9K:00000001 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
-2018-11-26T10:38:26.0815946+01:00 0HLIJGBKNCA9K:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
-2018-11-26T10:38:29.6549823+01:00 0HLIJGBKNCA9K:00000001 [INF] Executed DbCommand ("202"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
-""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
-FROM [Movies] AS [movie]
-WHERE [movie].[IsDeleted] = 0
-ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
-2018-11-26T10:38:29.9029787+01:00 0HLIJGBKNCA9K:00000001 [INF] Executed DbCommand ("139"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
-""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn]
-FROM [MovieGenres] AS [movie.MovieGenres]
-INNER JOIN (
-    SELECT [movie0].[Id], [movie0].[Title]
-    FROM [Movies] AS [movie0]
-    WHERE [movie0].[IsDeleted] = 0
-) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
-ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
-2018-11-26T10:38:30.1227158+01:00 0HLIJGBKNCA9K:00000001 [INF] Executed action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 4463.311ms. (50a9e262)
-2018-11-26T10:38:30.1495348+01:00 0HLIJGBKNCA9K:00000001 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
-2018-11-26T10:38:30.1999173+01:00 0HLIJGBKNCA9K:00000001 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 4919.0454ms (afa2e885)
-2018-11-26T10:38:30.2421293+01:00 0HLIJGBKNCA9K:00000001 [INF] Request finished in 5344.722ms 200 application/json; charset=utf-8 (791a596a)
+ORDER BY [movie].[Title]" (0723d8ff)
+2018-11-26T10:14:30.8031348+01:00 0HLIJFU3DOI6S:00000002 [INF] Executed action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 3561.2602ms. (50a9e262)
+2018-11-26T10:14:30.8286379+01:00 0HLIJFU3DOI6S:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-11-26T10:14:30.8771098+01:00 0HLIJFU3DOI6S:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 4024.5922ms (afa2e885)
+2018-11-26T10:14:30.8964094+01:00 0HLIJFU3DOI6S:00000002 [INF] Generating expiration headers. (97875003)
+2018-11-26T10:14:30.9074317+01:00 0HLIJFU3DOI6S:00000002 [INF] Expiration headers generated. Expires: Mon, 26 Nov 2018 09:24:30 GMT. Cache-Control: public,max-age=600,must-revalidate. (ebe8155c)
+2018-11-26T10:14:30.9286690+01:00 0HLIJFU3DOI6S:00000002 [INF] Generating Validation headers. (20c08f55)
+2018-11-26T10:14:30.9580894+01:00 0HLIJFU3DOI6S:00000002 [INF] Validation headers generated. ETag: Strong, "A56F59C984D02B6E21F6630B3D452AD9". Last-Modified: Mon, 26 Nov 2018 09:14:30 GMT (6af93580)
+2018-11-26T10:14:30.9721331+01:00 0HLIJFU3DOI6S:00000002 [INF] Generating Vary header. (c1174e38)
+2018-11-26T10:14:30.9847758+01:00 0HLIJFU3DOI6S:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-26T10:14:31.0589882+01:00 0HLIJFU3DOI6S:00000002 [INF] Request finished in 4803.8978ms 200 application/json; charset=utf-8 (791a596a)
