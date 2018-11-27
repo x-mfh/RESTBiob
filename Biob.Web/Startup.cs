@@ -40,9 +40,15 @@ namespace Biob.Web
             {
                 setupAction.ReturnHttpNotAcceptable = true;
                 setupAction.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+                var xmlSerializerInputFormatter = new XmlSerializerInputFormatter(setupAction);
+                setupAction.InputFormatters.Add(xmlSerializerInputFormatter);
 
-                setupAction.InputFormatters.Add(new XmlSerializerInputFormatter(setupAction));
+                var jsonOutputFormatter = setupAction.OutputFormatters.OfType<JsonOutputFormatter>().FirstOrDefault();
 
+                if (jsonOutputFormatter != null)
+                {
+                    jsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.biob.json+hateoas");
+                }
 
             })
             .AddJsonOptions(options =>
