@@ -77,50 +77,9 @@ namespace Biob.Web.Controllers
 
             var movies = Mapper.Map<IEnumerable<MovieDto>>(moviesPagedList);
 
-            if (mediaType == "application/vnd.biob.json+hateoas")
-            {
-                var paginationMetadataWithLinks = new
-                {
-                    moviesPagedList.TotalCount,
-                    moviesPagedList.PageSize,
-                    moviesPagedList.CurrentPage,
-                    moviesPagedList.TotalPages
-                };
-
-                Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadataWithLinks));
-
-                
-
-                var shapedMovies = movies.ShapeData(requestParameters.Fields);
-
-                var shapedMoviesWithLinks = shapedMovies.Select(movie => 
-                {
-                    var movieDictionary = movie as IDictionary<string, object>;
-                    var movieLinks = CreateLinksForMovie((Guid)movieDictionary["Id"], requestParameters.Fields);
-
-                    movieDictionary.Add("links", movieLinks);
-
-                    return movieDictionary;
-                }).ToList();
-
-                var linkedCollection = new
-                {
-                    movies = shapedMoviesWithLinks,
-                    links = shapedMoviesWithLinks
-                };
-
-                if (requestParameters.IncludeMetadata)
-                {
-
-                    var moviesWithMetadata = new
-                    {
-                        Metadata = paginationMetadataWithLinks,
-                        linkedCollection
-                    };
-                    return Ok(moviesWithMetadata);
-                }
-
-                return Ok(linkedCollection);
+            if (mediaType == "application/vnd.biob.json+hateoas" || mediaType == "application/vnd.biob.xml+hateoas")
+            {  
+                return Ok(CreateHateoasResponse(moviesPagedList, requestParameters));
             }
             else
             {
@@ -150,17 +109,35 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet("{movieId}", Name = "GetMovie")]
-        [MovieParameterValidationFilter]
-        public async Task<IActionResult> GetOneMovie([FromRoute]Guid movieId)
+        //[MovieParameterValidationFilter]
+        public async Task<IActionResult> GetOneMovie([FromRoute]Guid movieId, [FromQuery] string fields, [FromHeader(Name = "Accept")] string mediaType)
         {
+            if (!_typeHelperService.TypeHasProperties<MovieDto>(fields))
+            {
+                return BadRequest();
+            }
+
             var foundMovie = await _movieRepository.GetMovieAsync(movieId);
+
+            var movie = Mapper.Map<MovieDto>(foundMovie);
 
             if (foundMovie == null)
             {
                 return NotFound();
             }
-            var movie = Mapper.Map<MovieDto>(foundMovie);
-            return Ok(movie);
+
+            if (mediaType == "application/vnd.biob.json+hateoas")
+            {
+                var links = CreateLinksForMovies(movieId, fields);
+
+                var linkedMovie = movie.ShapeData(fields) as IDictionary<string, object>;
+                linkedMovie.Add("links", links);
+                return Ok(linkedMovie);
+            }
+            else
+            {
+                return Ok(movie.ShapeData(fields));
+            }
         }
 
         [HttpPost]
@@ -190,8 +167,14 @@ namespace Biob.Web.Controllers
                 _logger.LogError("Saving changes to database while creating a movie failed");
             }
             var movieDto = Mapper.Map<MovieDto>(movieToAdd);
+
+            var links = CreateLinksForMovies(movieDto.Id, null);
+
+            var linkedMovie = movieDto as IDictionary<string, object>;
+
+            linkedMovie.Add("links", links);
             
-            return CreatedAtRoute("GetMovie", new { movieId = movieToAdd.Id }, movieDto);
+            return CreatedAtRoute("GetMovie", new { movieId = movieToAdd.Id }, linkedMovie);
         }
 
         [HttpPut("{movieId}",Name = "UpdateMovie")]
@@ -315,26 +298,55 @@ namespace Biob.Web.Controllers
             return NoContent();
         }
 
-        //private MovieDto CreateLinksForMovie(MovieDto movie)
-        //{
+        private ExpandoObject CreateHateoasResponse(PagedList<Movie> moviesPagedList, RequestParameters requestParameters)
+        {
 
-        //    movie.Links.Add(
-        //        new LinkDto(_urlHelper.Link("GetMovie", new { id = movie.Id }), "Self", "GET")
-        //        );
-        //    movie.Links.Add(
-        //        new LinkDto(_urlHelper.Link("DeleteMovie", new { id = movie.Id }), "delete_movie", "DELETE")
-        //        );
-        //    movie.Links.Add(
-        //        new LinkDto(_urlHelper.Link("UpdateMovie", new { id = movie.Id }), "update_book", "PUT")
-        //        );
-        //    movie.Links.Add(
-        //        new LinkDto(_urlHelper.Link("PartiallyUpdateMovie", new { id = movie.Id }), "partially_update_book", "PATCH")
-        //        );
+            var movies = Mapper.Map<IEnumerable<MovieDto>>(moviesPagedList);
 
-        //    return movie;
-        //}
+            var paginationMetadataWithLinks = new
+            {
+                moviesPagedList.TotalCount,
+                moviesPagedList.PageSize,
+                moviesPagedList.CurrentPage,
+                moviesPagedList.TotalPages
+            };
 
-        private IEnumerable<LinkDto> CreateLinksForMovie(Guid id, string fields)
+            Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadataWithLinks));
+
+            var links = CreateLinksForMovies(requestParameters, moviesPagedList.HasNext, moviesPagedList.HasPrevious);
+
+            
+
+            var shapedMovies = movies.ShapeData(requestParameters.Fields);
+
+            var shapedMoviesWithLinks = shapedMovies.Select(movie =>
+            {
+                var movieDictionary = movie as IDictionary<string, object>;
+                var movieLinks = CreateLinksForMovies((Guid)movieDictionary["Id"], requestParameters.Fields);
+
+                movieDictionary.Add("links", movieLinks);
+
+                return movieDictionary;
+            });
+            if (requestParameters.IncludeMetadata)
+            {
+                var moviesWithMetadata = new ExpandoObject();
+                ((IDictionary<string, object>)moviesWithMetadata).Add("Metadata", paginationMetadataWithLinks);
+                ((IDictionary<string, object>)moviesWithMetadata).Add("movies", shapedMoviesWithLinks);
+                ((IDictionary<string, object>)moviesWithMetadata).Add("links", links);
+                return moviesWithMetadata;
+            }
+            else
+            {
+                var linkedCollection = new ExpandoObject();
+                ((IDictionary<string, object>)linkedCollection).Add("movies", shapedMoviesWithLinks);
+                ((IDictionary<string, object>)linkedCollection).Add("links", links);
+                return linkedCollection;
+            }
+            
+        }
+
+        private IEnumerable<LinkDto> CreateLinksForMovies(Guid id, string fields)
         {
             var links = new List<LinkDto>();
 
@@ -358,11 +370,27 @@ namespace Biob.Web.Controllers
             return links;
         }
 
-        private LinkedCollectionWrapperDto<MovieDto> CreateLinksForMovies(LinkedCollectionWrapperDto<MovieDto> movies)
+        private IEnumerable<LinkDto> CreateLinksForMovies(RequestParameters requestParameters, bool hasNext, bool hasPRevious)
         {
-            movies.Links.Add(new LinkDto(_urlHelper.Link("GetMovies", new { }), "self", "GET"));
-            return movies;
+            var links = new List<LinkDto>
+            {
+                new LinkDto(CreateUrlForResource(requestParameters, PageType.Current), "self", "GET")
+            };
+
+            if (hasNext)
+            {
+                new LinkDto(CreateUrlForResource(requestParameters, PageType.NextPage), "self", "GET");
+            }
+
+            if (hasPRevious)
+            {
+                new LinkDto(CreateUrlForResource(requestParameters, PageType.PreviousPage), "self", "GET");
+            }
+
+            return links;
+
         }
+
 
         //  TODO: consider making this a helper method instead, and reuseable
         private string CreateUrlForResource(RequestParameters requestParameters, PageType pageType)
@@ -388,6 +416,7 @@ namespace Biob.Web.Controllers
                         pageNumber = requestParameters.PageNumber + 1,
                         pageSize = requestParameters.PageSize
                     });
+                case PageType.Current:
                 default:
                     return _urlHelper.Link("GetMovies", new
                     {

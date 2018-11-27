@@ -21,6 +21,7 @@ using AspNetCoreRateLimit;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Dynamic;
 
 namespace Biob.Web
 {
@@ -39,9 +40,9 @@ namespace Biob.Web
             services.AddMvc(setupAction =>
             {
                 setupAction.ReturnHttpNotAcceptable = true;
-                setupAction.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
                 var xmlSerializerInputFormatter = new XmlSerializerInputFormatter(setupAction);
                 setupAction.InputFormatters.Add(xmlSerializerInputFormatter);
+
 
                 var jsonOutputFormatter = setupAction.OutputFormatters.OfType<JsonOutputFormatter>().FirstOrDefault();
 
