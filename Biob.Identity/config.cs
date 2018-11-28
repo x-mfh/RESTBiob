@@ -49,6 +49,7 @@ namespace Biob.Identity
             {
                 new ApiResource
                 {
+                    
                     Name = "Biob.Web",
                     DisplayName = "BioB web api",
                     UserClaims = new List<string>  { JwtClaimTypes.Role },
@@ -72,10 +73,6 @@ namespace Biob.Identity
                     ClientId = "Biob",
                     ClientName = "Biob",
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    RedirectUris =
-                    {
-                        "https://localhost:44355/signin-oidc"
-                    },
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
@@ -83,12 +80,13 @@ namespace Biob.Identity
                         IdentityServerConstants.StandardScopes.Address,
                         JwtClaimTypes.PhoneNumber,
                         JwtClaimTypes.Role,
-                        "read"
+                        "Biob.Web"
                     },
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
-                    }
+                    },
+                    AccessTokenType = AccessTokenType.Jwt,
                 }
             };
         }
