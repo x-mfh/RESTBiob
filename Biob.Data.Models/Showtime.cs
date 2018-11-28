@@ -17,6 +17,7 @@ namespace Biob.Data.Models
         public bool ThreeDee { get; set; }
 
         //Foreign key
+        public Movie Movie { get; set; }
         public Hall Hall { get; set; }
         public ICollection<Ticket> Tickets { get; set; }
     }
