@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Biob.Web.Controllers
@@ -45,7 +46,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet(Name = "GetShowtimes")]
-        public async Task<IActionResult> GetAllShowtimes([FromQuery]RequestParameters requestParameters)
+        public async Task<IActionResult> GetAllShowtimes([FromQuery]RequestParameters requestParameters, [FromHeader(Name = "Accept")] string mediaType)
         {
 
             if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
@@ -66,35 +67,46 @@ namespace Biob.Web.Controllers
 
             var showtimesPagedList = await _showtimeRepository.GetAllShowtimesAsync(requestParameters.OrderBy, requestParameters.PageNumber, requestParameters.PageSize);
 
-            var previousPageLink = showtimesPagedList.HasPrevious ? CreateUrlForResource(requestParameters, PageType.PreviousPage) : null;
-            var nextPageLink = showtimesPagedList.HasNext ? CreateUrlForResource(requestParameters, PageType.NextPage) : null;
-
-            var paginationMetadata = new PaginationMetadata()
-            {
-                TotalCount = showtimesPagedList.TotalCount,
-                PageSize = showtimesPagedList.PageSize,
-                CurrentPage = showtimesPagedList.CurrentPage,
-                TotalPages = showtimesPagedList.TotalPages,
-                PreviousPageLink = previousPageLink,
-                NextPageLink = nextPageLink
-            };
-
-            Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
-
             var showtimes = Mapper.Map<IEnumerable<ShowtimeDto>>(showtimesPagedList);
 
-            if (requestParameters.IncludeMetadata)
+            if (mediaType == "application/vnd.biob.json+hateoas")
             {
-                var showtimesWithMetadata = new EntityWithPaginationMetadataDto<ShowtimeDto>(paginationMetadata, showtimes);
-                return Ok(showtimesWithMetadata);
+                return Ok(CreateHateoasResponse(showtimesPagedList, requestParameters));
             }
+            else
+            {
+                var previousPageLink = showtimesPagedList.HasPrevious ? CreateUrlForResource(requestParameters, PageType.PreviousPage) : null;
+                var nextPageLink = showtimesPagedList.HasNext ? CreateUrlForResource(requestParameters, PageType.NextPage) : null;
+                var paginationMetadata = new PaginationMetadata()
+                {
+                    TotalCount = showtimesPagedList.TotalCount,
+                    PageSize = showtimesPagedList.PageSize,
+                    CurrentPage = showtimesPagedList.CurrentPage,
+                    TotalPages = showtimesPagedList.TotalPages,
+                    PreviousPageLink = previousPageLink,
+                    NextPageLink = nextPageLink
+                };
 
-            return Ok(showtimes);
+                Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
+
+                if (requestParameters.IncludeMetadata)
+                {
+                    var showtimesWithMetadata = new EntityWithPaginationMetadataDto<ShowtimeDto>(paginationMetadata, showtimes);
+                    return Ok(showtimesWithMetadata);
+                }
+
+                return Ok(showtimes);
+            }
         }
 
         [HttpGet("{showtimeId}", Name = "GetShowtime")]
-        public async Task<IActionResult> GetOneShowtime([FromRoute]Guid showtimeId, [FromRoute]Guid movieId)
+        public async Task<IActionResult> GetOneShowtime([FromRoute]Guid showtimeId, [FromRoute]Guid movieId, [FromQuery] string fields, [FromHeader(Name = "Accept")] string mediaType)
         {
+            if (!_typeHelperService.TypeHasProperties<ShowtimeDto>(fields))
+            {
+                return BadRequest();
+            }
+
             if (showtimeId == Guid.Empty)
             {
                 return BadRequest();
@@ -112,17 +124,31 @@ namespace Biob.Web.Controllers
 
             var foundShowtime = await _showtimeRepository.GetShowtimeAsync(showtimeId, movieId);
 
+            var showtime = Mapper.Map<ShowtimeDto>(foundShowtime);
+
             if (foundShowtime == null)
             {
                 return NotFound();
             }
 
-            var showtimeToReturn = Mapper.Map<ShowtimeDto>(foundShowtime);
-            return Ok(showtimeToReturn);
+            if (mediaType == "application/vnd.biob.json+hateoas")
+            {
+                var links = CreateLinksForShowtimes(showtimeId, fields);
+
+                var linkedShowtime = showtime.ShapeData(fields) as IDictionary<string, object>;
+                linkedShowtime.Add("links", links);
+                return Ok(linkedShowtime);
+            }
+            else
+            {
+                //var showtimeToReturn = Mapper.Map<ShowtimeDto>(foundShowtime);
+                //return Ok(showtimeToReturn);
+                return Ok(showtime.ShapeData(fields));
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateShowtime([FromRoute]Guid movieId, [FromBody] ShowtimeToCreateDto showtimeToCreate)
+        public async Task<IActionResult> CreateShowtime([FromRoute]Guid movieId, [FromBody] ShowtimeToCreateDto showtimeToCreate, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (showtimeToCreate == null)
             {
@@ -147,11 +173,26 @@ namespace Biob.Web.Controllers
                 _logger.LogError("Saving changes to database while creating a showtime failed");
             }
 
-            return CreatedAtRoute("GetShowtime", new { movieId, showtimeId = showtimeToAdd.Id }, showtimeToAdd);
+            var showtime = Mapper.Map<ShowtimeDto>(showtimeToAdd);
+
+            if (mediaType == "application/vnd.biob.json+hateoas")
+            {
+                var links = CreateLinksForShowtimes(showtime.Id, null);
+
+                var linkedShowtime = showtime.ShapeData(null) as IDictionary<string, object>;
+
+                linkedShowtime.Add("links", links);
+
+                return CreatedAtRoute("GetShowtime", new { movieId, showtimeId = showtimeToAdd.Id }, linkedShowtime);
+            }
+            else
+            {
+                return CreatedAtRoute("GetShowtime", new { movieId, showtimeId = showtimeToAdd.Id }, showtime);
+            }
         }
 
-        [HttpPut("{showtimeId}")]
-        public async Task<IActionResult> UpdateShowtime([FromRoute]Guid movieId, [FromRoute] Guid showtimeId, [FromBody] ShowtimeToUpdateDto showtimeToUpdate)
+        [HttpPut("{showtimeId}", Name = "UpdateShowtime")]
+        public async Task<IActionResult> UpdateShowtime([FromRoute]Guid movieId, [FromRoute] Guid showtimeId, [FromBody] ShowtimeToUpdateDto showtimeToUpdate, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (movieId == Guid.Empty)
             {
@@ -188,7 +229,20 @@ namespace Biob.Web.Controllers
 
                 var showtimeToReturn = Mapper.Map<ShowtimeDto>(showtimeEntity);
 
-                return CreatedAtRoute("GetShowtime", new { movieId, showtimeId = showtimeToReturn.Id }, showtimeToReturn);
+                if (mediaType == "application/vnd.biob.json+hateoas")
+                {
+                    var links = CreateLinksForShowtimes(showtimeToReturn.Id, null);
+
+                    var linkedShowtime = showtimeToReturn.ShapeData(null) as IDictionary<string, object>;
+
+                    linkedShowtime.Add("links", links);
+
+                    return CreatedAtRoute("GetShowtime", new { movieId, showtimeId = showtimeToReturn.Id }, linkedShowtime);
+                }
+                else
+                {
+                    return CreatedAtRoute("GetShowtime", new { movieId, showtimeId = showtimeToReturn.Id }, showtimeToReturn);
+                }
             }
 
             Mapper.Map(showtimeToUpdate, showtimeFromDb);
@@ -203,10 +257,9 @@ namespace Biob.Web.Controllers
             return NoContent();
         }
 
-        [HttpPatch("{showtimeId}")]
-        public async Task<IActionResult> PartiuallyUpdateShowtime([FromRoute]Guid movieId, [FromRoute] Guid showtimeId, JsonPatchDocument<ShowtimeToUpdateDto> patchDoc)
+        [HttpPatch("{showtimeId}", Name = "PartiallyUpdateShowtime")]
+        public async Task<IActionResult> PartiuallyUpdateShowtime([FromRoute]Guid movieId, [FromRoute] Guid showtimeId, JsonPatchDocument<ShowtimeToUpdateDto> patchDoc, [FromHeader(Name = "Accept")] string mediaType)
         {
-
             if (movieId == Guid.Empty)
             {
                 return BadRequest();
@@ -251,7 +304,20 @@ namespace Biob.Web.Controllers
 
                 var showtimeToReturn = Mapper.Map<ShowtimeDto>(showtimeToAddToDb);
 
-                return CreatedAtRoute("GetShowtime", new { movieId, showtimeId = showtimeToReturn.Id }, showtimeToReturn);
+                if (mediaType == "application/vnd.biob.json+hateoas")
+                {
+                    var links = CreateLinksForShowtimes(showtimeToReturn.Id, null);
+
+                    var linkedShowtime = showtimeToReturn.ShapeData(null) as IDictionary<string, object>;
+
+                    linkedShowtime.Add("links", links);
+
+                    return CreatedAtRoute("GetShowtime", new { movieId, showtimeId = showtimeToReturn.Id }, linkedShowtime);
+                }
+                else
+                {
+                    return CreatedAtRoute("GetShowtime", new { movieId, showtimeId = showtimeToReturn.Id }, showtimeToReturn);
+                }
             }
 
             var showtimeToPatch = Mapper.Map<ShowtimeToUpdateDto>(showtimeFromDb);
@@ -275,7 +341,7 @@ namespace Biob.Web.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{showtimeId}")]
+        [HttpDelete("{showtimeId}", Name = "DeleteShowtime")]
         public async Task<IActionResult> DeleteShowtime([FromRoute] Guid showtimeId, [FromRoute]Guid movieId)
         {
             if (movieId == Guid.Empty)
@@ -309,6 +375,90 @@ namespace Biob.Web.Controllers
             }
 
             return NoContent();
+        }
+
+        private ExpandoObject CreateHateoasResponse(PagedList<Showtime> showtimesPagedList, RequestParameters requestParameters)
+        {
+            var showtimes = Mapper.Map<IEnumerable<ShowtimeDto>>(showtimesPagedList);
+
+            var paginationMetadataWithLinks = new
+            {
+                showtimesPagedList.TotalCount,
+                showtimesPagedList.PageSize,
+                showtimesPagedList.CurrentPage,
+                showtimesPagedList.TotalPages
+            };
+
+            Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadataWithLinks));
+
+            var links = CreateLinksForShowtimes(requestParameters, showtimesPagedList.HasNext, showtimesPagedList.HasPrevious);
+
+            var shapedShowtimes = showtimes.ShapeData(requestParameters.Fields);
+
+            var shapedShowtimesWithLinks = shapedShowtimes.Select(showtime =>
+           {
+               var showtimeDictionary = showtime as IDictionary<string, object>;
+               var showtimeLinks = CreateLinksForShowtimes((Guid)showtimeDictionary["Id"], requestParameters.Fields);
+
+               showtimeDictionary.Add("links", showtimeLinks);
+
+               return showtimeDictionary;
+           });
+            if(requestParameters.IncludeMetadata)
+            {
+                var showtimesWithMetadata = new ExpandoObject();
+                ((IDictionary<string, object>)showtimesWithMetadata).Add("Metadata", paginationMetadataWithLinks);
+                ((IDictionary<string, object>)showtimesWithMetadata).Add("showtimes", shapedShowtimesWithLinks);
+                ((IDictionary<string, object>)showtimesWithMetadata).Add("links", links);
+                return showtimesWithMetadata;
+            }
+            else
+            {
+                var linkedCollection = new ExpandoObject();
+                ((IDictionary<string, object>)linkedCollection).Add("showtimes", shapedShowtimesWithLinks);
+                ((IDictionary<string, object>)linkedCollection).Add("links", links);
+                return linkedCollection;
+            }
+        }
+
+        private IEnumerable<LinkDto> CreateLinksForShowtimes(Guid id, string fields)
+        {
+            var links = new List<LinkDto>();
+
+            if(string.IsNullOrWhiteSpace(fields))
+            {
+                links.Add(new LinkDto(_urlHelper.Link("GetShowtime", new { showtimeId = id }), "self", "GET"));
+            }
+            else
+            {
+                links.Add(new LinkDto(_urlHelper.Link("GetShowtime", new { showtimeId = id, fields }), "self", "GET"));
+            }
+                links.Add(new LinkDto(_urlHelper.Link("DeleteShowtime", new { showtimeId = id }), "delete_showtime", "DELETE"));
+            {
+                links.Add(new LinkDto(_urlHelper.Link("UpdateShowtime", new { showtimeId = id }), "update_showtime", "PUT"));
+            }
+                links.Add(new LinkDto(_urlHelper.Link("PartiallyUpdateShowtime", new { showtimeId = id }), "partially_update_showtime", "PATCH"));
+            return links;
+        }
+
+        private IEnumerable<LinkDto> CreateLinksForShowtimes(RequestParameters requestParameters, bool hasNext, bool hasPrevious)
+        {
+            var links = new List<LinkDto>
+            {
+                new LinkDto(CreateUrlForResource(requestParameters, PageType.Current), "self", "GET")
+            };
+
+            if (hasNext)
+            {
+                new LinkDto(CreateUrlForResource(requestParameters, PageType.NextPage), "self", "GET");
+            }
+
+            if (hasPrevious)
+            {
+                new LinkDto(CreateUrlForResource(requestParameters, PageType.PreviousPage), "self", "GET");
+            }
+
+            return links;
         }
 
         private string CreateUrlForResource(RequestParameters requestParameters, PageType pageType)
