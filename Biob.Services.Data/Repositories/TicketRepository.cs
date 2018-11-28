@@ -54,6 +54,26 @@ namespace Biob.Services.Data.Repositories
             return await _context.Tickets.Where(ticket => ticket.Id == id).FirstOrDefaultAsync();
         }
 
+        public async Task<PagedList<Ticket>> GetAllTicketsAsync(string orderBy, string searchQuery, int pageNumber, int pageSize)
+        {
+            var collectionsBeforePaging = _context.Tickets.Include(ticket => ticket.Showtime).ThenInclude(showtime => showtime.Movie) //Hmm. If this is not included, will the Where below then cause error?
+                                                         .Where(ticket => !ticket.IsDeleted).Applysort(orderBy, _propertyMappingService.GetPropertyMapping<TicketDto, Ticket>());
+
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                string searchQueryForWhere = searchQuery.Trim().ToLowerInvariant();
+                collectionsBeforePaging = collectionsBeforePaging
+                    .Where(ticket => ticket.Showtime.Movie.Title.ToLowerInvariant().Contains(searchQueryForWhere));
+                           //this can be added if we want to be able to search all tickets by related movie's genre:
+                           //|| ticket.Showtime.Movie.MovieGenres.Select(moviegenre => moviegenre.Genre.GenreName).Contains(searchQueryForWhere));
+            }
+
+
+            var listToPage = await collectionsBeforePaging.ToListAsync();
+            return PagedList<Ticket>.Create(listToPage, pageNumber, pageSize);
+        }
+
+        //Todo: fix this
         public async Task<PagedList<Ticket>> GetTicketsByCustomerIdAsync(Guid customerId, string orderBy, string searchQuery, int pageNumber, int pageSize)
         {
             var collectionsBeforePaging = await _context.Tickets.Applysort(orderBy, _propertyMappingService.GetPropertyMapping<TicketDto, Ticket>()).ToListAsync();

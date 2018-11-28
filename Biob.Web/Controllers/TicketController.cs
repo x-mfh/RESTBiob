@@ -32,6 +32,62 @@ namespace Biob.Web.Controllers
             _ticketRepository = ticketRepository;
         }
 
+        [HttpGet(Name = "GetTickets")]
+        public async Task<IActionResult> GetAllTickets([FromQuery]RequestParameters requestParameters)
+        {
+            if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
+            {
+                requestParameters.OrderBy = "CreatedOn";
+            }
+
+            if (!_propertyMappingService.ValidMappingExistsFor<TicketDto, Ticket>(requestParameters.Fields))
+            {
+                return BadRequest();
+            }
+
+            if (!_typeHelperService.TypeHasProperties<TicketDto>(requestParameters.Fields))
+            {
+                return BadRequest();
+            }
+
+            var ticketsPagedList = await _ticketRepository.GetAllTicketsAsync(requestParameters.OrderBy,
+                                                                    requestParameters.SearchQuery,
+                                                                    requestParameters.PageNumber, requestParameters.PageSize);
+
+            var tickets = Mapper.Map<IEnumerable<TicketDto>>(ticketsPagedList);
+
+            //if (mediaType == "application/vnd.biob.json+hateoas")
+            //{
+            //    return Ok(CreateHateoasResponse(ticketsPagedList, requestParameters));
+            //}
+            //else
+            //{
+            var previousPageLink = ticketsPagedList.HasPrevious ? CreateUrlForResource(requestParameters, PageType.PreviousPage) : null;
+            var nextPageLink = ticketsPagedList.HasNext ? CreateUrlForResource(requestParameters, PageType.NextPage) : null;
+            var paginationMetadata = new PaginationMetadata()
+            {
+                TotalCount = ticketsPagedList.TotalCount,
+                PageSize = ticketsPagedList.PageSize,
+                CurrentPage = ticketsPagedList.CurrentPage,
+                TotalPages = ticketsPagedList.TotalPages,
+                PreviousPageLink = previousPageLink,
+                NextPageLink = nextPageLink
+            };
+
+            Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
+
+            if (requestParameters.IncludeMetadata)
+            {
+                var shapedTickets = tickets.ShapeData(requestParameters.Fields);
+                var ticketsWithMetadata = new EntityWithPaginationMetadataDto<ExpandoObject>(paginationMetadata, shapedTickets);
+                return Ok(ticketsWithMetadata);
+            }
+
+            return Ok(tickets.ShapeData(requestParameters.Fields));
+            //}
+        }
+
+
         [HttpGet("{ticketId}", Name = "GetTicket")]
         public async Task<IActionResult> GetOneTicket([FromRoute]Guid ticketId)
         {
