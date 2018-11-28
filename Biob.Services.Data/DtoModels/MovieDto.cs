@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Biob.Services.Data.Helpers;
+using System;
 using System.Collections.Generic;
 
 namespace Biob.Services.Data.DtoModels

@@ -3,6 +3,7 @@
     public enum PageType
     {
         PreviousPage,
+        Current,
         NextPage
     }
 }
