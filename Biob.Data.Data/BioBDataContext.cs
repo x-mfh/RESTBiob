@@ -153,33 +153,33 @@ namespace Biob.Data.Data
 
             modelBuilder.Entity<MovieGenre>().HasData(
                 // Movie 1
-                new MovieGenre() { Id = 1, MovieId = Guid.Parse("9D90A452-9547-4D04-98ED-7D617E64AE1E"), GenreId = Guid.Parse("6E0A64BC-7A50-4A6C-9125-8CCF6E54BF70") },
-                new MovieGenre() { Id = 2, MovieId = Guid.Parse("9D90A452-9547-4D04-98ED-7D617E64AE1E"), GenreId = Guid.Parse("72163C34-3D32-4A78-9701-1F708053978F") },
+                new MovieGenre() { Id = Guid.Parse("5DF8A672-E37A-4EC2-8B6D-D331C84E7F8D"), MovieId = Guid.Parse("9D90A452-9547-4D04-98ED-7D617E64AE1E"), GenreId = Guid.Parse("6E0A64BC-7A50-4A6C-9125-8CCF6E54BF70") },
+                new MovieGenre() { Id = Guid.Parse("C136188F-D71C-4575-8258-1AF4DB16DC0F"), MovieId = Guid.Parse("9D90A452-9547-4D04-98ED-7D617E64AE1E"), GenreId = Guid.Parse("72163C34-3D32-4A78-9701-1F708053978F") },
                 // Movie 2
-                new MovieGenre() { Id = 3, MovieId = Guid.Parse("45C0C223-DE18-4E6E-99EA-AED94E7469F1"), GenreId = Guid.Parse("8068CBF6-C595-4733-9C24-8104E8454B4C") },
-                new MovieGenre() { Id = 4, MovieId = Guid.Parse("45C0C223-DE18-4E6E-99EA-AED94E7469F1"), GenreId = Guid.Parse("6E0A64BC-7A50-4A6C-9125-8CCF6E54BF70") },
-                new MovieGenre() { Id = 5, MovieId = Guid.Parse("45C0C223-DE18-4E6E-99EA-AED94E7469F1"), GenreId = Guid.Parse("01C66E3E-8C25-4F5C-A2C5-512C79D09AA6") },
-                new MovieGenre() { Id = 6, MovieId = Guid.Parse("45C0C223-DE18-4E6E-99EA-AED94E7469F1"), GenreId = Guid.Parse("976A7A24-1C25-4A7F-97C6-1A019C5C148D") },
-                new MovieGenre() { Id = 7, MovieId = Guid.Parse("45C0C223-DE18-4E6E-99EA-AED94E7469F1"), GenreId = Guid.Parse("72163C34-3D32-4A78-9701-1F708053978F") },
-                new MovieGenre() { Id = 8, MovieId = Guid.Parse("45C0C223-DE18-4E6E-99EA-AED94E7469F1"), GenreId = Guid.Parse("E143EBFF-A0BD-4107-889F-9BFF26EDA916") },
-                new MovieGenre() { Id = 9, MovieId = Guid.Parse("45C0C223-DE18-4E6E-99EA-AED94E7469F1"), GenreId = Guid.Parse("0532F0DF-C92D-4A10-9D1A-8A5935C541A2") },
-                new MovieGenre() { Id = 10, MovieId = Guid.Parse("45C0C223-DE18-4E6E-99EA-AED94E7469F1"), GenreId = Guid.Parse("E48AA8E0-3EFC-4ACD-A0D5-88C82551807A") },
+                new MovieGenre() { Id = Guid.Parse("BA8E9182-B327-4089-95F9-AD187C414AAD"), MovieId = Guid.Parse("45C0C223-DE18-4E6E-99EA-AED94E7469F1"), GenreId = Guid.Parse("8068CBF6-C595-4733-9C24-8104E8454B4C") },
+                new MovieGenre() { Id = Guid.Parse("50D42FAC-3A09-4BBC-BE99-85D66F664104"), MovieId = Guid.Parse("45C0C223-DE18-4E6E-99EA-AED94E7469F1"), GenreId = Guid.Parse("6E0A64BC-7A50-4A6C-9125-8CCF6E54BF70") },
+                new MovieGenre() { Id = Guid.Parse("FF036140-B028-4FE6-82D7-00AB55278518"), MovieId = Guid.Parse("45C0C223-DE18-4E6E-99EA-AED94E7469F1"), GenreId = Guid.Parse("01C66E3E-8C25-4F5C-A2C5-512C79D09AA6") },
+                new MovieGenre() { Id = Guid.Parse("944AC338-EA45-4133-9EBB-4D0BD2A1DB3B"), MovieId = Guid.Parse("45C0C223-DE18-4E6E-99EA-AED94E7469F1"), GenreId = Guid.Parse("976A7A24-1C25-4A7F-97C6-1A019C5C148D") },
+                new MovieGenre() { Id = Guid.Parse("7C3C5A3D-4566-4C04-BAB2-987EB175F3CA"), MovieId = Guid.Parse("45C0C223-DE18-4E6E-99EA-AED94E7469F1"), GenreId = Guid.Parse("72163C34-3D32-4A78-9701-1F708053978F") },
+                new MovieGenre() { Id = Guid.Parse("B7364F6C-9205-46CA-B6C9-8EABFD3DB362"), MovieId = Guid.Parse("45C0C223-DE18-4E6E-99EA-AED94E7469F1"), GenreId = Guid.Parse("E143EBFF-A0BD-4107-889F-9BFF26EDA916") },
+                new MovieGenre() { Id = Guid.Parse("1E7F851F-BA66-4989-AFC7-0D193B08575E"), MovieId = Guid.Parse("45C0C223-DE18-4E6E-99EA-AED94E7469F1"), GenreId = Guid.Parse("0532F0DF-C92D-4A10-9D1A-8A5935C541A2") },
+                new MovieGenre() { Id = Guid.Parse("F128E5DE-CA20-4672-BE7D-E84A3FB3ED60"), MovieId = Guid.Parse("45C0C223-DE18-4E6E-99EA-AED94E7469F1"), GenreId = Guid.Parse("E48AA8E0-3EFC-4ACD-A0D5-88C82551807A") },
                 // Movie 3
-                new MovieGenre() { Id = 11, MovieId = Guid.Parse("DE9B842D-531A-4F17-AD69-0D3E11CB911D"), GenreId = Guid.Parse("E48AA8E0-3EFC-4ACD-A0D5-88C82551807A") },
-                new MovieGenre() { Id = 12, MovieId = Guid.Parse("DE9B842D-531A-4F17-AD69-0D3E11CB911D"), GenreId = Guid.Parse("76C2FAB8-7161-49B7-88C6-F3AAF484EA64") },
+                new MovieGenre() { Id = Guid.Parse("8FDEAECF-FD6F-4AD5-AD3D-4B0E64380AB5"), MovieId = Guid.Parse("DE9B842D-531A-4F17-AD69-0D3E11CB911D"), GenreId = Guid.Parse("E48AA8E0-3EFC-4ACD-A0D5-88C82551807A") },
+                new MovieGenre() { Id = Guid.Parse("FEA24F3A-5853-404E-ADCB-9A35BF9A0EDB"), MovieId = Guid.Parse("DE9B842D-531A-4F17-AD69-0D3E11CB911D"), GenreId = Guid.Parse("76C2FAB8-7161-49B7-88C6-F3AAF484EA64") },
                 // Movie 4
-                new MovieGenre() { Id = 13, MovieId = Guid.Parse("195C5A46-96F9-446B-B4F7-864AB2DC49DE"), GenreId = Guid.Parse("6E0A64BC-7A50-4A6C-9125-8CCF6E54BF70") },
-                new MovieGenre() { Id = 14, MovieId = Guid.Parse("195C5A46-96F9-446B-B4F7-864AB2DC49DE"), GenreId = Guid.Parse("0532F0DF-C92D-4A10-9D1A-8A5935C541A2") },
-                new MovieGenre() { Id = 15, MovieId = Guid.Parse("195C5A46-96F9-446B-B4F7-864AB2DC49DE"), GenreId = Guid.Parse("76C2FAB8-7161-49B7-88C6-F3AAF484EA64") },
+                new MovieGenre() { Id = Guid.Parse("7AD0A3A0-8D31-4F50-83A1-36BF60D3AFB5"), MovieId = Guid.Parse("195C5A46-96F9-446B-B4F7-864AB2DC49DE"), GenreId = Guid.Parse("6E0A64BC-7A50-4A6C-9125-8CCF6E54BF70") },
+                new MovieGenre() { Id = Guid.Parse("DE438A37-46B0-4EC4-9AB9-C7797E0733FC"), MovieId = Guid.Parse("195C5A46-96F9-446B-B4F7-864AB2DC49DE"), GenreId = Guid.Parse("0532F0DF-C92D-4A10-9D1A-8A5935C541A2") },
+                new MovieGenre() { Id = Guid.Parse("677C944F-2498-4D65-B0D5-6276E6FB3261"), MovieId = Guid.Parse("195C5A46-96F9-446B-B4F7-864AB2DC49DE"), GenreId = Guid.Parse("76C2FAB8-7161-49B7-88C6-F3AAF484EA64") },
                 // Movie 5
-                new MovieGenre() { Id = 16, MovieId = Guid.Parse("174FD8D4-F72B-4059-A7EA-05E687026B0D"), GenreId = Guid.Parse("6E0A64BC-7A50-4A6C-9125-8CCF6E54BF70") },
-                new MovieGenre() { Id = 17, MovieId = Guid.Parse("174FD8D4-F72B-4059-A7EA-05E687026B0D"), GenreId = Guid.Parse("72163C34-3D32-4A78-9701-1F708053978F") },
-                new MovieGenre() { Id = 18, MovieId = Guid.Parse("174FD8D4-F72B-4059-A7EA-05E687026B0D"), GenreId = Guid.Parse("E143EBFF-A0BD-4107-889F-9BFF26EDA916") },
+                new MovieGenre() { Id = Guid.Parse("CCEEA45F-FA85-4E1A-810F-4ECC606F91FA"), MovieId = Guid.Parse("174FD8D4-F72B-4059-A7EA-05E687026B0D"), GenreId = Guid.Parse("6E0A64BC-7A50-4A6C-9125-8CCF6E54BF70") },
+                new MovieGenre() { Id = Guid.Parse("AE13C433-3272-43A0-80EC-8DECACF70976"), MovieId = Guid.Parse("174FD8D4-F72B-4059-A7EA-05E687026B0D"), GenreId = Guid.Parse("72163C34-3D32-4A78-9701-1F708053978F") },
+                new MovieGenre() { Id = Guid.Parse("20565D3D-A307-40C5-A30C-229764D7B5C6"), MovieId = Guid.Parse("174FD8D4-F72B-4059-A7EA-05E687026B0D"), GenreId = Guid.Parse("E143EBFF-A0BD-4107-889F-9BFF26EDA916") },
                 // Movie 6
-                new MovieGenre() { Id = 19, MovieId = Guid.Parse("163C03B3-A057-426D-AFA3-1A2631A693E2"), GenreId = Guid.Parse("6E0A64BC-7A50-4A6C-9125-8CCF6E54BF70") },
-                new MovieGenre() { Id = 20, MovieId = Guid.Parse("163C03B3-A057-426D-AFA3-1A2631A693E2"), GenreId = Guid.Parse("01C66E3E-8C25-4F5C-A2C5-512C79D09AA6") },
-                new MovieGenre() { Id = 21, MovieId = Guid.Parse("163C03B3-A057-426D-AFA3-1A2631A693E2"), GenreId = Guid.Parse("976A7A24-1C25-4A7F-97C6-1A019C5C148D") },
-                new MovieGenre() { Id = 22, MovieId = Guid.Parse("163C03B3-A057-426D-AFA3-1A2631A693E2"), GenreId = Guid.Parse("76C2FAB8-7161-49B7-88C6-F3AAF484EA64") }
+                new MovieGenre() { Id = Guid.Parse("0CC0D877-05A6-4227-8191-A9AED4F67757"), MovieId = Guid.Parse("163C03B3-A057-426D-AFA3-1A2631A693E2"), GenreId = Guid.Parse("6E0A64BC-7A50-4A6C-9125-8CCF6E54BF70") },
+                new MovieGenre() { Id = Guid.Parse("7FB799A4-7EE1-4E72-AA66-ED490BFCF682"), MovieId = Guid.Parse("163C03B3-A057-426D-AFA3-1A2631A693E2"), GenreId = Guid.Parse("01C66E3E-8C25-4F5C-A2C5-512C79D09AA6") },
+                new MovieGenre() { Id = Guid.Parse("EA23961B-3379-48AC-862D-28756F2593D2"), MovieId = Guid.Parse("163C03B3-A057-426D-AFA3-1A2631A693E2"), GenreId = Guid.Parse("976A7A24-1C25-4A7F-97C6-1A019C5C148D") },
+                new MovieGenre() { Id = Guid.Parse("FCC28F44-22DC-47EB-ACFA-CDCF8F6265C6"), MovieId = Guid.Parse("163C03B3-A057-426D-AFA3-1A2631A693E2"), GenreId = Guid.Parse("76C2FAB8-7161-49B7-88C6-F3AAF484EA64") }
                 );
 
             modelBuilder.Entity<Hall>().HasData(

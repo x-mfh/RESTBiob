@@ -142,13 +142,18 @@ namespace Biob.Web
 
             Mapper.Initialize(config => 
             {
-            config.CreateMap<Movie, MovieDto>()
-            .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.LengthInSeconds.CalculateFromSeconds()))
-            .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.MovieGenres.Select(moviegenre => moviegenre.Genre.GenreName).ConvertIEnumerableToString()));
+                config.CreateMap<Movie, MovieDto>()
+                .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.LengthInSeconds.CalculateFromSeconds()))
+                .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.MovieGenres.Select(moviegenre => moviegenre.Genre.GenreName).ConvertIEnumerableToString()));
 
                 config.CreateMap<MovieToCreateDto, Movie>();
                 config.CreateMap<MovieToUpdateDto, Movie>();
                 config.CreateMap<Movie, MovieToUpdateDto>();
+
+                config.CreateMap<Genre, GenreDto>();
+                config.CreateMap<GenreToCreateDto, Genre>();
+                config.CreateMap<GenreToUpdateDto, Genre>();
+                config.CreateMap<Genre, GenreToUpdateDto>();
 
                 config.CreateMap<MovieGenre, MovieGenreDto>()
                 .ForMember(dest => dest.GenreName, opt => opt.MapFrom(src => src.Genre.GenreName));

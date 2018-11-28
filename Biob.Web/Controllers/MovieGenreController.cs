@@ -160,7 +160,7 @@ namespace Biob.Web.Controllers
         // check if movie exists, check if genre exists, upsert if not, take id from genre, update only genreId on moviegenre
 
         [HttpPut("{genreId}")]
-        public async Task<IActionResult> UpdateMovieGenreById([FromRoute] Guid movieId, [FromRoute] Guid genreId, [FromRoute] int movieGenreId, [FromBody] MovieGenreToUpdateDto movieGenreToUpdate)
+        public async Task<IActionResult> UpdateMovieGenreById([FromRoute] Guid movieId, [FromRoute] Guid genreId, [FromRoute] Guid movieGenreId, [FromBody] MovieGenreToUpdateDto movieGenreToUpdate)
         {
             var movieExists = await _movieRepository.GetMovieAsync(movieId);
 
@@ -211,7 +211,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPatch("{genreId}")]
-        public async Task<IActionResult> PartiuallyUpdateMovieGenreById([FromRoute] int movieGenreId, JsonPatchDocument<MovieGenreToUpdateDto> patchDoc)
+        public async Task<IActionResult> PartiuallyUpdateMovieGenreById([FromRoute] Guid movieGenreId, JsonPatchDocument<MovieGenreToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
             {

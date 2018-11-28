@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Biob.Data.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -114,7 +114,7 @@ namespace Biob.Data.Data.Migrations
                 name: "MovieGenres",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
                     ModifiedOn = table.Column<DateTimeOffset>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -157,6 +157,12 @@ namespace Biob.Data.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Showtimes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Showtimes_Halls_HallId",
+                        column: x => x.HallId,
+                        principalTable: "Halls",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Showtimes_Movies_MovieId",
                         column: x => x.MovieId,
@@ -209,28 +215,28 @@ namespace Biob.Data.Data.Migrations
                 columns: new[] { "MovieId", "GenreId", "CreatedOn", "DeletedOn", "Id", "IsDeleted", "ModifiedOn" },
                 values: new object[,]
                 {
-                    { new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 4, false, null },
-                    { new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), new Guid("976a7a24-1c25-4a7f-97c6-1a019c5c148d"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 6, false, null },
-                    { new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), new Guid("72163c34-3d32-4a78-9701-1f708053978f"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 7, false, null },
-                    { new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), new Guid("e143ebff-a0bd-4107-889f-9bff26eda916"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 8, false, null },
-                    { new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), new Guid("0532f0df-c92d-4a10-9d1a-8a5935c541a2"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 9, false, null },
-                    { new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), new Guid("e48aa8e0-3efc-4acd-a0d5-88c82551807a"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 10, false, null },
-                    { new Guid("de9b842d-531a-4f17-ad69-0d3e11cb911d"), new Guid("e48aa8e0-3efc-4acd-a0d5-88c82551807a"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 11, false, null },
-                    { new Guid("de9b842d-531a-4f17-ad69-0d3e11cb911d"), new Guid("76c2fab8-7161-49b7-88c6-f3aaf484ea64"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 12, false, null },
-                    { new Guid("195c5a46-96f9-446b-b4f7-864ab2dc49de"), new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 13, false, null },
-                    { new Guid("195c5a46-96f9-446b-b4f7-864ab2dc49de"), new Guid("0532f0df-c92d-4a10-9d1a-8a5935c541a2"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 14, false, null },
-                    { new Guid("195c5a46-96f9-446b-b4f7-864ab2dc49de"), new Guid("76c2fab8-7161-49b7-88c6-f3aaf484ea64"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 15, false, null },
-                    { new Guid("174fd8d4-f72b-4059-a7ea-05e687026b0d"), new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 16, false, null },
-                    { new Guid("174fd8d4-f72b-4059-a7ea-05e687026b0d"), new Guid("72163c34-3d32-4a78-9701-1f708053978f"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 17, false, null },
-                    { new Guid("174fd8d4-f72b-4059-a7ea-05e687026b0d"), new Guid("e143ebff-a0bd-4107-889f-9bff26eda916"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 18, false, null },
-                    { new Guid("163c03b3-a057-426d-afa3-1a2631a693e2"), new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 19, false, null },
-                    { new Guid("163c03b3-a057-426d-afa3-1a2631a693e2"), new Guid("01c66e3e-8c25-4f5c-a2c5-512c79d09aa6"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 20, false, null },
-                    { new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), new Guid("01c66e3e-8c25-4f5c-a2c5-512c79d09aa6"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 5, false, null },
-                    { new Guid("163c03b3-a057-426d-afa3-1a2631a693e2"), new Guid("976a7a24-1c25-4a7f-97c6-1a019c5c148d"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 21, false, null },
-                    { new Guid("163c03b3-a057-426d-afa3-1a2631a693e2"), new Guid("76c2fab8-7161-49b7-88c6-f3aaf484ea64"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 22, false, null },
-                    { new Guid("9d90a452-9547-4d04-98ed-7d617e64ae1e"), new Guid("72163c34-3d32-4a78-9701-1f708053978f"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 2, false, null },
-                    { new Guid("9d90a452-9547-4d04-98ed-7d617e64ae1e"), new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 1, false, null },
-                    { new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), new Guid("8068cbf6-c595-4733-9c24-8104e8454b4c"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, 3, false, null }
+                    { new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("50d42fac-3a09-4bbc-be99-85d66f664104"), false, null },
+                    { new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), new Guid("976a7a24-1c25-4a7f-97c6-1a019c5c148d"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("944ac338-ea45-4133-9ebb-4d0bd2a1db3b"), false, null },
+                    { new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), new Guid("72163c34-3d32-4a78-9701-1f708053978f"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("7c3c5a3d-4566-4c04-bab2-987eb175f3ca"), false, null },
+                    { new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), new Guid("e143ebff-a0bd-4107-889f-9bff26eda916"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("b7364f6c-9205-46ca-b6c9-8eabfd3db362"), false, null },
+                    { new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), new Guid("0532f0df-c92d-4a10-9d1a-8a5935c541a2"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("1e7f851f-ba66-4989-afc7-0d193b08575e"), false, null },
+                    { new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), new Guid("e48aa8e0-3efc-4acd-a0d5-88c82551807a"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("f128e5de-ca20-4672-be7d-e84a3fb3ed60"), false, null },
+                    { new Guid("de9b842d-531a-4f17-ad69-0d3e11cb911d"), new Guid("e48aa8e0-3efc-4acd-a0d5-88c82551807a"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("8fdeaecf-fd6f-4ad5-ad3d-4b0e64380ab5"), false, null },
+                    { new Guid("de9b842d-531a-4f17-ad69-0d3e11cb911d"), new Guid("76c2fab8-7161-49b7-88c6-f3aaf484ea64"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("fea24f3a-5853-404e-adcb-9a35bf9a0edb"), false, null },
+                    { new Guid("195c5a46-96f9-446b-b4f7-864ab2dc49de"), new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("7ad0a3a0-8d31-4f50-83a1-36bf60d3afb5"), false, null },
+                    { new Guid("195c5a46-96f9-446b-b4f7-864ab2dc49de"), new Guid("0532f0df-c92d-4a10-9d1a-8a5935c541a2"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("de438a37-46b0-4ec4-9ab9-c7797e0733fc"), false, null },
+                    { new Guid("195c5a46-96f9-446b-b4f7-864ab2dc49de"), new Guid("76c2fab8-7161-49b7-88c6-f3aaf484ea64"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("677c944f-2498-4d65-b0d5-6276e6fb3261"), false, null },
+                    { new Guid("174fd8d4-f72b-4059-a7ea-05e687026b0d"), new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("cceea45f-fa85-4e1a-810f-4ecc606f91fa"), false, null },
+                    { new Guid("174fd8d4-f72b-4059-a7ea-05e687026b0d"), new Guid("72163c34-3d32-4a78-9701-1f708053978f"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("ae13c433-3272-43a0-80ec-8decacf70976"), false, null },
+                    { new Guid("174fd8d4-f72b-4059-a7ea-05e687026b0d"), new Guid("e143ebff-a0bd-4107-889f-9bff26eda916"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("20565d3d-a307-40c5-a30c-229764d7b5c6"), false, null },
+                    { new Guid("163c03b3-a057-426d-afa3-1a2631a693e2"), new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("0cc0d877-05a6-4227-8191-a9aed4f67757"), false, null },
+                    { new Guid("163c03b3-a057-426d-afa3-1a2631a693e2"), new Guid("01c66e3e-8c25-4f5c-a2c5-512c79d09aa6"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("7fb799a4-7ee1-4e72-aa66-ed490bfcf682"), false, null },
+                    { new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), new Guid("01c66e3e-8c25-4f5c-a2c5-512c79d09aa6"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("ff036140-b028-4fe6-82d7-00ab55278518"), false, null },
+                    { new Guid("163c03b3-a057-426d-afa3-1a2631a693e2"), new Guid("976a7a24-1c25-4a7f-97c6-1a019c5c148d"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("ea23961b-3379-48ac-862d-28756f2593d2"), false, null },
+                    { new Guid("163c03b3-a057-426d-afa3-1a2631a693e2"), new Guid("76c2fab8-7161-49b7-88c6-f3aaf484ea64"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("fcc28f44-22dc-47eb-acfa-cdcf8f6265c6"), false, null },
+                    { new Guid("9d90a452-9547-4d04-98ed-7d617e64ae1e"), new Guid("72163c34-3d32-4a78-9701-1f708053978f"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("c136188f-d71c-4575-8258-1af4db16dc0f"), false, null },
+                    { new Guid("9d90a452-9547-4d04-98ed-7d617e64ae1e"), new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("5df8a672-e37a-4ec2-8b6d-d331c84e7f8d"), false, null },
+                    { new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), new Guid("8068cbf6-c595-4733-9c24-8104e8454b4c"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new Guid("ba8e9182-b327-4089-95f9-ad187c414aad"), false, null }
                 });
 
             migrationBuilder.InsertData(
@@ -296,6 +302,11 @@ namespace Biob.Data.Data.Migrations
                 name: "IX_Seats_IsDeleted",
                 table: "Seats",
                 column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Showtimes_HallId",
+                table: "Showtimes",
+                column: "HallId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Showtimes_IsDeleted",
