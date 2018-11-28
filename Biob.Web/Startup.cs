@@ -19,6 +19,9 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using AspNetCoreRateLimit;
 using System.Collections.Generic;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Dynamic;
 
 namespace Biob.Web
 {
@@ -37,10 +40,16 @@ namespace Biob.Web
             services.AddMvc(setupAction =>
             {
                 setupAction.ReturnHttpNotAcceptable = true;
-                setupAction.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+                var xmlSerializerInputFormatter = new XmlSerializerInputFormatter(setupAction);
+                setupAction.InputFormatters.Add(xmlSerializerInputFormatter);
 
-                setupAction.InputFormatters.Add(new XmlSerializerInputFormatter(setupAction));
 
+                var jsonOutputFormatter = setupAction.OutputFormatters.OfType<JsonOutputFormatter>().FirstOrDefault();
+
+                if (jsonOutputFormatter != null)
+                {
+                    jsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.biob.json+hateoas");
+                }
 
             })
             .AddJsonOptions(options =>
@@ -49,6 +58,14 @@ namespace Biob.Web
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => 
+                {
+                    //  needs to  be configured
+                    options.Authority = "";
+                    options.Audience = "";
+                });
 
             var connectionString = Configuration.GetConnectionString("BiobDB");
             services.AddDbContext<BiobDataContext>(options => options.UseSqlServer(connectionString));
@@ -117,15 +134,18 @@ namespace Biob.Web
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             loggerFactory.AddFile("Logs/BioB-{Date}.txt");
 
             Mapper.Initialize(config => 
             {
-                config.CreateMap<Movie, MovieDto>()
-                .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.LengthInSeconds.CalculateFromSeconds()))
-                .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.MovieGenres.Select(moviegenre => moviegenre.Genre.GenreName)));
+            config.CreateMap<Movie, MovieDto>()
+            .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.LengthInSeconds.CalculateFromSeconds()))
+            .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.MovieGenres.Select(moviegenre => moviegenre.Genre.GenreName).ConvertIEnumerableToString()));
+
                 config.CreateMap<MovieToCreateDto, Movie>();
                 config.CreateMap<MovieToUpdateDto, Movie>();
                 config.CreateMap<Movie, MovieToUpdateDto>();
