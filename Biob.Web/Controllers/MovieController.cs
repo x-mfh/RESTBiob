@@ -77,7 +77,7 @@ namespace Biob.Web.Controllers
 
             var movies = Mapper.Map<IEnumerable<MovieDto>>(moviesPagedList);
 
-            if (mediaType == "application/vnd.biob.json+hateoas" || mediaType == "application/vnd.biob.xml+hateoas")
+            if (mediaType == "application/vnd.biob.json+hateoas")
             {  
                 return Ok(CreateHateoasResponse(moviesPagedList, requestParameters));
             }
@@ -109,7 +109,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet("{movieId}", Name = "GetMovie")]
-        //[MovieParameterValidationFilter]
+        [MovieParameterValidationFilter]
         public async Task<IActionResult> GetOneMovie([FromRoute]Guid movieId, [FromQuery] string fields, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (!_typeHelperService.TypeHasProperties<MovieDto>(fields))
@@ -141,23 +141,17 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMovie([FromBody] MovieToCreateDto movieToCreate)
+        public async Task<IActionResult> CreateMovie([FromBody] MovieToCreateDto movieToCreate, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (movieToCreate == null)
             {
                 return BadRequest();
             }
 
-            if (movieToCreate.Id == null)
+            if (movieToCreate.Id == Guid.Empty)
             {
                 movieToCreate.Id = Guid.NewGuid();
             }
-
-            if (!ModelState.IsValid)
-            {
-                return new ProccessingEntityObjectResultErrors(ModelState);
-            }
-
 
             var movieToAdd = Mapper.Map<Movie>(movieToCreate);
             _movieRepository.AddMovie(movieToAdd);
@@ -168,18 +162,26 @@ namespace Biob.Web.Controllers
             }
             var movieDto = Mapper.Map<MovieDto>(movieToAdd);
 
-            var links = CreateLinksForMovies(movieDto.Id, null);
+            if (mediaType == "application/vnd.biob.json+hateoas")
+            {
+                var links = CreateLinksForMovies(movieDto.Id, null);
 
-            var linkedMovie = movieDto as IDictionary<string, object>;
+                var linkedMovie = movieDto.ShapeData(null) as IDictionary<string, object>;
 
-            linkedMovie.Add("links", links);
-            
-            return CreatedAtRoute("GetMovie", new { movieId = movieToAdd.Id }, linkedMovie);
+                linkedMovie.Add("links", links);
+
+                return CreatedAtRoute("GetMovie", new { movieId = movieDto.Id }, linkedMovie);
+            }
+            else
+            {
+                return CreatedAtRoute("GetMovie", new { movieId = movieDto.Id }, movieDto);
+            }
+               
         }
 
         [HttpPut("{movieId}",Name = "UpdateMovie")]
         [MovieParameterValidationFilter]
-        public async Task<IActionResult> UpdateMovie([FromRoute] Guid movieId, [FromBody] MovieToUpdateDto movieToUpdate)
+        public async Task<IActionResult> UpdateMovie([FromRoute] Guid movieId, [FromBody] MovieToUpdateDto movieToUpdate, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (movieToUpdate == null)
             {
@@ -202,7 +204,20 @@ namespace Biob.Web.Controllers
 
                 var movieToReturn = Mapper.Map<MovieDto>(movieEntity);
 
-                return CreatedAtRoute("GetMovie", new { movieId = movieToReturn.Id }, movieToReturn);
+                if (mediaType == "application/vnd.biob.json+hateoas")
+                {
+                    var links = CreateLinksForMovies(movieToReturn.Id, null);
+
+                    var linkedMovie = movieToReturn.ShapeData(null) as IDictionary<string, object>;
+
+                    linkedMovie.Add("links", links);
+
+                    return CreatedAtRoute("GetMovie", new { movieId = movieToReturn.Id }, linkedMovie);
+                }
+                else
+                {
+                    return CreatedAtRoute("GetMovie", new { movieId = movieToReturn.Id }, movieToReturn);
+                }
             }
 
             Mapper.Map(movieToUpdate, movieFromDb);
@@ -219,7 +234,8 @@ namespace Biob.Web.Controllers
 
         [HttpPatch("{movieId}", Name = "PartiallyUpdateMovie")]
         [MovieParameterValidationFilter]
-        public async Task<IActionResult> PartiuallyUpdateMovie([FromRoute] Guid movieId, JsonPatchDocument<MovieToUpdateDto> patchDoc)
+        public async Task<IActionResult> PartiuallyUpdateMovie([FromRoute] Guid movieId, JsonPatchDocument<MovieToUpdateDto> patchDoc,
+                                                               [FromHeader(Name = "Accept")] string mediaType)
         {
             if (patchDoc == null)
             {
@@ -253,7 +269,21 @@ namespace Biob.Web.Controllers
 
                 var movieToReturn = Mapper.Map<MovieDto>(movieToAddToDb);
 
-                return CreatedAtRoute("GetMovie", new { movieId = movieToReturn.Id }, movieToReturn);
+                if (mediaType == "application/vnd.biob.json+hateoas")
+                {
+                    var links = CreateLinksForMovies(movieToReturn.Id, null);
+
+                    var linkedMovie = movieToReturn.ShapeData(null) as IDictionary<string, object>;
+
+                    linkedMovie.Add("links", links);
+
+                    return CreatedAtRoute("GetMovie", new { movieId = movieToReturn.Id }, linkedMovie);
+                }
+                else
+                {
+                    return CreatedAtRoute("GetMovie", new { movieId = movieToReturn.Id }, movieToReturn);
+                }
+                
             }
 
             var movieToPatch = Mapper.Map<MovieToUpdateDto>(movieFromDb);
