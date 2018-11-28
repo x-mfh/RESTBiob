@@ -17,7 +17,7 @@ This document provides simple information regarding our API.
 ___This is a school project and is mainly made for us to gain knowlegde in the various technologies, while also being effective in best practices.___
 
 ## Getting Started
-To clone and run the API, you'll need [Node.js](https://nodejs.org/en/download/) and [MongoDB](https://www.mongodb.com/) installed on your computer.
+To clone and run the API, you'll need [Visual Studio](https://visualstudio.microsoft.com/vs/community/) installed on your computer.
 
 From your command line:
 
