@@ -33,7 +33,8 @@ $ XXX
 ```
 
 ## API endpoints
-https://localhost:44390/api/v1/halls/{hallId}/seats
+Example on URL startpoint
+https://localhost:PORT/api/v1/halls/{hallId}/seats
 #### Movie Resources
 - <code>GET</code> movies
 - <code>POST</code> movies
