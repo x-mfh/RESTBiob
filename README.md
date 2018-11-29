@@ -70,6 +70,8 @@ https://localhost:PORT/api/v1/movies/{movieId}/
 - <code>GET</code> halls/:id/seats/:id
 - <code>PATCH</code> halls/:id/seats/:id
 - <code>DELETE</code> halls/:id/seats/:id
+## API string queries
+
 ## Authors
 - BalenD - [BalenD](https://github.com/BalenD)
 - Mikkel - [x-mfh](https://github.com/x-mfh)
