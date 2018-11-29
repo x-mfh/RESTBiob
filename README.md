@@ -33,27 +33,43 @@ $ XXX
 ```
 
 ## API endpoints
+https://localhost:44390/api/v1/halls/{hallId}/seats
 #### Movie Resources
 - <code>GET</code> movies
 - <code>POST</code> movies
 - <code>GET</code> movies:id
 - <code>PATCH</code> movies/:id
 - <code>DELETE</code> movies/:id
-#### Showtime Resources
-- <code>GET</code> movies/:id/showtimes
-- <code>POST</code> movies/:id/showtimes
-- <code>GET</code> movies/:id/showtimes/:id
-- <code>PATCH</code> movies/:id/showtimes/:id
-- <code>DELETE</code> movies/:id/showtimes/:id
 #### Genre sources
 - <code>GET</code> movies/:id/showtimes/:id
 - <code>POST</code> movies/:id/showtimes/:id
 - <code>GET</code> movies/:id/showtimes/:id
 - <code>PATCH</code> movies/:id/showtimes/:id
 - <code>DELETE</code> movies/:id/showtimes/:id
+#### Showtime Resources
+- <code>GET</code> movies/:id/showtimes
+- <code>POST</code> movies/:id/showtimes
+- <code>GET</code> movies/:id/showtimes/:id
+- <code>PATCH</code> movies/:id/showtimes/:id
+- <code>DELETE</code> movies/:id/showtimes/:id
 #### Ticket sources
+- <code>GET</code> movies/:id/showtimes/:id/tickets
+- <code>POST</code> movies/:id/showtimes/id/tickets
+- <code>GET</code> movies/:id/showtimes/:id/tickets/:id
+- <code>PATCH</code> movies/:id/showtimes/:id/tickets/:id
+- <code>DELETE</code> movies/:id/showtimes/:id/tickets/:id
 #### Hall sources
+- <code>GET</code> halls/
+- <code>POST</code> halls/
+- <code>GET</code> halls/:id
+- <code>PATCH</code> halls/:id
+- <code>DELETE</code> halls/:id
 #### Seat sources
+- <code>GET</code> halls/:id/seats
+- <code>POST</code> halls/:id/seats
+- <code>GET</code> halls/:id/seats/:id
+- <code>PATCH</code> halls/:id/seats/:id
+- <code>DELETE</code> halls/:id/seats/:id
 ## Authors
 - BalenD - [BalenD](https://github.com/BalenD)
 - Mikkel - [x-mfh](https://github.com/x-mfh)
