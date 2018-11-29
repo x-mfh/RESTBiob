@@ -497,3 +497,7 @@ System.NullReferenceException: Object reference not set to an instance of an obj
    at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
 2018-11-29T15:50:44.6571486+01:00 0HLIM180MPUA6:00000002 [INF] Request finished in 4448.2804ms 500  (791a596a)
 2018-11-29T15:50:44.6760370+01:00  [INF] Connection id ""0HLIM180MPUA6"", Request id ""0HLIM180MPUA6:00000002"": the application completed without reading the entire request body. (54ac9468)
+2018-11-29T20:06:21.2779382+01:00 0HLIM5MVT257T:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-29T20:06:21.3408940+01:00 0HLIM5MVT257T:00000001 [INF] Request finished in 70.2366ms 200  (791a596a)
+2018-11-29T20:52:52.8827293+01:00 0HLIM6GVRMD8R:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-29T20:52:52.9488563+01:00 0HLIM6GVRMD8R:00000001 [INF] Request finished in 64.2177ms 200  (791a596a)
