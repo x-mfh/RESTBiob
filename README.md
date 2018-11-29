@@ -14,6 +14,8 @@
 ## About
 This document provides simple information regarding our API.
 
+The API is mainly used for our project regarding Bio B, and is supposed to handle CRUD operations to a "imaginary" cinema.
+
 ___This is a school project and is mainly made for us to gain knowlegde in the various technologies, while also being effective in best practices.___
 
 ## Getting Started
@@ -43,12 +45,15 @@ $ XXX
 - <code>GET</code> movies/:id/showtimes/:id
 - <code>PATCH</code> movies/:id/showtimes/:id
 - <code>DELETE</code> movies/:id/showtimes/:id
-#### //MANGLER sources
+#### Genre sources
 - <code>GET</code> movies/:id/showtimes/:id
 - <code>POST</code> movies/:id/showtimes/:id
 - <code>GET</code> movies/:id/showtimes/:id
 - <code>PATCH</code> movies/:id/showtimes/:id
 - <code>DELETE</code> movies/:id/showtimes/:id
+#### Ticket sources
+#### Hall sources
+#### Seat sources
 ## Authors
 - BalenD - [BalenD](https://github.com/BalenD)
 - Mikkel - [x-mfh](https://github.com/x-mfh)
