@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Biob.Web.Controllers
 {
-    [Route("/api/v1/movies/{movieId}/showtime/{showtimeId}/tickets")]
+    [Route("/api/v1/movies/{movieId}/showtimes/{showtimeId}/tickets")]
     [ApiController]
     public class TicketController : ControllerBase
     {
@@ -35,16 +35,19 @@ namespace Biob.Web.Controllers
         [HttpGet(Name = "GetTickets")]
         public async Task<IActionResult> GetAllTickets([FromQuery]RequestParameters requestParameters)
         {
+            
             if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
             {
                 requestParameters.OrderBy = "CreatedOn";
             }
 
+            //  __propertyMappingService needs to be initialized
             if (!_propertyMappingService.ValidMappingExistsFor<TicketDto, Ticket>(requestParameters.Fields))
             {
                 return BadRequest();
             }
 
+            //  _typeHelperService needs to be initialized
             if (!_typeHelperService.TypeHasProperties<TicketDto>(requestParameters.Fields))
             {
                 return BadRequest();
