@@ -39,23 +39,42 @@ https://localhost:PORT/api/v1/movies/{movieId}/
 |:--------|:--------------------------------|
 | `GET`   | /movies |
 | `POST`  | /movies |
-| `GET`   | /movies/:id |
-| `PATCH` | /movies/:id |
-| `DELETE`| /movies/:id |
-| `DELETE`| /movies/:id |
+| `GET`   | /movies/{movieId} |
+| `PATCH` | /movies/{movieId} |
+| `DELETE`| /movies/{movieId} |
+| `DELETE`| /movies/{movieId} |
 #### Genre sources
+| Request | Resources                       |
+|:--------|:--------------------------------|
+| `GET`   | /movies/{movieId}/showtimes/ |
+| `POST`  | /movies/{movieId}/showtimes/ |
+| `GET`   | /movies/{movieId}/showtimes/{showtimeId} |
+| `PATCH` | /movies/{movieId}/showtimes/{showtimeId} |
+| `DELETE`| /movies/{movieId}/showtimes/{showtimeId} |
+| `DELETE`| /movies/{movieId}/showtimes/{showtimeId} |
 - <code>GET</code> movies/:id/showtimes/:id
 - <code>POST</code> movies/:id/showtimes/:id
 - <code>GET</code> movies/:id/showtimes/:id
 - <code>PATCH</code> movies/:id/showtimes/:id
 - <code>DELETE</code> movies/:id/showtimes/:id
 #### Showtime Resources
-- <code>GET</code> movies/:id/showtimes
-- <code>POST</code> movies/:id/showtimes
-- <code>GET</code> movies/:id/showtimes/:id
-- <code>PATCH</code> movies/:id/showtimes/:id
-- <code>DELETE</code> movies/:id/showtimes/:id
+| Request | Resources                       |
+|:--------|:--------------------------------|
+| `GET`   | /movies/{movieId}/showtimes/ |
+| `POST`  | /movies/{movieId}/showtimes/ |
+| `GET`   | /movies/{movieId}/showtimes/{showtimeId} |
+| `PATCH` | /movies/{movieId}/showtimes/{showtimeId} |
+| `DELETE`| /movies/{movieId}/showtimes/{showtimeId} |
+| `DELETE`| /movies/{movieId}/showtimes/{showtimeId} |
 #### Ticket sources
+| Request | Resources                       |
+|:--------|:--------------------------------|
+| `GET`   | /movies/{movieId}/showtimes/{showtimeId}/tickets |
+| `POST`  | /movies/{movieId}/showtimes/{showtimeId}/tickets |
+| `GET`   | /movies/{movieId}/showtimes/{showtimeId}/tickets/{ticketId} |
+| `PATCH` | /movies/{movieId}/showtimes/{showtimeId}/tickets/{ticketId} |
+| `DELETE`| /movies/{movieId}/showtimes/{showtimeId}/tickets/{ticketId} |
+| `DELETE`| /movies/{movieId}/showtimes/{showtimeId}/tickets/{ticketId} |
 - <code>GET</code> movies/:id/showtimes/:id/tickets
 - <code>POST</code> movies/:id/showtimes/id/tickets
 - <code>GET</code> movies/:id/showtimes/:id/tickets/:id
