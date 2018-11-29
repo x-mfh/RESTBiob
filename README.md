@@ -42,29 +42,21 @@ https://localhost:PORT/api/v1/movies/{movieId}/
 | `GET`   | /movies/{movieId} |
 | `PATCH` | /movies/{movieId} |
 | `DELETE`| /movies/{movieId} |
-| `DELETE`| /movies/{movieId} |
 #### Genre sources
 | Request | Resources                       |
 |:--------|:--------------------------------|
-| `GET`   | /movies/{movieId}/showtimes/ |
-| `POST`  | /movies/{movieId}/showtimes/ |
-| `GET`   | /movies/{movieId}/showtimes/{showtimeId} |
-| `PATCH` | /movies/{movieId}/showtimes/{showtimeId} |
-| `DELETE`| /movies/{movieId}/showtimes/{showtimeId} |
-| `DELETE`| /movies/{movieId}/showtimes/{showtimeId} |
-- <code>GET</code> movies/:id/showtimes/:id
-- <code>POST</code> movies/:id/showtimes/:id
-- <code>GET</code> movies/:id/showtimes/:id
-- <code>PATCH</code> movies/:id/showtimes/:id
-- <code>DELETE</code> movies/:id/showtimes/:id
+| `GET`   | /movies/{movieId}/genres |
+| `POST`  | /movies/{movieId}/genres |
+| `GET`   | /movies/{movieId}/genres/{genreId} |
+| `PATCH` | /movies/{movieId}/genres/{genreId} |
+| `DELETE`| /movies/{movieId}/genres/{genreId} |
 #### Showtime Resources
 | Request | Resources                       |
 |:--------|:--------------------------------|
-| `GET`   | /movies/{movieId}/showtimes/ |
-| `POST`  | /movies/{movieId}/showtimes/ |
+| `GET`   | /movies/{movieId}/showtimes |
+| `POST`  | /movies/{movieId}/showtimes |
 | `GET`   | /movies/{movieId}/showtimes/{showtimeId} |
 | `PATCH` | /movies/{movieId}/showtimes/{showtimeId} |
-| `DELETE`| /movies/{movieId}/showtimes/{showtimeId} |
 | `DELETE`| /movies/{movieId}/showtimes/{showtimeId} |
 #### Ticket sources
 | Request | Resources                       |
@@ -74,24 +66,22 @@ https://localhost:PORT/api/v1/movies/{movieId}/
 | `GET`   | /movies/{movieId}/showtimes/{showtimeId}/tickets/{ticketId} |
 | `PATCH` | /movies/{movieId}/showtimes/{showtimeId}/tickets/{ticketId} |
 | `DELETE`| /movies/{movieId}/showtimes/{showtimeId}/tickets/{ticketId} |
-| `DELETE`| /movies/{movieId}/showtimes/{showtimeId}/tickets/{ticketId} |
-- <code>GET</code> movies/:id/showtimes/:id/tickets
-- <code>POST</code> movies/:id/showtimes/id/tickets
-- <code>GET</code> movies/:id/showtimes/:id/tickets/:id
-- <code>PATCH</code> movies/:id/showtimes/:id/tickets/:id
-- <code>DELETE</code> movies/:id/showtimes/:id/tickets/:id
 #### Hall sources
-- <code>GET</code> halls/
-- <code>POST</code> halls/
-- <code>GET</code> halls/:id
-- <code>PATCH</code> halls/:id
-- <code>DELETE</code> halls/:id
+| Request | Resources                       |
+|:--------|:--------------------------------|
+| `GET`   | /halls |
+| `POST`  | /halls |
+| `GET`   | /halls/{hallId} |
+| `PATCH` | /halls/{hallId} |
+| `DELETE`| /halls/{hallId} |
 #### Seat sources
-- <code>GET</code> halls/:id/seats
-- <code>POST</code> halls/:id/seats
-- <code>GET</code> halls/:id/seats/:id
-- <code>PATCH</code> halls/:id/seats/:id
-- <code>DELETE</code> halls/:id/seats/:id
+| Request | Resources                       |
+|:--------|:--------------------------------|
+| `GET`   | /halls/{hallId}/seats |
+| `POST`  | /halls/{hallId}/seats |
+| `GET`   | /halls/{hallId}/seats/{seatId} |
+| `PATCH` | /halls/{hallId}/seats/{seatId} |
+| `DELETE`| /halls/{hallId}/seats/{seatId} |
 ## API string queries
 
 ## Authors
