@@ -56,16 +56,19 @@ namespace Biob.Services.Data.Repositories
 
         public async Task<PagedList<Ticket>> GetAllTicketsAsync(string orderBy, string searchQuery, int pageNumber, int pageSize)
         {
+                                                            
             var collectionsBeforePaging = _context.Tickets.Include(ticket => ticket.Showtime).ThenInclude(showtime => showtime.Movie) //Hmm. If this is not included, will the Where below then cause error?
-                                                         .Where(ticket => !ticket.IsDeleted).Applysort(orderBy, _propertyMappingService.GetPropertyMapping<TicketDto, Ticket>());
+
+                                                           .Where(ticket => !ticket.IsDeleted);//.Applysort(orderBy, _propertyMappingService.GetPropertyMapping<TicketDto, Ticket>());
+                                                                                               //^This^ outcommenting was made because applysort seems to fail, resulting in instant server error 500 as it is not handled. I THINK.. TODO: could be fixed if time allows
 
             if (!string.IsNullOrWhiteSpace(searchQuery))
             {
                 string searchQueryForWhere = searchQuery.Trim().ToLowerInvariant();
                 collectionsBeforePaging = collectionsBeforePaging
                     .Where(ticket => ticket.Showtime.Movie.Title.ToLowerInvariant().Contains(searchQueryForWhere));
-                           //this can be added if we want to be able to search all tickets by related movie's genre:
-                           //|| ticket.Showtime.Movie.MovieGenres.Select(moviegenre => moviegenre.Genre.GenreName).Contains(searchQueryForWhere));
+                //this can be added if we want to be able to search all tickets by related movie's genre:
+                //|| ticket.Showtime.Movie.MovieGenres.Select(moviegenre => moviegenre.Genre.GenreName).Contains(searchQueryForWhere));
             }
 
 
