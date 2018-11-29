@@ -35,11 +35,14 @@ If you however want the API, you will need your own local DB
 Example on URL startpoint
 https://localhost:PORT/api/v1/movies/{movieId}/
 #### Movie Resources
-- <code>GET</code> movies
-- <code>POST</code> movies
-- <code>GET</code> movies:id
-- <code>PATCH</code> movies/:id
-- <code>DELETE</code> movies/:id
+| Request | Resources                       |
+|:--------|:--------------------------------|
+| GET     | `/movies` |
+| POST    | `/movies` |
+| GET     | `/movies/:id` |
+| PATCH   | `/movies/:id` |
+| DELETE  | `/movies/:id` |
+| DELETE  | `/movies/:id` |
 #### Genre sources
 - <code>GET</code> movies/:id/showtimes/:id
 - <code>POST</code> movies/:id/showtimes/:id
