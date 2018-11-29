@@ -350,6 +350,20 @@ namespace Biob.Web.Controllers
             return NoContent();
         }
 
+        [HttpOptions]
+        public IActionResult GetMoviesOptions()
+        {
+            Response.Headers.Add("Allow", "GET,POST,OPTIONS");
+            return Ok();
+        }
+
+        [HttpOptions("{movieId}")]
+        public IActionResult GetMovieOptions()
+        {
+            Response.Headers.Add("Allow", "GET,PATCH,PUT,OPTIONS");
+            return Ok();
+        }
+
         private ExpandoObject CreateHateoasResponse(PagedList<Movie> moviesPagedList, RequestParameters requestParameters)
         {
 

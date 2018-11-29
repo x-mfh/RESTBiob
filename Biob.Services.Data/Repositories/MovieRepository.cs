@@ -35,10 +35,6 @@ namespace Biob.Services.Data.Repositories
         }
         public void AddMovie(Movie movieToAdd)
         {
-            if (movieToAdd.Id ==  Guid.Empty)
-            {
-                movieToAdd.Id = Guid.NewGuid();
-            }
             _context.Movies.Add(movieToAdd);
         }
 
