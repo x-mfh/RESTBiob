@@ -22,15 +22,18 @@ namespace Biob.Web.Controllers
     public class MovieController : ControllerBase
     {
         private readonly IMovieRepository _movieRepository;
+        private readonly IMovieGenreRepository _movieGenreRepository;
         private readonly IPropertyMappingService _propertyMappingService;
         private readonly ITypeHelperService _typeHelperService;
         private readonly IUrlHelper _urlHelper;
         private readonly ILogger<MovieController> _logger;
 
-        public MovieController(IMovieRepository movieRepository, IPropertyMappingService propertyMappingService,
-                                ITypeHelperService typeHelperService, IUrlHelper urlHelper, ILogger<MovieController> logger)
+        public MovieController(IMovieRepository movieRepository, IMovieGenreRepository movieGenreRepository,
+                               IPropertyMappingService propertyMappingService, ITypeHelperService typeHelperService,
+                               IUrlHelper urlHelper, ILogger<MovieController> logger)
         {
             _movieRepository = movieRepository;
+            _movieGenreRepository = movieGenreRepository;
             _propertyMappingService = propertyMappingService;
             _typeHelperService = typeHelperService;
             _urlHelper = urlHelper;
@@ -160,6 +163,25 @@ namespace Biob.Web.Controllers
             {
                 _logger.LogError("Saving changes to database while creating a movie failed");
             }
+
+            // if any genre is added to movie, create many-to-many relationship for each genre
+            if (movieToCreate.GenreIds.Count > 0)
+            {
+                for (int i = 0; i < movieToCreate.GenreIds.Count; i++)
+                {
+                    // create moviegenre object with genre id and movie id from movieToCreate object
+                    MovieGenre movieGenreToAdd = new MovieGenre { MovieId = movieToAdd.Id, GenreId = movieToCreate.GenreIds[i] };
+                    movieGenreToAdd.Id = Guid.NewGuid();
+                    _movieGenreRepository.AddMovieGenre(movieGenreToAdd);
+                }
+                // save changes to database after all many-to-many relationships has been created
+                if (!await _movieGenreRepository.SaveChangesAsync())
+                {
+                    _logger.LogError("Saving changes to database while creating a moviegenre failed");
+                }
+
+            }
+
             var movieDto = Mapper.Map<MovieDto>(movieToAdd);
 
             if (mediaType == "application/vnd.biob.json+hateoas")
@@ -326,6 +348,20 @@ namespace Biob.Web.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpOptions]
+        public IActionResult GetMoviesOptions()
+        {
+            Response.Headers.Add("Allow", "GET,POST,OPTIONS");
+            return Ok();
+        }
+
+        [HttpOptions("{movieId}")]
+        public IActionResult GetMovieOptions()
+        {
+            Response.Headers.Add("Allow", "GET,PATCH,PUT,OPTIONS");
+            return Ok();
         }
 
         private ExpandoObject CreateHateoasResponse(PagedList<Movie> moviesPagedList, RequestParameters requestParameters)
