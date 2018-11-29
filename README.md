@@ -24,17 +24,16 @@ To clone and run the API, you'll need [Visual Studio](https://visualstudio.micro
 From your command line:
 
 ```bash
-//MANGLER
 # Clone this repository
 $ git clone https://github.com/BalenD/Restbiob
-
-# Run the app
-$ XXX
 ```
+
+If you however want the API, you will need your own local DB
+// MANGLER
 
 ## API endpoints
 Example on URL startpoint
-https://localhost:PORT/api/v1/halls/{hallId}/seats
+https://localhost:PORT/api/v1/movies/{movieId}/
 #### Movie Resources
 - <code>GET</code> movies
 - <code>POST</code> movies
