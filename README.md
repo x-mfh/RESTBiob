@@ -37,12 +37,12 @@ https://localhost:PORT/api/v1/movies/{movieId}/
 #### Movie Resources
 | Request | Resources                       |
 |:--------|:--------------------------------|
-| GET     | `/movies` |
-| POST    | `/movies` |
-| GET     | `/movies/:id` |
-| PATCH   | `/movies/:id` |
-| DELETE  | `/movies/:id` |
-| DELETE  | `/movies/:id` |
+| `GET`   | /movies |
+| `POST`  | /movies |
+| `GET`   | /movies/:id |
+| `PATCH` | /movies/:id |
+| `DELETE`| /movies/:id |
+| `DELETE`| /movies/:id |
 #### Genre sources
 - <code>GET</code> movies/:id/showtimes/:id
 - <code>POST</code> movies/:id/showtimes/:id
