@@ -1,5 +1,6 @@
 ﻿using Biob.Data.Common.Models;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Biob.Data.Models
@@ -17,5 +18,6 @@ namespace Biob.Data.Models
 
         //Foreign key
         public Hall Hall { get; set; }
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }

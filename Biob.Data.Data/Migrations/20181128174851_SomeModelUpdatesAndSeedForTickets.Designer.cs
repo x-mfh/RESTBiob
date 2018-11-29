@@ -4,14 +4,16 @@ using Biob.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Biob.Data.Data.Migrations
 {
     [DbContext(typeof(BiobDataContext))]
-    partial class BiobDataContextModelSnapshot : ModelSnapshot
+    [Migration("20181128174851_SomeModelUpdatesAndSeedForTickets")]
+    partial class SomeModelUpdatesAndSeedForTickets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,7 +149,7 @@ namespace Biob.Data.Data.Migrations
 
                     b.Property<DateTimeOffset?>("DeletedOn");
 
-                    b.Property<Guid>("Id");
+                    b.Property<int>("Id");
 
                     b.Property<bool>("IsDeleted");
 
@@ -164,28 +166,28 @@ namespace Biob.Data.Data.Migrations
                     b.ToTable("MovieGenres");
 
                     b.HasData(
-                        new { MovieId = new Guid("9d90a452-9547-4d04-98ed-7d617e64ae1e"), GenreId = new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("5df8a672-e37a-4ec2-8b6d-d331c84e7f8d"), IsDeleted = false },
-                        new { MovieId = new Guid("9d90a452-9547-4d04-98ed-7d617e64ae1e"), GenreId = new Guid("72163c34-3d32-4a78-9701-1f708053978f"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("c136188f-d71c-4575-8258-1af4db16dc0f"), IsDeleted = false },
-                        new { MovieId = new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), GenreId = new Guid("8068cbf6-c595-4733-9c24-8104e8454b4c"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("ba8e9182-b327-4089-95f9-ad187c414aad"), IsDeleted = false },
-                        new { MovieId = new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), GenreId = new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("50d42fac-3a09-4bbc-be99-85d66f664104"), IsDeleted = false },
-                        new { MovieId = new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), GenreId = new Guid("01c66e3e-8c25-4f5c-a2c5-512c79d09aa6"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("ff036140-b028-4fe6-82d7-00ab55278518"), IsDeleted = false },
-                        new { MovieId = new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), GenreId = new Guid("976a7a24-1c25-4a7f-97c6-1a019c5c148d"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("944ac338-ea45-4133-9ebb-4d0bd2a1db3b"), IsDeleted = false },
-                        new { MovieId = new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), GenreId = new Guid("72163c34-3d32-4a78-9701-1f708053978f"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("7c3c5a3d-4566-4c04-bab2-987eb175f3ca"), IsDeleted = false },
-                        new { MovieId = new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), GenreId = new Guid("e143ebff-a0bd-4107-889f-9bff26eda916"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("b7364f6c-9205-46ca-b6c9-8eabfd3db362"), IsDeleted = false },
-                        new { MovieId = new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), GenreId = new Guid("0532f0df-c92d-4a10-9d1a-8a5935c541a2"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("1e7f851f-ba66-4989-afc7-0d193b08575e"), IsDeleted = false },
-                        new { MovieId = new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), GenreId = new Guid("e48aa8e0-3efc-4acd-a0d5-88c82551807a"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("f128e5de-ca20-4672-be7d-e84a3fb3ed60"), IsDeleted = false },
-                        new { MovieId = new Guid("de9b842d-531a-4f17-ad69-0d3e11cb911d"), GenreId = new Guid("e48aa8e0-3efc-4acd-a0d5-88c82551807a"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("8fdeaecf-fd6f-4ad5-ad3d-4b0e64380ab5"), IsDeleted = false },
-                        new { MovieId = new Guid("de9b842d-531a-4f17-ad69-0d3e11cb911d"), GenreId = new Guid("76c2fab8-7161-49b7-88c6-f3aaf484ea64"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("fea24f3a-5853-404e-adcb-9a35bf9a0edb"), IsDeleted = false },
-                        new { MovieId = new Guid("195c5a46-96f9-446b-b4f7-864ab2dc49de"), GenreId = new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("7ad0a3a0-8d31-4f50-83a1-36bf60d3afb5"), IsDeleted = false },
-                        new { MovieId = new Guid("195c5a46-96f9-446b-b4f7-864ab2dc49de"), GenreId = new Guid("0532f0df-c92d-4a10-9d1a-8a5935c541a2"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("de438a37-46b0-4ec4-9ab9-c7797e0733fc"), IsDeleted = false },
-                        new { MovieId = new Guid("195c5a46-96f9-446b-b4f7-864ab2dc49de"), GenreId = new Guid("76c2fab8-7161-49b7-88c6-f3aaf484ea64"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("677c944f-2498-4d65-b0d5-6276e6fb3261"), IsDeleted = false },
-                        new { MovieId = new Guid("174fd8d4-f72b-4059-a7ea-05e687026b0d"), GenreId = new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("cceea45f-fa85-4e1a-810f-4ecc606f91fa"), IsDeleted = false },
-                        new { MovieId = new Guid("174fd8d4-f72b-4059-a7ea-05e687026b0d"), GenreId = new Guid("72163c34-3d32-4a78-9701-1f708053978f"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("ae13c433-3272-43a0-80ec-8decacf70976"), IsDeleted = false },
-                        new { MovieId = new Guid("174fd8d4-f72b-4059-a7ea-05e687026b0d"), GenreId = new Guid("e143ebff-a0bd-4107-889f-9bff26eda916"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("20565d3d-a307-40c5-a30c-229764d7b5c6"), IsDeleted = false },
-                        new { MovieId = new Guid("163c03b3-a057-426d-afa3-1a2631a693e2"), GenreId = new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("0cc0d877-05a6-4227-8191-a9aed4f67757"), IsDeleted = false },
-                        new { MovieId = new Guid("163c03b3-a057-426d-afa3-1a2631a693e2"), GenreId = new Guid("01c66e3e-8c25-4f5c-a2c5-512c79d09aa6"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("7fb799a4-7ee1-4e72-aa66-ed490bfcf682"), IsDeleted = false },
-                        new { MovieId = new Guid("163c03b3-a057-426d-afa3-1a2631a693e2"), GenreId = new Guid("976a7a24-1c25-4a7f-97c6-1a019c5c148d"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("ea23961b-3379-48ac-862d-28756f2593d2"), IsDeleted = false },
-                        new { MovieId = new Guid("163c03b3-a057-426d-afa3-1a2631a693e2"), GenreId = new Guid("76c2fab8-7161-49b7-88c6-f3aaf484ea64"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = new Guid("fcc28f44-22dc-47eb-acfa-cdcf8f6265c6"), IsDeleted = false }
+                        new { MovieId = new Guid("9d90a452-9547-4d04-98ed-7d617e64ae1e"), GenreId = new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 1, IsDeleted = false },
+                        new { MovieId = new Guid("9d90a452-9547-4d04-98ed-7d617e64ae1e"), GenreId = new Guid("72163c34-3d32-4a78-9701-1f708053978f"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 2, IsDeleted = false },
+                        new { MovieId = new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), GenreId = new Guid("8068cbf6-c595-4733-9c24-8104e8454b4c"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 3, IsDeleted = false },
+                        new { MovieId = new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), GenreId = new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 4, IsDeleted = false },
+                        new { MovieId = new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), GenreId = new Guid("01c66e3e-8c25-4f5c-a2c5-512c79d09aa6"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 5, IsDeleted = false },
+                        new { MovieId = new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), GenreId = new Guid("976a7a24-1c25-4a7f-97c6-1a019c5c148d"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 6, IsDeleted = false },
+                        new { MovieId = new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), GenreId = new Guid("72163c34-3d32-4a78-9701-1f708053978f"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 7, IsDeleted = false },
+                        new { MovieId = new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), GenreId = new Guid("e143ebff-a0bd-4107-889f-9bff26eda916"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 8, IsDeleted = false },
+                        new { MovieId = new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), GenreId = new Guid("0532f0df-c92d-4a10-9d1a-8a5935c541a2"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 9, IsDeleted = false },
+                        new { MovieId = new Guid("45c0c223-de18-4e6e-99ea-aed94e7469f1"), GenreId = new Guid("e48aa8e0-3efc-4acd-a0d5-88c82551807a"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 10, IsDeleted = false },
+                        new { MovieId = new Guid("de9b842d-531a-4f17-ad69-0d3e11cb911d"), GenreId = new Guid("e48aa8e0-3efc-4acd-a0d5-88c82551807a"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 11, IsDeleted = false },
+                        new { MovieId = new Guid("de9b842d-531a-4f17-ad69-0d3e11cb911d"), GenreId = new Guid("76c2fab8-7161-49b7-88c6-f3aaf484ea64"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 12, IsDeleted = false },
+                        new { MovieId = new Guid("195c5a46-96f9-446b-b4f7-864ab2dc49de"), GenreId = new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 13, IsDeleted = false },
+                        new { MovieId = new Guid("195c5a46-96f9-446b-b4f7-864ab2dc49de"), GenreId = new Guid("0532f0df-c92d-4a10-9d1a-8a5935c541a2"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 14, IsDeleted = false },
+                        new { MovieId = new Guid("195c5a46-96f9-446b-b4f7-864ab2dc49de"), GenreId = new Guid("76c2fab8-7161-49b7-88c6-f3aaf484ea64"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 15, IsDeleted = false },
+                        new { MovieId = new Guid("174fd8d4-f72b-4059-a7ea-05e687026b0d"), GenreId = new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 16, IsDeleted = false },
+                        new { MovieId = new Guid("174fd8d4-f72b-4059-a7ea-05e687026b0d"), GenreId = new Guid("72163c34-3d32-4a78-9701-1f708053978f"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 17, IsDeleted = false },
+                        new { MovieId = new Guid("174fd8d4-f72b-4059-a7ea-05e687026b0d"), GenreId = new Guid("e143ebff-a0bd-4107-889f-9bff26eda916"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 18, IsDeleted = false },
+                        new { MovieId = new Guid("163c03b3-a057-426d-afa3-1a2631a693e2"), GenreId = new Guid("6e0a64bc-7a50-4a6c-9125-8ccf6e54bf70"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 19, IsDeleted = false },
+                        new { MovieId = new Guid("163c03b3-a057-426d-afa3-1a2631a693e2"), GenreId = new Guid("01c66e3e-8c25-4f5c-a2c5-512c79d09aa6"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 20, IsDeleted = false },
+                        new { MovieId = new Guid("163c03b3-a057-426d-afa3-1a2631a693e2"), GenreId = new Guid("976a7a24-1c25-4a7f-97c6-1a019c5c148d"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 21, IsDeleted = false },
+                        new { MovieId = new Guid("163c03b3-a057-426d-afa3-1a2631a693e2"), GenreId = new Guid("76c2fab8-7161-49b7-88c6-f3aaf484ea64"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Id = 22, IsDeleted = false }
                     );
                 });
 
