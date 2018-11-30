@@ -9,6 +9,9 @@ using Biob.Web.Helpers;
 using Biob.Data.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.Extensions.Logging;
+using Biob.Services.Data.Helpers;
+using System.Dynamic;
+using System.Linq;
 
 namespace Biob.Web.Controllers
 {
@@ -20,39 +23,55 @@ namespace Biob.Web.Controllers
         private readonly ISeatRepository _seatRepository;
         private readonly ILogger<SeatController> _logger;
         private readonly IHallRepository _hallRepository;
+        private readonly IUrlHelper _urlHelper;
 
         public SeatController(ISeatRepository seatRepository, ILogger<SeatController> logger,
-                              IHallRepository hallRepository)
+                              IHallRepository hallRepository, IUrlHelper urlHelper)
         {
             _seatRepository = seatRepository;
             _logger = logger;
             _hallRepository = hallRepository;
+            _urlHelper = urlHelper;
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAllSeatsByHallId([FromRoute] Guid hallId)
+        public async Task<IActionResult> GetAllSeatsByHallId([FromRoute] Guid hallId, [FromQuery] string fields, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (hallId == Guid.Empty)
             {
                 return BadRequest();
             }
 
-            var hallExists = _hallRepository.GetHallAsync(hallId);
+            //var hallExists = _hallRepository.GetHallAsync(hallId);
 
-            if (hallExists == null)
-            {
-                return BadRequest();
-            }
+            //if (hallExists == null)
+            //{
+            //    return BadRequest();
+            //}
 
             var foundSeats = await _seatRepository.GetAllSeatsAsync(hallId);
 
             var seatsToReturn = Mapper.Map<IEnumerable<Seat>>(foundSeats);
+            //var seat = Mapper.Map<Seat>(seatToAdd);
+
+            //if (mediaType == "application/vnd.biob.json+hateoas")
+            //{
+            //    var links = CreateLinksForSeats(seatsToReturn., fields);
+
+            //    var linkedSeat = seatToReturn.ShapeData(fields) as IDictionary<string, object>;
+            //    linkedSeat.Add("links", links);
+            //    return Ok(linkedSeat);
+            //}
+            //else
+            //{
+            //    return Ok(seatToReturn.ShapeData(fields));
+            //}
             return Ok(seatsToReturn);
         }
 
         [HttpGet("{seatId}", Name = "GetSeat")]
-        public async Task<IActionResult> GetOneSeat([FromRoute] Guid seatId)
+        public async Task<IActionResult> GetOneSeat([FromRoute] Guid seatId, [FromQuery] string fields, [FromHeader(Name = "Accept")] string mediaType)
         {
             var foundSeat = await _seatRepository.GetSeatAsync(seatId);
 
@@ -62,11 +81,23 @@ namespace Biob.Web.Controllers
             }
 
             var seatToReturn = Mapper.Map<SeatDto>(foundSeat);
-            return Ok(seatToReturn);
+
+            if (mediaType == "application/vnd.biob.json+hateoas")
+            {
+                var links = CreateLinksForSeats(seatId, fields);
+
+                var linkedSeat = seatToReturn.ShapeData(fields) as IDictionary<string, object>;
+                linkedSeat.Add("links", links);
+                return Ok(linkedSeat);
+            }
+            else
+            {
+                return Ok(seatToReturn.ShapeData(fields));
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSeat([FromRoute] Guid hallId, [FromBody] SeatToCreateDto seatToCreate)
+        public async Task<IActionResult> CreateSeat([FromRoute] Guid hallId, [FromBody] SeatToCreateDto seatToCreate, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (seatToCreate == null)
             {
@@ -86,11 +117,26 @@ namespace Biob.Web.Controllers
                 _logger.LogError("Saving changes to database while creating a seat failed");
             }
 
-            return CreatedAtRoute("GetSeat", new { seatId = seatToAdd.Id }, seatToAdd);
+            var seat = Mapper.Map<Seat>(seatToAdd);
+
+            if (mediaType == "application/vnd.biob.json+hateoas")
+            {
+                var links = CreateLinksForSeats(seat.Id, null);
+
+                var linkedSeat = seat.ShapeData(null) as IDictionary<string, object>;
+                linkedSeat.Add("links", links);
+
+                return CreatedAtRoute("GetSeat", new { hallId, seatId = seatToAdd.Id }, linkedSeat);
+            }
+            else
+            {
+                return CreatedAtRoute("GetSeat", new { hallId, seatId = seatToAdd.Id }, seat);
+            }
+            //return CreatedAtRoute("GetSeat", new { seatId = seatToAdd.Id }, seatToAdd);
         }
 
-        [HttpPut("{seatId}")]
-        public async Task<IActionResult> UpdateSeatById([FromRoute] Guid hallId ,[FromRoute] Guid seatId, [FromBody] SeatToUpdateDto seatToUpdate)
+        [HttpPut("{seatId}", Name = "UpdateSeat")]
+        public async Task<IActionResult> UpdateSeatById([FromRoute] Guid hallId ,[FromRoute] Guid seatId, [FromBody] SeatToUpdateDto seatToUpdate, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (seatToUpdate == null)
             {
@@ -113,7 +159,21 @@ namespace Biob.Web.Controllers
 
                 var seatToReturn = Mapper.Map<SeatDto>(seatEntity);
 
-                return CreatedAtRoute("GetSeat", new { seatId = seatToReturn.Id }, seatToReturn);
+                if (mediaType == "application/vnd.biob.json+hateoas")
+                {
+                    var links = CreateLinksForSeats(seatToReturn.Id, null);
+
+                    var linkedSeat = seatToReturn.ShapeData(null) as IDictionary<string, object>;
+                    linkedSeat.Add("links", links);
+
+                    return CreatedAtRoute("GetSeat", new { hallId, seatId = seatToReturn.Id }, linkedSeat);
+                }
+                else
+                {
+                    return CreatedAtRoute("GetSeat", new { hallId, seatId = seatToReturn.Id }, seatToReturn);
+                }
+
+                //return CreatedAtRoute("GetSeat", new { seatId = seatToReturn.Id }, seatToReturn);
             }
 
             Mapper.Map(seatToUpdate, seatFromDb);
@@ -129,8 +189,8 @@ namespace Biob.Web.Controllers
 
         }
 
-        [HttpPatch("{seatId}")]
-        public async Task<IActionResult> PartiuallyUpdateSeatById([FromRoute] Guid hallId, [FromRoute] Guid seatId, JsonPatchDocument<SeatToUpdateDto> patchDoc)
+        [HttpPatch("{seatId}", Name = "PartiallyUpdateSeat")]
+        public async Task<IActionResult> PartiuallyUpdateSeatById([FromRoute] Guid hallId, [FromRoute] Guid seatId, JsonPatchDocument<SeatToUpdateDto> patchDoc, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (patchDoc == null)
             {
@@ -162,7 +222,21 @@ namespace Biob.Web.Controllers
 
                 var seatToReturn = Mapper.Map<SeatDto>(seatToAddToDb);
 
-                return CreatedAtRoute("GetSeat", new { seatId = seatToReturn.Id }, seatToReturn);
+                if (mediaType == "application/vnd.biob.json+hateoas")
+                {
+                    var links = CreateLinksForSeats(seatToReturn.Id, null);
+
+                    var linkedSeat = seatToReturn.ShapeData(null) as IDictionary<string, object>;
+                    linkedSeat.Add("links", links);
+
+                    return CreatedAtRoute("GetSeat", new { hallId, seatId = seatToReturn.Id }, linkedSeat);
+                }
+                else
+                {
+                    return CreatedAtRoute("GetSeat", new { hallId, seatId = seatToReturn.Id }, seatToReturn);
+                }
+
+                //return CreatedAtRoute("GetSeat", new { seatId = seatToReturn.Id }, seatToReturn);
             }
 
             var seatToPatch = Mapper.Map<SeatToUpdateDto>(seatFromDb);
@@ -185,7 +259,7 @@ namespace Biob.Web.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{seatId}")]
+        [HttpDelete("{seatId}", Name = "DeleteSeat")]
         public async Task<IActionResult> DeleteSeatById([FromRoute]Guid seatId)
         {
             var seatToDelete = await _seatRepository.GetSeatAsync(seatId);
@@ -204,6 +278,45 @@ namespace Biob.Web.Controllers
 
             return NoContent();
         }
+        private ExpandoObject CreateHateoasResponse(PagedList<Seat> seatsPagedList, RequestParameters requestParameters)
+        {
+            var seats = Mapper.Map<IEnumerable<SeatDto>>(seatsPagedList);
 
+            var shapedSeats = seats.ShapeData(requestParameters.Fields);
+
+            var shapedSeatsWithLinks = shapedSeats.Select(seat =>
+            {
+                var seatDictionary = seat as IDictionary<string, object>;
+                var seatLinks = CreateLinksForSeats((Guid)seatDictionary["Id"], requestParameters.Fields);
+
+                seatDictionary.Add("links", seatLinks);
+
+                return seatDictionary;
+            });
+
+            var linkedCollection = new ExpandoObject();
+            ((IDictionary<string, object>)linkedCollection).Add("seats", shapedSeatsWithLinks);
+            return linkedCollection;
+        }
+
+        private IEnumerable<LinkDto> CreateLinksForSeats(Guid id, string fields)
+        {
+            var links = new List<LinkDto>();
+
+            if (string.IsNullOrWhiteSpace(fields))
+            {
+                links.Add(new LinkDto(_urlHelper.Link("GetSeat", new { showtimeId = id }), "self", "GET"));
+            }
+            else
+            {
+                links.Add(new LinkDto(_urlHelper.Link("GetSeat", new { showtimeId = id, fields }), "self", "GET"));
+            }
+            links.Add(new LinkDto(_urlHelper.Link("DeleteSeat", new { showtimeId = id }), "delete_seat", "DELETE"));
+            {
+                links.Add(new LinkDto(_urlHelper.Link("UpdateSeat", new { showtimeId = id }), "update_seat", "PUT"));
+            }
+            links.Add(new LinkDto(_urlHelper.Link("PartiallyUpdateSeat", new { showtimeId = id }), "partially_update_seat", "PATCH"));
+            return links;
+        }
     }
 }
