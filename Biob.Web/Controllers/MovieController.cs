@@ -217,6 +217,8 @@ namespace Biob.Web.Controllers
             // loop on movietoupdate.genreids, check if moviegenre exists with movieid & movietoupdate.genreid, if not and its added, upsert
             // if removed delete moviegenre with removed genreid
 
+            var moviegenresAlreadyExists = _movieGenreRepository.GetAllMovieGenresByMovieIdAsync(movieId);
+
             if (movieToUpdate.GenreIds.Count > 0)
             {
                 for (int i = 0; i < movieToUpdate.GenreIds.Count; i++)
