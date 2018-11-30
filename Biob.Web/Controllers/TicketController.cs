@@ -26,10 +26,24 @@ namespace Biob.Web.Controllers
         private readonly IUrlHelper _urlHelper;
         private readonly ILogger<TicketController> _logger;
 
-        public TicketController(ITicketRepository ticketRepository, ILogger<TicketController> logger)
+        public TicketController(ITicketRepository ticketRepository, IPropertyMappingService propertyMappingService, 
+                                ITypeHelperService typeHelperService, IUrlHelper urlHelper, ILogger<TicketController> logger)
         {
-            _logger = logger;
             _ticketRepository = ticketRepository;
+            _propertyMappingService = propertyMappingService;
+            _typeHelperService = typeHelperService;
+            _urlHelper = urlHelper;
+            _logger = logger;
+            //Note: In TicketRepository, ApplySort is temprarily outcommented as it caused an error somehow. TODO: Could be fixed at some point
+            _propertyMappingService.AddPropertyMapping<TicketDto, Ticket>(new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "Id", new PropertyMappingValue(new List<string>() { "Id" })},
+                { "CustomerId", new PropertyMappingValue(new List<string>() { "CustomerId" })},
+                { "ShowtimeId", new PropertyMappingValue(new List<string>() { "ShowtimeId" })},
+                { "SeatId", new PropertyMappingValue(new List<string>() { "SeatId" })},
+                { "Paid", new PropertyMappingValue(new List<string>() { "Paid" })},
+                { "Price", new PropertyMappingValue(new List<string>() { "Price" })},
+            });
         }
 
         [HttpGet(Name = "GetTickets")]
@@ -41,13 +55,11 @@ namespace Biob.Web.Controllers
                 requestParameters.OrderBy = "CreatedOn";
             }
 
-            //  __propertyMappingService needs to be initialized
             if (!_propertyMappingService.ValidMappingExistsFor<TicketDto, Ticket>(requestParameters.Fields))
             {
                 return BadRequest();
             }
 
-            //  _typeHelperService needs to be initialized
             if (!_typeHelperService.TypeHasProperties<TicketDto>(requestParameters.Fields))
             {
                 return BadRequest();
