@@ -47,12 +47,12 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet(Name = "GetTickets")]
-        public async Task<IActionResult> GetAllTickets([FromQuery]RequestParameters requestParameters)
+        public async Task<IActionResult> GetAllTickets([FromRoute] Guid showtimeId,[FromQuery]RequestParameters requestParameters)
         {
             
             if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
             {
-                requestParameters.OrderBy = "CreatedOn";
+                requestParameters.OrderBy = "Price";
             }
 
             if (!_propertyMappingService.ValidMappingExistsFor<TicketDto, Ticket>(requestParameters.Fields))
@@ -65,7 +65,8 @@ namespace Biob.Web.Controllers
                 return BadRequest();
             }
 
-            var ticketsPagedList = await _ticketRepository.GetAllTicketsAsync(requestParameters.OrderBy,
+            var ticketsPagedList = await _ticketRepository.GetAllTicketsAsync(showtimeId,
+                                                                    requestParameters.OrderBy,
                                                                     requestParameters.SearchQuery,
                                                                     requestParameters.PageNumber, requestParameters.PageSize);
 
@@ -104,7 +105,7 @@ namespace Biob.Web.Controllers
 
 
         [HttpGet("{ticketId}", Name = "GetTicket")]
-        public async Task<IActionResult> GetOneTicket([FromRoute]Guid ticketId)
+        public async Task<IActionResult> GetOneTicket([FromRoute]Guid ticketId, [FromQuery] string fields)
         {
             if (ticketId == Guid.Empty)
             {
@@ -118,7 +119,7 @@ namespace Biob.Web.Controllers
                 return NotFound();
             }
 
-            return Ok(foundTicket);
+            return Ok(foundTicket.ShapeData(fields));
         }
 
         [HttpPost]
