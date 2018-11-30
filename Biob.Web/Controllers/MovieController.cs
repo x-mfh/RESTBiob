@@ -212,6 +212,35 @@ namespace Biob.Web.Controllers
 
             var movieFromDb = await _movieRepository.GetMovieAsync(movieId);
 
+            // easy solution delete all moviegenres with id, add new ids
+
+            // loop on movietoupdate.genreids, check if moviegenre exists with movieid & movietoupdate.genreid, if not and its added, upsert
+            // if removed delete moviegenre with removed genreid
+
+            if (movieToUpdate.GenreIds.Count > 0)
+            {
+                for (int i = 0; i < movieToUpdate.GenreIds.Count; i++)
+                {
+
+                }
+            }
+            else
+            {
+                // if no genreids was given delete all moviegenres with movieid
+                // only on put
+                var moviegenresExist = await _movieGenreRepository.GetAllMovieGenresByMovieIdAsync(movieId);
+
+                foreach (var moviegenre in moviegenresExist)
+                {
+                    _movieGenreRepository.DeleteMovieGenre(moviegenre);
+                }
+
+                if (!await _movieGenreRepository.SaveChangesAsync())
+                {
+                    _logger.LogError("Saving changes to database while deleting a moviegenre failed");
+                }
+            }
+
             //  upserting if movie does not already exist
             if (movieFromDb == null)
             {
