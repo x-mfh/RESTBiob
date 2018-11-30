@@ -7,10 +7,10 @@ namespace Biob.Services.Data.Repositories
 {
     public interface ITicketRepository : IRepository
     {
+        Task<PagedList<Ticket>> GetAllTicketsAsync(Guid showtimeId, string orderBy, string searchQuery, int pageNumber, int pageSize);
         Task<Ticket> GetTicketAsync(Guid id);
         void AddTicket(Ticket ticketToAdd);
         void UpdateTicket(Ticket ticketToUpdate);
         void DeleteTicket(Ticket ticketToDelete);
-        Task<PagedList<Ticket>> GetTicketsByCustomerIdAsync(Guid customerId, string orderBy, string searchQuery, int pageNumber, int pageSize);
     }
 }

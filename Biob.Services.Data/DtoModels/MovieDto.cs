@@ -13,8 +13,8 @@ namespace Biob.Services.Data.DtoModels
         public string Producer { get; set; }
         public string Actors { get; set; }
         // only use one
-        public string Genre { get; set; }
-        public IList<string> Genres { get; set; }
+        //public string Genre { get; set; }
+        //public IList<string> Genres { get; set; }
         public DateTimeOffset Released { get; set; }
         public bool ThreeDee { get; set; }
         public int AgeRestriction { get; set; }
