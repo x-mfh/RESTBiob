@@ -59,13 +59,20 @@ namespace Biob.Web
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => 
-                {
-                    //  needs to  be configured
-                    options.Authority = "";
-                    options.Audience = "";
-                });
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddIdentityServerAuthentication(options =>
+            //    {
+            //        //  IP of the identity server
+            //        options.Authority = "https://localhost:44393/";
+            //        options.RequireHttpsMetadata = false;
+            //        options.ApiName = "Biob.Web";
+            //    });
+                //.AddJwtBearer(options => 
+                //{
+                //    //  needs to  be configured
+                //    options.Authority = "";
+                //    options.Audience = "";
+                //});
 
             var connectionString = Configuration.GetConnectionString("BiobDB");
             services.AddDbContext<BiobDataContext>(options => options.UseSqlServer(connectionString));
@@ -134,7 +141,7 @@ namespace Biob.Web
                 app.UseHsts();
             }
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -142,13 +149,18 @@ namespace Biob.Web
 
             Mapper.Initialize(config => 
             {
-            config.CreateMap<Movie, MovieDto>()
-            .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.LengthInSeconds.CalculateFromSeconds()))
-            .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.MovieGenres.Select(moviegenre => moviegenre.Genre.GenreName).ConvertIEnumerableToString()));
+                config.CreateMap<Movie, MovieDto>()
+                .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.LengthInSeconds.CalculateFromSeconds()))
+                .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.MovieGenres.Select(moviegenre => moviegenre.Genre.GenreName).ConvertIEnumerableToString()));
 
                 config.CreateMap<MovieToCreateDto, Movie>();
                 config.CreateMap<MovieToUpdateDto, Movie>();
                 config.CreateMap<Movie, MovieToUpdateDto>();
+
+                config.CreateMap<Genre, GenreDto>();
+                config.CreateMap<GenreToCreateDto, Genre>();
+                config.CreateMap<GenreToUpdateDto, Genre>();
+                config.CreateMap<Genre, GenreToUpdateDto>();
 
                 config.CreateMap<MovieGenre, MovieGenreDto>()
                 .ForMember(dest => dest.GenreName, opt => opt.MapFrom(src => src.Genre.GenreName));

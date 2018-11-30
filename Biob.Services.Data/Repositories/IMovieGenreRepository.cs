@@ -10,7 +10,7 @@ namespace Biob.Services.Data.Repositories
         Task<IEnumerable<MovieGenre>> GetAllMovieGenresAsync();
         Task<IEnumerable<MovieGenre>> GetAllMovieGenresByGenreIdAsync(Guid genreId);
         Task<IEnumerable<MovieGenre>> GetAllMovieGenresByMovieIdAsync(Guid movieId);
-        Task<MovieGenre> GetMovieGenreByIdAsync(int movieGenreId);
+        Task<MovieGenre> GetMovieGenreByIdAsync(Guid movieGenreId);
         Task<MovieGenre> GetMovieGenreByMovieIdGenreIdAsync(Guid movieId, Guid genreId);
         void AddMovieGenre(MovieGenre movieGenreToAdd);
         void DeleteMovieGenre(MovieGenre movieGenreToDelete);

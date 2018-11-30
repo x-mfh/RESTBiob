@@ -20,7 +20,7 @@ namespace Biob.Services.Data.Repositories
             return await _context.MovieGenres.ToListAsync();
         }
 
-        public async Task<MovieGenre> GetMovieGenreByIdAsync(int movieGenreId)
+        public async Task<MovieGenre> GetMovieGenreByIdAsync(Guid movieGenreId)
         {
             return await _context.MovieGenres.Where(moviegenre => moviegenre.Id == movieGenreId).FirstOrDefaultAsync();
         }

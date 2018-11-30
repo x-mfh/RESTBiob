@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Biob.Data.Models
 {
     [Table("MovieGenres")]
-    public class MovieGenre : DeleteableModelBase<int>
+    public class MovieGenre : DeleteableModelBase<Guid>
     {
         [ForeignKey("Movie")]
         public Guid MovieId { get; set; }

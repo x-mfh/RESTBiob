@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Biob.Data.Data.Migrations
 {
     [DbContext(typeof(BiobDataContext))]
-    [Migration("20181126101500_foreignKeyConstrain")]
-    partial class foreignKeyConstrain
+    [Migration("20181128200806_AddedMovieFKToShowtimeModel")]
+    partial class AddedMovieFKToShowtimeModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -283,17 +283,15 @@ namespace Biob.Data.Data.Migrations
 
                     b.Property<DateTimeOffset?>("DeletedOn");
 
-                    b.Property<int>("HallSeatId");
-
                     b.Property<bool>("IsDeleted");
 
                     b.Property<DateTimeOffset?>("ModifiedOn");
 
                     b.Property<bool>("Paid");
 
-                    b.Property<int>("Price");
+                    b.Property<decimal>("Price");
 
-                    b.Property<bool>("Reserved");
+                    b.Property<Guid>("SeatId");
 
                     b.Property<Guid>("ShowtimeId");
 
@@ -301,7 +299,18 @@ namespace Biob.Data.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
+                    b.HasIndex("SeatId");
+
+                    b.HasIndex("ShowtimeId");
+
                     b.ToTable("Tickets");
+
+                    b.HasData(
+                        new { Id = new Guid("303814ca-54f0-4fbb-955b-7ffd33b10b9d"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), CustomerId = new Guid("64c986df-a168-40cb-b5ea-ab2b20069a08"), IsDeleted = false, Paid = false, Price = 250m, SeatId = new Guid("5fd7f7c4-d90f-4d60-8878-067af214a0dc"), ShowtimeId = new Guid("092ca7c5-ae83-4a52-a38b-cfc7c8e40e9a") },
+                        new { Id = new Guid("ce442ad4-37a4-43f4-9a6d-5f7ab15df011"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), CustomerId = new Guid("64c986df-a168-40cb-b5ea-ab2b20069a08"), IsDeleted = false, Paid = true, Price = 250m, SeatId = new Guid("603ab124-4be6-40fd-9a5e-49bb4a5730db"), ShowtimeId = new Guid("092ca7c5-ae83-4a52-a38b-cfc7c8e40e9a") },
+                        new { Id = new Guid("7f36e8e7-b5cd-43ef-a71d-8cfa2355d8ab"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), CustomerId = new Guid("64c986df-a168-40cb-b5ea-ab2b20069a08"), IsDeleted = false, Paid = false, Price = 300m, SeatId = new Guid("173595a9-917d-4df9-9a6d-1a5d5b46104e"), ShowtimeId = new Guid("5e0d5ad3-22b0-4bdc-808c-62b8f50d0796") },
+                        new { Id = new Guid("a9aee74e-c644-4fc3-9a27-946d7c4cd037"), CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), CustomerId = new Guid("64c986df-a168-40cb-b5ea-ab2b20069a08"), IsDeleted = false, Paid = false, Price = 300m, SeatId = new Guid("70fe1293-99c5-43aa-82df-fd0beaa8076a"), ShowtimeId = new Guid("5e0d5ad3-22b0-4bdc-808c-62b8f50d0796") }
+                    );
                 });
 
             modelBuilder.Entity("Biob.Data.Models.MovieGenre", b =>
@@ -319,7 +328,7 @@ namespace Biob.Data.Data.Migrations
 
             modelBuilder.Entity("Biob.Data.Models.Seat", b =>
                 {
-                    b.HasOne("Biob.Data.Models.Hall")
+                    b.HasOne("Biob.Data.Models.Hall", "Hall")
                         .WithMany("Seats")
                         .HasForeignKey("HallId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -330,11 +339,24 @@ namespace Biob.Data.Data.Migrations
                     b.HasOne("Biob.Data.Models.Hall", "Hall")
                         .WithMany()
                         .HasForeignKey("HallId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Biob.Data.Models.Movie")
+                    b.HasOne("Biob.Data.Models.Movie", "Movie")
                         .WithMany("Showtimes")
                         .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Biob.Data.Models.Ticket", b =>
+                {
+                    b.HasOne("Biob.Data.Models.Seat", "Seat")
+                        .WithMany("Tickets")
+                        .HasForeignKey("SeatId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Biob.Data.Models.Showtime", "Showtime")
+                        .WithMany("Tickets")
+                        .HasForeignKey("ShowtimeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
