@@ -47,19 +47,22 @@ namespace Biob.Identity
         {
             return new List<ApiResource>
             {
-                new ApiResource
-                {
-                    Name = "Biob.Web",
-                    DisplayName = "BioB web api",
-                    UserClaims = new List<string>  { JwtClaimTypes.Role },
-                    ApiSecrets = new List<Secret> {new Secret("scopeSecret".Sha256())},
-                    Scopes = new List<Scope>
-                    {
-                        new Scope("read"),
-                        new Scope("write")
-                    }
+                //new ApiResource
+                //{
+                    
+                //    Name = "Biob.Web",
+                //    DisplayName = "BioB web api",
+                //    UserClaims = new List<string>  { JwtClaimTypes.Role },
+                //    ApiSecrets = new List<Secret> {new Secret("scopeSecret".Sha256())},
+                //    Scopes = new List<Scope>
+                //    {
+                //        new Scope("read"),
+                //        new Scope("write")
+                //    }
 
-                }
+                //}
+
+                new ApiResource("Biob.Web", "Biob Api")
             };
         }
 
@@ -67,28 +70,33 @@ namespace Biob.Identity
         {
             return new Client[]
             {
+                //new Client
+                //{
+                //    ClientId = "Biob",
+                //    ClientName = "Biob",
+                //    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                //    AllowedScopes =
+                //    {
+                //        IdentityServerConstants.StandardScopes.OpenId,
+                //        IdentityServerConstants.StandardScopes.Profile,
+                //        IdentityServerConstants.StandardScopes.Address,
+                //        JwtClaimTypes.PhoneNumber,
+                //        JwtClaimTypes.Role,
+                //        "Biob.Web"
+                //    },
+                //    ClientSecrets =
+                //    {
+                //        new Secret("secret".Sha256())
+                //    },
+                //    AccessTokenType = AccessTokenType.Jwt,
+                //}
+
                 new Client
                 {
                     ClientId = "Biob",
-                    ClientName = "Biob",
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    RedirectUris =
-                    {
-                        "https://localhost:44355/signin-oidc"
-                    },
-                    AllowedScopes =
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        IdentityServerConstants.StandardScopes.Address,
-                        JwtClaimTypes.PhoneNumber,
-                        JwtClaimTypes.Role,
-                        "read"
-                    },
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    }
+                    ClientSecrets =  { new Secret("secret".ToSha256()) },
+                    AllowedScopes = { "Biob.Web" }
                 }
             };
         }

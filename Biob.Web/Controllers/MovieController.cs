@@ -459,10 +459,10 @@ namespace Biob.Web.Controllers
                 new LinkDto(_urlHelper.Link("DeleteMovie", new { movieId = id }), "delete_movie", "DELETE")
                 );
             links.Add(
-                new LinkDto(_urlHelper.Link("UpdateMovie", new { movieId = id }), "update_book", "PUT")
+                new LinkDto(_urlHelper.Link("UpdateMovie", new { movieId = id }), "update_movie", "PUT")
                 );
             links.Add(
-                new LinkDto(_urlHelper.Link("PartiallyUpdateMovie", new { movieId = id }), "partially_update_book", "PATCH")
+                new LinkDto(_urlHelper.Link("PartiallyUpdateMovie", new { movieId = id }), "partially_update_movie", "PATCH")
                 );
             return links;
         }

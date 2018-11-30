@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Biob.Web.Controllers
 {
-    [Route("/api/v1/movies/{movieId}/showtime/{showtimeId}/tickets")]
+    [Route("/api/v1/movies/{movieId}/showtimes/{showtimeId}/tickets")]
     [ApiController]
     public class TicketController : ControllerBase
     {
@@ -26,14 +26,86 @@ namespace Biob.Web.Controllers
         private readonly IUrlHelper _urlHelper;
         private readonly ILogger<TicketController> _logger;
 
-        public TicketController(ITicketRepository ticketRepository, ILogger<TicketController> logger)
+        public TicketController(ITicketRepository ticketRepository, IPropertyMappingService propertyMappingService, 
+                                ITypeHelperService typeHelperService, IUrlHelper urlHelper, ILogger<TicketController> logger)
         {
-            _logger = logger;
             _ticketRepository = ticketRepository;
+            _propertyMappingService = propertyMappingService;
+            _typeHelperService = typeHelperService;
+            _urlHelper = urlHelper;
+            _logger = logger;
+            //Note: In TicketRepository, ApplySort is temprarily outcommented as it caused an error somehow. TODO: Could be fixed at some point
+            _propertyMappingService.AddPropertyMapping<TicketDto, Ticket>(new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "Id", new PropertyMappingValue(new List<string>() { "Id" })},
+                { "CustomerId", new PropertyMappingValue(new List<string>() { "CustomerId" })},
+                { "ShowtimeId", new PropertyMappingValue(new List<string>() { "ShowtimeId" })},
+                { "SeatId", new PropertyMappingValue(new List<string>() { "SeatId" })},
+                { "Paid", new PropertyMappingValue(new List<string>() { "Paid" })},
+                { "Price", new PropertyMappingValue(new List<string>() { "Price" })},
+            });
         }
 
+        [HttpGet(Name = "GetTickets")]
+        public async Task<IActionResult> GetAllTickets([FromRoute] Guid showtimeId,[FromQuery]RequestParameters requestParameters)
+        {
+            
+            if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
+            {
+                requestParameters.OrderBy = "Price";
+            }
+
+            if (!_propertyMappingService.ValidMappingExistsFor<TicketDto, Ticket>(requestParameters.Fields))
+            {
+                return BadRequest();
+            }
+
+            if (!_typeHelperService.TypeHasProperties<TicketDto>(requestParameters.Fields))
+            {
+                return BadRequest();
+            }
+
+            var ticketsPagedList = await _ticketRepository.GetAllTicketsAsync(showtimeId,
+                                                                    requestParameters.OrderBy,
+                                                                    requestParameters.SearchQuery,
+                                                                    requestParameters.PageNumber, requestParameters.PageSize);
+
+            var tickets = Mapper.Map<IEnumerable<TicketDto>>(ticketsPagedList);
+
+            //if (mediaType == "application/vnd.biob.json+hateoas")
+            //{
+            //    return Ok(CreateHateoasResponse(ticketsPagedList, requestParameters));
+            //}
+            //else
+            //{
+            var previousPageLink = ticketsPagedList.HasPrevious ? CreateUrlForResource(requestParameters, PageType.PreviousPage) : null;
+            var nextPageLink = ticketsPagedList.HasNext ? CreateUrlForResource(requestParameters, PageType.NextPage) : null;
+            var paginationMetadata = new PaginationMetadata()
+            {
+                TotalCount = ticketsPagedList.TotalCount,
+                PageSize = ticketsPagedList.PageSize,
+                CurrentPage = ticketsPagedList.CurrentPage,
+                TotalPages = ticketsPagedList.TotalPages,
+                PreviousPageLink = previousPageLink,
+                NextPageLink = nextPageLink
+            };
+
+            Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
+
+            if (requestParameters.IncludeMetadata)
+            {
+                var shapedTickets = tickets.ShapeData(requestParameters.Fields);
+                var ticketsWithMetadata = new EntityWithPaginationMetadataDto<ExpandoObject>(paginationMetadata, shapedTickets);
+                return Ok(ticketsWithMetadata);
+            }
+
+            return Ok(tickets.ShapeData(requestParameters.Fields));
+            //}
+        }
+
+
         [HttpGet("{ticketId}", Name = "GetTicket")]
-        public async Task<IActionResult> GetOneTicket([FromRoute]Guid ticketId)
+        public async Task<IActionResult> GetOneTicket([FromRoute]Guid ticketId, [FromQuery] string fields)
         {
             if (ticketId == Guid.Empty)
             {
@@ -47,7 +119,7 @@ namespace Biob.Web.Controllers
                 return NotFound();
             }
 
-            return Ok(foundTicket);
+            return Ok(foundTicket.ShapeData(fields));
         }
 
         [HttpPost]

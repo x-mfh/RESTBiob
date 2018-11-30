@@ -1,0 +1,1443 @@
+2018-11-30T08:49:11.2159447+01:00 0HLIMJ189G5FN:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-30T08:49:11.8927403+01:00 0HLIMJ189G5FN:00000001 [INF] Request finished in 609.1306ms 200  (791a596a)
+2018-11-30T08:49:37.5620813+01:00 0HLIMJ189G5FN:00000002 [INF] Request starting HTTP/1.1 POST http://localhost:44390/api/v1/movies/ application/json 217 (ca22a1cb)
+2018-11-30T08:49:37.8635778+01:00 0HLIMJ189G5FN:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T08:49:37.8773196+01:00 0HLIMJ189G5FN:00000002 [INF] Not valid - method isn't GET or HEAD. (0be1d475)
+2018-11-30T08:49:37.8897120+01:00 0HLIMJ189G5FN:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T08:49:37.9146686+01:00 0HLIMJ189G5FN:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T08:49:37.9239789+01:00 0HLIMJ189G5FN:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T08:49:37.9339667+01:00 0HLIMJ189G5FN:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T08:49:38.8197464+01:00 0HLIMJ189G5FN:00000002 [INF] Route matched with "{action = \"CreateMovie\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.CreateMovie (Biob.Web)" (a44c0341)
+2018-11-30T08:49:40.0991141+01:00 0HLIMJ189G5FN:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.CreateMovie (Biob.Web)" with arguments (["Biob.Services.Data.DtoModels.MovieToCreateDto", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-11-30T08:49:40.6076369+01:00 0HLIMJ189G5FN:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-11-30T08:49:40.7323754+01:00 0HLIMJ189G5FN:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T08:49:44.9279163+01:00 0HLIMJ189G5FN:00000002 [INF] Executed DbCommand ("241"ms) [Parameters=["@p0='?' (DbType = Guid), @p1='?' (Size = 4000), @p2='?' (DbType = Int32), @p3='?' (DbType = DateTimeOffset), @p4='?' (DbType = DateTimeOffset), @p5='?' (Size = 4000), @p6='?' (DbType = Boolean), @p7='?' (DbType = Int32), @p8='?' (DbType = DateTimeOffset), @p9='?' (Size = 4000), @p10='?' (Size = 255), @p11='?' (DbType = DateTimeOffset), @p12='?' (DbType = Boolean), @p13='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+INSERT INTO [Movies] ([Id], [Actors], [AgeRestriction], [CreatedOn], [DeletedOn], [Description], [IsDeleted], [LengthInSeconds], [ModifiedOn], [Poster], [Producer], [Released], [ThreeDee], [Title])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13);" (0723d8ff)
+2018-11-30T08:49:45.1680738+01:00 0HLIMJ189G5FN:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.CreateMovie (Biob.Web)" in 6335.1561ms (afa2e885)
+2018-11-30T08:49:45.5455885+01:00 0HLIMJ189G5FN:00000002 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Biob.Web.Controllers.MovieController.CreateMovie(MovieToCreateDto movieToCreate, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 168
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T08:49:45.7373558+01:00 0HLIMJ189G5FN:00000002 [ERR] An exception was thrown attempting to display the error page. (33804fd3)
+System.ArgumentException: Stream was not writable.
+   at System.IO.StreamWriter..ctor(Stream stream, Encoding encoding, Int32 bufferSize, Boolean leaveOpen)
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T08:49:45.7826973+01:00 0HLIMJ189G5FN:00000002 [ERR] Connection id ""0HLIMJ189G5FN"", Request id ""0HLIMJ189G5FN:00000002"": An unhandled exception was thrown by the application. (560e7d32)
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Biob.Web.Controllers.MovieController.CreateMovie(MovieToCreateDto movieToCreate, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 168
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2018-11-30T08:49:45.8023235+01:00 0HLIMJ189G5FN:00000002 [INF] Request finished in 8238.1791ms 500  (791a596a)
+2018-11-30T08:50:50.8745800+01:00 0HLIMJ189G5FO:00000001 [INF] Request starting HTTP/1.1 POST http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtime/5E0D5AD3-22B0-4BDC-808C-62B8F50D0796/tickets/7F36E8E7-B5CD-43EF-A71D-8CFA2355D8AB application/json 217 (ca22a1cb)
+2018-11-30T08:50:50.8901080+01:00 0HLIMJ189G5FO:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T08:50:50.9096535+01:00 0HLIMJ189G5FO:00000001 [INF] Not valid - method isn't GET or HEAD. (0be1d475)
+2018-11-30T08:50:50.9249061+01:00 0HLIMJ189G5FO:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T08:50:50.9372793+01:00 0HLIMJ189G5FO:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T08:50:50.9472993+01:00 0HLIMJ189G5FO:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T08:50:50.9575449+01:00 0HLIMJ189G5FO:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T08:50:50.9784016+01:00 0HLIMJ189G5FO:00000001 [INF] Generating expiration headers. (97875003)
+2018-11-30T08:50:50.9909181+01:00 0HLIMJ189G5FO:00000001 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:00:50 GMT. Cache-Control: public,max-age=600,must-revalidate. (6f74824b)
+2018-11-30T08:50:51.0097288+01:00 0HLIMJ189G5FO:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T08:50:51.0541054+01:00 0HLIMJ189G5FO:00000001 [INF] Validation headers generated. ETag: Strong, "9AE361F02CC479EC733DDCFFECA96AD6". Last-Modified: Fri, 30 Nov 2018 07:50:51 GMT (8f1efd60)
+2018-11-30T08:50:51.0658482+01:00 0HLIMJ189G5FO:00000001 [INF] Generating Vary header. (c1174e38)
+2018-11-30T08:50:51.0781681+01:00 0HLIMJ189G5FO:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T08:50:51.1042677+01:00 0HLIMJ189G5FO:00000001 [INF] Request finished in 269.4982ms 404  (791a596a)
+2018-11-30T08:50:51.1549188+01:00  [INF] Connection id ""0HLIMJ189G5FO"", Request id ""0HLIMJ189G5FO:00000001"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T08:50:57.8948610+01:00 0HLIMJ189G5FO:00000002 [INF] Request starting HTTP/1.1 POST http://localhost:44390/api/v1/movies/ application/json 217 (ca22a1cb)
+2018-11-30T08:50:57.9096342+01:00 0HLIMJ189G5FO:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T08:50:57.9244870+01:00 0HLIMJ189G5FO:00000002 [INF] Not valid - method isn't GET or HEAD. (0be1d475)
+2018-11-30T08:50:57.9364130+01:00 0HLIMJ189G5FO:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T08:50:57.9483038+01:00 0HLIMJ189G5FO:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T08:50:57.9604419+01:00 0HLIMJ189G5FO:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T08:50:57.9728733+01:00 0HLIMJ189G5FO:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T08:50:57.9827688+01:00 0HLIMJ189G5FO:00000002 [INF] Route matched with "{action = \"CreateMovie\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.CreateMovie (Biob.Web)" (a44c0341)
+2018-11-30T08:50:58.0329319+01:00 0HLIMJ189G5FO:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.CreateMovie (Biob.Web)" with arguments (["Biob.Services.Data.DtoModels.MovieToCreateDto", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-11-30T08:50:58.0702625+01:00 0HLIMJ189G5FO:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T08:50:58.2732309+01:00 0HLIMJ189G5FO:00000002 [INF] Executed DbCommand ("157"ms) [Parameters=["@p0='?' (DbType = Guid), @p1='?' (Size = 4000), @p2='?' (DbType = Int32), @p3='?' (DbType = DateTimeOffset), @p4='?' (DbType = DateTimeOffset), @p5='?' (Size = 4000), @p6='?' (DbType = Boolean), @p7='?' (DbType = Int32), @p8='?' (DbType = DateTimeOffset), @p9='?' (Size = 4000), @p10='?' (Size = 255), @p11='?' (DbType = DateTimeOffset), @p12='?' (DbType = Boolean), @p13='?' (Size = 255)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+INSERT INTO [Movies] ([Id], [Actors], [AgeRestriction], [CreatedOn], [DeletedOn], [Description], [IsDeleted], [LengthInSeconds], [ModifiedOn], [Poster], [Producer], [Released], [ThreeDee], [Title])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13);" (0723d8ff)
+2018-11-30T08:50:58.4258086+01:00 0HLIMJ189G5FO:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.CreateMovie (Biob.Web)" in 428.3103ms (afa2e885)
+2018-11-30T08:50:58.4819094+01:00 0HLIMJ189G5FO:00000002 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Biob.Web.Controllers.MovieController.CreateMovie(MovieToCreateDto movieToCreate, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 168
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T08:50:58.5299800+01:00 0HLIMJ189G5FO:00000002 [ERR] An exception was thrown attempting to display the error page. (33804fd3)
+System.ArgumentException: Stream was not writable.
+   at System.IO.StreamWriter..ctor(Stream stream, Encoding encoding, Int32 bufferSize, Boolean leaveOpen)
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T08:50:58.5571954+01:00 0HLIMJ189G5FO:00000002 [ERR] Connection id ""0HLIMJ189G5FO"", Request id ""0HLIMJ189G5FO:00000002"": An unhandled exception was thrown by the application. (560e7d32)
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Biob.Web.Controllers.MovieController.CreateMovie(MovieToCreateDto movieToCreate, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 168
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2018-11-30T08:50:58.5865161+01:00 0HLIMJ189G5FO:00000002 [INF] Request finished in 676.4426ms 500  (791a596a)
+2018-11-30T08:51:50.2522858+01:00 0HLIMJ2NP34EF:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-30T08:51:50.3638804+01:00 0HLIMJ2NP34EF:00000001 [INF] Request finished in 104.6362ms 200  (791a596a)
+2018-11-30T08:51:57.0030031+01:00 0HLIMJ2NP34EF:00000002 [INF] Request starting HTTP/1.1 POST http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtime/5E0D5AD3-22B0-4BDC-808C-62B8F50D0796/tickets/7F36E8E7-B5CD-43EF-A71D-8CFA2355D8AB application/json 217 (ca22a1cb)
+2018-11-30T08:51:57.1076512+01:00 0HLIMJ2NP34EF:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T08:51:57.1184388+01:00 0HLIMJ2NP34EF:00000002 [INF] Not valid - method isn't GET or HEAD. (0be1d475)
+2018-11-30T08:51:57.1282645+01:00 0HLIMJ2NP34EF:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T08:51:57.1466925+01:00 0HLIMJ2NP34EF:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T08:51:57.1565849+01:00 0HLIMJ2NP34EF:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T08:51:57.1661250+01:00 0HLIMJ2NP34EF:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T08:51:57.4428963+01:00 0HLIMJ2NP34EF:00000002 [INF] Generating expiration headers. (97875003)
+2018-11-30T08:51:57.4560188+01:00 0HLIMJ2NP34EF:00000002 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:01:57 GMT. Cache-Control: public,max-age=600,must-revalidate. (5d5176b7)
+2018-11-30T08:51:57.4783273+01:00 0HLIMJ2NP34EF:00000002 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T08:51:57.5120413+01:00 0HLIMJ2NP34EF:00000002 [INF] Validation headers generated. ETag: Strong, "9AE361F02CC479EC733DDCFFECA96AD6". Last-Modified: Fri, 30 Nov 2018 07:51:57 GMT (e9c8d963)
+2018-11-30T08:51:57.5298068+01:00 0HLIMJ2NP34EF:00000002 [INF] Generating Vary header. (c1174e38)
+2018-11-30T08:51:57.5424760+01:00 0HLIMJ2NP34EF:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T08:51:57.6100027+01:00 0HLIMJ2NP34EF:00000002 [INF] Request finished in 561.3956ms 404  (791a596a)
+2018-11-30T08:51:57.6553317+01:00  [INF] Connection id ""0HLIMJ2NP34EF"", Request id ""0HLIMJ2NP34EF:00000002"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T08:52:10.1783593+01:00 0HLIMJ2NP34EF:00000003 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtime/5E0D5AD3-22B0-4BDC-808C-62B8F50D0796/tickets/7F36E8E7-B5CD-43EF-A71D-8CFA2355D8AB application/json 217 (ca22a1cb)
+2018-11-30T08:52:10.1969519+01:00 0HLIMJ2NP34EF:00000003 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T08:52:10.2202859+01:00 0HLIMJ2NP34EF:00000003 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T08:52:10.2294992+01:00 0HLIMJ2NP34EF:00000003 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T08:52:10.2391073+01:00 0HLIMJ2NP34EF:00000003 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T08:52:10.2499064+01:00 0HLIMJ2NP34EF:00000003 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T08:52:10.2588459+01:00 0HLIMJ2NP34EF:00000003 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T08:52:10.2691413+01:00 0HLIMJ2NP34EF:00000003 [INF] Generating expiration headers. (97875003)
+2018-11-30T08:52:10.2789918+01:00 0HLIMJ2NP34EF:00000003 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:02:10 GMT. Cache-Control: public,max-age=600,must-revalidate. (9c9dc8ab)
+2018-11-30T08:52:10.2893282+01:00 0HLIMJ2NP34EF:00000003 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T08:52:10.2992655+01:00 0HLIMJ2NP34EF:00000003 [INF] Validation headers generated. ETag: Strong, "9AE361F02CC479EC733DDCFFECA96AD6". Last-Modified: Fri, 30 Nov 2018 07:52:10 GMT (5c43c117)
+2018-11-30T08:52:10.3103443+01:00 0HLIMJ2NP34EF:00000003 [INF] Generating Vary header. (c1174e38)
+2018-11-30T08:52:10.3196504+01:00 0HLIMJ2NP34EF:00000003 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T08:52:10.3443482+01:00 0HLIMJ2NP34EF:00000003 [INF] Request finished in 160.4867ms 404  (791a596a)
+2018-11-30T08:52:10.3754424+01:00  [INF] Connection id ""0HLIMJ2NP34EF"", Request id ""0HLIMJ2NP34EF:00000003"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T08:52:12.6736681+01:00 0HLIMJ2NP34EF:00000004 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtimes/5E0D5AD3-22B0-4BDC-808C-62B8F50D0796/tickets/7F36E8E7-B5CD-43EF-A71D-8CFA2355D8AB application/json 217 (ca22a1cb)
+2018-11-30T08:52:12.6847447+01:00 0HLIMJ2NP34EF:00000004 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T08:52:12.6958128+01:00 0HLIMJ2NP34EF:00000004 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T08:52:12.7081480+01:00 0HLIMJ2NP34EF:00000004 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T08:52:12.7426262+01:00 0HLIMJ2NP34EF:00000004 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T08:52:12.7587081+01:00 0HLIMJ2NP34EF:00000004 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T08:52:12.7675613+01:00 0HLIMJ2NP34EF:00000004 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T08:52:12.9335195+01:00 0HLIMJ2NP34EF:00000004 [INF] Route matched with "{action = \"GetOneTicket\", controller = \"Ticket\"}". Executing action "Biob.Web.Controllers.TicketController.GetOneTicket (Biob.Web)" (a44c0341)
+2018-11-30T08:52:13.3444521+01:00 0HLIMJ2NP34EF:00000004 [INF] Executing action method "Biob.Web.Controllers.TicketController.GetOneTicket (Biob.Web)" with arguments (["7f36e8e7-b5cd-43ef-a71d-8cfa2355d8ab"]) - Validation state: Valid (4e3479ed)
+2018-11-30T08:52:13.7532628+01:00 0HLIMJ2NP34EF:00000004 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-11-30T08:52:13.8452576+01:00 0HLIMJ2NP34EF:00000004 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T08:52:14.7426001+01:00 0HLIMJ2NP34EF:00000004 [INF] Executed DbCommand ("138"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [ticket].[Id], [ticket].[CreatedOn], [ticket].[CustomerId], [ticket].[DeletedOn], [ticket].[IsDeleted], [ticket].[ModifiedOn], [ticket].[Paid], [ticket].[Price], [ticket].[SeatId], [ticket].[ShowtimeId]
+FROM [Tickets] AS [ticket]
+WHERE [ticket].[Id] = @__id_0" (0723d8ff)
+2018-11-30T08:52:14.8327817+01:00 0HLIMJ2NP34EF:00000004 [INF] Executed action method "Biob.Web.Controllers.TicketController.GetOneTicket (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 1472.9862ms. (50a9e262)
+2018-11-30T08:52:14.8663413+01:00 0HLIMJ2NP34EF:00000004 [INF] Executing ObjectResult, writing value of type '"Biob.Data.Models.Ticket"'. (8a1b66c8)
+2018-11-30T08:52:15.0059860+01:00 0HLIMJ2NP34EF:00000004 [INF] Executed action "Biob.Web.Controllers.TicketController.GetOneTicket (Biob.Web)" in 2058.203ms (afa2e885)
+2018-11-30T08:52:15.0182117+01:00 0HLIMJ2NP34EF:00000004 [INF] Generating expiration headers. (97875003)
+2018-11-30T08:52:15.0277192+01:00 0HLIMJ2NP34EF:00000004 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:02:15 GMT. Cache-Control: public,max-age=600,must-revalidate. (b6f813f0)
+2018-11-30T08:52:15.0383280+01:00 0HLIMJ2NP34EF:00000004 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T08:52:15.0481396+01:00 0HLIMJ2NP34EF:00000004 [INF] Validation headers generated. ETag: Strong, "E9DAB3A1B2E414E02C822896B682C476". Last-Modified: Fri, 30 Nov 2018 07:52:15 GMT (7d2d2ac1)
+2018-11-30T08:52:15.0638075+01:00 0HLIMJ2NP34EF:00000004 [INF] Generating Vary header. (c1174e38)
+2018-11-30T08:52:15.0739591+01:00 0HLIMJ2NP34EF:00000004 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T08:52:15.1253133+01:00 0HLIMJ2NP34EF:00000004 [INF] Request finished in 2434.8208ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-11-30T08:52:15.1554431+01:00  [INF] Connection id ""0HLIMJ2NP34EF"", Request id ""0HLIMJ2NP34EF:00000004"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T08:53:02.8450259+01:00 0HLIMJ2NP34EF:00000005 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtimes/5E0D5AD3-22B0-4BDC-808C-62B8F50D0796/tickets/7F36E8E7-B5CD-43EF-A71D-8CFA2355D8AB?fields=price application/json 217 (ca22a1cb)
+2018-11-30T08:53:02.8959545+01:00 0HLIMJ2NP34EF:00000005 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T08:53:02.9103176+01:00 0HLIMJ2NP34EF:00000005 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T08:53:02.9197520+01:00 0HLIMJ2NP34EF:00000005 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T08:53:02.9308980+01:00 0HLIMJ2NP34EF:00000005 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T08:53:02.9544124+01:00 0HLIMJ2NP34EF:00000005 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T08:53:02.9765382+01:00 0HLIMJ2NP34EF:00000005 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T08:53:02.9926872+01:00 0HLIMJ2NP34EF:00000005 [INF] Route matched with "{action = \"GetOneTicket\", controller = \"Ticket\"}". Executing action "Biob.Web.Controllers.TicketController.GetOneTicket (Biob.Web)" (a44c0341)
+2018-11-30T08:53:03.0379482+01:00 0HLIMJ2NP34EF:00000005 [INF] Executing action method "Biob.Web.Controllers.TicketController.GetOneTicket (Biob.Web)" with arguments (["7f36e8e7-b5cd-43ef-a71d-8cfa2355d8ab"]) - Validation state: Valid (4e3479ed)
+2018-11-30T08:53:03.0733241+01:00 0HLIMJ2NP34EF:00000005 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T08:53:03.5178133+01:00 0HLIMJ2NP34EF:00000005 [INF] Executed DbCommand ("408"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [ticket].[Id], [ticket].[CreatedOn], [ticket].[CustomerId], [ticket].[DeletedOn], [ticket].[IsDeleted], [ticket].[ModifiedOn], [ticket].[Paid], [ticket].[Price], [ticket].[SeatId], [ticket].[ShowtimeId]
+FROM [Tickets] AS [ticket]
+WHERE [ticket].[Id] = @__id_0" (0723d8ff)
+2018-11-30T08:53:03.5306001+01:00 0HLIMJ2NP34EF:00000005 [INF] Executed action method "Biob.Web.Controllers.TicketController.GetOneTicket (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 481.5346ms. (50a9e262)
+2018-11-30T08:53:03.5420540+01:00 0HLIMJ2NP34EF:00000005 [INF] Executing ObjectResult, writing value of type '"Biob.Data.Models.Ticket"'. (8a1b66c8)
+2018-11-30T08:53:03.5537738+01:00 0HLIMJ2NP34EF:00000005 [INF] Executed action "Biob.Web.Controllers.TicketController.GetOneTicket (Biob.Web)" in 549.8819ms (afa2e885)
+2018-11-30T08:53:03.5705660+01:00 0HLIMJ2NP34EF:00000005 [INF] Generating expiration headers. (97875003)
+2018-11-30T08:53:03.5839655+01:00 0HLIMJ2NP34EF:00000005 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:03:03 GMT. Cache-Control: public,max-age=600,must-revalidate. (08c53e52)
+2018-11-30T08:53:03.6063634+01:00 0HLIMJ2NP34EF:00000005 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T08:53:03.6247306+01:00 0HLIMJ2NP34EF:00000005 [INF] Validation headers generated. ETag: Strong, "BE36380DDFFDFB4414A28ED7BB0F08B4". Last-Modified: Fri, 30 Nov 2018 07:53:03 GMT (9203eb93)
+2018-11-30T08:53:03.6402463+01:00 0HLIMJ2NP34EF:00000005 [INF] Generating Vary header. (c1174e38)
+2018-11-30T08:53:03.6511938+01:00 0HLIMJ2NP34EF:00000005 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T08:53:03.7103672+01:00 0HLIMJ2NP34EF:00000005 [INF] Request finished in 820.0195ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-11-30T08:53:03.7328449+01:00  [INF] Connection id ""0HLIMJ2NP34EF"", Request id ""0HLIMJ2NP34EF:00000005"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T08:53:20.5472529+01:00 0HLIMJ2NP34EF:00000006 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtimes/5E0D5AD3-22B0-4BDC-808C-62B8F50D0796/tickets/7F36E8E7-B5CD-43EF-A71D-8CFA2355D8AB?field=price application/json 217 (ca22a1cb)
+2018-11-30T08:53:20.5598862+01:00 0HLIMJ2NP34EF:00000006 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T08:53:20.5707370+01:00 0HLIMJ2NP34EF:00000006 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T08:53:20.5850659+01:00 0HLIMJ2NP34EF:00000006 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T08:53:20.6021220+01:00 0HLIMJ2NP34EF:00000006 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T08:53:20.6257767+01:00 0HLIMJ2NP34EF:00000006 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T08:53:20.6468625+01:00 0HLIMJ2NP34EF:00000006 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T08:53:20.6566544+01:00 0HLIMJ2NP34EF:00000006 [INF] Route matched with "{action = \"GetOneTicket\", controller = \"Ticket\"}". Executing action "Biob.Web.Controllers.TicketController.GetOneTicket (Biob.Web)" (a44c0341)
+2018-11-30T08:53:20.6924708+01:00 0HLIMJ2NP34EF:00000006 [INF] Executing action method "Biob.Web.Controllers.TicketController.GetOneTicket (Biob.Web)" with arguments (["7f36e8e7-b5cd-43ef-a71d-8cfa2355d8ab"]) - Validation state: Valid (4e3479ed)
+2018-11-30T08:53:20.7472872+01:00 0HLIMJ2NP34EF:00000006 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T08:53:20.8303488+01:00 0HLIMJ2NP34EF:00000006 [INF] Executed DbCommand ("45"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [ticket].[Id], [ticket].[CreatedOn], [ticket].[CustomerId], [ticket].[DeletedOn], [ticket].[IsDeleted], [ticket].[ModifiedOn], [ticket].[Paid], [ticket].[Price], [ticket].[SeatId], [ticket].[ShowtimeId]
+FROM [Tickets] AS [ticket]
+WHERE [ticket].[Id] = @__id_0" (0723d8ff)
+2018-11-30T08:53:20.8619724+01:00 0HLIMJ2NP34EF:00000006 [INF] Executed action method "Biob.Web.Controllers.TicketController.GetOneTicket (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 139.0587ms. (50a9e262)
+2018-11-30T08:53:20.8789844+01:00 0HLIMJ2NP34EF:00000006 [INF] Executing ObjectResult, writing value of type '"Biob.Data.Models.Ticket"'. (8a1b66c8)
+2018-11-30T08:53:20.8981291+01:00 0HLIMJ2NP34EF:00000006 [INF] Executed action "Biob.Web.Controllers.TicketController.GetOneTicket (Biob.Web)" in 223.0706ms (afa2e885)
+2018-11-30T08:53:20.9186170+01:00 0HLIMJ2NP34EF:00000006 [INF] Generating expiration headers. (97875003)
+2018-11-30T08:53:20.9313833+01:00 0HLIMJ2NP34EF:00000006 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:03:20 GMT. Cache-Control: public,max-age=600,must-revalidate. (75001918)
+2018-11-30T08:53:20.9433452+01:00 0HLIMJ2NP34EF:00000006 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T08:53:20.9549350+01:00 0HLIMJ2NP34EF:00000006 [INF] Validation headers generated. ETag: Strong, "61E022553DD6B0488098B250CC2B6C9A". Last-Modified: Fri, 30 Nov 2018 07:53:20 GMT (39cd81ca)
+2018-11-30T08:53:20.9680353+01:00 0HLIMJ2NP34EF:00000006 [INF] Generating Vary header. (c1174e38)
+2018-11-30T08:53:20.9781146+01:00 0HLIMJ2NP34EF:00000006 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T08:53:21.0068276+01:00 0HLIMJ2NP34EF:00000006 [INF] Request finished in 443.6288ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-11-30T08:53:21.0365768+01:00  [INF] Connection id ""0HLIMJ2NP34EF"", Request id ""0HLIMJ2NP34EF:00000006"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T08:53:47.9400578+01:00 0HLIMJ2NP34EF:00000007 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtimes/5E0D5AD3-22B0-4BDC-808C-62B8F50D0796/tickets application/json 217 (ca22a1cb)
+2018-11-30T08:53:47.9646615+01:00 0HLIMJ2NP34EF:00000007 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T08:53:48.0174543+01:00 0HLIMJ2NP34EF:00000007 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T08:53:48.0333087+01:00 0HLIMJ2NP34EF:00000007 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T08:53:48.0456379+01:00 0HLIMJ2NP34EF:00000007 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T08:53:48.0571806+01:00 0HLIMJ2NP34EF:00000007 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T08:53:48.0672762+01:00 0HLIMJ2NP34EF:00000007 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T08:53:48.1036865+01:00 0HLIMJ2NP34EF:00000007 [INF] Route matched with "{action = \"GetAllTickets\", controller = \"Ticket\"}". Executing action "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" (a44c0341)
+2018-11-30T08:53:48.1624276+01:00 0HLIMJ2NP34EF:00000007 [INF] Executing action method "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" with arguments (["5e0d5ad3-22b0-4bdc-808c-62b8f50d0796", "Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
+2018-11-30T08:53:48.1858034+01:00 0HLIMJ2NP34EF:00000007 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T08:53:48.4206281+01:00 0HLIMJ2NP34EF:00000007 [INF] Executed action "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" in 306.5192ms (afa2e885)
+2018-11-30T08:53:48.5532781+01:00 0HLIMJ2NP34EF:00000007 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.ArgumentException: key mapping for CreatedOn is missing
+   at Biob.Services.Data.Helpers.IQueryableExtensions.Applysort[T](IQueryable`1 source, String orderBy, Dictionary`2 mappingDictionary) in C:\Users\tec\Documents\school\Restbiob\Biob.Services.Data\Helpers\IQueryableExtensions.cs:line 46
+   at Biob.Services.Data.Repositories.TicketRepository.GetAllTicketsAsync(Guid showtimeId, String orderBy, String searchQuery, Int32 pageNumber, Int32 pageSize) in C:\Users\tec\Documents\school\Restbiob\Biob.Services.Data\Repositories\TicketRepository.cs:line 63
+   at Biob.Web.Controllers.TicketController.GetAllTickets(Guid showtimeId, RequestParameters requestParameters) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\TicketController.cs:line 68
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T08:53:48.6014039+01:00 0HLIMJ2NP34EF:00000007 [ERR] An exception was thrown attempting to display the error page. (33804fd3)
+System.ArgumentException: Stream was not writable.
+   at System.IO.StreamWriter..ctor(Stream stream, Encoding encoding, Int32 bufferSize, Boolean leaveOpen)
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T08:53:48.7105331+01:00 0HLIMJ2NP34EF:00000007 [ERR] Connection id ""0HLIMJ2NP34EF"", Request id ""0HLIMJ2NP34EF:00000007"": An unhandled exception was thrown by the application. (560e7d32)
+System.ArgumentException: key mapping for CreatedOn is missing
+   at Biob.Services.Data.Helpers.IQueryableExtensions.Applysort[T](IQueryable`1 source, String orderBy, Dictionary`2 mappingDictionary) in C:\Users\tec\Documents\school\Restbiob\Biob.Services.Data\Helpers\IQueryableExtensions.cs:line 46
+   at Biob.Services.Data.Repositories.TicketRepository.GetAllTicketsAsync(Guid showtimeId, String orderBy, String searchQuery, Int32 pageNumber, Int32 pageSize) in C:\Users\tec\Documents\school\Restbiob\Biob.Services.Data\Repositories\TicketRepository.cs:line 63
+   at Biob.Web.Controllers.TicketController.GetAllTickets(Guid showtimeId, RequestParameters requestParameters) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\TicketController.cs:line 68
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2018-11-30T08:53:48.8140933+01:00 0HLIMJ2NP34EF:00000007 [INF] Request finished in 802.2348ms 500  (791a596a)
+2018-11-30T08:53:48.8416093+01:00  [INF] Connection id ""0HLIMJ2NP34EF"", Request id ""0HLIMJ2NP34EF:00000007"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T08:54:12.4100835+01:00 0HLIMJ2NP34EF:00000008 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtimes/5E0D5AD3-22B0-4BDC-808C-62B8F50D0796/tickets application/json 217 (ca22a1cb)
+2018-11-30T08:54:12.4293817+01:00 0HLIMJ2NP34EF:00000008 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T08:54:12.4372402+01:00 0HLIMJ2NP34EF:00000008 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T08:54:12.4447823+01:00 0HLIMJ2NP34EF:00000008 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T08:54:12.4528205+01:00 0HLIMJ2NP34EF:00000008 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T08:54:12.4602467+01:00 0HLIMJ2NP34EF:00000008 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T08:54:12.4677908+01:00 0HLIMJ2NP34EF:00000008 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T08:54:12.4753667+01:00 0HLIMJ2NP34EF:00000008 [INF] Route matched with "{action = \"GetAllTickets\", controller = \"Ticket\"}". Executing action "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" (a44c0341)
+2018-11-30T08:54:12.5120721+01:00 0HLIMJ2NP34EF:00000008 [INF] Executing action method "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" with arguments (["5e0d5ad3-22b0-4bdc-808c-62b8f50d0796", "Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
+2018-11-30T08:54:37.4971120+01:00 0HLIMJ2NP34EF:00000008 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T08:54:51.5509654+01:00 0HLIMJ2NP34EF:00000008 [INF] Executed action "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" in 39067.377ms (afa2e885)
+2018-11-30T08:54:51.5857245+01:00 0HLIMJ2NP34EF:00000008 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.ArgumentException: key mapping for CreatedOn is missing
+   at Biob.Services.Data.Helpers.IQueryableExtensions.Applysort[T](IQueryable`1 source, String orderBy, Dictionary`2 mappingDictionary) in C:\Users\tec\Documents\school\Restbiob\Biob.Services.Data\Helpers\IQueryableExtensions.cs:line 46
+   at Biob.Services.Data.Repositories.TicketRepository.GetAllTicketsAsync(Guid showtimeId, String orderBy, String searchQuery, Int32 pageNumber, Int32 pageSize) in C:\Users\tec\Documents\school\Restbiob\Biob.Services.Data\Repositories\TicketRepository.cs:line 63
+   at Biob.Web.Controllers.TicketController.GetAllTickets(Guid showtimeId, RequestParameters requestParameters) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\TicketController.cs:line 68
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T08:54:51.6066106+01:00 0HLIMJ2NP34EF:00000008 [ERR] An exception was thrown attempting to display the error page. (33804fd3)
+System.ArgumentException: Stream was not writable.
+   at System.IO.StreamWriter..ctor(Stream stream, Encoding encoding, Int32 bufferSize, Boolean leaveOpen)
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T08:54:51.6396138+01:00 0HLIMJ2NP34EF:00000008 [ERR] Connection id ""0HLIMJ2NP34EF"", Request id ""0HLIMJ2NP34EF:00000008"": An unhandled exception was thrown by the application. (560e7d32)
+System.ArgumentException: key mapping for CreatedOn is missing
+   at Biob.Services.Data.Helpers.IQueryableExtensions.Applysort[T](IQueryable`1 source, String orderBy, Dictionary`2 mappingDictionary) in C:\Users\tec\Documents\school\Restbiob\Biob.Services.Data\Helpers\IQueryableExtensions.cs:line 46
+   at Biob.Services.Data.Repositories.TicketRepository.GetAllTicketsAsync(Guid showtimeId, String orderBy, String searchQuery, Int32 pageNumber, Int32 pageSize) in C:\Users\tec\Documents\school\Restbiob\Biob.Services.Data\Repositories\TicketRepository.cs:line 63
+   at Biob.Web.Controllers.TicketController.GetAllTickets(Guid showtimeId, RequestParameters requestParameters) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\TicketController.cs:line 68
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2018-11-30T08:54:51.6692736+01:00 0HLIMJ2NP34EF:00000008 [INF] Request finished in 39282.7961ms 500  (791a596a)
+2018-11-30T08:54:51.6818855+01:00  [INF] Connection id ""0HLIMJ2NP34EF"", Request id ""0HLIMJ2NP34EF:00000008"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T08:56:52.4442212+01:00 0HLIMJ5HR5K64:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-30T08:56:52.5333884+01:00 0HLIMJ5HR5K64:00000001 [INF] Request finished in 87.2282ms 200  (791a596a)
+2018-11-30T08:57:01.0491921+01:00 0HLIMJ5HR5K64:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtimes/5E0D5AD3-22B0-4BDC-808C-62B8F50D0796/tickets application/json 217 (ca22a1cb)
+2018-11-30T08:57:01.1473138+01:00 0HLIMJ5HR5K64:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T08:57:01.1561449+01:00 0HLIMJ5HR5K64:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T08:57:01.1636913+01:00 0HLIMJ5HR5K64:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T08:57:01.1802200+01:00 0HLIMJ5HR5K64:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T08:57:01.1874302+01:00 0HLIMJ5HR5K64:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T08:57:01.1949912+01:00 0HLIMJ5HR5K64:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T08:57:01.5262787+01:00 0HLIMJ5HR5K64:00000002 [INF] Route matched with "{action = \"GetAllTickets\", controller = \"Ticket\"}". Executing action "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" (a44c0341)
+2018-11-30T08:57:01.9110976+01:00 0HLIMJ5HR5K64:00000002 [INF] Executing action method "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" with arguments (["5e0d5ad3-22b0-4bdc-808c-62b8f50d0796", "Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
+2018-11-30T08:57:04.2515943+01:00 0HLIMJ5HR5K64:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-11-30T08:57:04.3632949+01:00 0HLIMJ5HR5K64:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T08:57:05.5507011+01:00 0HLIMJ5HR5K64:00000002 [INF] Executed DbCommand ("118"ms) [Parameters=["@__showtimeId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [ticket].[Id], [ticket].[CreatedOn], [ticket].[CustomerId], [ticket].[DeletedOn], [ticket].[IsDeleted], [ticket].[ModifiedOn], [ticket].[Paid], [ticket].[Price], [ticket].[SeatId], [ticket].[ShowtimeId]
+FROM [Tickets] AS [ticket]
+WHERE ([ticket].[IsDeleted] = 0) AND ([ticket].[ShowtimeId] = @__showtimeId_0)
+ORDER BY [ticket].[Price]" (0723d8ff)
+2018-11-30T08:57:05.8251708+01:00 0HLIMJ5HR5K64:00000002 [INF] Executed action method "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 3900.7722ms. (50a9e262)
+2018-11-30T08:57:05.8521163+01:00 0HLIMJ5HR5K64:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-11-30T08:57:05.9329742+01:00 0HLIMJ5HR5K64:00000002 [INF] Executed action "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" in 4379.2393ms (afa2e885)
+2018-11-30T08:57:05.9536794+01:00 0HLIMJ5HR5K64:00000002 [INF] Generating expiration headers. (97875003)
+2018-11-30T08:57:05.9635710+01:00 0HLIMJ5HR5K64:00000002 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:07:05 GMT. Cache-Control: public,max-age=600,must-revalidate. (fa133d1b)
+2018-11-30T08:57:05.9813784+01:00 0HLIMJ5HR5K64:00000002 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T08:57:06.0114223+01:00 0HLIMJ5HR5K64:00000002 [INF] Validation headers generated. ETag: Strong, "69343C5467D0C8CC443D0EA5A8D0DD81". Last-Modified: Fri, 30 Nov 2018 07:57:05 GMT (3ecf0b95)
+2018-11-30T08:57:06.0218297+01:00 0HLIMJ5HR5K64:00000002 [INF] Generating Vary header. (c1174e38)
+2018-11-30T08:57:06.0305927+01:00 0HLIMJ5HR5K64:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T08:57:06.0727129+01:00 0HLIMJ5HR5K64:00000002 [INF] Request finished in 5014.343ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-11-30T08:57:06.1111755+01:00  [INF] Connection id ""0HLIMJ5HR5K64"", Request id ""0HLIMJ5HR5K64:00000002"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T08:59:50.9635513+01:00 0HLIMJ771PU9B:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-30T08:59:51.0344834+01:00 0HLIMJ771PU9B:00000001 [INF] Request finished in 74.8369ms 200  (791a596a)
+2018-11-30T09:02:21.4714609+01:00 0HLIMJ771PU9C:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtimes/5E0D5AD3-22B0-4BDC-808C-62B8F50D0796/tickets application/json 217 (ca22a1cb)
+2018-11-30T09:02:21.6007116+01:00 0HLIMJ771PU9C:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T09:02:21.6143430+01:00 0HLIMJ771PU9C:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T09:02:21.6238412+01:00 0HLIMJ771PU9C:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T09:02:21.6404323+01:00 0HLIMJ771PU9C:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T09:02:21.6510979+01:00 0HLIMJ771PU9C:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T09:02:21.6632313+01:00 0HLIMJ771PU9C:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T09:02:22.0633247+01:00 0HLIMJ771PU9C:00000001 [INF] Route matched with "{action = \"GetAllTickets\", controller = \"Ticket\"}". Executing action "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" (a44c0341)
+2018-11-30T09:02:22.4630067+01:00 0HLIMJ771PU9C:00000001 [INF] Executing action method "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" with arguments (["5e0d5ad3-22b0-4bdc-808c-62b8f50d0796", "Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
+2018-11-30T09:02:32.0379906+01:00 0HLIMJ771PU9C:00000001 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-11-30T09:02:32.1274011+01:00 0HLIMJ771PU9C:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T09:02:35.1829056+01:00 0HLIMJ771PU9C:00000001 [INF] Executed DbCommand ("93"ms) [Parameters=["@__showtimeId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [ticket].[Id], [ticket].[CreatedOn], [ticket].[CustomerId], [ticket].[DeletedOn], [ticket].[IsDeleted], [ticket].[ModifiedOn], [ticket].[Paid], [ticket].[Price], [ticket].[SeatId], [ticket].[ShowtimeId]
+FROM [Tickets] AS [ticket]
+WHERE ([ticket].[IsDeleted] = 0) AND ([ticket].[ShowtimeId] = @__showtimeId_0)
+ORDER BY [ticket].[Price]" (0723d8ff)
+2018-11-30T09:02:35.3814457+01:00 0HLIMJ771PU9C:00000001 [INF] Executed action method "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 12902.8767ms. (50a9e262)
+2018-11-30T09:02:35.4042927+01:00 0HLIMJ771PU9C:00000001 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-11-30T09:02:35.4420624+01:00 0HLIMJ771PU9C:00000001 [INF] Executed action "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" in 13366.4979ms (afa2e885)
+2018-11-30T09:02:35.4575101+01:00 0HLIMJ771PU9C:00000001 [INF] Generating expiration headers. (97875003)
+2018-11-30T09:02:35.4656004+01:00 0HLIMJ771PU9C:00000001 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:12:35 GMT. Cache-Control: public,max-age=600,must-revalidate. (82002ee4)
+2018-11-30T09:02:35.4795376+01:00 0HLIMJ771PU9C:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T09:02:35.5024443+01:00 0HLIMJ771PU9C:00000001 [INF] Validation headers generated. ETag: Strong, "69343C5467D0C8CC443D0EA5A8D0DD81". Last-Modified: Fri, 30 Nov 2018 08:02:35 GMT (27183141)
+2018-11-30T09:02:35.5131468+01:00 0HLIMJ771PU9C:00000001 [INF] Generating Vary header. (c1174e38)
+2018-11-30T09:02:35.5218161+01:00 0HLIMJ771PU9C:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T09:02:35.5581401+01:00 0HLIMJ771PU9C:00000001 [INF] Request finished in 14157.4196ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-11-30T09:02:35.5870929+01:00  [INF] Connection id ""0HLIMJ771PU9C"", Request id ""0HLIMJ771PU9C:00000001"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T09:03:50.5690871+01:00 0HLIMJ771PU9D:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtimes/5E0D5AD3-22B0-4BDC-808C-62B8F50D0796/tickets?pageSize=1 application/json 217 (ca22a1cb)
+2018-11-30T09:03:50.5800936+01:00 0HLIMJ771PU9D:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T09:03:50.5901981+01:00 0HLIMJ771PU9D:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T09:03:50.6033164+01:00 0HLIMJ771PU9D:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T09:03:50.6142189+01:00 0HLIMJ771PU9D:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T09:03:50.6233250+01:00 0HLIMJ771PU9D:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T09:03:50.7491979+01:00 0HLIMJ771PU9D:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T09:03:50.7708624+01:00 0HLIMJ771PU9D:00000001 [INF] Route matched with "{action = \"GetAllTickets\", controller = \"Ticket\"}". Executing action "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" (a44c0341)
+2018-11-30T09:03:50.8127706+01:00 0HLIMJ771PU9D:00000001 [INF] Executing action method "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" with arguments (["5e0d5ad3-22b0-4bdc-808c-62b8f50d0796", "Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
+2018-11-30T09:03:50.8251516+01:00 0HLIMJ771PU9D:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T09:03:50.8920518+01:00 0HLIMJ771PU9D:00000001 [INF] Executed DbCommand ("54"ms) [Parameters=["@__showtimeId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [ticket].[Id], [ticket].[CreatedOn], [ticket].[CustomerId], [ticket].[DeletedOn], [ticket].[IsDeleted], [ticket].[ModifiedOn], [ticket].[Paid], [ticket].[Price], [ticket].[SeatId], [ticket].[ShowtimeId]
+FROM [Tickets] AS [ticket]
+WHERE ([ticket].[IsDeleted] = 0) AND ([ticket].[ShowtimeId] = @__showtimeId_0)
+ORDER BY [ticket].[Price]" (0723d8ff)
+2018-11-30T09:03:50.9212056+01:00 0HLIMJ771PU9D:00000001 [INF] Executed action method "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 95.8188ms. (50a9e262)
+2018-11-30T09:03:50.9311960+01:00 0HLIMJ771PU9D:00000001 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-11-30T09:03:50.9397871+01:00 0HLIMJ771PU9D:00000001 [INF] Executed action "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" in 160.7557ms (afa2e885)
+2018-11-30T09:03:50.9571759+01:00 0HLIMJ771PU9D:00000001 [INF] Generating expiration headers. (97875003)
+2018-11-30T09:03:50.9716416+01:00 0HLIMJ771PU9D:00000001 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:13:50 GMT. Cache-Control: public,max-age=600,must-revalidate. (08dd2e01)
+2018-11-30T09:03:50.9845221+01:00 0HLIMJ771PU9D:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T09:03:50.9944273+01:00 0HLIMJ771PU9D:00000001 [INF] Validation headers generated. ETag: Strong, "1F02A42A6FD88B2884D5B768DF9FDA09". Last-Modified: Fri, 30 Nov 2018 08:03:50 GMT (4df94010)
+2018-11-30T09:03:51.0030244+01:00 0HLIMJ771PU9D:00000001 [INF] Generating Vary header. (c1174e38)
+2018-11-30T09:03:51.0145176+01:00 0HLIMJ771PU9D:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T09:03:51.0601751+01:00 0HLIMJ771PU9D:00000001 [INF] Request finished in 478.0492ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-11-30T09:03:51.0757258+01:00  [INF] Connection id ""0HLIMJ771PU9D"", Request id ""0HLIMJ771PU9D:00000001"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T09:04:54.5662590+01:00 0HLIMJ771PU9E:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtimes/5E0D5AD3-22B0-4BDC-808C-62B8F50D0796/tickets?pageSize=1&includemetadata=true application/json 217 (ca22a1cb)
+2018-11-30T09:04:54.5989407+01:00 0HLIMJ771PU9E:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T09:04:54.6127568+01:00 0HLIMJ771PU9E:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T09:04:54.6246926+01:00 0HLIMJ771PU9E:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T09:04:54.6348356+01:00 0HLIMJ771PU9E:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T09:04:54.6445895+01:00 0HLIMJ771PU9E:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T09:04:54.6539282+01:00 0HLIMJ771PU9E:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T09:04:54.6627844+01:00 0HLIMJ771PU9E:00000001 [INF] Route matched with "{action = \"GetAllTickets\", controller = \"Ticket\"}". Executing action "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" (a44c0341)
+2018-11-30T09:04:54.7000988+01:00 0HLIMJ771PU9E:00000001 [INF] Executing action method "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" with arguments (["5e0d5ad3-22b0-4bdc-808c-62b8f50d0796", "Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
+2018-11-30T09:04:54.7103171+01:00 0HLIMJ771PU9E:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T09:04:54.7722304+01:00 0HLIMJ771PU9E:00000001 [INF] Executed DbCommand ("45"ms) [Parameters=["@__showtimeId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [ticket].[Id], [ticket].[CreatedOn], [ticket].[CustomerId], [ticket].[DeletedOn], [ticket].[IsDeleted], [ticket].[ModifiedOn], [ticket].[Paid], [ticket].[Price], [ticket].[SeatId], [ticket].[ShowtimeId]
+FROM [Tickets] AS [ticket]
+WHERE ([ticket].[IsDeleted] = 0) AND ([ticket].[ShowtimeId] = @__showtimeId_0)
+ORDER BY [ticket].[Price]" (0723d8ff)
+2018-11-30T09:04:54.7846166+01:00 0HLIMJ771PU9E:00000001 [INF] Executed action method "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 74.1497ms. (50a9e262)
+2018-11-30T09:04:54.7985131+01:00 0HLIMJ771PU9E:00000001 [INF] Executing ObjectResult, writing value of type '"Biob.Services.Data.Helpers.EntityWithPaginationMetadataDto`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-11-30T09:04:54.8161930+01:00 0HLIMJ771PU9E:00000001 [INF] Executed action "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" in 143.659ms (afa2e885)
+2018-11-30T09:04:54.8264443+01:00 0HLIMJ771PU9E:00000001 [INF] Generating expiration headers. (97875003)
+2018-11-30T09:04:54.8375581+01:00 0HLIMJ771PU9E:00000001 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:14:54 GMT. Cache-Control: public,max-age=600,must-revalidate. (1e4a2d04)
+2018-11-30T09:04:54.8485676+01:00 0HLIMJ771PU9E:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T09:04:54.8588984+01:00 0HLIMJ771PU9E:00000001 [INF] Validation headers generated. ETag: Strong, "6E339A8BDFC557EFE2141C48524B7DE7". Last-Modified: Fri, 30 Nov 2018 08:04:54 GMT (d99b4e7d)
+2018-11-30T09:04:54.8698874+01:00 0HLIMJ771PU9E:00000001 [INF] Generating Vary header. (c1174e38)
+2018-11-30T09:04:54.8801232+01:00 0HLIMJ771PU9E:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T09:04:54.9293909+01:00 0HLIMJ771PU9E:00000001 [INF] Request finished in 381.0727ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-11-30T09:04:54.9458551+01:00  [INF] Connection id ""0HLIMJ771PU9E"", Request id ""0HLIMJ771PU9E:00000001"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T09:05:34.3506659+01:00 0HLIMJADDHAVO:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtimes/5E0D5AD3-22B0-4BDC-808C-62B8F50D0796/tickets?pageSize=1&includemetadata=true application/json 217 (ca22a1cb)
+2018-11-30T09:05:34.4496178+01:00 0HLIMJADDHAVO:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T09:05:34.4508434+01:00 0HLIMJADDHAVO:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T09:05:34.4509589+01:00 0HLIMJADDHAVO:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T09:05:34.4600739+01:00 0HLIMJADDHAVO:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T09:05:34.4602342+01:00 0HLIMJADDHAVO:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T09:05:34.4603018+01:00 0HLIMJADDHAVO:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T09:05:34.6327606+01:00 0HLIMJADDHAVO:00000001 [INF] Route matched with "{action = \"GetAllTickets\", controller = \"Ticket\"}". Executing action "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" (a44c0341)
+2018-11-30T09:05:34.7601283+01:00 0HLIMJADDHAVO:00000001 [INF] Executing action method "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" with arguments (["5e0d5ad3-22b0-4bdc-808c-62b8f50d0796", "Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
+2018-11-30T09:05:35.0333595+01:00 0HLIMJADDHAVO:00000001 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-11-30T09:05:35.1164703+01:00 0HLIMJADDHAVO:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T09:05:37.4218152+01:00 0HLIMJADDHAVO:00000001 [INF] Executed DbCommand ("44"ms) [Parameters=["@__showtimeId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [ticket].[Id], [ticket].[CreatedOn], [ticket].[CustomerId], [ticket].[DeletedOn], [ticket].[IsDeleted], [ticket].[ModifiedOn], [ticket].[Paid], [ticket].[Price], [ticket].[SeatId], [ticket].[ShowtimeId]
+FROM [Tickets] AS [ticket]
+WHERE ([ticket].[IsDeleted] = 0) AND ([ticket].[ShowtimeId] = @__showtimeId_0)
+ORDER BY [ticket].[Price]" (0723d8ff)
+2018-11-30T09:05:37.5987179+01:00 0HLIMJADDHAVO:00000001 [INF] Executed action method "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 2821.2687ms. (50a9e262)
+2018-11-30T09:05:37.6166228+01:00 0HLIMJADDHAVO:00000001 [INF] Executing ObjectResult, writing value of type '"Biob.Services.Data.Helpers.EntityWithPaginationMetadataDto`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-11-30T09:05:37.6564531+01:00 0HLIMJADDHAVO:00000001 [INF] Executed action "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" in 3017.3451ms (afa2e885)
+2018-11-30T09:05:37.6664695+01:00 0HLIMJADDHAVO:00000001 [INF] Generating expiration headers. (97875003)
+2018-11-30T09:05:37.6678213+01:00 0HLIMJADDHAVO:00000001 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:15:37 GMT. Cache-Control: public,max-age=600,must-revalidate. (34706bc3)
+2018-11-30T09:05:37.6749131+01:00 0HLIMJADDHAVO:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T09:05:37.6901204+01:00 0HLIMJADDHAVO:00000001 [INF] Validation headers generated. ETag: Strong, "6E339A8BDFC557EFE2141C48524B7DE7". Last-Modified: Fri, 30 Nov 2018 08:05:37 GMT (5d8b2281)
+2018-11-30T09:05:37.6925862+01:00 0HLIMJADDHAVO:00000001 [INF] Generating Vary header. (c1174e38)
+2018-11-30T09:05:37.6927111+01:00 0HLIMJADDHAVO:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T09:05:37.7215977+01:00 0HLIMJADDHAVO:00000001 [INF] Request finished in 3378.5033ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-11-30T09:05:37.7534757+01:00  [INF] Connection id ""0HLIMJADDHAVO"", Request id ""0HLIMJADDHAVO:00000001"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T09:05:58.1586043+01:00 0HLIMJADDHAVO:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtimes/5E0D5AD3-22B0-4BDC-808C-62B8F50D0796/tickets?pageSize=1&fields=price application/json 217 (ca22a1cb)
+2018-11-30T09:05:58.1616676+01:00 0HLIMJADDHAVO:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T09:05:58.1617788+01:00 0HLIMJADDHAVO:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T09:05:58.1618293+01:00 0HLIMJADDHAVO:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T09:05:58.1619516+01:00 0HLIMJADDHAVO:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T09:05:58.1620358+01:00 0HLIMJADDHAVO:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T09:05:58.1620662+01:00 0HLIMJADDHAVO:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T09:05:58.1629429+01:00 0HLIMJADDHAVO:00000002 [INF] Route matched with "{action = \"GetAllTickets\", controller = \"Ticket\"}". Executing action "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" (a44c0341)
+2018-11-30T09:05:58.1657440+01:00 0HLIMJADDHAVO:00000002 [INF] Executing action method "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" with arguments (["5e0d5ad3-22b0-4bdc-808c-62b8f50d0796", "Biob.Web.Helpers.RequestParameters"]) - Validation state: Valid (4e3479ed)
+2018-11-30T09:05:58.1672506+01:00 0HLIMJADDHAVO:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T09:05:58.1848006+01:00 0HLIMJADDHAVO:00000002 [INF] Executed DbCommand ("14"ms) [Parameters=["@__showtimeId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [ticket].[Id], [ticket].[CreatedOn], [ticket].[CustomerId], [ticket].[DeletedOn], [ticket].[IsDeleted], [ticket].[ModifiedOn], [ticket].[Paid], [ticket].[Price], [ticket].[SeatId], [ticket].[ShowtimeId]
+FROM [Tickets] AS [ticket]
+WHERE ([ticket].[IsDeleted] = 0) AND ([ticket].[ShowtimeId] = @__showtimeId_0)
+ORDER BY [ticket].[Price]" (0723d8ff)
+2018-11-30T09:05:58.1875256+01:00 0HLIMJADDHAVO:00000002 [INF] Executed action method "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 21.5934ms. (50a9e262)
+2018-11-30T09:05:58.1881807+01:00 0HLIMJADDHAVO:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-11-30T09:05:58.1887269+01:00 0HLIMJADDHAVO:00000002 [INF] Executed action "Biob.Web.Controllers.TicketController.GetAllTickets (Biob.Web)" in 25.639ms (afa2e885)
+2018-11-30T09:05:58.1888201+01:00 0HLIMJADDHAVO:00000002 [INF] Generating expiration headers. (97875003)
+2018-11-30T09:05:58.1888924+01:00 0HLIMJADDHAVO:00000002 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:15:58 GMT. Cache-Control: public,max-age=600,must-revalidate. (a363144a)
+2018-11-30T09:05:58.1889355+01:00 0HLIMJADDHAVO:00000002 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T09:05:58.1892088+01:00 0HLIMJADDHAVO:00000002 [INF] Validation headers generated. ETag: Strong, "D65CCE4E4369D8AA596A7342AA9F9F69". Last-Modified: Fri, 30 Nov 2018 08:05:58 GMT (4ee63de0)
+2018-11-30T09:05:58.1892533+01:00 0HLIMJADDHAVO:00000002 [INF] Generating Vary header. (c1174e38)
+2018-11-30T09:05:58.1892871+01:00 0HLIMJADDHAVO:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T09:05:58.1897374+01:00 0HLIMJADDHAVO:00000002 [INF] Request finished in 31.3712ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-11-30T09:05:58.1901188+01:00  [INF] Connection id ""0HLIMJADDHAVO"", Request id ""0HLIMJADDHAVO:00000002"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T09:08:42.2148132+01:00 0HLIMJC5C0EG9:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/json 217 (ca22a1cb)
+2018-11-30T09:08:42.2148132+01:00 0HLIMJC5C0EG8:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-30T09:08:42.3200233+01:00 0HLIMJC5C0EG8:00000001 [INF] Request finished in 113.4591ms 200  (791a596a)
+2018-11-30T09:08:42.4302490+01:00 0HLIMJC5C0EG9:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T09:08:42.4406580+01:00 0HLIMJC5C0EG9:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T09:08:42.4508447+01:00 0HLIMJC5C0EG9:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T09:08:42.4779416+01:00 0HLIMJC5C0EG9:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T09:08:42.4922299+01:00 0HLIMJC5C0EG9:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T09:08:42.5028977+01:00 0HLIMJC5C0EG9:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T09:08:42.8761430+01:00 0HLIMJC5C0EG9:00000001 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-11-30T09:08:43.3195880+01:00 0HLIMJC5C0EG9:00000001 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-11-30T09:08:43.8213758+01:00 0HLIMJC5C0EG9:00000001 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-11-30T09:08:43.8864422+01:00 0HLIMJC5C0EG9:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T09:08:47.0389361+01:00 0HLIMJC5C0EG9:00000001 [INF] Executed DbCommand ("136"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-11-30T09:08:47.2422561+01:00 0HLIMJC5C0EG9:00000001 [INF] Executed DbCommand ("98"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-11-30T09:08:47.7887122+01:00 0HLIMJC5C0EG9:00000001 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 4898.0712ms (afa2e885)
+2018-11-30T09:08:47.9245195+01:00 0HLIMJC5C0EG9:00000001 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+PagedList`1 -> IEnumerable`1
+Biob.Services.Data.Helpers.PagedList`1[[Biob.Data.Models.Movie, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Type Map configuration:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Destination Member:
+Genre
+ ---> System.ArgumentOutOfRangeException: StartIndex cannot be less than zero.
+Parameter name: startIndex
+   at System.Text.StringBuilder.Remove(Int32 startIndex, Int32 length)
+   at Biob.Web.Helpers.IEnumerableExtensions.ConvertIEnumerableToString[T](IEnumerable`1 listOfString) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Helpers\IEnumerableExtensions.cs:line 15
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
+   at Biob.Web.Controllers.MovieController.GetAllMovies(RequestParameters requestParameters, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 81
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T09:08:47.9680079+01:00 0HLIMJC5C0EG9:00000001 [ERR] An exception was thrown attempting to display the error page. (33804fd3)
+System.ArgumentException: Stream was not writable.
+   at System.IO.StreamWriter..ctor(Stream stream, Encoding encoding, Int32 bufferSize, Boolean leaveOpen)
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T09:08:47.9982134+01:00 0HLIMJC5C0EG9:00000001 [ERR] Connection id ""0HLIMJC5C0EG9"", Request id ""0HLIMJC5C0EG9:00000001"": An unhandled exception was thrown by the application. (560e7d32)
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+PagedList`1 -> IEnumerable`1
+Biob.Services.Data.Helpers.PagedList`1[[Biob.Data.Models.Movie, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Type Map configuration:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Destination Member:
+Genre
+ ---> System.ArgumentOutOfRangeException: StartIndex cannot be less than zero.
+Parameter name: startIndex
+   at System.Text.StringBuilder.Remove(Int32 startIndex, Int32 length)
+   at Biob.Web.Helpers.IEnumerableExtensions.ConvertIEnumerableToString[T](IEnumerable`1 listOfString) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Helpers\IEnumerableExtensions.cs:line 15
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
+   at Biob.Web.Controllers.MovieController.GetAllMovies(RequestParameters requestParameters, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 81
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2018-11-30T09:08:48.0486931+01:00 0HLIMJC5C0EG9:00000001 [INF] Request finished in 5825.7526ms 500  (791a596a)
+2018-11-30T09:08:48.0816377+01:00  [INF] Connection id ""0HLIMJC5C0EG9"", Request id ""0HLIMJC5C0EG9:00000001"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T09:09:00.2027137+01:00 0HLIMJC5C0EG8:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/json 217 (ca22a1cb)
+2018-11-30T09:09:00.2127626+01:00 0HLIMJC5C0EG8:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T09:09:00.2219481+01:00 0HLIMJC5C0EG8:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T09:09:00.2336047+01:00 0HLIMJC5C0EG8:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T09:09:00.2501326+01:00 0HLIMJC5C0EG8:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T09:09:00.2698242+01:00 0HLIMJC5C0EG8:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T09:09:00.2866665+01:00 0HLIMJC5C0EG8:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T09:09:00.2987973+01:00 0HLIMJC5C0EG8:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-11-30T09:09:00.3429750+01:00 0HLIMJC5C0EG8:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters", "*/*"]) - Validation state: Valid (4e3479ed)
+2018-11-30T09:09:00.3676779+01:00 0HLIMJC5C0EG8:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T09:09:00.4834352+01:00 0HLIMJC5C0EG8:00000002 [INF] Executed DbCommand ("83"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-11-30T09:09:00.5371851+01:00 0HLIMJC5C0EG8:00000002 [INF] Executed DbCommand ("39"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-11-30T09:09:00.8093904+01:00 0HLIMJC5C0EG8:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 498.7754ms (afa2e885)
+2018-11-30T09:09:00.8329908+01:00 0HLIMJC5C0EG8:00000002 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+PagedList`1 -> IEnumerable`1
+Biob.Services.Data.Helpers.PagedList`1[[Biob.Data.Models.Movie, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Type Map configuration:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Destination Member:
+Genre
+ ---> System.ArgumentOutOfRangeException: StartIndex cannot be less than zero.
+Parameter name: startIndex
+   at System.Text.StringBuilder.Remove(Int32 startIndex, Int32 length)
+   at Biob.Web.Helpers.IEnumerableExtensions.ConvertIEnumerableToString[T](IEnumerable`1 listOfString) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Helpers\IEnumerableExtensions.cs:line 15
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
+   at Biob.Web.Controllers.MovieController.GetAllMovies(RequestParameters requestParameters, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 81
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T09:09:00.8502517+01:00 0HLIMJC5C0EG8:00000002 [ERR] An exception was thrown attempting to display the error page. (33804fd3)
+System.ArgumentException: Stream was not writable.
+   at System.IO.StreamWriter..ctor(Stream stream, Encoding encoding, Int32 bufferSize, Boolean leaveOpen)
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T09:09:00.8780709+01:00 0HLIMJC5C0EG8:00000002 [ERR] Connection id ""0HLIMJC5C0EG8"", Request id ""0HLIMJC5C0EG8:00000002"": An unhandled exception was thrown by the application. (560e7d32)
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+PagedList`1 -> IEnumerable`1
+Biob.Services.Data.Helpers.PagedList`1[[Biob.Data.Models.Movie, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Type Map configuration:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Destination Member:
+Genre
+ ---> System.ArgumentOutOfRangeException: StartIndex cannot be less than zero.
+Parameter name: startIndex
+   at System.Text.StringBuilder.Remove(Int32 startIndex, Int32 length)
+   at Biob.Web.Helpers.IEnumerableExtensions.ConvertIEnumerableToString[T](IEnumerable`1 listOfString) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Helpers\IEnumerableExtensions.cs:line 15
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
+   at Biob.Web.Controllers.MovieController.GetAllMovies(RequestParameters requestParameters, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 81
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2018-11-30T09:09:00.9493344+01:00 0HLIMJC5C0EG8:00000002 [INF] Request finished in 687.172ms 500  (791a596a)
+2018-11-30T09:09:00.9702428+01:00  [INF] Connection id ""0HLIMJC5C0EG8"", Request id ""0HLIMJC5C0EG8:00000002"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T09:09:55.3452723+01:00 0HLIMJCR5OUL1:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-30T09:09:55.4364165+01:00 0HLIMJCR5OUL1:00000001 [INF] Request finished in 103.7569ms 200  (791a596a)
+2018-11-30T09:09:59.9081426+01:00 0HLIMJCR5OUL1:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/json 217 (ca22a1cb)
+2018-11-30T09:10:00.0589764+01:00 0HLIMJCR5OUL1:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T09:10:00.0693752+01:00 0HLIMJCR5OUL1:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T09:10:00.0812476+01:00 0HLIMJCR5OUL1:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T09:10:00.1088080+01:00 0HLIMJCR5OUL1:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T09:10:00.1208153+01:00 0HLIMJCR5OUL1:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T09:10:00.1318649+01:00 0HLIMJCR5OUL1:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T09:10:00.5565855+01:00 0HLIMJCR5OUL1:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-11-30T09:10:00.9369073+01:00 0HLIMJCR5OUL1:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters", "*/*"]) - Validation state: Valid (4e3479ed)
+2018-11-30T09:10:26.6241435+01:00 0HLIMJCR5OUL1:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-11-30T09:10:26.7170094+01:00 0HLIMJCR5OUL1:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T09:10:40.5592220+01:00 0HLIMJCR5OUL1:00000002 [INF] Executed DbCommand ("125"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-11-30T09:10:40.7879586+01:00 0HLIMJCR5OUL1:00000002 [INF] Executed DbCommand ("79"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-11-30T09:10:50.1862559+01:00 0HLIMJCR5OUL1:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 49605.4716ms (afa2e885)
+2018-11-30T09:10:50.3597420+01:00 0HLIMJCR5OUL1:00000002 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+PagedList`1 -> IEnumerable`1
+Biob.Services.Data.Helpers.PagedList`1[[Biob.Data.Models.Movie, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Type Map configuration:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Destination Member:
+Genre
+ ---> System.ArgumentOutOfRangeException: StartIndex cannot be less than zero.
+Parameter name: startIndex
+   at System.Text.StringBuilder.Remove(Int32 startIndex, Int32 length)
+   at Biob.Web.Helpers.IEnumerableExtensions.ConvertIEnumerableToString[T](IEnumerable`1 listOfString) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Helpers\IEnumerableExtensions.cs:line 15
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
+   at Biob.Web.Controllers.MovieController.GetAllMovies(RequestParameters requestParameters, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 81
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T09:10:50.4175182+01:00 0HLIMJCR5OUL1:00000002 [ERR] An exception was thrown attempting to display the error page. (33804fd3)
+System.ArgumentException: Stream was not writable.
+   at System.IO.StreamWriter..ctor(Stream stream, Encoding encoding, Int32 bufferSize, Boolean leaveOpen)
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T09:10:50.4675240+01:00 0HLIMJCR5OUL1:00000002 [ERR] Connection id ""0HLIMJCR5OUL1"", Request id ""0HLIMJCR5OUL1:00000002"": An unhandled exception was thrown by the application. (560e7d32)
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+PagedList`1 -> IEnumerable`1
+Biob.Services.Data.Helpers.PagedList`1[[Biob.Data.Models.Movie, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Type Map configuration:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Destination Member:
+Genre
+ ---> System.ArgumentOutOfRangeException: StartIndex cannot be less than zero.
+Parameter name: startIndex
+   at System.Text.StringBuilder.Remove(Int32 startIndex, Int32 length)
+   at Biob.Web.Helpers.IEnumerableExtensions.ConvertIEnumerableToString[T](IEnumerable`1 listOfString) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Helpers\IEnumerableExtensions.cs:line 15
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
+   at Biob.Web.Controllers.MovieController.GetAllMovies(RequestParameters requestParameters, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 81
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2018-11-30T09:10:50.4851308+01:00 0HLIMJCR5OUL1:00000002 [INF] Request finished in 50603.1986ms 500  (791a596a)
+2018-11-30T09:10:50.5369816+01:00  [INF] Connection id ""0HLIMJCR5OUL1"", Request id ""0HLIMJCR5OUL1:00000002"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T09:11:17.6144208+01:00 0HLIMJDJM6QDD:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-30T09:11:17.7080801+01:00 0HLIMJDJM6QDD:00000001 [INF] Request finished in 100.6218ms 200  (791a596a)
+2018-11-30T09:11:20.5279637+01:00 0HLIMJDJM6QDD:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/json 217 (ca22a1cb)
+2018-11-30T09:11:20.6672739+01:00 0HLIMJDJM6QDD:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T09:11:20.6773190+01:00 0HLIMJDJM6QDD:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T09:11:20.6872439+01:00 0HLIMJDJM6QDD:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T09:11:20.7076242+01:00 0HLIMJDJM6QDD:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T09:11:20.7173549+01:00 0HLIMJDJM6QDD:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T09:11:20.7311553+01:00 0HLIMJDJM6QDD:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T09:11:21.1359696+01:00 0HLIMJDJM6QDD:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-11-30T09:11:21.5344776+01:00 0HLIMJDJM6QDD:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters", "*/*"]) - Validation state: Valid (4e3479ed)
+2018-11-30T09:11:21.9307543+01:00 0HLIMJDJM6QDD:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-11-30T09:11:21.9843955+01:00 0HLIMJDJM6QDD:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T09:11:24.7112160+01:00 0HLIMJDJM6QDD:00000002 [INF] Executed DbCommand ("133"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-11-30T09:11:24.8676491+01:00 0HLIMJDJM6QDD:00000002 [INF] Executed DbCommand ("70"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-11-30T09:11:29.5643393+01:00 0HLIMJDJM6QDD:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 8415.5564ms (afa2e885)
+2018-11-30T09:11:29.6916411+01:00 0HLIMJDJM6QDD:00000002 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+PagedList`1 -> IEnumerable`1
+Biob.Services.Data.Helpers.PagedList`1[[Biob.Data.Models.Movie, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Type Map configuration:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Destination Member:
+Genre
+ ---> System.ArgumentOutOfRangeException: StartIndex cannot be less than zero.
+Parameter name: startIndex
+   at System.Text.StringBuilder.Remove(Int32 startIndex, Int32 length)
+   at Biob.Web.Helpers.IEnumerableExtensions.ConvertIEnumerableToString[T](IEnumerable`1 listOfString) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Helpers\IEnumerableExtensions.cs:line 15
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
+   at Biob.Web.Controllers.MovieController.GetAllMovies(RequestParameters requestParameters, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 81
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T09:11:29.7365189+01:00 0HLIMJDJM6QDD:00000002 [ERR] An exception was thrown attempting to display the error page. (33804fd3)
+System.ArgumentException: Stream was not writable.
+   at System.IO.StreamWriter..ctor(Stream stream, Encoding encoding, Int32 bufferSize, Boolean leaveOpen)
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T09:11:29.7671204+01:00 0HLIMJDJM6QDD:00000002 [ERR] Connection id ""0HLIMJDJM6QDD"", Request id ""0HLIMJDJM6QDD:00000002"": An unhandled exception was thrown by the application. (560e7d32)
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+PagedList`1 -> IEnumerable`1
+Biob.Services.Data.Helpers.PagedList`1[[Biob.Data.Models.Movie, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Type Map configuration:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Destination Member:
+Genre
+ ---> System.ArgumentOutOfRangeException: StartIndex cannot be less than zero.
+Parameter name: startIndex
+   at System.Text.StringBuilder.Remove(Int32 startIndex, Int32 length)
+   at Biob.Web.Helpers.IEnumerableExtensions.ConvertIEnumerableToString[T](IEnumerable`1 listOfString) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Helpers\IEnumerableExtensions.cs:line 15
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
+   at Biob.Web.Controllers.MovieController.GetAllMovies(RequestParameters requestParameters, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 81
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2018-11-30T09:11:29.8041098+01:00 0HLIMJDJM6QDD:00000002 [INF] Request finished in 9261.1252ms 500  (791a596a)
+2018-11-30T09:11:29.8412574+01:00  [INF] Connection id ""0HLIMJDJM6QDD"", Request id ""0HLIMJDJM6QDD:00000002"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T09:12:09.3406618+01:00 0HLIMJE33IO97:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-30T09:12:09.4184334+01:00 0HLIMJE33IO97:00000001 [INF] Request finished in 84.664ms 200  (791a596a)
+2018-11-30T09:12:11.8297484+01:00 0HLIMJE33IO97:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/json 217 (ca22a1cb)
+2018-11-30T09:12:11.9804205+01:00 0HLIMJE33IO97:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T09:12:11.9903895+01:00 0HLIMJE33IO97:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T09:12:12.0002332+01:00 0HLIMJE33IO97:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T09:12:12.0177451+01:00 0HLIMJE33IO97:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T09:12:12.0295723+01:00 0HLIMJE33IO97:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T09:12:12.0372991+01:00 0HLIMJE33IO97:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T09:12:12.4422335+01:00 0HLIMJE33IO97:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-11-30T09:12:12.8051922+01:00 0HLIMJE33IO97:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters", "*/*"]) - Validation state: Valid (4e3479ed)
+2018-11-30T09:12:13.2245761+01:00 0HLIMJE33IO97:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-11-30T09:12:13.2773582+01:00 0HLIMJE33IO97:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T09:12:15.8591610+01:00 0HLIMJE33IO97:00000002 [INF] Executed DbCommand ("127"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-11-30T09:12:16.0391979+01:00 0HLIMJE33IO97:00000002 [INF] Executed DbCommand ("71"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-11-30T09:13:45.5063638+01:00 0HLIMJEVNU64J:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-30T09:13:45.6731418+01:00 0HLIMJEVNU64J:00000001 [INF] Request finished in 139.5617ms 200  (791a596a)
+2018-11-30T09:13:50.0186804+01:00 0HLIMJEVNU64J:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/json 217 (ca22a1cb)
+2018-11-30T09:13:50.1625105+01:00 0HLIMJEVNU64J:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T09:13:50.1714766+01:00 0HLIMJEVNU64J:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T09:13:50.1789024+01:00 0HLIMJEVNU64J:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T09:13:50.1934635+01:00 0HLIMJEVNU64J:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T09:13:50.2004885+01:00 0HLIMJEVNU64J:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T09:13:50.2072839+01:00 0HLIMJEVNU64J:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T09:13:50.6355216+01:00 0HLIMJEVNU64J:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-11-30T09:13:51.1101822+01:00 0HLIMJEVNU64J:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters", "*/*"]) - Validation state: Valid (4e3479ed)
+2018-11-30T09:13:51.5096640+01:00 0HLIMJEVNU64J:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-11-30T09:13:51.5608215+01:00 0HLIMJEVNU64J:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T09:13:54.4549429+01:00 0HLIMJEVNU64J:00000002 [INF] Executed DbCommand ("100"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-11-30T09:13:54.7089345+01:00 0HLIMJEVNU64J:00000002 [INF] Executed DbCommand ("86"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-11-30T09:13:59.7286766+01:00 0HLIMJEVNU64J:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 9078.1675ms (afa2e885)
+2018-11-30T09:13:59.8520975+01:00 0HLIMJEVNU64J:00000002 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+PagedList`1 -> IEnumerable`1
+Biob.Services.Data.Helpers.PagedList`1[[Biob.Data.Models.Movie, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Type Map configuration:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Destination Member:
+Genre
+ ---> System.ArgumentOutOfRangeException: StartIndex cannot be less than zero.
+Parameter name: startIndex
+   at System.Text.StringBuilder.Remove(Int32 startIndex, Int32 length)
+   at Biob.Web.Helpers.IEnumerableExtensions.ConvertIEnumerableToString[T](IEnumerable`1 listOfString) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Helpers\IEnumerableExtensions.cs:line 15
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
+   at Biob.Web.Controllers.MovieController.GetAllMovies(RequestParameters requestParameters, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 81
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T09:13:59.9019194+01:00 0HLIMJEVNU64J:00000002 [ERR] An exception was thrown attempting to display the error page. (33804fd3)
+System.ArgumentException: Stream was not writable.
+   at System.IO.StreamWriter..ctor(Stream stream, Encoding encoding, Int32 bufferSize, Boolean leaveOpen)
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T09:13:59.9265038+01:00 0HLIMJEVNU64J:00000002 [ERR] Connection id ""0HLIMJEVNU64J"", Request id ""0HLIMJEVNU64J:00000002"": An unhandled exception was thrown by the application. (560e7d32)
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+PagedList`1 -> IEnumerable`1
+Biob.Services.Data.Helpers.PagedList`1[[Biob.Data.Models.Movie, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Type Map configuration:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Destination Member:
+Genre
+ ---> System.ArgumentOutOfRangeException: StartIndex cannot be less than zero.
+Parameter name: startIndex
+   at System.Text.StringBuilder.Remove(Int32 startIndex, Int32 length)
+   at Biob.Web.Helpers.IEnumerableExtensions.ConvertIEnumerableToString[T](IEnumerable`1 listOfString) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Helpers\IEnumerableExtensions.cs:line 15
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
+   at Biob.Web.Controllers.MovieController.GetAllMovies(RequestParameters requestParameters, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 81
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2018-11-30T09:13:59.9986462+01:00 0HLIMJEVNU64J:00000002 [INF] Request finished in 9927.0682ms 500  (791a596a)
+2018-11-30T09:14:00.0735833+01:00  [INF] Connection id ""0HLIMJEVNU64J"", Request id ""0HLIMJEVNU64J:00000002"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T09:17:27.6346179+01:00 0HLIMJH1V7OSC:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-30T09:17:27.7074818+01:00 0HLIMJH1V7OSC:00000001 [INF] Request finished in 84.8658ms 200  (791a596a)
+2018-11-30T09:18:23.1219285+01:00 0HLIMJH1V7OSC:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtimes/ application/json 217 (ca22a1cb)
+2018-11-30T09:18:23.2318376+01:00 0HLIMJH1V7OSC:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T09:18:23.2395315+01:00 0HLIMJH1V7OSC:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T09:18:23.2467994+01:00 0HLIMJH1V7OSC:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T09:18:23.2617622+01:00 0HLIMJH1V7OSC:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T09:18:23.2690614+01:00 0HLIMJH1V7OSC:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T09:18:23.2766431+01:00 0HLIMJH1V7OSC:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T09:18:23.6594012+01:00 0HLIMJH1V7OSC:00000002 [INF] Route matched with "{action = \"GetAllShowtimes\", controller = \"Showtime\"}". Executing action "Biob.Web.Controllers.ShowtimeController.GetAllShowtimes (Biob.Web)" (a44c0341)
+2018-11-30T09:18:24.0834547+01:00 0HLIMJH1V7OSC:00000002 [INF] Executing action method "Biob.Web.Controllers.ShowtimeController.GetAllShowtimes (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters", "*/*"]) - Validation state: Valid (4e3479ed)
+2018-11-30T09:18:24.5526790+01:00 0HLIMJH1V7OSC:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-11-30T09:18:24.6201137+01:00 0HLIMJH1V7OSC:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T09:18:27.5079371+01:00 0HLIMJH1V7OSC:00000002 [INF] Executed DbCommand ("126"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [showtime].[Id], [showtime].[CreatedOn], [showtime].[DeletedOn], [showtime].[HallId], [showtime].[IsDeleted], [showtime].[ModifiedOn], [showtime].[MovieId], [showtime].[ThreeDee], [showtime].[TimeOfPlaying]
+FROM [Showtimes] AS [showtime]
+WHERE [showtime].[IsDeleted] = 0
+ORDER BY [showtime].[Id]" (0723d8ff)
+2018-11-30T09:18:27.7430881+01:00 0HLIMJH1V7OSC:00000002 [INF] Executed action method "Biob.Web.Controllers.ShowtimeController.GetAllShowtimes (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 3646.6596ms. (50a9e262)
+2018-11-30T09:18:27.7647610+01:00 0HLIMJH1V7OSC:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Services.Data.DtoModels.ShowtimeDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-11-30T09:18:27.8020437+01:00 0HLIMJH1V7OSC:00000002 [INF] Executed action "Biob.Web.Controllers.ShowtimeController.GetAllShowtimes (Biob.Web)" in 4128.9704ms (afa2e885)
+2018-11-30T09:18:27.8180406+01:00 0HLIMJH1V7OSC:00000002 [INF] Generating expiration headers. (97875003)
+2018-11-30T09:18:27.8264234+01:00 0HLIMJH1V7OSC:00000002 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:28:27 GMT. Cache-Control: public,max-age=600,must-revalidate. (b8964133)
+2018-11-30T09:18:27.8399132+01:00 0HLIMJH1V7OSC:00000002 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T09:18:27.8595173+01:00 0HLIMJH1V7OSC:00000002 [INF] Validation headers generated. ETag: Strong, "F54E7CE792BCD9E4A96BE8F4BD7DEC94". Last-Modified: Fri, 30 Nov 2018 08:18:27 GMT (01c7d946)
+2018-11-30T09:18:27.8681849+01:00 0HLIMJH1V7OSC:00000002 [INF] Generating Vary header. (c1174e38)
+2018-11-30T09:18:27.8773353+01:00 0HLIMJH1V7OSC:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T09:18:27.9365545+01:00 0HLIMJH1V7OSC:00000002 [INF] Request finished in 4798.1507ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-30T09:18:27.9642655+01:00  [INF] Connection id ""0HLIMJH1V7OSC"", Request id ""0HLIMJH1V7OSC:00000002"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T09:18:53.6913609+01:00 0HLIMJH1V7OSC:00000003 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtimes/ application/json 217 (ca22a1cb)
+2018-11-30T09:18:53.7187632+01:00 0HLIMJH1V7OSC:00000003 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T09:18:53.7294130+01:00 0HLIMJH1V7OSC:00000003 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T09:18:53.7387971+01:00 0HLIMJH1V7OSC:00000003 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T09:18:53.7510044+01:00 0HLIMJH1V7OSC:00000003 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T09:18:53.7617961+01:00 0HLIMJH1V7OSC:00000003 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T09:18:53.7694126+01:00 0HLIMJH1V7OSC:00000003 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T09:18:53.7792692+01:00 0HLIMJH1V7OSC:00000003 [INF] Route matched with "{action = \"GetAllShowtimes\", controller = \"Showtime\"}". Executing action "Biob.Web.Controllers.ShowtimeController.GetAllShowtimes (Biob.Web)" (a44c0341)
+2018-11-30T09:18:53.8482096+01:00 0HLIMJH1V7OSC:00000003 [INF] Executing action method "Biob.Web.Controllers.ShowtimeController.GetAllShowtimes (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-11-30T09:18:53.8768385+01:00 0HLIMJH1V7OSC:00000003 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T09:18:54.0393001+01:00 0HLIMJH1V7OSC:00000003 [INF] Executed DbCommand ("139"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [showtime].[Id], [showtime].[CreatedOn], [showtime].[DeletedOn], [showtime].[HallId], [showtime].[IsDeleted], [showtime].[ModifiedOn], [showtime].[MovieId], [showtime].[ThreeDee], [showtime].[TimeOfPlaying]
+FROM [Showtimes] AS [showtime]
+WHERE [showtime].[IsDeleted] = 0
+ORDER BY [showtime].[Id]" (0723d8ff)
+2018-11-30T09:18:54.1142726+01:00 0HLIMJH1V7OSC:00000003 [INF] Executed action method "Biob.Web.Controllers.ShowtimeController.GetAllShowtimes (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 236.767ms. (50a9e262)
+2018-11-30T09:18:54.1411301+01:00 0HLIMJH1V7OSC:00000003 [INF] Executing ObjectResult, writing value of type '"System.Dynamic.ExpandoObject"'. (8a1b66c8)
+2018-11-30T09:18:54.1673417+01:00 0HLIMJH1V7OSC:00000003 [INF] Executed action "Biob.Web.Controllers.ShowtimeController.GetAllShowtimes (Biob.Web)" in 379.8979ms (afa2e885)
+2018-11-30T09:18:54.1769570+01:00 0HLIMJH1V7OSC:00000003 [INF] Generating expiration headers. (97875003)
+2018-11-30T09:18:54.1861828+01:00 0HLIMJH1V7OSC:00000003 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:28:54 GMT. Cache-Control: public,max-age=600,must-revalidate. (3bbfb035)
+2018-11-30T09:18:54.1944258+01:00 0HLIMJH1V7OSC:00000003 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T09:18:54.2040865+01:00 0HLIMJH1V7OSC:00000003 [INF] Validation headers generated. ETag: Strong, "3BC0BABB7D5D48EE000E3266CCF3BBA5". Last-Modified: Fri, 30 Nov 2018 08:18:54 GMT (56cc4ff5)
+2018-11-30T09:18:54.2134067+01:00 0HLIMJH1V7OSC:00000003 [INF] Generating Vary header. (c1174e38)
+2018-11-30T09:18:54.2223416+01:00 0HLIMJH1V7OSC:00000003 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T09:18:54.2575938+01:00 0HLIMJH1V7OSC:00000003 [INF] Request finished in 541.9007ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-11-30T09:18:54.4292020+01:00  [INF] Connection id ""0HLIMJH1V7OSC"", Request id ""0HLIMJH1V7OSC:00000003"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T09:19:16.6342587+01:00 0HLIMJH1V7OSC:00000004 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtimes/ application/json 217 (ca22a1cb)
+2018-11-30T09:19:16.6489178+01:00 0HLIMJH1V7OSC:00000004 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T09:19:16.6595638+01:00 0HLIMJH1V7OSC:00000004 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T09:19:16.6787687+01:00 0HLIMJH1V7OSC:00000004 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T09:19:16.6873483+01:00 0HLIMJH1V7OSC:00000004 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T09:19:16.6951589+01:00 0HLIMJH1V7OSC:00000004 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T09:19:16.7020707+01:00 0HLIMJH1V7OSC:00000004 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T09:19:16.7100678+01:00 0HLIMJH1V7OSC:00000004 [INF] Route matched with "{action = \"GetAllShowtimes\", controller = \"Showtime\"}". Executing action "Biob.Web.Controllers.ShowtimeController.GetAllShowtimes (Biob.Web)" (a44c0341)
+2018-11-30T09:19:16.7513567+01:00 0HLIMJH1V7OSC:00000004 [INF] Executing action method "Biob.Web.Controllers.ShowtimeController.GetAllShowtimes (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters", "*/*"]) - Validation state: Valid (4e3479ed)
+2018-11-30T09:19:16.7681592+01:00 0HLIMJH1V7OSC:00000004 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T09:19:16.8255082+01:00 0HLIMJH1V7OSC:00000004 [INF] Executed DbCommand ("45"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [showtime].[Id], [showtime].[CreatedOn], [showtime].[DeletedOn], [showtime].[HallId], [showtime].[IsDeleted], [showtime].[ModifiedOn], [showtime].[MovieId], [showtime].[ThreeDee], [showtime].[TimeOfPlaying]
+FROM [Showtimes] AS [showtime]
+WHERE [showtime].[IsDeleted] = 0
+ORDER BY [showtime].[Id]" (0723d8ff)
+2018-11-30T09:19:16.8370492+01:00 0HLIMJH1V7OSC:00000004 [INF] Executed action method "Biob.Web.Controllers.ShowtimeController.GetAllShowtimes (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 75.2817ms. (50a9e262)
+2018-11-30T09:19:16.8472427+01:00 0HLIMJH1V7OSC:00000004 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Services.Data.DtoModels.ShowtimeDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-11-30T09:19:16.8593141+01:00 0HLIMJH1V7OSC:00000004 [INF] Executed action "Biob.Web.Controllers.ShowtimeController.GetAllShowtimes (Biob.Web)" in 137.4551ms (afa2e885)
+2018-11-30T09:19:16.8703997+01:00 0HLIMJH1V7OSC:00000004 [INF] Generating expiration headers. (97875003)
+2018-11-30T09:19:16.8799423+01:00 0HLIMJH1V7OSC:00000004 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:29:16 GMT. Cache-Control: public,max-age=600,must-revalidate. (835fe10b)
+2018-11-30T09:19:16.8894944+01:00 0HLIMJH1V7OSC:00000004 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T09:19:16.8982245+01:00 0HLIMJH1V7OSC:00000004 [INF] Validation headers generated. ETag: Strong, "F54E7CE792BCD9E4A96BE8F4BD7DEC94". Last-Modified: Fri, 30 Nov 2018 08:19:16 GMT (d0bef5d7)
+2018-11-30T09:19:16.9061946+01:00 0HLIMJH1V7OSC:00000004 [INF] Generating Vary header. (c1174e38)
+2018-11-30T09:19:16.9133975+01:00 0HLIMJH1V7OSC:00000004 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T09:19:16.9259825+01:00 0HLIMJH1V7OSC:00000004 [INF] Request finished in 296.1709ms 200 application/json; charset=utf-8 (791a596a)
+2018-11-30T09:19:16.9533018+01:00  [INF] Connection id ""0HLIMJH1V7OSC"", Request id ""0HLIMJH1V7OSC:00000004"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T09:21:03.9445507+01:00 0HLIMJH1V7OSD:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtimes/ application/json 217 (ca22a1cb)
+2018-11-30T09:21:03.9700940+01:00 0HLIMJH1V7OSD:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T09:21:03.9808550+01:00 0HLIMJH1V7OSD:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T09:21:03.9973572+01:00 0HLIMJH1V7OSD:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T09:21:04.0052966+01:00 0HLIMJH1V7OSD:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T09:21:04.0134173+01:00 0HLIMJH1V7OSD:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T09:21:04.0212429+01:00 0HLIMJH1V7OSD:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T09:21:04.0288769+01:00 0HLIMJH1V7OSD:00000001 [INF] Route matched with "{action = \"GetAllShowtimes\", controller = \"Showtime\"}". Executing action "Biob.Web.Controllers.ShowtimeController.GetAllShowtimes (Biob.Web)" (a44c0341)
+2018-11-30T09:21:04.0617407+01:00 0HLIMJH1V7OSD:00000001 [INF] Executing action method "Biob.Web.Controllers.ShowtimeController.GetAllShowtimes (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-11-30T09:21:04.0694205+01:00 0HLIMJH1V7OSD:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T09:21:04.1364896+01:00 0HLIMJH1V7OSD:00000001 [INF] Executed DbCommand ("44"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [showtime].[Id], [showtime].[CreatedOn], [showtime].[DeletedOn], [showtime].[HallId], [showtime].[IsDeleted], [showtime].[ModifiedOn], [showtime].[MovieId], [showtime].[ThreeDee], [showtime].[TimeOfPlaying]
+FROM [Showtimes] AS [showtime]
+WHERE [showtime].[IsDeleted] = 0
+ORDER BY [showtime].[Id]" (0723d8ff)
+2018-11-30T09:21:04.1469624+01:00 0HLIMJH1V7OSD:00000001 [INF] Executed action method "Biob.Web.Controllers.ShowtimeController.GetAllShowtimes (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 76.1815ms. (50a9e262)
+2018-11-30T09:21:04.1602119+01:00 0HLIMJH1V7OSD:00000001 [INF] Executing ObjectResult, writing value of type '"System.Dynamic.ExpandoObject"'. (8a1b66c8)
+2018-11-30T09:21:04.1720275+01:00 0HLIMJH1V7OSD:00000001 [INF] Executed action "Biob.Web.Controllers.ShowtimeController.GetAllShowtimes (Biob.Web)" in 133.01ms (afa2e885)
+2018-11-30T09:21:04.1812973+01:00 0HLIMJH1V7OSD:00000001 [INF] Generating expiration headers. (97875003)
+2018-11-30T09:21:04.1891994+01:00 0HLIMJH1V7OSD:00000001 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:31:04 GMT. Cache-Control: public,max-age=600,must-revalidate. (ec3b5d7c)
+2018-11-30T09:21:04.1965957+01:00 0HLIMJH1V7OSD:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T09:21:04.2047116+01:00 0HLIMJH1V7OSD:00000001 [INF] Validation headers generated. ETag: Strong, "3BC0BABB7D5D48EE000E3266CCF3BBA5". Last-Modified: Fri, 30 Nov 2018 08:21:04 GMT (ef0d9679)
+2018-11-30T09:21:04.2128931+01:00 0HLIMJH1V7OSD:00000001 [INF] Generating Vary header. (c1174e38)
+2018-11-30T09:21:04.2210625+01:00 0HLIMJH1V7OSD:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T09:21:04.2302395+01:00 0HLIMJH1V7OSD:00000001 [INF] Request finished in 333.6426ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-11-30T09:21:04.2544617+01:00  [INF] Connection id ""0HLIMJH1V7OSD"", Request id ""0HLIMJH1V7OSD:00000001"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T09:23:18.0837900+01:00 0HLIMJH1V7OSE:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9D90A452-9547-4D04-98ED-7D617E64AE1E/showtimes/cf3c5f8e-94ee-494a-b0f1-4a48d9d8291f application/json 217 (ca22a1cb)
+2018-11-30T09:23:18.1808264+01:00 0HLIMJH1V7OSE:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T09:23:18.1917055+01:00 0HLIMJH1V7OSE:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-11-30T09:23:18.2030246+01:00 0HLIMJH1V7OSE:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T09:23:18.2174732+01:00 0HLIMJH1V7OSE:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T09:23:18.2358974+01:00 0HLIMJH1V7OSE:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-11-30T09:23:18.2481996+01:00 0HLIMJH1V7OSE:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T09:23:18.2744989+01:00 0HLIMJH1V7OSE:00000001 [INF] Route matched with "{action = \"GetOneShowtime\", controller = \"Showtime\"}". Executing action "Biob.Web.Controllers.ShowtimeController.GetOneShowtime (Biob.Web)" (a44c0341)
+2018-11-30T09:23:18.4925036+01:00 0HLIMJH1V7OSE:00000001 [INF] Executing action method "Biob.Web.Controllers.ShowtimeController.GetOneShowtime (Biob.Web)" with arguments (["cf3c5f8e-94ee-494a-b0f1-4a48d9d8291f", "9d90a452-9547-4d04-98ed-7d617e64ae1e", "", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-11-30T09:23:18.5270827+01:00 0HLIMJH1V7OSE:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T09:23:18.7451438+01:00 0HLIMJH1V7OSE:00000001 [INF] Executed DbCommand ("133"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[Id] = @__id_0" (0723d8ff)
+2018-11-30T09:23:18.8909403+01:00 0HLIMJH1V7OSE:00000001 [INF] Executed DbCommand ("88"ms) [Parameters=["@__movieId_0='?' (DbType = Guid), @__showtimeId_1='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [showtime].[Id], [showtime].[CreatedOn], [showtime].[DeletedOn], [showtime].[HallId], [showtime].[IsDeleted], [showtime].[ModifiedOn], [showtime].[MovieId], [showtime].[ThreeDee], [showtime].[TimeOfPlaying]
+FROM [Showtimes] AS [showtime]
+WHERE ([showtime].[MovieId] = @__movieId_0) AND ([showtime].[Id] = @__showtimeId_1)" (0723d8ff)
+2018-11-30T09:23:18.9228769+01:00 0HLIMJH1V7OSE:00000001 [INF] Executed action method "Biob.Web.Controllers.ShowtimeController.GetOneShowtime (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 421.1095ms. (50a9e262)
+2018-11-30T09:23:18.9334895+01:00 0HLIMJH1V7OSE:00000001 [INF] Executing ObjectResult, writing value of type '"System.Dynamic.ExpandoObject"'. (8a1b66c8)
+2018-11-30T09:23:18.9434179+01:00 0HLIMJH1V7OSE:00000001 [INF] Executed action "Biob.Web.Controllers.ShowtimeController.GetOneShowtime (Biob.Web)" in 659.2895ms (afa2e885)
+2018-11-30T09:23:18.9538860+01:00 0HLIMJH1V7OSE:00000001 [INF] Generating expiration headers. (97875003)
+2018-11-30T09:23:18.9640444+01:00 0HLIMJH1V7OSE:00000001 [INF] Expiration headers generated. Expires: Fri, 30 Nov 2018 08:33:18 GMT. Cache-Control: public,max-age=600,must-revalidate. (c6995e94)
+2018-11-30T09:23:18.9758318+01:00 0HLIMJH1V7OSE:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-11-30T09:23:18.9881477+01:00 0HLIMJH1V7OSE:00000001 [INF] Validation headers generated. ETag: Strong, "0E78C7352B1BA966D52EBDC7C4BEA28A". Last-Modified: Fri, 30 Nov 2018 08:23:18 GMT (ae174355)
+2018-11-30T09:23:19.0008182+01:00 0HLIMJH1V7OSE:00000001 [INF] Generating Vary header. (c1174e38)
+2018-11-30T09:23:19.0105058+01:00 0HLIMJH1V7OSE:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-11-30T09:23:19.0420448+01:00 0HLIMJH1V7OSE:00000001 [INF] Request finished in 1043.9887ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-11-30T09:23:19.0552801+01:00  [INF] Connection id ""0HLIMJH1V7OSE"", Request id ""0HLIMJH1V7OSE:00000001"": the application completed without reading the entire request body. (54ac9468)
+2018-11-30T10:34:26.8198106+01:00 0HLIMKS2J40R7:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-30T10:34:26.8957231+01:00 0HLIMKS2J40R7:00000001 [INF] Request finished in 83.6953ms 200  (791a596a)
+2018-11-30T10:35:10.6064241+01:00 0HLIMKS2J40R7:00000002 [INF] Request starting HTTP/1.1 PATCH http://localhost:44390/api/v1/Movies/a8715416-1065-4eb7-8876-8362f8e25aa4 application/json 62 (ca22a1cb)
+2018-11-30T10:35:10.6982992+01:00 0HLIMKS2J40R7:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T10:35:10.7075780+01:00 0HLIMKS2J40R7:00000002 [INF] Not valid - method isn't GET or HEAD. (0be1d475)
+2018-11-30T10:35:10.7167182+01:00 0HLIMKS2J40R7:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T10:35:10.7373768+01:00 0HLIMKS2J40R7:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T10:35:10.7451942+01:00 0HLIMKS2J40R7:00000002 [INF] Not valid - no If Match or If Unmodified-Since headers. (392b25de)
+2018-11-30T10:35:10.7561790+01:00 0HLIMKS2J40R7:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T10:35:11.0986556+01:00 0HLIMKS2J40R7:00000002 [INF] Route matched with "{action = \"PartiuallyUpdateMovie\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.PartiuallyUpdateMovie (Biob.Web)" (a44c0341)
+2018-11-30T10:35:11.7110501+01:00 0HLIMKS2J40R7:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.PartiuallyUpdateMovie (Biob.Web)" with arguments (["a8715416-1065-4eb7-8876-8362f8e25aa4", "Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1[Biob.Services.Data.DtoModels.MovieToUpdateDto]", "*/*"]) - Validation state: Valid (4e3479ed)
+2018-11-30T10:36:01.6593320+01:00 0HLIMKS2J40R7:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-11-30T10:36:01.7476768+01:00 0HLIMKS2J40R7:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-11-30T10:36:06.2996188+01:00 0HLIMKS2J40R7:00000002 [INF] Executed DbCommand ("106"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[Id] = @__id_0" (0723d8ff)
+2018-11-30T10:36:06.7642530+01:00 0HLIMKS2J40R7:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.PartiuallyUpdateMovie (Biob.Web)" in 55652.0857ms (afa2e885)
+2018-11-30T10:36:06.8699656+01:00 0HLIMKS2J40R7:00000002 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Biob.Services.Data.Repositories.MovieRepository.GetMovieAsync(Guid id) in C:\Users\tec\Documents\school\Restbiob\Biob.Services.Data\Repositories\MovieRepository.cs:line 68
+   at Biob.Web.Controllers.MovieController.PartiuallyUpdateMovie(Guid movieId, JsonPatchDocument`1 patchDoc, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 298
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T10:36:06.9133753+01:00 0HLIMKS2J40R7:00000002 [ERR] An exception was thrown attempting to display the error page. (33804fd3)
+System.ArgumentException: Stream was not writable.
+   at System.IO.StreamWriter..ctor(Stream stream, Encoding encoding, Int32 bufferSize, Boolean leaveOpen)
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-11-30T10:36:06.9634315+01:00 0HLIMKS2J40R7:00000002 [ERR] Connection id ""0HLIMKS2J40R7"", Request id ""0HLIMKS2J40R7:00000002"": An unhandled exception was thrown by the application. (560e7d32)
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Biob.Services.Data.Repositories.MovieRepository.GetMovieAsync(Guid id) in C:\Users\tec\Documents\school\Restbiob\Biob.Services.Data\Repositories\MovieRepository.cs:line 68
+   at Biob.Web.Controllers.MovieController.PartiuallyUpdateMovie(Guid movieId, JsonPatchDocument`1 patchDoc, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 298
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2018-11-30T10:36:06.9989934+01:00 0HLIMKS2J40R7:00000002 [INF] Request finished in 56382.7294ms 500  (791a596a)
+2018-11-30T10:37:52.8273958+01:00 0HLIMKTVVTP12:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-11-30T10:37:52.9226772+01:00 0HLIMKTVVTP12:00000001 [INF] Request finished in 93.767ms 200  (791a596a)
+2018-11-30T10:38:24.1506509+01:00 0HLIMKTVVTP12:00000002 [INF] Request starting HTTP/1.1 PATCH http://localhost:44390/api/v1/Movies/a8715416-1065-4eb7-8876-8362f8e25aa4 application/json 61 (ca22a1cb)
+2018-11-30T10:38:24.2453865+01:00 0HLIMKTVVTP12:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-11-30T10:38:24.2538475+01:00 0HLIMKTVVTP12:00000002 [INF] Not valid - method isn't GET or HEAD. (0be1d475)
+2018-11-30T10:38:24.2619498+01:00 0HLIMKTVVTP12:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-11-30T10:38:24.2854643+01:00 0HLIMKTVVTP12:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-11-30T10:38:24.2958058+01:00 0HLIMKTVVTP12:00000002 [INF] Not valid - no If Match or If Unmodified-Since headers. (392b25de)
+2018-11-30T10:38:24.3036084+01:00 0HLIMKTVVTP12:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-11-30T10:38:24.6012405+01:00 0HLIMKTVVTP12:00000002 [INF] Route matched with "{action = \"PartiuallyUpdateMovie\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.PartiuallyUpdateMovie (Biob.Web)" (a44c0341)
+2018-11-30T10:38:25.2125073+01:00 0HLIMKTVVTP12:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.PartiuallyUpdateMovie (Biob.Web)" with arguments (["a8715416-1065-4eb7-8876-8362f8e25aa4", "Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1[Biob.Services.Data.DtoModels.MovieToUpdateDto]", "*/*"]) - Validation state: Valid (4e3479ed)

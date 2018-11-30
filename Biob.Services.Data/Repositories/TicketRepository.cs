@@ -30,11 +30,6 @@ namespace Biob.Services.Data.Repositories
                 { "Price", new PropertyMappingValue(new List<string>() { "Price" })},
             });
         }
-
-        //public TicketRepository(BiobDataContext context) : base(context)
-        //{
-
-        //}
         public void AddTicket(Ticket ticketToAdd)
         {
             if (ticketToAdd.Id == Guid.Empty)
@@ -46,46 +41,34 @@ namespace Biob.Services.Data.Repositories
 
         public void DeleteTicket(Ticket ticketToDelete)
         {
-            _context.Tickets.Remove(ticketToDelete);
+            ticketToDelete.IsDeleted = true;
+            ticketToDelete.DeletedOn = DateTimeOffset.Now;
         }
 
         public async Task<Ticket> GetTicketAsync(Guid id)
         {
-            return await _context.Tickets.Where(ticket => ticket.Id == id).FirstOrDefaultAsync();
+            var foundTicket =  await _context.Tickets.Where(ticket => ticket.Id == id).FirstOrDefaultAsync();
+            if (foundTicket.IsDeleted)
+            {
+                foundTicket = null;
+            }
+
+            return foundTicket;
+
         }
 
-        public async Task<PagedList<Ticket>> GetTicketsByCustomerIdAsync(Guid customerId, string orderBy, string searchQuery, int pageNumber, int pageSize)
+        public async Task<PagedList<Ticket>> GetAllTicketsAsync(Guid showtimeId, string orderBy, string searchQuery, int pageNumber, int pageSize)
         {
-            var collectionsBeforePaging = await _context.Tickets.Applysort(orderBy, _propertyMappingService.GetPropertyMapping<TicketDto, Ticket>()).ToListAsync();
+                                                            
+            var collectionsBeforePaging =_context.Tickets
+                                    .Where(ticket => !ticket.IsDeleted && ticket.ShowtimeId == showtimeId)
+                                    .Applysort(orderBy, _propertyMappingService.GetPropertyMapping<TicketDto, Ticket>());
 
-            //TODO: Make this search thing be able to have a list of names on movies that the showtime is for. 
-
-            //Could perhaps be done with a entity framework equivalent for the select query: 
-            //  SELECT fieldsNeeded 
-            //  FROM Tickets t 
-            //  INNER JOIN ShowTimes st 
-            //      ON st.Id = t.ShowTimeId 
-            //  INNER JOIN Movies m 
-            //      ON m.Id = st.MovieId 
-            //  WHERE m.Title LIKE '% <searchString> %' 
-            //      AND t.CustomerId = <customerId>
-
-            //if (!string.IsNullOrWhiteSpace(searchQuery))
-            //{
-            //    string searchQueryForWhere = searchQuery.Trim().ToLowerInvariant();
-            //    collectionsBeforePaging = collectionsBeforePaging
-            //          <perhaps add the join here to a list?>
-            //        .Where(ticket => ticket.Title.ToLowerInvariant().Contains(searchQueryForWhere)).ToList();
-            //}
-
-            return PagedList<Ticket>.Create(collectionsBeforePaging, pageNumber, pageSize);
+            var listToPage = await collectionsBeforePaging.ToListAsync();
+            return PagedList<Ticket>.Create(listToPage, pageNumber, pageSize);
         }
-
-
         public void UpdateTicket(Ticket ticketToUpdate)
         {
-            //  TODO: consider changing update to attach
-            //  if things dont work as expected
             _context.Tickets.Update(ticketToUpdate);
         }
     }

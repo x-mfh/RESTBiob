@@ -59,13 +59,20 @@ namespace Biob.Web
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => 
-                {
-                    //  needs to  be configured
-                    options.Authority = "";
-                    options.Audience = "";
-                });
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddIdentityServerAuthentication(options =>
+            //    {
+            //        //  IP of the identity server
+            //        options.Authority = "https://localhost:44393/";
+            //        options.RequireHttpsMetadata = false;
+            //        options.ApiName = "Biob.Web";
+            //    });
+                //.AddJwtBearer(options => 
+                //{
+                //    //  needs to  be configured
+                //    options.Authority = "";
+                //    options.Audience = "";
+                //});
 
             var connectionString = Configuration.GetConnectionString("BiobDB");
             services.AddDbContext<BiobDataContext>(options => options.UseSqlServer(connectionString));
@@ -134,7 +141,7 @@ namespace Biob.Web
                 app.UseHsts();
             }
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();

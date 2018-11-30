@@ -52,7 +52,11 @@ namespace Biob.Data.Data
             //modelBuilder.Entity<Showtime>()
             //    .Property(showtime => showtime.ThreeDee)
             //    .HasDefaultValue(false);
-               
+
+            //This will deactivate "cascade on delete" function on foreign key for Showtime.HallId - this way, deleting a hall will not delete the related showtimes.
+            //The reason this was needed, is that Seat.HallId was also doing this, resulting in errors when EF runs update-database, because it doesn't want multiple of those.
+            //Another option was to not have the foreign key on showtimes, but i think just removing the cascade on delete for showtimes would make better sense
+            modelBuilder.Entity<Showtime>().HasOne(x => x.Hall).WithMany().HasForeignKey(x => x.HallId).OnDelete(DeleteBehavior.Restrict);
 
             //  TODO: add seed data
             modelBuilder.Entity<Genre>().HasData(
@@ -232,6 +236,46 @@ namespace Biob.Data.Data
                 }
                 );
 
+            modelBuilder.Entity<Ticket>().HasData(
+                //Showtime 092CA7C5-AE83-4A52-A38B-CFC7C8E40E9A with HallId 7E9A2751-F1C0-4EB6-A7EC-1319C6DAE31E
+                new Ticket()
+                {
+                    Id = Guid.Parse("303814CA-54F0-4FBB-955B-7FFD33B10B9D"),
+                    CustomerId = Guid.Parse("64C986DF-A168-40CB-B5EA-AB2B20069A08"),
+                    ShowtimeId = Guid.Parse("092CA7C5-AE83-4A52-A38B-CFC7C8E40E9A"),
+                    SeatId = Guid.Parse("5FD7F7C4-D90F-4D60-8878-067AF214A0DC"),
+                    Paid = false,
+                    Price = 250
+                },
+                new Ticket()
+                {
+                    Id = Guid.Parse("CE442AD4-37A4-43F4-9A6D-5F7AB15DF011"),
+                    CustomerId = Guid.Parse("64C986DF-A168-40CB-B5EA-AB2B20069A08"),
+                    ShowtimeId = Guid.Parse("092CA7C5-AE83-4A52-A38B-CFC7C8E40E9A"),
+                    SeatId = Guid.Parse("603AB124-4BE6-40FD-9A5E-49BB4A5730DB"),
+                    Paid = true,
+                    Price = 250
+                },
+                //Showtime 5E0D5AD3-22B0-4BDC-808C-62B8F50D0796 with HallId 288AAD6A-F042-4B36-A5AE-F950AEA18B46
+                new Ticket()
+                {
+                    Id = Guid.Parse("7F36E8E7-B5CD-43EF-A71D-8CFA2355D8AB"),
+                    CustomerId = Guid.Parse("64C986DF-A168-40CB-B5EA-AB2B20069A08"),
+                    ShowtimeId = Guid.Parse("5E0D5AD3-22B0-4BDC-808C-62B8F50D0796"),
+                    SeatId = Guid.Parse("173595A9-917D-4DF9-9A6D-1A5D5B46104E"),
+                    Paid = false,
+                    Price = 300
+                },
+                new Ticket()
+                {
+                    Id = Guid.Parse("A9AEE74E-C644-4FC3-9A27-946D7C4CD037"),
+                    CustomerId = Guid.Parse("64C986DF-A168-40CB-B5EA-AB2B20069A08"),
+                    ShowtimeId = Guid.Parse("5E0D5AD3-22B0-4BDC-808C-62B8F50D0796"),
+                    SeatId = Guid.Parse("70FE1293-99C5-43AA-82DF-FD0BEAA8076A"),
+                    Paid = false,
+                    Price = 300
+                }
+                );
 
             //  get all the deleteable entity types
             var deleteableEntityTypes = modelBuilder.Model.GetEntityTypes().Where(x => x.ClrType != null && typeof(IDeleteable).IsAssignableFrom(x.ClrType));

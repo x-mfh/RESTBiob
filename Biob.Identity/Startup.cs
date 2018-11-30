@@ -24,8 +24,8 @@ namespace Biob.Identity
                 //  tell identityserver to use certificate
                 //.AddSigningCredential("CN=ceritficateName")
                 .AddDeveloperSigningCredential()
-                .AddTestUsers(Config.GetUsers())
-                .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                //.AddTestUsers(Config.GetUsers())
+                //.AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients());
         }
