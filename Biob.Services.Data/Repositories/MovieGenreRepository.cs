@@ -25,10 +25,11 @@ namespace Biob.Services.Data.Repositories
             return await _context.MovieGenres.Where(moviegenre => moviegenre.Id == movieGenreId).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<MovieGenre>> GetAllMovieGenresByMovieIdAsync(Guid movieId)
+        // uses ICollection to get count property
+        public async Task<ICollection<MovieGenre>> GetAllMovieGenresByMovieIdAsync(Guid movieId)
         {
             return await _context.MovieGenres.Include(moviegenre => moviegenre.Genre)
-                                           .Where(movie => movie.MovieId == movieId).ToListAsync();
+                                             .Where(movie => movie.MovieId == movieId).ToListAsync();
         }
 
         // include movie ?
@@ -39,7 +40,8 @@ namespace Biob.Services.Data.Repositories
 
         public async Task<MovieGenre> GetMovieGenreByMovieIdGenreIdAsync(Guid movieId, Guid genreId)
         {
-            return await _context.MovieGenres.Where(moviegenre => moviegenre.MovieId == movieId && moviegenre.GenreId == genreId).FirstOrDefaultAsync();
+            return await _context.MovieGenres.Include(moviegenre => moviegenre.Genre)
+                                             .Where(moviegenre => moviegenre.MovieId == movieId && moviegenre.GenreId == genreId).FirstOrDefaultAsync();
         }
 
         public void AddMovieGenre(MovieGenre movieGenreToAdd)

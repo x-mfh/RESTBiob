@@ -65,7 +65,9 @@ namespace Biob.Web.Controllers
 
             var foundMovieGenre = await _movieGenreRepository.GetAllMovieGenresByMovieIdAsync(movieId);
 
-            if (foundMovieGenre == null)
+            // IEnumerable returns 0 not null
+            // changed GetAllMovieGenresByMovieIdAsync return to ICollection to get Count property
+            if (foundMovieGenre.Count == 0)
             {
                 return NotFound();
             }
@@ -91,7 +93,7 @@ namespace Biob.Web.Controllers
                 return NotFound();
             }
 
-            var movieGenreToReturn = Mapper.Map<IEnumerable<MovieGenreDto>>(foundMovieGenre);
+            var movieGenreToReturn = Mapper.Map<MovieGenreDto>(foundMovieGenre);
             return Ok(movieGenreToReturn);
         }
 
