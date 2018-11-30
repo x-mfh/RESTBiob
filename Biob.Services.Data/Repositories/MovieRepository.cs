@@ -65,7 +65,7 @@ namespace Biob.Services.Data.Repositories
         public async Task<Movie> GetMovieAsync(Guid id)
         {
             var foundMovie = await _context.Movies.Where(movie => movie.Id == id).FirstOrDefaultAsync();
-            if (foundMovie.IsDeleted)
+            if (foundMovie != null && foundMovie.IsDeleted)
             {
                 foundMovie = null;
             }
