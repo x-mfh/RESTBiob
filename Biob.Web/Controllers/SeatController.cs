@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Biob.Services.Data.Helpers;
 using System.Dynamic;
 using System.Linq;
+using Biob.Services.Web.PropertyMapping;
 
 namespace Biob.Web.Controllers
 {
@@ -24,21 +25,43 @@ namespace Biob.Web.Controllers
         private readonly ILogger<SeatController> _logger;
         private readonly IHallRepository _hallRepository;
         private readonly IUrlHelper _urlHelper;
+        private readonly ITypeHelperService _typeHelperService;
+        private readonly IPropertyMappingService _propertyMappingService;
 
         public SeatController(ISeatRepository seatRepository, ILogger<SeatController> logger,
-                              IHallRepository hallRepository, IUrlHelper urlHelper)
+                              IHallRepository hallRepository, IUrlHelper urlHelper, 
+                              ITypeHelperService typeHelperService, IPropertyMappingService propertyMappingService)
         {
             _seatRepository = seatRepository;
             _logger = logger;
             _hallRepository = hallRepository;
             _urlHelper = urlHelper;
+            _typeHelperService = typeHelperService;
+            _propertyMappingService = propertyMappingService;
+
+            _propertyMappingService.AddPropertyMapping<SeatDto, Seat>(new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "Id", new PropertyMappingValue(new List<string>() { "Id" })},
+                { "RowNo", new PropertyMappingValue(new List<string>() { "RowNo" })},
+                { "SeatNo", new PropertyMappingValue(new List<string>() { "SeatNo" })},
+            });
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllSeatsByHallId([FromRoute] Guid hallId, [FromQuery] string fields, [FromHeader(Name = "Accept")] string mediaType)
+        [HttpGet(Name = "GetSeats")]
+        public async Task<IActionResult> GetAllSeats([FromQuery]RequestParameters requestParameters, [FromHeader(Name = "Accept")] string mediaType)
         {
-            if (hallId == Guid.Empty)
+            //if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
+            //{
+            //    requestParameters.OrderBy = "Id";
+            //}
+
+            if (!_propertyMappingService.ValidMappingExistsFor<SeatDto, Seat>(requestParameters.Fields))
+            {
+                return BadRequest();
+            }
+
+            if (!_typeHelperService.TypeHasProperties<SeatDto>(requestParameters.Fields))
             {
                 return BadRequest();
             }
@@ -50,24 +73,38 @@ namespace Biob.Web.Controllers
             //    return BadRequest();
             //}
 
-            var foundSeats = await _seatRepository.GetAllSeatsAsync(hallId);
+            var seatsPagedList = await _seatRepository.GetAllSeatsAsync(requestParameters.PageNumber, requestParameters.PageSize);
 
-            var seatsToReturn = Mapper.Map<IEnumerable<Seat>>(foundSeats);
-            //var seat = Mapper.Map<Seat>(seatToAdd);
+            var seats = Mapper.Map<IEnumerable<SeatDto>>(seatsPagedList);
 
-            //if (mediaType == "application/vnd.biob.json+hateoas")
-            //{
-            //    var links = CreateLinksForSeats(seatsToReturn., fields);
+            if (mediaType == "application/vnd.biob.json+hateoas")
+            {
+                return Ok(CreateHateoasResponse(seatsPagedList, requestParameters));
+            }
+            else
+            {
+                var previousPageLink = seatsPagedList.HasPrevious ? CreateUrlForResource(requestParameters, PageType.PreviousPage) : null;
+                var nextPageLink = seatsPagedList.HasNext ? CreateUrlForResource(requestParameters, PageType.NextPage) : null;
+                var paginationMetadata = new PaginationMetadata()
+                {
+                    TotalCount = seatsPagedList.TotalCount,
+                    PageSize = seatsPagedList.PageSize,
+                    CurrentPage = seatsPagedList.CurrentPage,
+                    TotalPages = seatsPagedList.TotalPages,
+                    PreviousPageLink = previousPageLink,
+                    NextPageLink = nextPageLink
+                };
 
-            //    var linkedSeat = seatToReturn.ShapeData(fields) as IDictionary<string, object>;
-            //    linkedSeat.Add("links", links);
-            //    return Ok(linkedSeat);
-            //}
-            //else
-            //{
-            //    return Ok(seatToReturn.ShapeData(fields));
-            //}
-            return Ok(seatsToReturn);
+                Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
+
+                if (requestParameters.IncludeMetadata)
+                {
+                    var seatsWithMetadata = new EntityWithPaginationMetadataDto<SeatDto>(paginationMetadata, seats);
+                    return Ok(seatsWithMetadata);
+                }
+
+                return Ok(seats);
+            }
         }
 
         [HttpGet("{seatId}", Name = "GetSeat")]
@@ -278,9 +315,22 @@ namespace Biob.Web.Controllers
 
             return NoContent();
         }
+
         private ExpandoObject CreateHateoasResponse(PagedList<Seat> seatsPagedList, RequestParameters requestParameters)
         {
             var seats = Mapper.Map<IEnumerable<SeatDto>>(seatsPagedList);
+
+            var paginationMetadataWithLinks = new
+            {
+                seatsPagedList.TotalCount,
+                seatsPagedList.PageSize,
+                seatsPagedList.CurrentPage,
+                seatsPagedList.TotalPages
+            };
+
+            Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadataWithLinks));
+
+            var links = CreateLinksForSeats(requestParameters, seatsPagedList.HasNext, seatsPagedList.HasPrevious);
 
             var shapedSeats = seats.ShapeData(requestParameters.Fields);
 
@@ -293,10 +343,21 @@ namespace Biob.Web.Controllers
 
                 return seatDictionary;
             });
-
-            var linkedCollection = new ExpandoObject();
-            ((IDictionary<string, object>)linkedCollection).Add("seats", shapedSeatsWithLinks);
-            return linkedCollection;
+            if (requestParameters.IncludeMetadata)
+            {
+                var seatsWithMetadata = new ExpandoObject();
+                ((IDictionary<string, object>)seatsWithMetadata).Add("Metadata", paginationMetadataWithLinks);
+                ((IDictionary<string, object>)seatsWithMetadata).Add("seats", shapedSeatsWithLinks);
+                ((IDictionary<string, object>)seatsWithMetadata).Add("links", links);
+                return seatsWithMetadata;
+            }
+            else
+            {
+                var linkedCollection = new ExpandoObject();
+                ((IDictionary<string, object>)linkedCollection).Add("seats", shapedSeatsWithLinks);
+                ((IDictionary<string, object>)linkedCollection).Add("links", links);
+                return linkedCollection;
+            }
         }
 
         private IEnumerable<LinkDto> CreateLinksForSeats(Guid id, string fields)
@@ -305,18 +366,70 @@ namespace Biob.Web.Controllers
 
             if (string.IsNullOrWhiteSpace(fields))
             {
-                links.Add(new LinkDto(_urlHelper.Link("GetSeat", new { showtimeId = id }), "self", "GET"));
+                links.Add(new LinkDto(_urlHelper.Link("GetSeat", new { seatId = id }), "self", "GET"));
             }
             else
             {
-                links.Add(new LinkDto(_urlHelper.Link("GetSeat", new { showtimeId = id, fields }), "self", "GET"));
+                links.Add(new LinkDto(_urlHelper.Link("GetSeat", new { seatId = id, fields }), "self", "GET"));
             }
-            links.Add(new LinkDto(_urlHelper.Link("DeleteSeat", new { showtimeId = id }), "delete_seat", "DELETE"));
+            links.Add(new LinkDto(_urlHelper.Link("DeleteSeat", new { seatId = id }), "delete_seat", "DELETE"));
             {
-                links.Add(new LinkDto(_urlHelper.Link("UpdateSeat", new { showtimeId = id }), "update_seat", "PUT"));
+                links.Add(new LinkDto(_urlHelper.Link("UpdateSeat", new { seatId = id }), "update_seat", "PUT"));
             }
-            links.Add(new LinkDto(_urlHelper.Link("PartiallyUpdateSeat", new { showtimeId = id }), "partially_update_seat", "PATCH"));
+            links.Add(new LinkDto(_urlHelper.Link("PartiallyUpdateSeat", new { seatId = id }), "partially_update_seat", "PATCH"));
             return links;
+        }
+
+        private IEnumerable<LinkDto> CreateLinksForSeats(RequestParameters requestParameters, bool hasNext, bool hasPrevious)
+        {
+            var links = new List<LinkDto>
+            {
+                new LinkDto(CreateUrlForResource(requestParameters, PageType.Current), "self", "GET")
+            };
+
+            if (hasNext)
+            {
+                new LinkDto(CreateUrlForResource(requestParameters, PageType.NextPage), "self", "GET");
+            }
+
+            if (hasPrevious)
+            {
+                new LinkDto(CreateUrlForResource(requestParameters, PageType.PreviousPage), "self", "GET");
+            }
+
+            return links;
+        }
+
+        private string CreateUrlForResource(RequestParameters requestParameters, PageType pageType)
+        {
+            switch (pageType)
+            {
+                case PageType.PreviousPage:
+                    return _urlHelper.Link("GetSeats", new
+                    {
+                        orderBy = requestParameters.OrderBy,
+                        searchQuery = requestParameters.SearchQuery,
+                        pageNumber = requestParameters.PageNumber - 1,
+                        pageSize = requestParameters.PageSize
+
+                    });
+                case PageType.NextPage:
+                    return _urlHelper.Link("GetSeats", new
+                    {
+                        orderBy = requestParameters.OrderBy,
+                        searchQuery = requestParameters.SearchQuery,
+                        pageNumber = requestParameters.PageNumber + 1,
+                        pageSize = requestParameters.PageSize
+                    });
+                default:
+                    return _urlHelper.Link("GetSeats", new
+                    {
+                        orderBy = requestParameters.OrderBy,
+                        searchQuery = requestParameters.SearchQuery,
+                        pageNumber = requestParameters.PageNumber,
+                        pageSize = requestParameters.PageSize
+                    });
+            }
         }
     }
 }
