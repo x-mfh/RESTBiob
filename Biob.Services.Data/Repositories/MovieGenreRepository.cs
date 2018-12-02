@@ -57,8 +57,9 @@ namespace Biob.Services.Data.Repositories
 
         public void DeleteMovieGenre(MovieGenre movieGenreToDelete)
         {
-            movieGenreToDelete.IsDeleted = true;
-            movieGenreToDelete.DeletedOn = DateTimeOffset.Now;
+            //movieGenreToDelete.IsDeleted = true;
+            //movieGenreToDelete.DeletedOn = DateTimeOffset.Now;
+            _context.MovieGenres.Remove(movieGenreToDelete);
         }
     }
 }
