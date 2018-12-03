@@ -21,6 +21,9 @@ namespace Biob.Web.Controllers
     public class TicketController : ControllerBase
     {
         private readonly ITicketRepository _ticketRepository;
+        private readonly IShowtimeRepository _showtimeRepository;
+        private readonly IHallRepository _hallRepository;
+        private readonly ISeatRepository _seatRepository;
         private readonly IPropertyMappingService _propertyMappingService;
         private readonly ITypeHelperService _typeHelperService;
         private readonly IUrlHelper _urlHelper;
@@ -183,12 +186,14 @@ namespace Biob.Web.Controllers
                 //Hmm why is dto used here when it's not in the other methods?
                 return CreatedAtRoute("GetTicket", new { ticketId = ticketToAdd.Id }, ticketToAddDto);
             }
-
-
         }
 
         [HttpPut("{ticketId}", Name = "UpdateTicket")]
-        public async Task<IActionResult> UpdateTicket([FromRoute] Guid ticketId, [FromBody] TicketToUpdateDto ticketToUpdate, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> UpdateTicket(  [FromRoute] Guid ticketId, 
+                                                        [FromRoute] Guid movieId, 
+                                                        [FromRoute] Guid showtimeId,
+                                                        [FromBody] TicketToUpdateDto ticketToUpdate, 
+                                                        [FromHeader(Name = "Accept")] string mediaType)
         {
             if (ticketToUpdate == null)
             {
@@ -204,6 +209,17 @@ namespace Biob.Web.Controllers
             {
                 var ticketEntity = Mapper.Map<Ticket>(ticketToUpdate);
                 ticketEntity.Id = ticketId;
+                ticketEntity.ShowtimeId = showtimeId;
+                ticketEntity.CustomerId = new Guid("64C986DF-A168-40CB-B5EA-AB2B20069A08"); //TODO: this should not be hardcoded- only temporary testpurpose. Should probably just fail if no customer is provided?
+                var showtime = await _showtimeRepository.GetShowtimeAsync(showtimeId, movieId);
+                var hall = await _hallRepository.GetHallAsync(showtime.HallId);
+                var tickets = await _ticketRepository.GetAllTicketsAsync(showtimeId, null, null, 1, 100 ); //wtf
+                var seats = await _seatRepository.GetAllSeatsAsync(1, 100); //would be good to have a method to get all seats in a specific hall
+                seats.Where(seat => seat.HallId == showtime.HallId);
+
+                
+                ticketEntity.SeatId =  // new Guid("603AB124-4BE6-40FD-9A5E-49BB4A5730DB"); //TODO the same as above
+
                 _ticketRepository.AddTicket(ticketEntity);
 
                 if (!await _ticketRepository.SaveChangesAsync())
