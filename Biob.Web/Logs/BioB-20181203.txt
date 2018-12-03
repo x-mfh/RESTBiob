@@ -1,0 +1,687 @@
+2018-12-03T11:14:49.6942224+01:00 0HLIP10K86A62:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-03T11:14:50.0030182+01:00 0HLIP10K86A62:00000001 [INF] Request finished in 281.5492ms 200  (791a596a)
+2018-12-03T11:21:20.9010299+01:00 0HLIP148SA4RE:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-03T11:21:20.9970375+01:00 0HLIP148SA4RE:00000001 [INF] Request finished in 78.1634ms 200  (791a596a)
+2018-12-03T11:21:32.2625177+01:00 0HLIP148SA4RE:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/ application/json 62 (ca22a1cb)
+2018-12-03T11:21:32.4434107+01:00 0HLIP148SA4RE:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:21:32.4524265+01:00 0HLIP148SA4RE:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:21:32.4678420+01:00 0HLIP148SA4RE:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:21:32.5067196+01:00 0HLIP148SA4RE:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:21:32.5154578+01:00 0HLIP148SA4RE:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:21:32.5241469+01:00 0HLIP148SA4RE:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:21:33.6022684+01:00 0HLIP148SA4RE:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-12-03T11:21:34.4536393+01:00 0HLIP148SA4RE:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:21:35.0964827+01:00 0HLIP148SA4RE:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-12-03T11:21:35.1548142+01:00 0HLIP148SA4RE:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-03T11:21:39.1917026+01:00 0HLIP148SA4RE:00000002 [INF] Executed DbCommand ("217"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-12-03T11:21:39.4722067+01:00 0HLIP148SA4RE:00000002 [INF] Executed DbCommand ("128"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-12-03T11:21:40.2083567+01:00 0HLIP148SA4RE:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 6593.9874ms (afa2e885)
+2018-12-03T11:21:40.5413996+01:00 0HLIP148SA4RE:00000002 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+PagedList`1 -> IEnumerable`1
+Biob.Services.Data.Helpers.PagedList`1[[Biob.Data.Models.Movie, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Type Map configuration:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Destination Member:
+Genre
+ ---> System.ArgumentOutOfRangeException: StartIndex cannot be less than zero.
+Parameter name: startIndex
+   at System.Text.StringBuilder.Remove(Int32 startIndex, Int32 length)
+   at Biob.Web.Helpers.IEnumerableExtensions.ConvertIEnumerableToString[T](IEnumerable`1 listOfString) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Helpers\IEnumerableExtensions.cs:line 15
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
+   at Biob.Web.Controllers.MovieController.GetAllMovies(RequestParameters requestParameters, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 81
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-12-03T11:21:40.6357211+01:00 0HLIP148SA4RE:00000002 [ERR] An exception was thrown attempting to display the error page. (33804fd3)
+System.ArgumentException: Stream was not writable.
+   at System.IO.StreamWriter..ctor(Stream stream, Encoding encoding, Int32 bufferSize, Boolean leaveOpen)
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-12-03T11:21:40.7061146+01:00 0HLIP148SA4RE:00000002 [ERR] Connection id ""0HLIP148SA4RE"", Request id ""0HLIP148SA4RE:00000002"": An unhandled exception was thrown by the application. (560e7d32)
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+PagedList`1 -> IEnumerable`1
+Biob.Services.Data.Helpers.PagedList`1[[Biob.Data.Models.Movie, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Type Map configuration:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Destination Member:
+Genre
+ ---> System.ArgumentOutOfRangeException: StartIndex cannot be less than zero.
+Parameter name: startIndex
+   at System.Text.StringBuilder.Remove(Int32 startIndex, Int32 length)
+   at Biob.Web.Helpers.IEnumerableExtensions.ConvertIEnumerableToString[T](IEnumerable`1 listOfString) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Helpers\IEnumerableExtensions.cs:line 15
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
+   at Biob.Web.Controllers.MovieController.GetAllMovies(RequestParameters requestParameters, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 81
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2018-12-03T11:21:40.7500268+01:00 0HLIP148SA4RE:00000002 [INF] Request finished in 8460.2479ms 500  (791a596a)
+2018-12-03T11:21:40.8249366+01:00  [INF] Connection id ""0HLIP148SA4RE"", Request id ""0HLIP148SA4RE:00000002"": the application completed without reading the entire request body. (54ac9468)
+2018-12-03T11:28:23.6346781+01:00 0HLIP186RD083:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-03T11:28:23.7225672+01:00 0HLIP186RD083:00000001 [INF] Request finished in 94.77ms 200  (791a596a)
+2018-12-03T11:28:29.9179893+01:00 0HLIP186RD083:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls application/json 62 (ca22a1cb)
+2018-12-03T11:28:30.0338798+01:00 0HLIP186RD083:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:28:30.0420510+01:00 0HLIP186RD083:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:28:30.0495974+01:00 0HLIP186RD083:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:28:30.0651473+01:00 0HLIP186RD083:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:28:30.0731003+01:00 0HLIP186RD083:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:28:30.0811715+01:00 0HLIP186RD083:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:28:30.4999507+01:00 0HLIP186RD083:00000002 [INF] Route matched with "{action = \"GetAllHalls\", controller = \"Hall\"}". Executing action "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" (a44c0341)
+2018-12-03T11:28:30.9343637+01:00 0HLIP186RD083:00000002 [INF] Executing action method "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" with arguments (["application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:28:31.3146863+01:00 0HLIP186RD083:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-12-03T11:28:31.3694810+01:00 0HLIP186RD083:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-03T11:28:31.9006453+01:00 0HLIP186RD083:00000002 [INF] Executed DbCommand ("112"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE [hall].[IsDeleted] = 0" (0723d8ff)
+2018-12-03T11:28:32.0542057+01:00 0HLIP186RD083:00000002 [INF] Executed action method "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 1104.9092ms. (50a9e262)
+2018-12-03T11:28:32.0821751+01:00 0HLIP186RD083:00000002 [INF] Executing ObjectResult, writing value of type '"System.Dynamic.ExpandoObject"'. (8a1b66c8)
+2018-12-03T11:28:32.2264931+01:00 0HLIP186RD083:00000002 [INF] Executed action "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" in 1714.1113ms (afa2e885)
+2018-12-03T11:28:32.2420199+01:00 0HLIP186RD083:00000002 [INF] Generating expiration headers. (97875003)
+2018-12-03T11:28:32.2505452+01:00 0HLIP186RD083:00000002 [INF] Expiration headers generated. Expires: Mon, 03 Dec 2018 10:38:32 GMT. Cache-Control: public,max-age=600,must-revalidate. (b3d1a904)
+2018-12-03T11:28:32.2639140+01:00 0HLIP186RD083:00000002 [INF] Generating Validation headers. (20c08f55)
+2018-12-03T11:28:32.2914377+01:00 0HLIP186RD083:00000002 [INF] Validation headers generated. ETag: Strong, "BFB3FE92F75C0E3D276705354916189F". Last-Modified: Mon, 03 Dec 2018 10:28:32 GMT (363156e2)
+2018-12-03T11:28:32.2999690+01:00 0HLIP186RD083:00000002 [INF] Generating Vary header. (c1174e38)
+2018-12-03T11:28:32.3068764+01:00 0HLIP186RD083:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-03T11:28:32.3656745+01:00 0HLIP186RD083:00000002 [INF] Request finished in 2418.5269ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-12-03T11:28:32.3932072+01:00  [INF] Connection id ""0HLIP186RD083"", Request id ""0HLIP186RD083:00000002"": the application completed without reading the entire request body. (54ac9468)
+2018-12-03T11:28:53.1651292+01:00 0HLIP186RD083:00000003 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls?fields=hallNo application/json 62 (ca22a1cb)
+2018-12-03T11:28:53.1750460+01:00 0HLIP186RD083:00000003 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:28:53.1831042+01:00 0HLIP186RD083:00000003 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:28:53.1918827+01:00 0HLIP186RD083:00000003 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:28:53.2000089+01:00 0HLIP186RD083:00000003 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:28:53.2094233+01:00 0HLIP186RD083:00000003 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:28:53.2189480+01:00 0HLIP186RD083:00000003 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:28:53.2277145+01:00 0HLIP186RD083:00000003 [INF] Route matched with "{action = \"GetAllHalls\", controller = \"Hall\"}". Executing action "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" (a44c0341)
+2018-12-03T11:28:53.2769356+01:00 0HLIP186RD083:00000003 [INF] Executing action method "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" with arguments (["application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:28:53.2990029+01:00 0HLIP186RD083:00000003 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-03T11:28:53.4028311+01:00 0HLIP186RD083:00000003 [INF] Executed DbCommand ("89"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE [hall].[IsDeleted] = 0" (0723d8ff)
+2018-12-03T11:28:53.4377011+01:00 0HLIP186RD083:00000003 [INF] Executed action method "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 129.5087ms. (50a9e262)
+2018-12-03T11:28:53.4488218+01:00 0HLIP186RD083:00000003 [INF] Executing ObjectResult, writing value of type '"System.Dynamic.ExpandoObject"'. (8a1b66c8)
+2018-12-03T11:28:53.4607571+01:00 0HLIP186RD083:00000003 [INF] Executed action "Biob.Web.Controllers.HallController.GetAllHalls (Biob.Web)" in 222.3659ms (afa2e885)
+2018-12-03T11:28:53.4714699+01:00 0HLIP186RD083:00000003 [INF] Generating expiration headers. (97875003)
+2018-12-03T11:28:53.4821616+01:00 0HLIP186RD083:00000003 [INF] Expiration headers generated. Expires: Mon, 03 Dec 2018 10:38:53 GMT. Cache-Control: public,max-age=600,must-revalidate. (fe8ab998)
+2018-12-03T11:28:53.4929509+01:00 0HLIP186RD083:00000003 [INF] Generating Validation headers. (20c08f55)
+2018-12-03T11:28:53.5043923+01:00 0HLIP186RD083:00000003 [INF] Validation headers generated. ETag: Strong, "41D600CD9DA0CE1D1598964DDCC15C71". Last-Modified: Mon, 03 Dec 2018 10:28:53 GMT (f5287cf0)
+2018-12-03T11:28:53.5151734+01:00 0HLIP186RD083:00000003 [INF] Generating Vary header. (c1174e38)
+2018-12-03T11:28:53.5262539+01:00 0HLIP186RD083:00000003 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-03T11:28:53.5918320+01:00 0HLIP186RD083:00000003 [INF] Request finished in 396.6888ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-12-03T11:28:53.6068353+01:00  [INF] Connection id ""0HLIP186RD083"", Request id ""0HLIP186RD083:00000003"": the application completed without reading the entire request body. (54ac9468)
+2018-12-03T11:29:04.6357682+01:00 0HLIP186RD083:00000004 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e application/json 62 (ca22a1cb)
+2018-12-03T11:29:04.6467734+01:00 0HLIP186RD083:00000004 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:29:04.6574990+01:00 0HLIP186RD083:00000004 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:29:04.6800012+01:00 0HLIP186RD083:00000004 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:29:04.6914584+01:00 0HLIP186RD083:00000004 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:29:04.7044771+01:00 0HLIP186RD083:00000004 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:29:04.7158868+01:00 0HLIP186RD083:00000004 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:29:04.7900821+01:00 0HLIP186RD083:00000004 [INF] Route matched with "{action = \"GetOneHall\", controller = \"Hall\"}". Executing action "Biob.Web.Controllers.HallController.GetOneHall (Biob.Web)" (a44c0341)
+2018-12-03T11:29:04.8257804+01:00 0HLIP186RD083:00000004 [INF] Executing action method "Biob.Web.Controllers.HallController.GetOneHall (Biob.Web)" with arguments (["7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:29:04.8395714+01:00 0HLIP186RD083:00000004 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-03T11:29:05.0227484+01:00 0HLIP186RD083:00000004 [INF] Executed DbCommand ("118"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE ([hall].[IsDeleted] = 0) AND ([hall].[Id] = @__id_0)" (0723d8ff)
+2018-12-03T11:29:05.0588184+01:00 0HLIP186RD083:00000004 [INF] Executed action method "Biob.Web.Controllers.HallController.GetOneHall (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 218.2223ms. (50a9e262)
+2018-12-03T11:29:05.0680715+01:00 0HLIP186RD083:00000004 [INF] Executing ObjectResult, writing value of type '"System.Dynamic.ExpandoObject"'. (8a1b66c8)
+2018-12-03T11:29:05.0764437+01:00 0HLIP186RD083:00000004 [INF] Executed action "Biob.Web.Controllers.HallController.GetOneHall (Biob.Web)" in 278.3491ms (afa2e885)
+2018-12-03T11:29:05.0841244+01:00 0HLIP186RD083:00000004 [INF] Generating expiration headers. (97875003)
+2018-12-03T11:29:05.0919838+01:00 0HLIP186RD083:00000004 [INF] Expiration headers generated. Expires: Mon, 03 Dec 2018 10:39:05 GMT. Cache-Control: public,max-age=600,must-revalidate. (bc46474d)
+2018-12-03T11:29:05.0998295+01:00 0HLIP186RD083:00000004 [INF] Generating Validation headers. (20c08f55)
+2018-12-03T11:29:05.1077637+01:00 0HLIP186RD083:00000004 [INF] Validation headers generated. ETag: Strong, "2A822FCC374B6D9DE3DF2EB6ACB1A7DA". Last-Modified: Mon, 03 Dec 2018 10:29:05 GMT (16c471e3)
+2018-12-03T11:29:05.1157446+01:00 0HLIP186RD083:00000004 [INF] Generating Vary header. (c1174e38)
+2018-12-03T11:29:05.1236459+01:00 0HLIP186RD083:00000004 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-03T11:29:05.1699586+01:00 0HLIP186RD083:00000004 [INF] Request finished in 501.5771ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-12-03T11:29:05.2050744+01:00  [INF] Connection id ""0HLIP186RD083"", Request id ""0HLIP186RD083:00000004"": the application completed without reading the entire request body. (54ac9468)
+2018-12-03T11:29:25.5780765+01:00 0HLIP18PA4J2L:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-03T11:29:25.6641759+01:00 0HLIP18PA4J2L:00000001 [INF] Request finished in 87.2467ms 200  (791a596a)
+2018-12-03T11:32:56.8229438+01:00 0HLIP18PA4J2M:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats application/json 62 (ca22a1cb)
+2018-12-03T11:32:56.9529311+01:00 0HLIP18PA4J2M:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:32:56.9623048+01:00 0HLIP18PA4J2M:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:32:56.9734183+01:00 0HLIP18PA4J2M:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:32:56.9897123+01:00 0HLIP18PA4J2M:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:32:57.0116800+01:00 0HLIP18PA4J2M:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:32:57.0408292+01:00 0HLIP18PA4J2M:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:32:57.4304010+01:00 0HLIP18PA4J2M:00000001 [INF] Route matched with "{action = \"GetAllSeats\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" (a44c0341)
+2018-12-03T11:32:57.7954936+01:00 0HLIP18PA4J2M:00000001 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" with arguments (["7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e", "Biob.Web.Helpers.RequestParameters", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:32:58.2066910+01:00 0HLIP18PA4J2M:00000001 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-12-03T11:32:58.2705110+01:00 0HLIP18PA4J2M:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-03T11:32:58.9822159+01:00 0HLIP18PA4J2M:00000001 [INF] Executed DbCommand ("110"ms) [Parameters=["@__hallId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [seat].[Id], [seat].[CreatedOn], [seat].[DeletedOn], [seat].[HallId], [seat].[IsDeleted], [seat].[ModifiedOn], [seat].[RowNo], [seat].[SeatNo]
+FROM [Seats] AS [seat]
+WHERE ([seat].[IsDeleted] = 0) AND ([seat].[HallId] = @__hallId_0)" (0723d8ff)
+2018-12-03T11:32:59.2282135+01:00 0HLIP18PA4J2M:00000001 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 1419.5614ms. (50a9e262)
+2018-12-03T11:32:59.2505267+01:00 0HLIP18PA4J2M:00000001 [INF] Executing ObjectResult, writing value of type '"System.Dynamic.ExpandoObject"'. (8a1b66c8)
+2018-12-03T11:32:59.3705087+01:00 0HLIP18PA4J2M:00000001 [INF] Executed action "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" in 1926.2644ms (afa2e885)
+2018-12-03T11:32:59.3978160+01:00 0HLIP18PA4J2M:00000001 [INF] Generating expiration headers. (97875003)
+2018-12-03T11:32:59.4070272+01:00 0HLIP18PA4J2M:00000001 [INF] Expiration headers generated. Expires: Mon, 03 Dec 2018 10:42:59 GMT. Cache-Control: public,max-age=600,must-revalidate. (b546a630)
+2018-12-03T11:32:59.4263332+01:00 0HLIP18PA4J2M:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-12-03T11:32:59.4611814+01:00 0HLIP18PA4J2M:00000001 [INF] Validation headers generated. ETag: Strong, "6F54077D18135652F2F96C3DEDD0D2D1". Last-Modified: Mon, 03 Dec 2018 10:32:59 GMT (3e521a1e)
+2018-12-03T11:32:59.4726365+01:00 0HLIP18PA4J2M:00000001 [INF] Generating Vary header. (c1174e38)
+2018-12-03T11:32:59.4817913+01:00 0HLIP18PA4J2M:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-03T11:32:59.5565839+01:00 0HLIP18PA4J2M:00000001 [INF] Request finished in 2733.4998ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-12-03T11:32:59.6082171+01:00  [INF] Connection id ""0HLIP18PA4J2M"", Request id ""0HLIP18PA4J2M:00000001"": the application completed without reading the entire request body. (54ac9468)
+2018-12-03T11:33:11.5313884+01:00 0HLIP18PA4J2M:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats?fields=rowNo application/json 62 (ca22a1cb)
+2018-12-03T11:33:11.5425449+01:00 0HLIP18PA4J2M:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:33:11.5549704+01:00 0HLIP18PA4J2M:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:33:11.5761119+01:00 0HLIP18PA4J2M:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:33:11.6247719+01:00 0HLIP18PA4J2M:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:33:11.6378859+01:00 0HLIP18PA4J2M:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:33:11.6473012+01:00 0HLIP18PA4J2M:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:33:11.6576397+01:00 0HLIP18PA4J2M:00000002 [INF] Route matched with "{action = \"GetAllSeats\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" (a44c0341)
+2018-12-03T11:33:11.6998477+01:00 0HLIP18PA4J2M:00000002 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" with arguments (["7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e", "Biob.Web.Helpers.RequestParameters", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:33:11.7498284+01:00 0HLIP18PA4J2M:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-03T11:33:11.8779494+01:00 0HLIP18PA4J2M:00000002 [INF] Executed DbCommand ("107"ms) [Parameters=["@__hallId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [seat].[Id], [seat].[CreatedOn], [seat].[DeletedOn], [seat].[HallId], [seat].[IsDeleted], [seat].[ModifiedOn], [seat].[RowNo], [seat].[SeatNo]
+FROM [Seats] AS [seat]
+WHERE ([seat].[IsDeleted] = 0) AND ([seat].[HallId] = @__hallId_0)" (0723d8ff)
+2018-12-03T11:33:11.8902431+01:00 0HLIP18PA4J2M:00000002 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 180.0252ms. (50a9e262)
+2018-12-03T11:33:11.9025694+01:00 0HLIP18PA4J2M:00000002 [INF] Executing ObjectResult, writing value of type '"System.Dynamic.ExpandoObject"'. (8a1b66c8)
+2018-12-03T11:39:17.8587854+01:00 0HLIP1E9QSKJ7:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-03T11:39:17.9393197+01:00 0HLIP1E9QSKJ7:00000001 [INF] Request finished in 91.2615ms 200  (791a596a)
+2018-12-03T11:39:21.6281491+01:00 0HLIP1E9QSKJ7:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats application/json 62 (ca22a1cb)
+2018-12-03T11:39:21.7320671+01:00 0HLIP1E9QSKJ7:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:39:21.7431536+01:00 0HLIP1E9QSKJ7:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:39:21.7524392+01:00 0HLIP1E9QSKJ7:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:39:21.7705717+01:00 0HLIP1E9QSKJ7:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:39:21.7805916+01:00 0HLIP1E9QSKJ7:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:39:21.7896352+01:00 0HLIP1E9QSKJ7:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:39:22.2101820+01:00 0HLIP1E9QSKJ7:00000002 [INF] Route matched with "{action = \"GetAllSeats\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" (a44c0341)
+2018-12-03T11:39:22.7550962+01:00 0HLIP1E9QSKJ7:00000002 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" with arguments (["7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e", "Biob.Web.Helpers.RequestParameters", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:39:23.1129718+01:00 0HLIP1E9QSKJ7:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-12-03T11:39:23.1794768+01:00 0HLIP1E9QSKJ7:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-03T11:39:23.8365166+01:00 0HLIP1E9QSKJ7:00000002 [INF] Executed DbCommand ("112"ms) [Parameters=["@__hallId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [seat].[Id], [seat].[CreatedOn], [seat].[DeletedOn], [seat].[HallId], [seat].[IsDeleted], [seat].[ModifiedOn], [seat].[RowNo], [seat].[SeatNo]
+FROM [Seats] AS [seat]
+WHERE ([seat].[IsDeleted] = 0) AND ([seat].[HallId] = @__hallId_0)" (0723d8ff)
+2018-12-03T11:39:24.0902736+01:00 0HLIP1E9QSKJ7:00000002 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 1321.1837ms. (50a9e262)
+2018-12-03T11:39:24.1125787+01:00 0HLIP1E9QSKJ7:00000002 [INF] Executing ObjectResult, writing value of type '"System.Dynamic.ExpandoObject"'. (8a1b66c8)
+2018-12-03T11:39:24.1557464+01:00 0HLIP1E9QSKJ7:00000002 [INF] Executed action "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" in 1931.3479ms (afa2e885)
+2018-12-03T11:39:24.1754043+01:00 0HLIP1E9QSKJ7:00000002 [INF] Generating expiration headers. (97875003)
+2018-12-03T11:39:24.1860319+01:00 0HLIP1E9QSKJ7:00000002 [INF] Expiration headers generated. Expires: Mon, 03 Dec 2018 10:49:24 GMT. Cache-Control: public,max-age=600,must-revalidate. (8ef79ad4)
+2018-12-03T11:39:24.2042855+01:00 0HLIP1E9QSKJ7:00000002 [INF] Generating Validation headers. (20c08f55)
+2018-12-03T11:39:24.2410050+01:00 0HLIP1E9QSKJ7:00000002 [INF] Validation headers generated. ETag: Strong, "6F54077D18135652F2F96C3DEDD0D2D1". Last-Modified: Mon, 03 Dec 2018 10:39:24 GMT (fd7d3da3)
+2018-12-03T11:39:24.2519658+01:00 0HLIP1E9QSKJ7:00000002 [INF] Generating Vary header. (c1174e38)
+2018-12-03T11:39:24.2629642+01:00 0HLIP1E9QSKJ7:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-03T11:39:24.3248871+01:00 0HLIP1E9QSKJ7:00000002 [INF] Request finished in 2682.506ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-12-03T11:39:24.3731537+01:00  [INF] Connection id ""0HLIP1E9QSKJ7"", Request id ""0HLIP1E9QSKJ7:00000002"": the application completed without reading the entire request body. (54ac9468)
+2018-12-03T11:40:21.1396068+01:00 0HLIP1E9QSKJ7:00000003 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats=?fields=seatNo application/json 62 (ca22a1cb)
+2018-12-03T11:40:21.1841358+01:00 0HLIP1E9QSKJ7:00000003 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:40:21.1935749+01:00 0HLIP1E9QSKJ7:00000003 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:40:21.2087186+01:00 0HLIP1E9QSKJ7:00000003 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:40:21.2205482+01:00 0HLIP1E9QSKJ7:00000003 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:40:21.2317057+01:00 0HLIP1E9QSKJ7:00000003 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:40:21.2449369+01:00 0HLIP1E9QSKJ7:00000003 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:40:21.2556667+01:00 0HLIP1E9QSKJ7:00000003 [INF] Generating expiration headers. (97875003)
+2018-12-03T11:40:21.2665021+01:00 0HLIP1E9QSKJ7:00000003 [INF] Expiration headers generated. Expires: Mon, 03 Dec 2018 10:50:21 GMT. Cache-Control: public,max-age=600,must-revalidate. (b6a36017)
+2018-12-03T11:40:21.2761684+01:00 0HLIP1E9QSKJ7:00000003 [INF] Generating Validation headers. (20c08f55)
+2018-12-03T11:40:21.2860387+01:00 0HLIP1E9QSKJ7:00000003 [INF] Validation headers generated. ETag: Strong, "D91A8AAFB703990C6EC4044EE009D4AF". Last-Modified: Mon, 03 Dec 2018 10:40:21 GMT (4998bd6d)
+2018-12-03T11:40:21.2978629+01:00 0HLIP1E9QSKJ7:00000003 [INF] Generating Vary header. (c1174e38)
+2018-12-03T11:40:21.3081347+01:00 0HLIP1E9QSKJ7:00000003 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-03T11:40:21.3649719+01:00 0HLIP1E9QSKJ7:00000003 [INF] Request finished in 194.4226ms 404  (791a596a)
+2018-12-03T11:40:21.3798414+01:00  [INF] Connection id ""0HLIP1E9QSKJ7"", Request id ""0HLIP1E9QSKJ7:00000003"": the application completed without reading the entire request body. (54ac9468)
+2018-12-03T11:41:32.3813916+01:00 0HLIP1E9QSKJ8:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats=?fields=seatNo application/json 62 (ca22a1cb)
+2018-12-03T11:41:32.4487366+01:00 0HLIP1E9QSKJ8:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:41:32.4851209+01:00 0HLIP1E9QSKJ8:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:41:32.5247567+01:00 0HLIP1E9QSKJ8:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:41:32.5369328+01:00 0HLIP1E9QSKJ8:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:41:32.5451891+01:00 0HLIP1E9QSKJ8:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:41:32.5545838+01:00 0HLIP1E9QSKJ8:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:41:32.5637621+01:00 0HLIP1E9QSKJ8:00000001 [INF] Generating expiration headers. (97875003)
+2018-12-03T11:41:32.5760195+01:00 0HLIP1E9QSKJ8:00000001 [INF] Expiration headers generated. Expires: Mon, 03 Dec 2018 10:51:32 GMT. Cache-Control: public,max-age=600,must-revalidate. (3a4d0ec0)
+2018-12-03T11:41:32.5893169+01:00 0HLIP1E9QSKJ8:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-12-03T11:41:32.6033465+01:00 0HLIP1E9QSKJ8:00000001 [INF] Validation headers generated. ETag: Strong, "D91A8AAFB703990C6EC4044EE009D4AF". Last-Modified: Mon, 03 Dec 2018 10:41:32 GMT (e214d786)
+2018-12-03T11:41:32.6146233+01:00 0HLIP1E9QSKJ8:00000001 [INF] Generating Vary header. (c1174e38)
+2018-12-03T11:41:32.6255631+01:00 0HLIP1E9QSKJ8:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-03T11:41:32.6732216+01:00 0HLIP1E9QSKJ8:00000001 [INF] Request finished in 280.2573ms 404  (791a596a)
+2018-12-03T11:41:32.7070780+01:00  [INF] Connection id ""0HLIP1E9QSKJ8"", Request id ""0HLIP1E9QSKJ8:00000001"": the application completed without reading the entire request body. (54ac9468)
+2018-12-03T11:45:50.1322990+01:00 0HLIP1HUNUPKB:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-03T11:45:50.2294443+01:00 0HLIP1HUNUPKB:00000001 [INF] Request finished in 82.7666ms 200  (791a596a)
+2018-12-03T11:45:59.8893378+01:00 0HLIP1HUNUPKB:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats application/json 62 (ca22a1cb)
+2018-12-03T11:45:59.9870497+01:00 0HLIP1HUNUPKB:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:45:59.9978761+01:00 0HLIP1HUNUPKB:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:46:00.0202086+01:00 0HLIP1HUNUPKB:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:46:00.0452811+01:00 0HLIP1HUNUPKB:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:46:00.0568080+01:00 0HLIP1HUNUPKB:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:46:00.0715432+01:00 0HLIP1HUNUPKB:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:46:00.4839346+01:00 0HLIP1HUNUPKB:00000002 [INF] Route matched with "{action = \"GetAllSeats\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" (a44c0341)
+2018-12-03T11:46:00.9022585+01:00 0HLIP1HUNUPKB:00000002 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" with arguments (["7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e", "Biob.Web.Helpers.RequestParameters", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:46:01.2924106+01:00 0HLIP1HUNUPKB:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-12-03T11:46:01.3856421+01:00 0HLIP1HUNUPKB:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-03T11:46:02.0569650+01:00 0HLIP1HUNUPKB:00000002 [INF] Executed DbCommand ("121"ms) [Parameters=["@__hallId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [seat].[Id], [seat].[CreatedOn], [seat].[DeletedOn], [seat].[HallId], [seat].[IsDeleted], [seat].[ModifiedOn], [seat].[RowNo], [seat].[SeatNo]
+FROM [Seats] AS [seat]
+WHERE ([seat].[IsDeleted] = 0) AND ([seat].[HallId] = @__hallId_0)" (0723d8ff)
+2018-12-03T11:46:02.2871954+01:00 0HLIP1HUNUPKB:00000002 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 1369.9613ms. (50a9e262)
+2018-12-03T11:46:02.3131001+01:00 0HLIP1HUNUPKB:00000002 [INF] Executing ObjectResult, writing value of type '"System.Dynamic.ExpandoObject"'. (8a1b66c8)
+2018-12-03T11:46:02.3646742+01:00 0HLIP1HUNUPKB:00000002 [INF] Executed action "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" in 1866.4644ms (afa2e885)
+2018-12-03T11:46:02.3838001+01:00 0HLIP1HUNUPKB:00000002 [INF] Generating expiration headers. (97875003)
+2018-12-03T11:46:02.3994518+01:00 0HLIP1HUNUPKB:00000002 [INF] Expiration headers generated. Expires: Mon, 03 Dec 2018 10:56:02 GMT. Cache-Control: public,max-age=600,must-revalidate. (3d56197f)
+2018-12-03T11:46:02.4187531+01:00 0HLIP1HUNUPKB:00000002 [INF] Generating Validation headers. (20c08f55)
+2018-12-03T11:46:02.4380022+01:00 0HLIP1HUNUPKB:00000002 [INF] Validation headers generated. ETag: Strong, "6F54077D18135652F2F96C3DEDD0D2D1". Last-Modified: Mon, 03 Dec 2018 10:46:02 GMT (c1095c09)
+2018-12-03T11:46:02.4469525+01:00 0HLIP1HUNUPKB:00000002 [INF] Generating Vary header. (c1174e38)
+2018-12-03T11:46:02.4541277+01:00 0HLIP1HUNUPKB:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-03T11:46:02.5013064+01:00 0HLIP1HUNUPKB:00000002 [INF] Request finished in 2606.8277ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-12-03T11:46:02.5247443+01:00  [INF] Connection id ""0HLIP1HUNUPKB"", Request id ""0HLIP1HUNUPKB:00000002"": the application completed without reading the entire request body. (54ac9468)
+2018-12-03T11:46:16.7027746+01:00 0HLIP1HUNUPKB:00000003 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats?fields=seatno application/json 62 (ca22a1cb)
+2018-12-03T11:46:16.7153878+01:00 0HLIP1HUNUPKB:00000003 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:46:16.7306430+01:00 0HLIP1HUNUPKB:00000003 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:46:16.7614058+01:00 0HLIP1HUNUPKB:00000003 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:46:16.7870180+01:00 0HLIP1HUNUPKB:00000003 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:46:16.7991406+01:00 0HLIP1HUNUPKB:00000003 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:46:16.8069996+01:00 0HLIP1HUNUPKB:00000003 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:46:16.8154223+01:00 0HLIP1HUNUPKB:00000003 [INF] Route matched with "{action = \"GetAllSeats\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" (a44c0341)
+2018-12-03T11:46:16.8537532+01:00 0HLIP1HUNUPKB:00000003 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" with arguments (["7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e", "Biob.Web.Helpers.RequestParameters", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:46:16.8783133+01:00 0HLIP1HUNUPKB:00000003 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.BadRequestResult" in 16.3671ms. (50a9e262)
+2018-12-03T11:46:16.9150226+01:00 0HLIP1HUNUPKB:00000003 [INF] Executing HttpStatusCodeResult, setting HTTP status code 400 (e28ccfae)
+2018-12-03T11:46:16.9272681+01:00 0HLIP1HUNUPKB:00000003 [INF] Executed action "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" in 99.8595ms (afa2e885)
+2018-12-03T11:46:16.9388819+01:00 0HLIP1HUNUPKB:00000003 [INF] Generating expiration headers. (97875003)
+2018-12-03T11:46:16.9586146+01:00 0HLIP1HUNUPKB:00000003 [INF] Expiration headers generated. Expires: Mon, 03 Dec 2018 10:56:16 GMT. Cache-Control: public,max-age=600,must-revalidate. (ed0a11ee)
+2018-12-03T11:46:16.9745486+01:00 0HLIP1HUNUPKB:00000003 [INF] Generating Validation headers. (20c08f55)
+2018-12-03T11:46:16.9865960+01:00 0HLIP1HUNUPKB:00000003 [INF] Validation headers generated. ETag: Strong, "F7ACBA8FEAEE25A5574EA3CE6C4356F6". Last-Modified: Mon, 03 Dec 2018 10:46:16 GMT (8dc2beb5)
+2018-12-03T11:46:16.9959834+01:00 0HLIP1HUNUPKB:00000003 [INF] Generating Vary header. (c1174e38)
+2018-12-03T11:46:17.0057843+01:00 0HLIP1HUNUPKB:00000003 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-03T11:46:17.0158966+01:00 0HLIP1HUNUPKB:00000003 [INF] Request finished in 319.5051ms 400  (791a596a)
+2018-12-03T11:46:17.0267983+01:00  [INF] Connection id ""0HLIP1HUNUPKB"", Request id ""0HLIP1HUNUPKB:00000003"": the application completed without reading the entire request body. (54ac9468)
+2018-12-03T11:46:30.0572305+01:00 0HLIP1HUNUPKB:00000004 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats application/json 62 (ca22a1cb)
+2018-12-03T11:46:30.0703441+01:00 0HLIP1HUNUPKB:00000004 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:46:30.0848664+01:00 0HLIP1HUNUPKB:00000004 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:46:30.1000109+01:00 0HLIP1HUNUPKB:00000004 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:46:30.1159648+01:00 0HLIP1HUNUPKB:00000004 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:46:30.1262824+01:00 0HLIP1HUNUPKB:00000004 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:46:30.1361244+01:00 0HLIP1HUNUPKB:00000004 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:46:30.1518364+01:00 0HLIP1HUNUPKB:00000004 [INF] Route matched with "{action = \"GetAllSeats\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" (a44c0341)
+2018-12-03T11:46:30.2061868+01:00 0HLIP1HUNUPKB:00000004 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" with arguments (["7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e", "Biob.Web.Helpers.RequestParameters", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:46:30.2269771+01:00 0HLIP1HUNUPKB:00000004 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-03T11:46:30.3222100+01:00 0HLIP1HUNUPKB:00000004 [INF] Executed DbCommand ("83"ms) [Parameters=["@__hallId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [seat].[Id], [seat].[CreatedOn], [seat].[DeletedOn], [seat].[HallId], [seat].[IsDeleted], [seat].[ModifiedOn], [seat].[RowNo], [seat].[SeatNo]
+FROM [Seats] AS [seat]
+WHERE ([seat].[IsDeleted] = 0) AND ([seat].[HallId] = @__hallId_0)" (0723d8ff)
+2018-12-03T11:46:30.3312407+01:00 0HLIP1HUNUPKB:00000004 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 117.5661ms. (50a9e262)
+2018-12-03T11:46:30.3401893+01:00 0HLIP1HUNUPKB:00000004 [INF] Executing ObjectResult, writing value of type '"System.Dynamic.ExpandoObject"'. (8a1b66c8)
+2018-12-03T11:46:30.3497598+01:00 0HLIP1HUNUPKB:00000004 [INF] Executed action "Biob.Web.Controllers.SeatController.GetAllSeats (Biob.Web)" in 189.4353ms (afa2e885)
+2018-12-03T11:46:30.3658460+01:00 0HLIP1HUNUPKB:00000004 [INF] Generating expiration headers. (97875003)
+2018-12-03T11:46:30.3803284+01:00 0HLIP1HUNUPKB:00000004 [INF] Expiration headers generated. Expires: Mon, 03 Dec 2018 10:56:30 GMT. Cache-Control: public,max-age=600,must-revalidate. (c3ee41cc)
+2018-12-03T11:46:30.3943944+01:00 0HLIP1HUNUPKB:00000004 [INF] Generating Validation headers. (20c08f55)
+2018-12-03T11:46:30.4292708+01:00 0HLIP1HUNUPKB:00000004 [INF] Validation headers generated. ETag: Strong, "6F54077D18135652F2F96C3DEDD0D2D1". Last-Modified: Mon, 03 Dec 2018 10:46:30 GMT (9913348b)
+2018-12-03T11:46:30.4417800+01:00 0HLIP1HUNUPKB:00000004 [INF] Generating Vary header. (c1174e38)
+2018-12-03T11:46:30.4879447+01:00 0HLIP1HUNUPKB:00000004 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-03T11:46:30.5438672+01:00 0HLIP1HUNUPKB:00000004 [INF] Request finished in 468.4306ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-12-03T11:46:30.5727214+01:00  [INF] Connection id ""0HLIP1HUNUPKB"", Request id ""0HLIP1HUNUPKB:00000004"": the application completed without reading the entire request body. (54ac9468)
+2018-12-03T11:46:36.9316536+01:00 0HLIP1HUNUPKB:00000005 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats/245e0e3e-ae50-4e80-b506-01436223f4aa application/json 62 (ca22a1cb)
+2018-12-03T11:46:36.9483330+01:00 0HLIP1HUNUPKB:00000005 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:46:36.9657500+01:00 0HLIP1HUNUPKB:00000005 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:46:36.9789449+01:00 0HLIP1HUNUPKB:00000005 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:46:36.9905641+01:00 0HLIP1HUNUPKB:00000005 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:46:37.0002381+01:00 0HLIP1HUNUPKB:00000005 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:46:37.0093603+01:00 0HLIP1HUNUPKB:00000005 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:46:37.0298261+01:00 0HLIP1HUNUPKB:00000005 [INF] Route matched with "{action = \"GetOneSeat\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetOneSeat (Biob.Web)" (a44c0341)
+2018-12-03T11:46:37.0644797+01:00 0HLIP1HUNUPKB:00000005 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetOneSeat (Biob.Web)" with arguments (["245e0e3e-ae50-4e80-b506-01436223f4aa", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:46:37.0775821+01:00 0HLIP1HUNUPKB:00000005 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-03T11:46:37.1960049+01:00 0HLIP1HUNUPKB:00000005 [INF] Executed DbCommand ("91"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [seat].[Id], [seat].[CreatedOn], [seat].[DeletedOn], [seat].[HallId], [seat].[IsDeleted], [seat].[ModifiedOn], [seat].[RowNo], [seat].[SeatNo]
+FROM [Seats] AS [seat]
+WHERE [seat].[Id] = @__id_0" (0723d8ff)
+2018-12-03T11:46:37.2245229+01:00 0HLIP1HUNUPKB:00000005 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetOneSeat (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 150.1156ms. (50a9e262)
+2018-12-03T11:46:37.2319452+01:00 0HLIP1HUNUPKB:00000005 [INF] Executing ObjectResult, writing value of type '"System.Dynamic.ExpandoObject"'. (8a1b66c8)
+2018-12-03T11:46:37.2399937+01:00 0HLIP1HUNUPKB:00000005 [INF] Executed action "Biob.Web.Controllers.SeatController.GetOneSeat (Biob.Web)" in 202.5322ms (afa2e885)
+2018-12-03T11:46:37.2476777+01:00 0HLIP1HUNUPKB:00000005 [INF] Generating expiration headers. (97875003)
+2018-12-03T11:46:37.2568449+01:00 0HLIP1HUNUPKB:00000005 [INF] Expiration headers generated. Expires: Mon, 03 Dec 2018 10:56:37 GMT. Cache-Control: public,max-age=600,must-revalidate. (c2ce86d2)
+2018-12-03T11:46:37.2662019+01:00 0HLIP1HUNUPKB:00000005 [INF] Generating Validation headers. (20c08f55)
+2018-12-03T11:46:37.2748418+01:00 0HLIP1HUNUPKB:00000005 [INF] Validation headers generated. ETag: Strong, "2CA0AA6712A0C5F587666613085D6184". Last-Modified: Mon, 03 Dec 2018 10:46:37 GMT (78210962)
+2018-12-03T11:46:37.2836985+01:00 0HLIP1HUNUPKB:00000005 [INF] Generating Vary header. (c1174e38)
+2018-12-03T11:46:37.2920749+01:00 0HLIP1HUNUPKB:00000005 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-03T11:46:37.3222476+01:00 0HLIP1HUNUPKB:00000005 [INF] Request finished in 373.6032ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-12-03T11:46:37.3405395+01:00  [INF] Connection id ""0HLIP1HUNUPKB"", Request id ""0HLIP1HUNUPKB:00000005"": the application completed without reading the entire request body. (54ac9468)
+2018-12-03T11:46:48.4482286+01:00 0HLIP1HUNUPKB:00000006 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats/245e0e3e-ae50-4e80-b506-01436223f4aa?fields=SeatNo application/json 62 (ca22a1cb)
+2018-12-03T11:46:48.4611698+01:00 0HLIP1HUNUPKB:00000006 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:46:48.4760547+01:00 0HLIP1HUNUPKB:00000006 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:46:48.4852202+01:00 0HLIP1HUNUPKB:00000006 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:46:48.4946007+01:00 0HLIP1HUNUPKB:00000006 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:46:48.5035623+01:00 0HLIP1HUNUPKB:00000006 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:46:48.5132832+01:00 0HLIP1HUNUPKB:00000006 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:46:48.5289105+01:00 0HLIP1HUNUPKB:00000006 [INF] Route matched with "{action = \"GetOneSeat\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetOneSeat (Biob.Web)" (a44c0341)
+2018-12-03T11:46:48.5621883+01:00 0HLIP1HUNUPKB:00000006 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetOneSeat (Biob.Web)" with arguments (["245e0e3e-ae50-4e80-b506-01436223f4aa", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:46:48.5719127+01:00 0HLIP1HUNUPKB:00000006 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-03T11:46:48.6365149+01:00 0HLIP1HUNUPKB:00000006 [INF] Executed DbCommand ("50"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [seat].[Id], [seat].[CreatedOn], [seat].[DeletedOn], [seat].[HallId], [seat].[IsDeleted], [seat].[ModifiedOn], [seat].[RowNo], [seat].[SeatNo]
+FROM [Seats] AS [seat]
+WHERE [seat].[Id] = @__id_0" (0723d8ff)
+2018-12-03T11:46:48.6461798+01:00 0HLIP1HUNUPKB:00000006 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetOneSeat (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 75.2695ms. (50a9e262)
+2018-12-03T11:46:48.6638440+01:00 0HLIP1HUNUPKB:00000006 [INF] Executing ObjectResult, writing value of type '"System.Dynamic.ExpandoObject"'. (8a1b66c8)
+2018-12-03T11:46:48.7709668+01:00 0HLIP1HUNUPKB:00000006 [INF] Executed action "Biob.Web.Controllers.SeatController.GetOneSeat (Biob.Web)" in 223.0912ms (afa2e885)
+2018-12-03T11:46:48.7796110+01:00 0HLIP1HUNUPKB:00000006 [INF] Generating expiration headers. (97875003)
+2018-12-03T11:46:48.7882210+01:00 0HLIP1HUNUPKB:00000006 [INF] Expiration headers generated. Expires: Mon, 03 Dec 2018 10:56:48 GMT. Cache-Control: public,max-age=600,must-revalidate. (8c2a49d4)
+2018-12-03T11:46:48.7977200+01:00 0HLIP1HUNUPKB:00000006 [INF] Generating Validation headers. (20c08f55)
+2018-12-03T11:46:48.8067084+01:00 0HLIP1HUNUPKB:00000006 [INF] Validation headers generated. ETag: Strong, "71C01CCBD54BDA7B8E5066200D523F59". Last-Modified: Mon, 03 Dec 2018 10:46:48 GMT (ac374d47)
+2018-12-03T11:46:48.8157075+01:00 0HLIP1HUNUPKB:00000006 [INF] Generating Vary header. (c1174e38)
+2018-12-03T11:46:48.8237235+01:00 0HLIP1HUNUPKB:00000006 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-03T11:46:48.8540380+01:00 0HLIP1HUNUPKB:00000006 [INF] Request finished in 403.8576ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-12-03T11:46:48.8671426+01:00  [INF] Connection id ""0HLIP1HUNUPKB"", Request id ""0HLIP1HUNUPKB:00000006"": the application completed without reading the entire request body. (54ac9468)
+2018-12-03T11:49:15.9841147+01:00 0HLIP1JS35PJR:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-03T11:49:16.0987894+01:00 0HLIP1JS35PJR:00000001 [INF] Request finished in 111.8334ms 200  (791a596a)
+2018-12-03T11:49:41.5669383+01:00 0HLIP1K3NHQUQ:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e/seats/245e0e3e-ae50-4e80-b506-01436223f4aa?fields=SeatNo application/json 62 (ca22a1cb)
+2018-12-03T11:49:41.6804985+01:00 0HLIP1K3NHQUQ:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:49:41.6816964+01:00 0HLIP1K3NHQUQ:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:49:41.6817866+01:00 0HLIP1K3NHQUQ:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:49:41.6930788+01:00 0HLIP1K3NHQUQ:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:49:41.6932221+01:00 0HLIP1K3NHQUQ:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:49:41.6932853+01:00 0HLIP1K3NHQUQ:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:49:42.0269826+01:00 0HLIP1K3NHQUQ:00000001 [INF] Route matched with "{action = \"GetOneSeat\", controller = \"Seat\"}". Executing action "Biob.Web.Controllers.SeatController.GetOneSeat (Biob.Web)" (a44c0341)
+2018-12-03T11:49:42.3289246+01:00 0HLIP1K3NHQUQ:00000001 [INF] Executing action method "Biob.Web.Controllers.SeatController.GetOneSeat (Biob.Web)" with arguments (["245e0e3e-ae50-4e80-b506-01436223f4aa", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:49:42.7220600+01:00 0HLIP1K3NHQUQ:00000001 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-12-03T11:49:42.7825366+01:00 0HLIP1K3NHQUQ:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-03T11:49:47.7993006+01:00 0HLIP1K3NHQUQ:00000001 [INF] Executed DbCommand ("217"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [seat].[Id], [seat].[CreatedOn], [seat].[DeletedOn], [seat].[HallId], [seat].[IsDeleted], [seat].[ModifiedOn], [seat].[RowNo], [seat].[SeatNo]
+FROM [Seats] AS [seat]
+WHERE [seat].[Id] = @__id_0" (0723d8ff)
+2018-12-03T11:49:47.9187403+01:00 0HLIP1K3NHQUQ:00000001 [INF] Executed action method "Biob.Web.Controllers.SeatController.GetOneSeat (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 5578.7257ms. (50a9e262)
+2018-12-03T11:49:47.9398069+01:00 0HLIP1K3NHQUQ:00000001 [INF] Executing ObjectResult, writing value of type '"System.Dynamic.ExpandoObject"'. (8a1b66c8)
+2018-12-03T11:49:48.0759797+01:00 0HLIP1K3NHQUQ:00000001 [INF] Executed action "Biob.Web.Controllers.SeatController.GetOneSeat (Biob.Web)" in 6034.8832ms (afa2e885)
+2018-12-03T11:49:48.0911559+01:00 0HLIP1K3NHQUQ:00000001 [INF] Generating expiration headers. (97875003)
+2018-12-03T11:49:48.0989814+01:00 0HLIP1K3NHQUQ:00000001 [INF] Expiration headers generated. Expires: Mon, 03 Dec 2018 10:59:48 GMT. Cache-Control: public,max-age=600,must-revalidate. (147ef903)
+2018-12-03T11:49:48.1121955+01:00 0HLIP1K3NHQUQ:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-12-03T11:49:48.1312196+01:00 0HLIP1K3NHQUQ:00000001 [INF] Validation headers generated. ETag: Strong, "71C01CCBD54BDA7B8E5066200D523F59". Last-Modified: Mon, 03 Dec 2018 10:49:48 GMT (2f68a008)
+2018-12-03T11:49:48.1394490+01:00 0HLIP1K3NHQUQ:00000001 [INF] Generating Vary header. (c1174e38)
+2018-12-03T11:49:48.1466737+01:00 0HLIP1K3NHQUQ:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-03T11:49:48.1709948+01:00 0HLIP1K3NHQUQ:00000001 [INF] Request finished in 6607.3152ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-12-03T11:49:48.1946975+01:00  [INF] Connection id ""0HLIP1K3NHQUQ"", Request id ""0HLIP1K3NHQUQ:00000001"": the application completed without reading the entire request body. (54ac9468)
+2018-12-03T11:50:31.1822249+01:00 0HLIP1K3NHQUR:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies application/json 62 (ca22a1cb)
+2018-12-03T11:50:31.1969700+01:00 0HLIP1K3NHQUR:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:50:31.2098620+01:00 0HLIP1K3NHQUR:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:50:31.2295405+01:00 0HLIP1K3NHQUR:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:50:31.2375350+01:00 0HLIP1K3NHQUR:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:50:31.2448398+01:00 0HLIP1K3NHQUR:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:50:31.2537359+01:00 0HLIP1K3NHQUR:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:50:31.2744757+01:00 0HLIP1K3NHQUR:00000001 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-12-03T11:50:31.3838061+01:00 0HLIP1K3NHQUR:00000001 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:50:31.4254830+01:00 0HLIP1K3NHQUR:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-03T11:50:31.7758844+01:00 0HLIP1K3NHQUR:00000001 [INF] Executed DbCommand ("109"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-12-03T11:50:31.9072624+01:00 0HLIP1K3NHQUR:00000001 [INF] Executed DbCommand ("79"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-12-03T11:51:33.6345053+01:00 0HLIP1L53HVQF:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-03T11:51:33.7073423+01:00 0HLIP1L53HVQF:00000001 [INF] Request finished in 81.8451ms 200  (791a596a)
+2018-12-03T11:51:42.9131653+01:00 0HLIP1L53HVQF:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies application/json 62 (ca22a1cb)
+2018-12-03T11:51:43.0292715+01:00 0HLIP1L53HVQF:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:51:43.0366433+01:00 0HLIP1L53HVQF:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:51:43.0438069+01:00 0HLIP1L53HVQF:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:51:43.0586349+01:00 0HLIP1L53HVQF:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:51:43.0653375+01:00 0HLIP1L53HVQF:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:51:43.0721406+01:00 0HLIP1L53HVQF:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:51:43.3718382+01:00 0HLIP1L53HVQF:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-12-03T11:51:43.8046500+01:00 0HLIP1L53HVQF:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:51:44.2379987+01:00 0HLIP1L53HVQF:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-12-03T11:51:44.3479577+01:00 0HLIP1L53HVQF:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-03T11:51:45.1239273+01:00 0HLIP1L53HVQF:00000002 [INF] Executed DbCommand ("119"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-12-03T11:51:45.3614514+01:00 0HLIP1L53HVQF:00000002 [INF] Executed DbCommand ("121"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-12-03T11:52:23.2228075+01:00 0HLIP1L53HVQF:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 39837.0137ms (afa2e885)
+2018-12-03T11:52:23.3380481+01:00 0HLIP1L53HVQF:00000002 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+PagedList`1 -> IEnumerable`1
+Biob.Services.Data.Helpers.PagedList`1[[Biob.Data.Models.Movie, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Type Map configuration:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Destination Member:
+Genre
+ ---> System.ArgumentOutOfRangeException: StartIndex cannot be less than zero.
+Parameter name: startIndex
+   at System.Text.StringBuilder.Remove(Int32 startIndex, Int32 length)
+   at Biob.Web.Helpers.IEnumerableExtensions.ConvertIEnumerableToString[T](IEnumerable`1 listOfString) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Helpers\IEnumerableExtensions.cs:line 16
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
+   at Biob.Web.Controllers.MovieController.GetAllMovies(RequestParameters requestParameters, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 81
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-12-03T11:52:23.3709234+01:00 0HLIP1L53HVQF:00000002 [ERR] An exception was thrown attempting to display the error page. (33804fd3)
+System.ArgumentException: Stream was not writable.
+   at System.IO.StreamWriter..ctor(Stream stream, Encoding encoding, Int32 bufferSize, Boolean leaveOpen)
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+2018-12-03T11:52:23.4003507+01:00 0HLIP1L53HVQF:00000002 [ERR] Connection id ""0HLIP1L53HVQF"", Request id ""0HLIP1L53HVQF:00000002"": An unhandled exception was thrown by the application. (560e7d32)
+AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+PagedList`1 -> IEnumerable`1
+Biob.Services.Data.Helpers.PagedList`1[[Biob.Data.Models.Movie, Biob.Data.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] -> System.Collections.Generic.IEnumerable`1[[Biob.Services.Data.DtoModels.MovieDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] ---> AutoMapper.AutoMapperMappingException: Error mapping types.
+
+Mapping types:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Type Map configuration:
+Movie -> MovieDto
+Biob.Data.Models.Movie -> Biob.Services.Data.DtoModels.MovieDto
+
+Destination Member:
+Genre
+ ---> System.ArgumentOutOfRangeException: StartIndex cannot be less than zero.
+Parameter name: startIndex
+   at System.Text.StringBuilder.Remove(Int32 startIndex, Int32 length)
+   at Biob.Web.Helpers.IEnumerableExtensions.ConvertIEnumerableToString[T](IEnumerable`1 listOfString) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Helpers\IEnumerableExtensions.cs:line 16
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   --- End of inner exception stack trace ---
+   at lambda_method(Closure , PagedList`1 , IEnumerable`1 , ResolutionContext )
+   at lambda_method(Closure , Object , Object , ResolutionContext )
+   at AutoMapper.Mapper.AutoMapper.IMapper.Map[TDestination](Object source) in C:\projects\automapper\src\AutoMapper\Mapper.cs:line 211
+   at Biob.Web.Controllers.MovieController.GetAllMovies(RequestParameters requestParameters, String mediaType) in C:\Users\tec\Documents\school\Restbiob\Biob.Web\Controllers\MovieController.cs:line 81
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.HandleResponse(HttpContext httpContext)
+   at Marvin.Cache.Headers.HttpCacheHeadersMiddleware.Invoke(HttpContext httpContext)
+   at AspNetCoreRateLimit.IpRateLimitMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+2018-12-03T11:52:23.4472608+01:00 0HLIP1L53HVQF:00000002 [INF] Request finished in 40505.7472ms 500  (791a596a)
+2018-12-03T11:52:23.4776645+01:00  [INF] Connection id ""0HLIP1L53HVQF"", Request id ""0HLIP1L53HVQF:00000002"": the application completed without reading the entire request body. (54ac9468)
+2018-12-03T11:53:57.9688312+01:00 0HLIP1MG49O4D:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-03T11:53:58.0686091+01:00 0HLIP1MG49O4D:00000001 [INF] Request finished in 84.6026ms 200  (791a596a)
+2018-12-03T11:54:13.8413522+01:00 0HLIP1MG49O4D:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies application/json 62 (ca22a1cb)
+2018-12-03T11:54:13.9392120+01:00 0HLIP1MG49O4D:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:54:13.9473904+01:00 0HLIP1MG49O4D:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:54:13.9550869+01:00 0HLIP1MG49O4D:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:54:13.9706834+01:00 0HLIP1MG49O4D:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:54:13.9782854+01:00 0HLIP1MG49O4D:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:54:13.9862415+01:00 0HLIP1MG49O4D:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:54:14.2981301+01:00 0HLIP1MG49O4D:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-12-03T11:54:14.7047319+01:00 0HLIP1MG49O4D:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:54:15.1274298+01:00 0HLIP1MG49O4D:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-12-03T11:54:15.1915769+01:00 0HLIP1MG49O4D:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-03T11:54:16.0422738+01:00 0HLIP1MG49O4D:00000002 [INF] Executed DbCommand ("142"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-12-03T11:54:16.2591409+01:00 0HLIP1MG49O4D:00000002 [INF] Executed DbCommand ("97"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-12-03T11:54:44.2035867+01:00 0HLIP1MTT8D50:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-03T11:54:44.2838943+01:00 0HLIP1MTT8D50:00000001 [INF] Request finished in 89.4342ms 200  (791a596a)
+2018-12-03T11:54:50.6107834+01:00 0HLIP1MTT8D50:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies application/json 62 (ca22a1cb)
+2018-12-03T11:54:50.7164180+01:00 0HLIP1MTT8D50:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-03T11:54:50.7241303+01:00 0HLIP1MTT8D50:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-03T11:54:50.7321962+01:00 0HLIP1MTT8D50:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-03T11:54:50.7499751+01:00 0HLIP1MTT8D50:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-03T11:54:50.7578691+01:00 0HLIP1MTT8D50:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-03T11:54:50.7669153+01:00 0HLIP1MTT8D50:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-03T11:54:51.1348590+01:00 0HLIP1MTT8D50:00000002 [INF] Route matched with "{action = \"GetAllMovies\", controller = \"Movie\"}". Executing action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" (a44c0341)
+2018-12-03T11:54:51.5365070+01:00 0HLIP1MTT8D50:00000002 [INF] Executing action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" with arguments (["Biob.Web.Helpers.RequestParameters", "application/vnd.biob.json+hateoas"]) - Validation state: Valid (4e3479ed)
+2018-12-03T11:54:51.8874245+01:00 0HLIP1MTT8D50:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-12-03T11:54:51.9734456+01:00 0HLIP1MTT8D50:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-03T11:54:52.9654143+01:00 0HLIP1MTT8D50:00000002 [INF] Executed DbCommand ("119"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-12-03T11:54:53.1485106+01:00 0HLIP1MTT8D50:00000002 [INF] Executed DbCommand ("87"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-12-03T11:54:55.2448573+01:00 0HLIP1MTT8D50:00000002 [INF] Executed action method "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 3696.5839ms. (50a9e262)
+2018-12-03T11:54:55.2666103+01:00 0HLIP1MTT8D50:00000002 [INF] Executing ObjectResult, writing value of type '"System.Dynamic.ExpandoObject"'. (8a1b66c8)
+2018-12-03T11:54:55.3169626+01:00 0HLIP1MTT8D50:00000002 [INF] Executed action "Biob.Web.Controllers.MovieController.GetAllMovies (Biob.Web)" in 4167.9423ms (afa2e885)
+2018-12-03T11:54:55.3469527+01:00 0HLIP1MTT8D50:00000002 [INF] Generating expiration headers. (97875003)
+2018-12-03T11:54:55.3703940+01:00 0HLIP1MTT8D50:00000002 [INF] Expiration headers generated. Expires: Mon, 03 Dec 2018 11:04:55 GMT. Cache-Control: public,max-age=600,must-revalidate. (49cb28ed)
+2018-12-03T11:54:55.3918901+01:00 0HLIP1MTT8D50:00000002 [INF] Generating Validation headers. (20c08f55)
+2018-12-03T11:54:55.4258936+01:00 0HLIP1MTT8D50:00000002 [INF] Validation headers generated. ETag: Strong, "4FE70206FF3FCCE3CAB196DAB6CD39F4". Last-Modified: Mon, 03 Dec 2018 10:54:55 GMT (057d1f37)
+2018-12-03T11:54:55.4388916+01:00 0HLIP1MTT8D50:00000002 [INF] Generating Vary header. (c1174e38)
+2018-12-03T11:54:55.4501278+01:00 0HLIP1MTT8D50:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-03T11:54:55.5897848+01:00 0HLIP1MTT8D50:00000002 [INF] Request finished in 4913.2728ms 200 application/vnd.biob.json+hateoas; charset=utf-8 (791a596a)
+2018-12-03T11:54:55.7070571+01:00  [INF] Connection id ""0HLIP1MTT8D50"", Request id ""0HLIP1MTT8D50:00000002"": the application completed without reading the entire request body. (54ac9468)
