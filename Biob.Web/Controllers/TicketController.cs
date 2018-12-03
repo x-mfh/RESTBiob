@@ -34,7 +34,6 @@ namespace Biob.Web.Controllers
             _typeHelperService = typeHelperService;
             _urlHelper = urlHelper;
             _logger = logger;
-            //Note: In TicketRepository, ApplySort is temprarily outcommented as it caused an error somehow. TODO: Could be fixed at some point
             _propertyMappingService.AddPropertyMapping<TicketDto, Ticket>(new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
             {
                 { "Id", new PropertyMappingValue(new List<string>() { "Id" })},
@@ -51,7 +50,9 @@ namespace Biob.Web.Controllers
                                                         [FromQuery]RequestParameters requestParameters,
                                                         [FromHeader(Name = "Accept")] string mediaType)
         {
-            
+            //Note: In TicketRepository, ApplySort is temprarily outcommented as it caused an error somehow. TODO: Could be fixed at some point
+            //EDIT: This was becuase it didn't like to sort on a date? now sorting on price to make it work. 
+            //TODO: Change back to CreatedOn
             if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
             {
                 requestParameters.OrderBy = "Price";
@@ -121,7 +122,7 @@ namespace Biob.Web.Controllers
                 return NotFound();
             }
 
-            var ticket = Mapper.Map<MovieDto>(foundTicket);
+            var ticket = Mapper.Map<TicketDto>(foundTicket);
 
             if (mediaType == "application/vnd.biob.json+hateoas")
             {
@@ -165,7 +166,7 @@ namespace Biob.Web.Controllers
                 _logger.LogError("Saving changes to database while creating a showtime failed");
             }
 
-            var ticketToAddDto = Mapper.Map<MovieDto>(ticketToAdd);
+            var ticketToAddDto = Mapper.Map<TicketDto>(ticketToAdd); //Should this be tikettocreate?
 
             if (mediaType == "application/vnd.biob.json+hateoas")
             {
@@ -175,7 +176,7 @@ namespace Biob.Web.Controllers
 
                 linkedTicket.Add("links", links);
 
-                return CreatedAtRoute("GetTicket", new { movieId = ticketToAddDto.Id }, linkedTicket);
+                return CreatedAtRoute("GetTicket", new { ticketId = ticketToAddDto.Id }, linkedTicket);
             }
             else
             {
@@ -194,6 +195,8 @@ namespace Biob.Web.Controllers
                 return BadRequest();
             }
 
+            //If ticket does not exist this fails.. Should probably not do that. Perhaps this also happens in other controllers?
+            //TODO: Check the other controllers too, and make general fix
             var ticketFromDb = await _ticketRepository.GetTicketAsync(ticketId);
 
             //  upserting if ticket does not already exist
@@ -218,7 +221,7 @@ namespace Biob.Web.Controllers
 
                     linkedTicket.Add("links", links);
 
-                    return CreatedAtRoute("GetTicket", new { movieId = ticketToReturn.Id }, linkedTicket);
+                    return CreatedAtRoute("GetTicket", new { ticketId = ticketToReturn.Id }, linkedTicket);
                 }
                 else
                 {
@@ -281,7 +284,7 @@ namespace Biob.Web.Controllers
 
                     linkedTicket.Add("links", links);
 
-                    return CreatedAtRoute("GetTicket", new { movieId = ticketToReturn.Id }, linkedTicket);
+                    return CreatedAtRoute("GetTicket", new { ticketId = ticketToReturn.Id }, linkedTicket);
                 }
                 else
                 {
