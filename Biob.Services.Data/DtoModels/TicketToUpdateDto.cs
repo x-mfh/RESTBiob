@@ -21,8 +21,7 @@ namespace Biob.Services.Data.DtoModels
         //TODO: I'm thinking it COULD (not necessarily) make sense to either 
         //  1: change "Reserved" field to an active/inactive field 
         //  2: Remove "Reserved" field and make a log table for all tickets. This way, to check if a seat is reserved on a specific showtime, you simply just check if a ticket exists. Not whether it's "reserved" or not
-            
-        public bool Reserved { get; set; }
+            //public bool Reserved { get; set; }
 
         public bool Paid { get; set; }
 

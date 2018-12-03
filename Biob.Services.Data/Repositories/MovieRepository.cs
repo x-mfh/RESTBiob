@@ -64,8 +64,9 @@ namespace Biob.Services.Data.Repositories
 
         public async Task<Movie> GetMovieAsync(Guid id)
         {
-            var foundMovie = await _context.Movies.Where(movie => movie.Id == id).FirstOrDefaultAsync();
-            if (foundMovie.IsDeleted)
+            var foundMovie = await _context.Movies.Include(movie => movie.MovieGenres).ThenInclude(moviegenre => moviegenre.Genre).Where(genre => !genre.IsDeleted)
+                                                  .Where(movie => movie.Id == id).FirstOrDefaultAsync();
+            if (foundMovie != null && foundMovie.IsDeleted)
             {
                 foundMovie = null;
             }

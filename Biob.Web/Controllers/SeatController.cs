@@ -12,11 +12,9 @@ using Microsoft.Extensions.Logging;
 using Biob.Services.Data.Helpers;
 using System.Dynamic;
 using System.Linq;
-using Biob.Services.Web.PropertyMapping;
 
 namespace Biob.Web.Controllers
 {
-    //[Route("/api/v1/seats")]
     [Route("api/v1/halls/{hallId}/seats")]
     [ApiController]
     public class SeatController : ControllerBase
@@ -25,46 +23,21 @@ namespace Biob.Web.Controllers
         private readonly ILogger<SeatController> _logger;
         private readonly IHallRepository _hallRepository;
         private readonly IUrlHelper _urlHelper;
-        private readonly ITypeHelperService _typeHelperService;
-        private readonly IPropertyMappingService _propertyMappingService;
+       
 
         public SeatController(ISeatRepository seatRepository, ILogger<SeatController> logger,
-                              IHallRepository hallRepository, IUrlHelper urlHelper, 
-                              ITypeHelperService typeHelperService, IPropertyMappingService propertyMappingService)
+                              IHallRepository hallRepository, IUrlHelper urlHelper)
         {
             _seatRepository = seatRepository;
             _logger = logger;
             _hallRepository = hallRepository;
             _urlHelper = urlHelper;
-            _typeHelperService = typeHelperService;
-            _propertyMappingService = propertyMappingService;
-
-            _propertyMappingService.AddPropertyMapping<SeatDto, Seat>(new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
-            {
-                { "Id", new PropertyMappingValue(new List<string>() { "Id" })},
-                { "RowNo", new PropertyMappingValue(new List<string>() { "RowNo" })},
-                { "SeatNo", new PropertyMappingValue(new List<string>() { "SeatNo" })},
-            });
         }
 
 
         [HttpGet(Name = "GetSeats")]
-        public async Task<IActionResult> GetAllSeats([FromQuery]RequestParameters requestParameters, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> GetAllSeats([FromRoute] Guid hallId, [FromQuery]RequestParameters requestParameters, [FromHeader(Name = "Accept")] string mediaType)
         {
-            //if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
-            //{
-            //    requestParameters.OrderBy = "Id";
-            //}
-
-            if (!_propertyMappingService.ValidMappingExistsFor<SeatDto, Seat>(requestParameters.Fields))
-            {
-                return BadRequest();
-            }
-
-            if (!_typeHelperService.TypeHasProperties<SeatDto>(requestParameters.Fields))
-            {
-                return BadRequest();
-            }
 
             //var hallExists = _hallRepository.GetHallAsync(hallId);
 
@@ -73,7 +46,12 @@ namespace Biob.Web.Controllers
             //    return BadRequest();
             //}
 
-            var seatsPagedList = await _seatRepository.GetAllSeatsAsync(requestParameters.PageNumber, requestParameters.PageSize);
+            if (!string.IsNullOrWhiteSpace(requestParameters.Fields))
+            {
+                return BadRequest();
+            }
+
+            var seatsPagedList = await _seatRepository.GetAllSeatsByHallIdAsync(hallId, requestParameters.PageNumber, requestParameters.PageSize);
 
             var seats = Mapper.Map<IEnumerable<SeatDto>>(seatsPagedList);
 
@@ -108,7 +86,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet("{seatId}", Name = "GetSeat")]
-        public async Task<IActionResult> GetOneSeat([FromRoute] Guid seatId, [FromQuery] string fields, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> GetOneSeat([FromRoute] Guid seatId, [FromHeader(Name = "Accept")] string mediaType)
         {
             var foundSeat = await _seatRepository.GetSeatAsync(seatId);
 
@@ -121,15 +99,15 @@ namespace Biob.Web.Controllers
 
             if (mediaType == "application/vnd.biob.json+hateoas")
             {
-                var links = CreateLinksForSeats(seatId, fields);
+                var links = CreateLinksForSeats(seatId, null);
 
-                var linkedSeat = seatToReturn.ShapeData(fields) as IDictionary<string, object>;
+                var linkedSeat = seatToReturn.ShapeData(null) as IDictionary<string, object>;
                 linkedSeat.Add("links", links);
                 return Ok(linkedSeat);
             }
             else
             {
-                return Ok(seatToReturn.ShapeData(fields));
+                return Ok(seatToReturn.ShapeData(null));
             }
         }
 
@@ -145,8 +123,10 @@ namespace Biob.Web.Controllers
             {
                 return new ProccessingEntityObjectResultErrors(ModelState);
             }
-            //  TODO: add id to seatoadd or else this will bug out
+            
             var seatToAdd = Mapper.Map<Seat>(seatToCreate);
+            seatToAdd.Id = Guid.NewGuid();
+
             _seatRepository.AddSeat(hallId, seatToAdd);
 
             if (!await _seatRepository.SaveChangesAsync())
@@ -169,7 +149,6 @@ namespace Biob.Web.Controllers
             {
                 return CreatedAtRoute("GetSeat", new { hallId, seatId = seatToAdd.Id }, seat);
             }
-            //return CreatedAtRoute("GetSeat", new { seatId = seatToAdd.Id }, seatToAdd);
         }
 
         [HttpPut("{seatId}", Name = "UpdateSeat")]
@@ -209,8 +188,6 @@ namespace Biob.Web.Controllers
                 {
                     return CreatedAtRoute("GetSeat", new { hallId, seatId = seatToReturn.Id }, seatToReturn);
                 }
-
-                //return CreatedAtRoute("GetSeat", new { seatId = seatToReturn.Id }, seatToReturn);
             }
 
             Mapper.Map(seatToUpdate, seatFromDb);
@@ -237,7 +214,6 @@ namespace Biob.Web.Controllers
             var seatFromDb = await _seatRepository.GetSeatAsync(seatId);
 
             //  upserting if movie does not already exist
-            //  TODO: research if upserting is neccesary in patching
             if (seatFromDb == null)
             {
                 var seatToCreate = new SeatToUpdateDto();
@@ -272,8 +248,6 @@ namespace Biob.Web.Controllers
                 {
                     return CreatedAtRoute("GetSeat", new { hallId, seatId = seatToReturn.Id }, seatToReturn);
                 }
-
-                //return CreatedAtRoute("GetSeat", new { seatId = seatToReturn.Id }, seatToReturn);
             }
 
             var seatToPatch = Mapper.Map<SeatToUpdateDto>(seatFromDb);

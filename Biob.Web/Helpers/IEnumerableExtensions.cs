@@ -7,12 +7,16 @@ namespace Biob.Web.Helpers
     {
         public static string ConvertIEnumerableToString<T>(this IEnumerable<T> listOfString)
         {
+            
             var sb = new StringBuilder();
             foreach (var name in listOfString)
             {
                 sb.Append($"{name}, ");
             }
-            sb.Remove(sb.Length - 2, 2);
+            if (sb.Length > 0)
+            {
+                sb.Remove(sb.Length - 2, 2);
+            }
             return sb.ToString();
         }
     }
