@@ -367,6 +367,20 @@ namespace Biob.Web.Controllers
             return NoContent();
         }
 
+        [HttpOptions]
+        public IActionResult GetShowtimesOptions()
+        {
+            Response.Headers.Add("Allow", "GET,POST,OPTIONS");
+            return Ok();
+        }
+
+        [HttpOptions("{showtimeId}")]
+        public IActionResult GetShowtimeOptions()
+        {
+            Response.Headers.Add("Allow", "GET,PATCH,PUT,OPTIONS");
+            return Ok();
+        }
+
         private ExpandoObject CreateHateoasResponse(PagedList<Showtime> showtimesPagedList, RequestParameters requestParameters)
         {
             var showtimes = Mapper.Map<IEnumerable<ShowtimeDto>>(showtimesPagedList);

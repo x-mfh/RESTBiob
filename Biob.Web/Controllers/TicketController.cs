@@ -211,14 +211,32 @@ namespace Biob.Web.Controllers
                 ticketEntity.Id = ticketId;
                 ticketEntity.ShowtimeId = showtimeId;
                 ticketEntity.CustomerId = new Guid("64C986DF-A168-40CB-B5EA-AB2B20069A08"); //TODO: this should not be hardcoded- only temporary testpurpose. Should probably just fail if no customer is provided?
+                //get showtime to get hallid
                 var showtime = await _showtimeRepository.GetShowtimeAsync(showtimeId, movieId);
-                var hall = await _hallRepository.GetHallAsync(showtime.HallId);
+                //get all tickets to know what seats are reserved
                 var tickets = await _ticketRepository.GetAllTicketsAsync(showtimeId, null, null, 1, 100 ); //wtf
-                var seats = await _seatRepository.GetAllSeatsAsync(1, 100); //would be good to have a method to get all seats in a specific hall
-                seats.Where(seat => seat.HallId == showtime.HallId);
 
-                
-                ticketEntity.SeatId =  // new Guid("603AB124-4BE6-40FD-9A5E-49BB4A5730DB"); //TODO the same as above
+
+                //This will get an available seat once GetAllSeatsByHallIdAsync has been made.
+                //Perhaps it should also be in seat repository but leaving for now
+                //List<Guid> availableSeats = new List<Guid>();
+                // var seats = await _seatRepository.GetAllSeatsByHallIdAsync(1, 100); //wtf + would be good to have a method to get all seats in a specific hall
+                //var availableseats = await _seatRepository.Get
+
+                //var seatids = seats.Select(seat => seat.Id);
+                //var ticketIds = tickets.Select(ticket => ticket.Id);
+                ////todo: nullcheck?
+                //for (var i = 0; i < seats.Count(); i++)
+                //{
+                //    if (ticketIds.Contains(seats[i].Id))
+                //    {
+                //        availableSeats.Add(seats[i].Id);
+                //    }
+                //}
+                //var proposedSeatId = availableSeats.FirstOrDefault();
+
+                //ticketEntity.SeatId = proposedSeatId;
+
 
                 _ticketRepository.AddTicket(ticketEntity);
 
