@@ -10,8 +10,13 @@ namespace Biob.Services.Data.Repositories
 {
     public class SeatRepository : Repository, ISeatRepository
     {
-        public SeatRepository(BiobDataContext context) : base(context)
+        private readonly ITicketRepository _ticketRepository;
+        private readonly IShowtimeRepository _showtimeRepository;
+
+        public SeatRepository(BiobDataContext context, ITicketRepository ticketRepository, IShowtimeRepository showtimeRepository) : base(context)
         {
+            _ticketRepository = ticketRepository;
+            _showtimeRepository = showtimeRepository;
         }
 
         public async Task<PagedList<Seat>> GetAllSeatsByHallIdAsync(Guid hallId ,int pageNumber, int pageSize)
@@ -42,6 +47,21 @@ namespace Biob.Services.Data.Repositories
         public void DeleteSeat(Seat seatToDelete)
         {
             _context.Seats.Remove(seatToDelete);
+        }
+
+        public async Task<Seat> GetFirstAvailableSeatByShowtimeIdAsync(Guid showtimeId)
+        {
+            //all taken seatids for showtime
+            var tickets = await _ticketRepository.GetAllTicketsByShowtimeIdAsync(showtimeId, null, null, 1, 500);
+            var takenOrReservedSeats = tickets.Where(ticket => !ticket.IsDeleted).Select(ticket => ticket.SeatId);
+            //existing seats
+            var showtime = await _showtimeRepository.GetShowtimeAsync(showtimeId);
+            var seatsToSearch = await GetAllSeatsByHallIdAsync(showtime.HallId, 1, 500);
+            //remove reserved seats
+            var firstAvailableSeatId = seatsToSearch.Select(seat => seat.Id).Except(takenOrReservedSeats).FirstOrDefault();
+
+            //return as seat object
+            return await GetSeatAsync(firstAvailableSeatId);
         }
 
     }
