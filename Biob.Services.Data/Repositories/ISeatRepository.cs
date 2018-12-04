@@ -7,7 +7,7 @@ namespace Biob.Services.Data.Repositories
 {
     public interface ISeatRepository : IRepository
     {
-        Task<PagedList<Seat>> GetAllSeatsAsync(int PageNumer, int PageSize);
+        Task<PagedList<Seat>> GetAllSeatsByHallIdAsync(Guid hallId,int PageNumer, int PageSize);
         Task<Seat> GetSeatAsync(Guid id);
         void AddSeat(Guid hallId, Seat seatToAdd);
         void UpdateSeat(Seat seatToUpdate);
