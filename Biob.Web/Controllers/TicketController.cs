@@ -355,14 +355,14 @@ namespace Biob.Web.Controllers
         [HttpOptions]
         public IActionResult GetTicketsOptions()
         {
-            Response.Headers.Add("Allow", "GET"); //Todo: update what http methods are available
+            Response.Headers.Add("Allow", "GET, OPTIONS"); //Todo: update what http methods are available
             return Ok();
         }
 
         [HttpOptions("{ticketId}")]
         public IActionResult GetTicketOptions()
         {
-            Response.Headers.Add("Allow", "GET"); //Todo: update what http methods are available
+            Response.Headers.Add("Allow", "GET, PUT, POST, PATCH, OPTIONS"); //Todo: update what http methods are available
             return Ok();
         }
 
