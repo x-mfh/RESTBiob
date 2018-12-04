@@ -27,7 +27,8 @@ namespace Biob.Services.Data.Helpers
             }
 
             string[] orderByAfterSplit = orderBy.Split(",");
-
+            
+            
             foreach (string orderByClause in orderByAfterSplit.Reverse())
             {
                 string trimmeedOrderByClause = orderByClause.Trim();

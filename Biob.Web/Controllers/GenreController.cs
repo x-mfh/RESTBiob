@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using Biob.Data.Models;
-using Biob.Services.Data.DtoModels;
+using Biob.Services.Data.DtoModels.GenreDtos;
 using Biob.Services.Data.Helpers;
 using Biob.Services.Data.Repositories;
-using Biob.Web.Helpers;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -31,7 +30,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllGenres([FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> GetAllGenresAsync([FromHeader(Name = "Accept")] string mediaType)
         {
             var genres = await _genreRepository.GetAllGenresAsync();
 
@@ -46,7 +45,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet("{genreId}", Name = "GetGenre")]
-        public async Task<IActionResult> GetGenreById([FromRoute] Guid genreId, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> GetGenreByIdAsync([FromRoute] Guid genreId, [FromHeader(Name = "Accept")] string mediaType)
         {
             var genreFound = await _genreRepository.GetGenreByIdAsync(genreId);
 
@@ -71,16 +70,11 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateGenre(GenreToCreateDto genreToCreate)
+        public async Task<IActionResult> CreateGenreAsync(GenreToCreateDto genreToCreate)
         {
             if (genreToCreate == null)
             {
                 return BadRequest();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return new ProccessingEntityObjectResultErrors(ModelState);
             }
 
             var genreToAdd = Mapper.Map<Genre>(genreToCreate);
@@ -99,7 +93,7 @@ namespace Biob.Web.Controllers
 
         [HttpPatch("{genreId}", Name = "PartiallyUpdateGenre")]
         [HttpPut("{genreId}", Name = "UpdateGenre")]
-        public async Task<IActionResult> UpdateGenre([FromRoute] Guid genreId, JsonPatchDocument<GenreToUpdateDto> patchDoc)
+        public async Task<IActionResult> UpdateGenreAsync([FromRoute] Guid genreId, JsonPatchDocument<GenreToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
             {
@@ -107,8 +101,6 @@ namespace Biob.Web.Controllers
             }
 
             var genreFromDb = await _genreRepository.GetGenreByIdAsync(genreId);
-
-            
 
             if (!await _genreRepository.SaveChangesAsync())
             {
@@ -118,11 +110,6 @@ namespace Biob.Web.Controllers
             var genreToPatch = Mapper.Map<GenreToUpdateDto>(genreFromDb);
 
             patchDoc.ApplyTo(genreToPatch, ModelState);
-
-            if (!ModelState.IsValid)
-            {
-                new ProccessingEntityObjectResultErrors(ModelState);
-            }
 
             Mapper.Map(genreToPatch, genreFromDb);
 
@@ -139,7 +126,7 @@ namespace Biob.Web.Controllers
 
 
         [HttpDelete("{genreId}", Name = "DeleteGenre")]
-        public async Task<IActionResult> DeleteGenre([FromRoute] Guid genreId)
+        public async Task<IActionResult> DeleteGenreAsync([FromRoute] Guid genreId)
         {
             var genreToDelete = await _genreRepository.GetGenreByIdAsync(genreId);
 

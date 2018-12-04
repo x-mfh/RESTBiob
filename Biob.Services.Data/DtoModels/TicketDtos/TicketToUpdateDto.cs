@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Biob.Services.Data.DtoModels
+namespace Biob.Services.Data.DtoModels.TicketDtos
 {
     public class TicketToUpdateDto
     {
@@ -26,6 +24,6 @@ namespace Biob.Services.Data.DtoModels
         public bool Paid { get; set; }
 
         //Not sure if Price should be changeable either...
-        public int Price { get; set; }
+        public int? Price { get; set; }
     }
 }

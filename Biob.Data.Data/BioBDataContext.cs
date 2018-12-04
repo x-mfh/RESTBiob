@@ -20,7 +20,6 @@ namespace Biob.Data.Data
 
         public BiobDataContext(DbContextOptions<BiobDataContext> options) : base(options)
         {
-
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken)) => SaveChangesAsync(true, cancellationToken);
@@ -39,26 +38,15 @@ namespace Biob.Data.Data
             //  TODO: add many to many relationship keys
             modelBuilder.Entity<MovieGenre>().HasKey(moviegenre => new { moviegenre.MovieId, moviegenre.GenreId });
 
-            // constraints
+            // TODO: add constraints
+            // add unique constraint for rowno & seatno together, so you can't have two RowNo = 1; SeatNo = 1;
             //modelBuilder.Entity<Hall>().HasIndex(hall => hall.HallNo).IsUnique();
-
-            // default values
-            //modelBuilder.Entity<Movie>()
-            //    .Property(movie => movie.ThreeDee)
-            //    .HasDefaultValue(false);
-            //modelBuilder.Entity<Hall>()
-            //    .Property(hall => hall.ThreeDee)
-            //    .HasDefaultValue(false);
-            //modelBuilder.Entity<Showtime>()
-            //    .Property(showtime => showtime.ThreeDee)
-            //    .HasDefaultValue(false);
 
             //This will deactivate "cascade on delete" function on foreign key for Showtime.HallId - this way, deleting a hall will not delete the related showtimes.
             //The reason this was needed, is that Seat.HallId was also doing this, resulting in errors when EF runs update-database, because it doesn't want multiple of those.
             //Another option was to not have the foreign key on showtimes, but i think just removing the cascade on delete for showtimes would make better sense
             modelBuilder.Entity<Showtime>().HasOne(x => x.Hall).WithMany().HasForeignKey(x => x.HallId).OnDelete(DeleteBehavior.Restrict);
 
-            //  TODO: add seed data
             modelBuilder.Entity<Genre>().HasData(
                 new Genre() { Id = Guid.Parse("8068CBF6-C595-4733-9C24-8104E8454B4C"), GenreName = "Horror" },
                 new Genre() { Id = Guid.Parse("6E0A64BC-7A50-4A6C-9125-8CCF6E54BF70"), GenreName = "Drama" },

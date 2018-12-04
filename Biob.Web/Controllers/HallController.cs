@@ -5,13 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Biob.Services.Data.Repositories;
 using AutoMapper;
-using Biob.Services.Data.DtoModels;
 using Biob.Web.Helpers;
 using Biob.Data.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.Extensions.Logging;
 using Biob.Services.Data.Helpers;
 using System.Dynamic;
+using Biob.Services.Data.DtoModels.HallDtos;
 
 namespace Biob.Web.Controllers
 {
@@ -31,7 +31,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllHalls([FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> GetAllHallsAsync([FromHeader(Name = "Accept")] string mediaType)
         {
             var halls = await _hallRepository.GetAllHallsAsync();
 
@@ -46,7 +46,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet("{hallId}", Name = "GetHall")]
-        public async Task<IActionResult> GetOneHall([FromRoute] Guid hallId, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> GetOneHallAsync([FromRoute] Guid hallId, [FromHeader(Name = "Accept")] string mediaType)
         {
             var foundHall = await _hallRepository.GetHallAsync(hallId);
 
@@ -72,16 +72,11 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateHall([FromBody] HallToCreateDto hallToCreate)
+        public async Task<IActionResult> CreateHallAsync([FromBody] HallToCreateDto hallToCreate)
         {
             if (hallToCreate == null)
             {
                 return BadRequest();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return new ProccessingEntityObjectResultErrors(ModelState);
             }
 
             var hallToAdd = Mapper.Map<Hall>(hallToCreate);
@@ -96,7 +91,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPut("{hallId}", Name = "UpdateHall")]
-        public async Task<IActionResult> UpdateHallById([FromRoute] Guid hallId, [FromBody] HallToUpdateDto hallToUpdate)
+        public async Task<IActionResult> UpdateHallByIdAsync([FromRoute] Guid hallId, [FromBody] HallToUpdateDto hallToUpdate)
         {
             if (hallToUpdate == null)
             {
@@ -136,7 +131,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPatch("{hallId}", Name = "PartiallyUpdateHall")]
-        public async Task<IActionResult> PartiuallyUpdateHallById([FromRoute] Guid hallId, JsonPatchDocument<HallToUpdateDto> patchDoc)
+        public async Task<IActionResult> PartiuallyUpdateHallByIdAsync([FromRoute] Guid hallId, JsonPatchDocument<HallToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
             {
@@ -146,7 +141,6 @@ namespace Biob.Web.Controllers
             var hallFromDb = await _hallRepository.GetHallAsync(hallId);
 
             //  upserting if movie does not already exist
-            //  TODO: research if upserting is neccesary in patching
             if (hallFromDb == null)
             {
                 var hallToCreate = new HallToUpdateDto();

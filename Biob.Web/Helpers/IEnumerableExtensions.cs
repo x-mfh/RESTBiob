@@ -11,6 +11,7 @@ namespace Biob.Web.Helpers
             var sb = new StringBuilder();
             foreach (var name in listOfString)
             {
+                //  appends name to end of string
                 sb.Append($"{name}, ");
             }
             if (sb.Length > 0)

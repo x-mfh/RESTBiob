@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Biob.Data.Data;
 using Biob.Data.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Biob.Services.Data.Helpers;
-using Biob.Services.Data.DtoModels;
 using Biob.Services.Web.PropertyMapping;
+using Biob.Services.Data.DtoModels.TicketDtos;
 
 namespace Biob.Services.Data.Repositories
 {

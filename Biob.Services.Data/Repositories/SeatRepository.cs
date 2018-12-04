@@ -16,7 +16,7 @@ namespace Biob.Services.Data.Repositories
 
         public async Task<PagedList<Seat>> GetAllSeatsByHallIdAsync(Guid hallId ,int pageNumber, int pageSize)
         {
-            var collectionBeforePaging = _context.Seats.Where(seat => !seat.IsDeleted && seat.HallId == hallId);
+            var collectionBeforePaging = _context.Seats.Where(seat => seat.HallId == hallId);
             var listToPage = await collectionBeforePaging.ToListAsync();
             return PagedList<Seat>.Create(listToPage, pageNumber, pageSize);
         }
@@ -24,11 +24,6 @@ namespace Biob.Services.Data.Repositories
         public async Task<Seat> GetSeatAsync(Guid id)
         {
             var foundSeat = await _context.Seats.Where(seat => seat.Id == id).FirstOrDefaultAsync();
-            if (foundSeat != null && foundSeat.IsDeleted)
-            {
-                foundSeat = null;
-            }
-
             return foundSeat;
         }
 
@@ -46,8 +41,7 @@ namespace Biob.Services.Data.Repositories
 
         public void DeleteSeat(Seat seatToDelete)
         {
-            seatToDelete.IsDeleted = true;
-            seatToDelete.DeletedOn = DateTimeOffset.Now;
+            _context.Seats.Remove(seatToDelete);
         }
 
     }

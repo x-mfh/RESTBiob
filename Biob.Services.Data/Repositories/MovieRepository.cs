@@ -7,7 +7,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Biob.Services.Web.PropertyMapping;
 using Biob.Services.Data.Helpers;
-using Biob.Services.Data.DtoModels;
+using Biob.Services.Data.DtoModels.MovieDtos;
 
 namespace Biob.Services.Data.Repositories
 {
@@ -57,7 +57,6 @@ namespace Biob.Services.Data.Repositories
                            || movie.MovieGenres.Select(x => x.Genre.GenreName).Contains(searchQueryForWhere));
             }
 
-
             var listToPage = await collectionsBeforePaging.ToListAsync();
             return  PagedList<Movie>.Create(listToPage, pageNumber, pageSize);
         }
@@ -73,12 +72,8 @@ namespace Biob.Services.Data.Repositories
             return foundMovie;
         }
 
-        
-
         public void UpdateMovie(Movie movieToUpdate)
         {
-            //  TODO: consider changing update to attach
-            //  if things dont work as expected
             _context.Movies.Update(movieToUpdate);
         }
     }
