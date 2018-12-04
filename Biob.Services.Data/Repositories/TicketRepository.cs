@@ -48,7 +48,8 @@ namespace Biob.Services.Data.Repositories
         public async Task<Ticket> GetTicketAsync(Guid id)
         {
             var foundTicket =  await _context.Tickets.Where(ticket => ticket.Id == id).FirstOrDefaultAsync();
-            if (foundTicket.IsDeleted)
+            //Make sure this is added to all repos?: if ticket is not null so it won't fail when checking isDeleted on a null object
+            if (foundTicket != null && foundTicket.IsDeleted)
             {
                 foundTicket = null;
             }
