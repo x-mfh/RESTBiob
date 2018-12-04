@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Biob.Services.Data.DtoModels;
+using Biob.Services.Data.DtoModels.TicketDtos;
 using Microsoft.AspNetCore.JsonPatch;
 using AutoMapper;
 using Biob.Services.Data.Helpers;
