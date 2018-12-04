@@ -290,6 +290,20 @@ namespace Biob.Web.Controllers
             return NoContent();
         }
 
+        [HttpOptions]
+        public IActionResult GetSeatsOptions()
+        {
+            Response.Headers.Add("Allow", "GET,POST,OPTIONS");
+            return Ok();
+        }
+
+        [HttpOptions("{seatId}")]
+        public IActionResult GetSeatOptions()
+        {
+            Response.Headers.Add("Allow", "GET,PATCH,PUT,OPTIONS");
+            return Ok();
+        }
+
         private ExpandoObject CreateHateoasResponse(PagedList<Seat> seatsPagedList, RequestParameters requestParameters)
         {
             var seats = Mapper.Map<IEnumerable<SeatDto>>(seatsPagedList);
