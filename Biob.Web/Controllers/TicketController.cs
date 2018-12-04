@@ -172,8 +172,12 @@ namespace Biob.Web.Controllers
 
             var ticket = Mapper.Map<Ticket>(ticketToCreateDto);
 
+            ticket.ShowtimeId = showtimeId;
+
             //Not sure if this empty check will work/should be here, but adding for now.
-            if (ticket.SeatId == Guid.Empty || ticket.ShowtimeId == Guid.Empty || ticket.CustomerId == Guid.Empty)
+            if (ticket.SeatId == Guid.Empty || ticket.ShowtimeId == Guid.Empty 
+                //|| ticket.CustomerId == Guid.Empty //TODO: add when it's present
+                )
             {
                 return BadRequest(); 
             }
