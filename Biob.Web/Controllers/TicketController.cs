@@ -29,10 +29,19 @@ namespace Biob.Web.Controllers
         private readonly IUrlHelper _urlHelper;
         private readonly ILogger<TicketController> _logger;
 
-        public TicketController(ITicketRepository ticketRepository, IPropertyMappingService propertyMappingService, 
-                                ITypeHelperService typeHelperService, IUrlHelper urlHelper, ILogger<TicketController> logger)
+        public TicketController(ITicketRepository ticketRepository,
+                                IShowtimeRepository showtimeRepository,
+                                IHallRepository hallRepository,
+                                ISeatRepository seatRepository,
+                                IPropertyMappingService propertyMappingService,
+                                ITypeHelperService typeHelperService, 
+                                IUrlHelper urlHelper, 
+                                ILogger<TicketController> logger)
         {
             _ticketRepository = ticketRepository;
+            _showtimeRepository = showtimeRepository;
+            _hallRepository = hallRepository;
+            _seatRepository = seatRepository;
             _propertyMappingService = propertyMappingService;
             _typeHelperService = typeHelperService;
             _urlHelper = urlHelper;
@@ -154,13 +163,6 @@ namespace Biob.Web.Controllers
                 ticketToCreate.Id = Guid.NewGuid();
             }
 
-            //Why has this modelstate check been removed from MovieController? Should it also be removed here?
-            if (!ModelState.IsValid)
-            {
-                return new ProccessingEntityObjectResultErrors(ModelState);
-            }
-
-
             var ticketToAdd = Mapper.Map<Ticket>(ticketToCreate);
             _ticketRepository.AddTicket(ticketToAdd);
 
@@ -214,29 +216,34 @@ namespace Biob.Web.Controllers
                 //get showtime to get hallid
                 var showtime = await _showtimeRepository.GetShowtimeAsync(showtimeId, movieId);
                 //get all tickets to know what seats are reserved
-                var tickets = await _ticketRepository.GetAllTicketsAsync(showtimeId, null, null, 1, 100 ); //wtf
+                var tickets = await _ticketRepository.GetAllTicketsAsync(showtimeId, null, null, 1, 500 ); //hope this pagination thing won't be a problem 
 
 
-                //This will get an available seat once GetAllSeatsByHallIdAsync has been made.
-                //Perhaps it should also be in seat repository but leaving for now
-                //List<Guid> availableSeats = new List<Guid>();
-                // var seats = await _seatRepository.GetAllSeatsByHallIdAsync(1, 100); //wtf + would be good to have a method to get all seats in a specific hall
-                //var availableseats = await _seatRepository.Get
+                //Perhaps this "getavailableseats" functionality should also be in seat repository but leaving for now
+                List<Guid> availableSeats = new List<Guid>();
+                var seats = await _seatRepository.GetAllSeatsByHallIdAsync(showtime.HallId, 1, 500); //also hope this pagination thing won't be a problem 
 
-                //var seatids = seats.Select(seat => seat.Id);
-                //var ticketIds = tickets.Select(ticket => ticket.Id);
-                ////todo: nullcheck?
-                //for (var i = 0; i < seats.Count(); i++)
-                //{
-                //    if (ticketIds.Contains(seats[i].Id))
-                //    {
-                //        availableSeats.Add(seats[i].Id);
-                //    }
-                //}
-                //var proposedSeatId = availableSeats.FirstOrDefault();
+                var seatids = seats.Select(seat => seat.Id);
+                var ticketIds = tickets.Select(ticket => ticket.Id);
+                //todo: nullcheck?
+                for (var i = 0; i < seats.Count(); i++)
+                {
+                    if (ticketIds.Contains(seats[i].Id))
+                    {
+                        availableSeats.Add(seats[i].Id);
+                    }
+                }
 
-                //ticketEntity.SeatId = proposedSeatId;
+                var proposedSeatId = availableSeats.FirstOrDefault();
 
+                if (proposedSeatId == Guid.Empty)
+                {
+                    _logger.LogError("Failed to upsert a new ticket because no seats are available");
+                    //TODO: Should perhaps be possible to return a custom error message to inform the reason to this (that no seats are available)? 
+                    return BadRequest();
+                }
+
+                ticketEntity.SeatId = proposedSeatId;
 
                 _ticketRepository.AddTicket(ticketEntity);
 
