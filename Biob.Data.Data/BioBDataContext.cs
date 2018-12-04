@@ -47,6 +47,11 @@ namespace Biob.Data.Data
             //Another option was to not have the foreign key on showtimes, but i think just removing the cascade on delete for showtimes would make better sense
             modelBuilder.Entity<Showtime>().HasOne(x => x.Hall).WithMany().HasForeignKey(x => x.HallId).OnDelete(DeleteBehavior.Restrict);
 
+            //Todo: Add precision definition to Ticket.price
+
+            //Todo: Add computed column logic to Hall.NoOfSeats
+
+            //  TODO: add seed data
             modelBuilder.Entity<Genre>().HasData(
                 new Genre() { Id = Guid.Parse("8068CBF6-C595-4733-9C24-8104E8454B4C"), GenreName = "Horror" },
                 new Genre() { Id = Guid.Parse("6E0A64BC-7A50-4A6C-9125-8CCF6E54BF70"), GenreName = "Drama" },
