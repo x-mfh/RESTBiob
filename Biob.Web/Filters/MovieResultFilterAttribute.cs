@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Biob.Services.Data.DtoModels.MovieDtos;
 
 namespace Biob.Web.Filters
 {

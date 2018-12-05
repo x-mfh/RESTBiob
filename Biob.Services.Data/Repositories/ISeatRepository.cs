@@ -12,5 +12,6 @@ namespace Biob.Services.Data.Repositories
         void AddSeat(Guid hallId, Seat seatToAdd);
         void UpdateSeat(Seat seatToUpdate);
         void DeleteSeat(Seat seatToDelete);
+        Task<Seat> GetFirstAvailableSeatByShowtimeIdAsync(Guid showtimeId);
     }
 }

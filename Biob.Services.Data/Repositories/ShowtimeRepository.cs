@@ -54,6 +54,16 @@ namespace Biob.Services.Data.Repositories
             return PagedList<Showtime>.Create(listToPage, pageNumber, pageSize);
         }
 
+        public async Task<Showtime> GetShowtimeAsync(Guid showtimeId)
+        {
+            var foundShowtime = await _context.Showtimes.Where(showtime => showtime.Id == showtimeId).FirstOrDefaultAsync();
+            if (foundShowtime.IsDeleted)
+            {
+                foundShowtime = null;
+            }
+            return foundShowtime;
+        }
+
         public async Task<Showtime> GetShowtimeAsync( Guid showtimeId, Guid movieId)
         {
             var foundShowtime = await _context.Showtimes.Where(showtime => showtime.MovieId == movieId && showtime.Id == showtimeId).FirstOrDefaultAsync();

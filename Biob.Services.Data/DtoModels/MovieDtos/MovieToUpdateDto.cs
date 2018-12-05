@@ -6,7 +6,6 @@ namespace Biob.Services.Data.DtoModels.MovieDtos
 {
     public class MovieToUpdateDto
     {
-        public Guid Id { get; set; }
         [StringLength(100, ErrorMessage = "Movie title must not be longer than 100 characters")]
         public string Title { get; set; }
         [StringLength(5000, ErrorMessage = "Movie Description must not be longer than 5000 characters")]

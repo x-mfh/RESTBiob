@@ -22,7 +22,6 @@ namespace Biob.Web.Controllers
     {
         private readonly ITicketRepository _ticketRepository;
         private readonly IShowtimeRepository _showtimeRepository;
-        private readonly IHallRepository _hallRepository;
         private readonly ISeatRepository _seatRepository;
         private readonly IPropertyMappingService _propertyMappingService;
         private readonly ITypeHelperService _typeHelperService;
@@ -31,7 +30,6 @@ namespace Biob.Web.Controllers
 
         public TicketController(ITicketRepository ticketRepository,
                                 IShowtimeRepository showtimeRepository,
-                                IHallRepository hallRepository,
                                 ISeatRepository seatRepository,
                                 IPropertyMappingService propertyMappingService,
                                 ITypeHelperService typeHelperService, 
@@ -40,7 +38,6 @@ namespace Biob.Web.Controllers
         {
             _ticketRepository = ticketRepository;
             _showtimeRepository = showtimeRepository;
-            _hallRepository = hallRepository;
             _seatRepository = seatRepository;
             _propertyMappingService = propertyMappingService;
             _typeHelperService = typeHelperService;
@@ -58,9 +55,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet(Name = "GetTickets")]
-        public async Task<IActionResult> GetAllTickets([FromRoute] Guid showtimeId,
-                                                        [FromQuery]RequestParameters requestParameters,
-                                                        [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> GetAllTickets([FromRoute] Guid showtimeId, [FromQuery]RequestParameters requestParameters, [FromHeader(Name = "Accept")] string mediaType)
         {
             //Note: In TicketRepository, ApplySort is temprarily outcommented as it caused an error somehow. TODO: Could be fixed at some point
             //EDIT: This was becuase it didn't like to sort on a date? now sorting on price to make it work. 
@@ -80,7 +75,7 @@ namespace Biob.Web.Controllers
                 return BadRequest();
             }
 
-            PagedList<Ticket> ticketsPagedList = await _ticketRepository.GetAllTicketsAsync(showtimeId,
+            PagedList<Ticket> ticketsPagedList = await _ticketRepository.GetAllTicketsByShowtimeIdAsync(showtimeId,
                                                                     requestParameters.OrderBy,
                                                                     requestParameters.SearchQuery,
                                                                     requestParameters.PageNumber, requestParameters.PageSize);
@@ -151,42 +146,67 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPost(Name = "CreateTicket")]
-        public async Task<IActionResult> CreateTicket([FromBody] TicketToCreateDto ticketToCreate, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> CreateTicketAsync([FromBody] TicketToCreateDto ticketToCreateDto, [FromHeader(Name = "Accept")] string mediaType, [FromRoute] Guid movieId, [FromRoute] Guid showtimeId)
         {
-            if (ticketToCreate == null)
+            if (ticketToCreateDto == null)
             {
                 return BadRequest();
             }
 
-            if (ticketToCreate.Id == null)
+            if (!await _showtimeRepository.MovieExists(movieId))
             {
-                ticketToCreate.Id = Guid.NewGuid();
+                return NotFound();
             }
 
-            var ticketToAdd = Mapper.Map<Ticket>(ticketToCreate);
-            _ticketRepository.AddTicket(ticketToAdd);
+            if (ticketToCreateDto.SeatId == Guid.Empty)
+            {
+                var availableSeat = await _seatRepository.GetFirstAvailableSeatByShowtimeIdAsync(showtimeId);
+                if (availableSeat == null)
+                {
+                    //Not sure if this is enough. Could be tested. 
+                    _logger.LogError("No available seats");
+                    
+                }
+                ticketToCreateDto.SeatId = availableSeat.Id;
+            }
+
+            var ticket = Mapper.Map<Ticket>(ticketToCreateDto);
+
+            ticket.ShowtimeId = showtimeId;
+
+            //Not sure if this empty check will work/should be here, but adding for now.
+            if (ticket.SeatId == Guid.Empty || ticket.ShowtimeId == Guid.Empty 
+                //|| ticket.CustomerId == Guid.Empty //TODO: add when it's present
+                )
+            {
+                return BadRequest(); 
+            }
+            
+            ticket.Id = Guid.NewGuid();
+
+            _ticketRepository.AddTicket(ticket);
 
             if (!await _ticketRepository.SaveChangesAsync())
             {
                 _logger.LogError("Saving changes to database while creating a showtime failed");
             }
 
-            var ticketToAddDto = Mapper.Map<TicketDto>(ticketToAdd); //Should this be tikettocreate?
+            var ticketDto = Mapper.Map<TicketDto>(ticket); 
 
             if (mediaType == "application/vnd.biob.json+hateoas")
             {
-                var links = CreateLinksForTickets(ticketToAddDto.Id, null);
+                var links = CreateLinksForTickets(ticketDto.Id, null);
 
-                var linkedTicket = ticketToAddDto.ShapeData(null) as IDictionary<string, object>;
+                var linkedTicket = ticketDto.ShapeData(null) as IDictionary<string, object>;
 
                 linkedTicket.Add("links", links);
 
-                return CreatedAtRoute("GetTicket", new { ticketId = ticketToAddDto.Id }, linkedTicket);
+                return CreatedAtRoute("GetTicket", new { ticketId = ticketDto.Id }, linkedTicket);
             }
             else
             {
                 //Hmm why is dto used here when it's not in the other methods?
-                return CreatedAtRoute("GetTicket", new { ticketId = ticketToAdd.Id }, ticketToAddDto);
+                return CreatedAtRoute("GetTicket", new { ticketId = ticketDto.Id }, ticketDto);
             }
         }
 
@@ -213,37 +233,13 @@ namespace Biob.Web.Controllers
                 ticketEntity.Id = ticketId;
                 ticketEntity.ShowtimeId = showtimeId;
                 ticketEntity.CustomerId = new Guid("64C986DF-A168-40CB-B5EA-AB2B20069A08"); //TODO: this should not be hardcoded- only temporary testpurpose. Should probably just fail if no customer is provided?
-                //get showtime to get hallid
-                var showtime = await _showtimeRepository.GetShowtimeAsync(showtimeId, movieId);
-                //get all tickets to know what seats are reserved
-                var tickets = await _ticketRepository.GetAllTicketsAsync(showtimeId, null, null, 1, 500 ); //hope this pagination thing won't be a problem 
+                var availableSeat = await _seatRepository.GetFirstAvailableSeatByShowtimeIdAsync(showtimeId);
+                ticketEntity.SeatId = availableSeat.Id;
 
-
-                //Perhaps this "getavailableseats" functionality should also be in seat repository but leaving for now
-                List<Guid> availableSeats = new List<Guid>();
-                var seats = await _seatRepository.GetAllSeatsByHallIdAsync(showtime.HallId, 1, 500); //also hope this pagination thing won't be a problem 
-
-                var seatids = seats.Select(seat => seat.Id);
-                var ticketIds = tickets.Select(ticket => ticket.Id);
-                //todo: nullcheck?
-                for (var i = 0; i < seats.Count(); i++)
+                if (ticketEntity.SeatId == Guid.Empty || ticketEntity.ShowtimeId == Guid.Empty || ticketEntity.CustomerId == Guid.Empty)
                 {
-                    if (ticketIds.Contains(seats[i].Id))
-                    {
-                        availableSeats.Add(seats[i].Id);
-                    }
-                }
-
-                var proposedSeatId = availableSeats.FirstOrDefault();
-
-                if (proposedSeatId == Guid.Empty)
-                {
-                    _logger.LogError("Failed to upsert a new ticket because no seats are available");
-                    //TODO: Should perhaps be possible to return a custom error message to inform the reason to this (that no seats are available)? 
                     return BadRequest();
                 }
-
-                ticketEntity.SeatId = proposedSeatId;
 
                 _ticketRepository.AddTicket(ticketEntity);
 
@@ -354,6 +350,20 @@ namespace Biob.Web.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpOptions]
+        public IActionResult GetTicketsOptions()
+        {
+            Response.Headers.Add("Allow", "GET, OPTIONS"); //Todo: update what http methods are available
+            return Ok();
+        }
+
+        [HttpOptions("{ticketId}")]
+        public IActionResult GetTicketOptions()
+        {
+            Response.Headers.Add("Allow", "GET, PUT, POST, PATCH, OPTIONS"); //Todo: update what http methods are available
+            return Ok();
         }
 
         private ExpandoObject CreateHateoasResponse(PagedList<Ticket> ticketsPagedList, RequestParameters requestParameters)

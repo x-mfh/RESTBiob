@@ -57,7 +57,7 @@ namespace Biob.Services.Data.Repositories
 
         }
 
-        public async Task<PagedList<Ticket>> GetAllTicketsAsync(Guid showtimeId, string orderBy, string searchQuery, int pageNumber, int pageSize)
+        public async Task<PagedList<Ticket>> GetAllTicketsByShowtimeIdAsync(Guid showtimeId, string orderBy, string searchQuery, int pageNumber, int pageSize)
         {
                                                             
             var collectionsBeforePaging =_context.Tickets
