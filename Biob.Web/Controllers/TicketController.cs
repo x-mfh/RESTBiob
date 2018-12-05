@@ -494,6 +494,9 @@ namespace Biob.Web.Controllers
             links.Add(
                 new LinkDto(_urlHelper.Link("PartiallyUpdateTicket", new { ticketId = id }), "partially_update_ticket", "PATCH")
                 );
+            links.Add(
+                new LinkDto(_urlHelper.Link("CreateTicket", new { ticketId = id }), "create_ticket", "POST")
+                );
             return links;
         }
 
