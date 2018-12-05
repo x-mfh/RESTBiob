@@ -4,6 +4,7 @@ using Biob.Services.Data.DtoModels.ShowtimeDtos;
 using Biob.Services.Data.Helpers;
 using Biob.Services.Data.Repositories;
 using Biob.Services.Web.PropertyMapping;
+using Biob.Web.Filters;
 using Biob.Web.Helpers;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -46,8 +47,14 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet(Name = "GetShowtimes")]
-        public async Task<IActionResult> GetAllShowtimesAsync([FromQuery]RequestParameters requestParameters, [FromHeader(Name = "Accept")] string mediaType)
+        [GuidCheckActionFilter(new string[] { "movieId"})]
+        public async Task<IActionResult> GetAllShowtimesAsync([FromRoute] Guid movieId,[FromQuery]RequestParameters requestParameters, [FromHeader(Name = "Accept")] string mediaType)
         {
+
+            if (!await _showtimeRepository.MovieExists(movieId))
+            {
+                return NotFound();
+            }
 
             if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
             {
@@ -100,26 +107,18 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet("{showtimeId}", Name = "GetShowtime")]
+        [GuidCheckActionFilter(new string[] { "movieId", "showtimeId" })]
         public async Task<IActionResult> GetOneShowtimeAsync([FromRoute]Guid showtimeId, [FromRoute]Guid movieId, [FromQuery] string fields, [FromHeader(Name = "Accept")] string mediaType)
         {
-            if (!_typeHelperService.TypeHasProperties<ShowtimeDto>(fields))
-            {
-                return BadRequest();
-            }
-
-            if (showtimeId == Guid.Empty)
-            {
-                return BadRequest();
-            }
-
-            if (movieId == Guid.Empty)
-            {
-                return BadRequest();
-            }
 
             if (!await _showtimeRepository.MovieExists(movieId))
             {
                 return NotFound();
+            }
+
+            if (!_typeHelperService.TypeHasProperties<ShowtimeDto>(fields))
+            {
+                return BadRequest();
             }
 
             var foundShowtime = await _showtimeRepository.GetShowtimeAsync(showtimeId, movieId);
@@ -146,11 +145,13 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPost]
+        [GuidCheckActionFilter(new string[] { "movieId", "showtimeId" })]
         public async Task<IActionResult> CreateShowtimeAsync([FromRoute]Guid movieId, [FromBody] ShowtimeToCreateDto showtimeToCreate, [FromHeader(Name = "Accept")] string mediaType)
         {
-            if (showtimeToCreate == null)
+
+            if (!await _showtimeRepository.MovieExists(movieId))
             {
-                return BadRequest();
+                return NotFound();
             }
 
             var showtimeToAdd = Mapper.Map<Showtime>(showtimeToCreate);
@@ -182,17 +183,9 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPut("{showtimeId}", Name = "UpdateShowtime")]
+        [GuidCheckActionFilter(new string[] { "movieId", "showtimeId" })]
         public async Task<IActionResult> UpdateShowtimeAsync([FromRoute]Guid movieId, [FromRoute] Guid showtimeId, [FromBody] ShowtimeToUpdateDto showtimeToUpdate, [FromHeader(Name = "Accept")] string mediaType)
         {
-            if (movieId == Guid.Empty)
-            {
-                return BadRequest();
-            }
-
-            if (showtimeId == Guid.Empty)
-            {
-                return BadRequest();
-            }
 
             if (!await _showtimeRepository.MovieExists(movieId))
             {
@@ -248,17 +241,9 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPatch("{showtimeId}", Name = "PartiallyUpdateShowtime")]
+        [GuidCheckActionFilter(new string[] { "movieId", "showtimeId" })]
         public async Task<IActionResult> PartiuallyUpdateShowtimeAsync([FromRoute]Guid movieId, [FromRoute] Guid showtimeId, JsonPatchDocument<ShowtimeToUpdateDto> patchDoc, [FromHeader(Name = "Accept")] string mediaType)
         {
-            if (movieId == Guid.Empty)
-            {
-                return BadRequest();
-            }
-
-            if (showtimeId == Guid.Empty)
-            {
-                return BadRequest();
-            }
 
             if (!await _showtimeRepository.MovieExists(movieId))
             {
@@ -332,17 +317,9 @@ namespace Biob.Web.Controllers
         }
 
         [HttpDelete("{showtimeId}", Name = "DeleteShowtime")]
+        [GuidCheckActionFilter(new string[] { "movieId", "showtimeId" })]
         public async Task<IActionResult> DeleteShowtimeAsync([FromRoute] Guid showtimeId, [FromRoute]Guid movieId)
         {
-            if (movieId == Guid.Empty)
-            {
-                return BadRequest();
-            }
-
-            if (showtimeId == Guid.Empty)
-            {
-                return BadRequest();
-            }
 
             if (!await _showtimeRepository.MovieExists(movieId))
             {

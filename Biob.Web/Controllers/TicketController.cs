@@ -13,6 +13,7 @@ using AutoMapper;
 using Biob.Services.Data.Helpers;
 using System.Dynamic;
 using Microsoft.Extensions.Logging;
+using Biob.Web.Filters;
 
 namespace Biob.Web.Controllers
 {
@@ -32,8 +33,8 @@ namespace Biob.Web.Controllers
                                 IShowtimeRepository showtimeRepository,
                                 ISeatRepository seatRepository,
                                 IPropertyMappingService propertyMappingService,
-                                ITypeHelperService typeHelperService, 
-                                IUrlHelper urlHelper, 
+                                ITypeHelperService typeHelperService,
+                                IUrlHelper urlHelper,
                                 ILogger<TicketController> logger)
         {
             _ticketRepository = ticketRepository;
@@ -55,8 +56,20 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet(Name = "GetTickets")]
-        public async Task<IActionResult> GetAllTickets([FromRoute] Guid showtimeId, [FromQuery]RequestParameters requestParameters, [FromHeader(Name = "Accept")] string mediaType)
+        [GuidCheckActionFilter(new string[] { "movieId", "showtimeId" })]
+        public async Task<IActionResult> GetAllTickets([FromRoute] Guid movieId,[FromRoute] Guid showtimeId, [FromQuery]RequestParameters requestParameters,
+                                                       [FromHeader(Name = "Accept")] string mediaType)
         {
+            if (!await _ticketRepository.MovieExists(movieId))
+            {
+                return NotFound();
+            }
+
+            if (!await _ticketRepository.ShowtimeExists(showtimeId))
+            {
+                return NotFound();
+            }
+
             //Note: In TicketRepository, ApplySort is temprarily outcommented as it caused an error somehow. TODO: Could be fixed at some point
             //EDIT: This was becuase it didn't like to sort on a date? now sorting on price to make it work. 
             //TODO: Change back to CreatedOn
@@ -89,45 +102,55 @@ namespace Biob.Web.Controllers
             else
             {
                 var previousPageLink = ticketsPagedList.HasPrevious ? CreateUrlForResource(requestParameters, PageType.PreviousPage) : null;
-            var nextPageLink = ticketsPagedList.HasNext ? CreateUrlForResource(requestParameters, PageType.NextPage) : null;
-            var paginationMetadata = new PaginationMetadata()
-            {
-                TotalCount = ticketsPagedList.TotalCount,
-                PageSize = ticketsPagedList.PageSize,
-                CurrentPage = ticketsPagedList.CurrentPage,
-                TotalPages = ticketsPagedList.TotalPages,
-                PreviousPageLink = previousPageLink,
-                NextPageLink = nextPageLink
-            };
+                var nextPageLink = ticketsPagedList.HasNext ? CreateUrlForResource(requestParameters, PageType.NextPage) : null;
+                var paginationMetadata = new PaginationMetadata()
+                {
+                    TotalCount = ticketsPagedList.TotalCount,
+                    PageSize = ticketsPagedList.PageSize,
+                    CurrentPage = ticketsPagedList.CurrentPage,
+                    TotalPages = ticketsPagedList.TotalPages,
+                    PreviousPageLink = previousPageLink,
+                    NextPageLink = nextPageLink
+                };
 
-            Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
+                Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
 
-            if (requestParameters.IncludeMetadata)
-            {
-                var shapedTickets = tickets.ShapeData(requestParameters.Fields);
-                var ticketsWithMetadata = new EntityWithPaginationMetadataDto<ExpandoObject>(paginationMetadata, shapedTickets);
-                return Ok(ticketsWithMetadata);
-            }
+                if (requestParameters.IncludeMetadata)
+                {
+                    var shapedTickets = tickets.ShapeData(requestParameters.Fields);
+                    var ticketsWithMetadata = new EntityWithPaginationMetadataDto<ExpandoObject>(paginationMetadata, shapedTickets);
+                    return Ok(ticketsWithMetadata);
+                }
 
-            return Ok(tickets.ShapeData(requestParameters.Fields));
+                return Ok(tickets.ShapeData(requestParameters.Fields));
             }
         }
 
 
         [HttpGet("{ticketId}", Name = "GetTicket")]
-        public async Task<IActionResult> GetOneTicket([FromRoute]Guid ticketId, [FromQuery] string fields, [FromHeader(Name = "Accept")] string mediaType)
+        [GuidCheckActionFilter(new string[] { "movieId", "showtimeId", "ticketId" })]
+        public async Task<IActionResult> GetOneTicket([FromRoute] Guid movieId, [FromRoute] Guid showtimeId,
+                                                      [FromRoute]Guid ticketId, [FromQuery] string fields,
+                                                      [FromHeader(Name = "Accept")] string mediaType)
         {
-            if (ticketId == Guid.Empty)
+
+            if (!await _ticketRepository.MovieExists(movieId))
             {
-                return BadRequest();
+                return NotFound();
+            }
+
+            if (!await _ticketRepository.ShowtimeExists(showtimeId))
+            {
+                return NotFound();
+            }
+
+            if(!await _ticketRepository.TicketExists(ticketId))
+            {
+                return NotFound();
             }
 
             var foundTicket = await _ticketRepository.GetTicketAsync(ticketId);
 
-            if (foundTicket == null)
-            {
-                return NotFound();
-            }
 
             var ticket = Mapper.Map<TicketDto>(foundTicket);
 
@@ -146,14 +169,23 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPost(Name = "CreateTicket")]
-        public async Task<IActionResult> CreateTicketAsync([FromBody] TicketToCreateDto ticketToCreateDto, [FromHeader(Name = "Accept")] string mediaType, [FromRoute] Guid movieId, [FromRoute] Guid showtimeId)
+        public async Task<IActionResult> CreateTicketAsync([FromBody] TicketToCreateDto ticketToCreateDto,
+                                                           [FromHeader(Name = "Accept")] string mediaType,
+                                                           [FromRoute] Guid movieId, [FromRoute] Guid showtimeId,
+                                                           [FromRoute] Guid  ticketId)
         {
-            if (ticketToCreateDto == null)
-            {
-                return BadRequest();
-            }
 
             if (!await _showtimeRepository.MovieExists(movieId))
+            {
+                return NotFound();
+            }
+
+            if (!await _ticketRepository.ShowtimeExists(showtimeId))
+            {
+                return NotFound();
+            }
+
+            if (!await _ticketRepository.TicketExists(ticketId))
             {
                 return NotFound();
             }
@@ -171,6 +203,7 @@ namespace Biob.Web.Controllers
             }
 
             var ticket = Mapper.Map<Ticket>(ticketToCreateDto);
+
 
             ticket.ShowtimeId = showtimeId;
 

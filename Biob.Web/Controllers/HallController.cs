@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Biob.Services.Data.Helpers;
 using System.Dynamic;
 using Biob.Services.Data.DtoModels.HallDtos;
+using Biob.Web.Filters;
 
 namespace Biob.Web.Controllers
 {
@@ -46,6 +47,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet("{hallId}", Name = "GetHall")]
+        [GuidCheckActionFilter(new string[] { "hallId" })]
         public async Task<IActionResult> GetOneHallAsync([FromRoute] Guid hallId, [FromHeader(Name = "Accept")] string mediaType)
         {
             var foundHall = await _hallRepository.GetHallAsync(hallId);
@@ -74,10 +76,6 @@ namespace Biob.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateHallAsync([FromBody] HallToCreateDto hallToCreate)
         {
-            if (hallToCreate == null)
-            {
-                return BadRequest();
-            }
 
             var hallToAdd = Mapper.Map<Hall>(hallToCreate);
             _hallRepository.AddHall(hallToAdd);
@@ -91,13 +89,9 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPut("{hallId}", Name = "UpdateHall")]
+        [GuidCheckActionFilter(new string[] { "hallId" })]
         public async Task<IActionResult> UpdateHallByIdAsync([FromRoute] Guid hallId, [FromBody] HallToUpdateDto hallToUpdate)
         {
-            if (hallToUpdate == null)
-            {
-                return BadRequest();
-            }
-
             var hallFromDb = await _hallRepository.GetHallAsync(hallId);
 
             // upserting if movie does not already exist
@@ -130,7 +124,22 @@ namespace Biob.Web.Controllers
 
         }
 
+        [HttpOptions]
+        public IActionResult GetHallsOptions()
+        {
+            Response.Headers.Add("Allow", "GET,POST,OPTIONS");
+            return Ok();
+        }
+
+        [HttpOptions("{hallId}")]
+        public IActionResult GetHallOptions()
+        {
+            Response.Headers.Add("Allow", "GET,PATCH,PUT,OPTIONS");
+            return Ok();
+        }
+
         [HttpPatch("{hallId}", Name = "PartiallyUpdateHall")]
+        [GuidCheckActionFilter(new string[] { "hallId" })]
         public async Task<IActionResult> PartiuallyUpdateHallByIdAsync([FromRoute] Guid hallId, JsonPatchDocument<HallToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
@@ -186,6 +195,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpDelete("{hallId}", Name = "DeleteHall")]
+        [GuidCheckActionFilter(new string[] { "hallId" })]
         public async Task<IActionResult> DeleteHallById([FromRoute]Guid hallId)
         {
             var hallToDelete = await _hallRepository.GetHallAsync(hallId);

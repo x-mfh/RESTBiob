@@ -3,6 +3,7 @@ using Biob.Data.Models;
 using Biob.Services.Data.DtoModels.GenreDtos;
 using Biob.Services.Data.Helpers;
 using Biob.Services.Data.Repositories;
+using Biob.Web.Filters;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -45,6 +46,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet("{genreId}", Name = "GetGenre")]
+        [GuidCheckActionFilter(new string[] { "genreId" })]
         public async Task<IActionResult> GetGenreByIdAsync([FromRoute] Guid genreId, [FromHeader(Name = "Accept")] string mediaType)
         {
             var genreFound = await _genreRepository.GetGenreByIdAsync(genreId);
@@ -72,10 +74,6 @@ namespace Biob.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateGenreAsync(GenreToCreateDto genreToCreate)
         {
-            if (genreToCreate == null)
-            {
-                return BadRequest();
-            }
 
             var genreToAdd = Mapper.Map<Genre>(genreToCreate);
             _genreRepository.AddGenre(genreToAdd);
@@ -92,7 +90,8 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPatch("{genreId}", Name = "PartiallyUpdateGenre")]
-        [HttpPut("{genreId}", Name = "UpdateGenre")]
+        //[HttpPut("{genreId}", Name = "UpdateGenre")]
+        [GuidCheckActionFilter(new string[] { "genreId" })]
         public async Task<IActionResult> UpdateGenreAsync([FromRoute] Guid genreId, JsonPatchDocument<GenreToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
@@ -126,6 +125,7 @@ namespace Biob.Web.Controllers
 
 
         [HttpDelete("{genreId}", Name = "DeleteGenre")]
+        [GuidCheckActionFilter(new string[] { "genreId" })]
         public async Task<IActionResult> DeleteGenreAsync([FromRoute] Guid genreId)
         {
             var genreToDelete = await _genreRepository.GetGenreByIdAsync(genreId);
@@ -143,6 +143,20 @@ namespace Biob.Web.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpOptions]
+        public IActionResult GetGenresOptions()
+        {
+            Response.Headers.Add("Allow", "GET,POST,OPTIONS");
+            return Ok();
+        }
+
+        [HttpOptions("{genreId}")]
+        public IActionResult GetGenreOptions()
+        {
+            Response.Headers.Add("Allow", "GET,PATCH,PUT,OPTIONS");
+            return Ok();
         }
 
         private IEnumerable<LinkDto> CreateLinksForGenre(Guid id)

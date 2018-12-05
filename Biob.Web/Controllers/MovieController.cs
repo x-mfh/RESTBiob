@@ -112,7 +112,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet("{movieId}", Name = "GetMovie")]
-        [MovieParameterValidationFilter]
+        [GuidCheckActionFilter(new string[] { "movieId" })]
         public async Task<IActionResult> GetOneMovieAsync([FromRoute]Guid movieId, [FromQuery] string fields, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (!_typeHelperService.TypeHasProperties<MovieDto>(fields))
@@ -146,11 +146,6 @@ namespace Biob.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMovieAsync([FromBody] MovieToCreateDto movieToCreate, [FromHeader(Name = "Accept")] string mediaType)
         {
-            if (movieToCreate == null)
-            {
-                return BadRequest();
-            }
-
             var movieToAdd = Mapper.Map<Movie>(movieToCreate);
             movieToAdd.Id = Guid.NewGuid();
 
@@ -199,13 +194,9 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPut("{movieId}",Name = "UpdateMovie")]
-        [MovieParameterValidationFilter]
+        [GuidCheckActionFilter(new string[] { "movieId" })]
         public async Task<IActionResult> UpdateMovieAsync([FromRoute] Guid movieId, [FromBody] MovieToUpdateDto movieToUpdate, [FromHeader(Name = "Accept")] string mediaType)
         {
-            if (movieToUpdate == null)
-            {
-                return BadRequest();
-            }
 
             var movieFromDb = await _movieRepository.GetMovieAsync(movieId);
 
@@ -298,7 +289,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPatch("{movieId}", Name = "PartiallyUpdateMovie")]
-        [MovieParameterValidationFilter]
+        [GuidCheckActionFilter(new string[] { "movieId" })]
         public async Task<IActionResult> PartiuallyUpdateMovieAsync([FromRoute] Guid movieId, JsonPatchDocument<MovieToUpdateDto> patchDoc,
                                                                [FromHeader(Name = "Accept")] string mediaType)
         {
@@ -519,7 +510,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpDelete("{movieId}", Name = "DeleteMovie")]
-        [MovieParameterValidationFilter]
+        [GuidCheckActionFilter(new string[] { "movieId" })]
         public async Task<IActionResult> DeleteMovieAsync([FromRoute] Guid movieId)
         {
             var movieFromDb = await _movieRepository.GetMovieAsync(movieId);

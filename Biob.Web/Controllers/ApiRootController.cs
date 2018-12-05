@@ -15,6 +15,13 @@ namespace Biob.Web.Controllers
             _urlHelper = urlHelper;
         }
 
+        [HttpOptions]
+        public IActionResult GetRootOptions()
+        {
+            Response.Headers.Add("Allow", "GET");
+            return Ok();
+        }
+
         [HttpGet(Name = "GetApiRoot")]
         public IActionResult GetApiRoot([FromHeader(Name = "Accept")] string mediaType)
         {

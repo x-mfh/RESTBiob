@@ -52,13 +52,15 @@ namespace Biob.Services.Data.Repositories
         public async Task<Seat> GetFirstAvailableSeatByShowtimeIdAsync(Guid showtimeId)
         {
             //all taken seatids for showtime
-            var tickets = await _ticketRepository.GetAllTicketsByShowtimeIdAsync(showtimeId, null, null, 1, 500);
-            var takenOrReservedSeats = tickets.Where(ticket => !ticket.IsDeleted).Select(ticket => ticket.SeatId);
+            var seatIdsToRemove = _context.Tickets.Where(ticket => !ticket.IsDeleted && ticket.ShowtimeId == showtimeId)
+                                          .Select(ticket => ticket.SeatId);
+
             //existing seats
-            var showtime = await _showtimeRepository.GetShowtimeAsync(showtimeId);
-            var seatsToSearch = await GetAllSeatsByHallIdAsync(showtime.HallId, 1, 500);
+            var showtime = await _context.Showtimes.FirstOrDefaultAsync(st=> st.Id == showtimeId);
+            var seatsToSearch = _context.Seats.Where(seat => seat.HallId == showtime.HallId);
+
             //remove reserved seats
-            var firstAvailableSeatId = seatsToSearch.Select(seat => seat.Id).Except(takenOrReservedSeats).FirstOrDefault();
+            var firstAvailableSeatId = await seatsToSearch.Select(seat => seat.Id).Except(seatIdsToRemove).FirstOrDefaultAsync();
 
             //return as seat object
             return await GetSeatAsync(firstAvailableSeatId);

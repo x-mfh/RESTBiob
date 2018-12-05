@@ -12,6 +12,7 @@ using Biob.Services.Data.Helpers;
 using System.Dynamic;
 using System.Linq;
 using Biob.Services.Data.DtoModels.SeatDtos;
+using Biob.Web.Filters;
 
 namespace Biob.Web.Controllers
 {
@@ -21,29 +22,26 @@ namespace Biob.Web.Controllers
     {
         private readonly ISeatRepository _seatRepository;
         private readonly ILogger<SeatController> _logger;
-        private readonly IHallRepository _hallRepository;
         private readonly IUrlHelper _urlHelper;
        
 
         public SeatController(ISeatRepository seatRepository, ILogger<SeatController> logger,
-                              IHallRepository hallRepository, IUrlHelper urlHelper)
+                              IUrlHelper urlHelper)
         {
             _seatRepository = seatRepository;
             _logger = logger;
-            _hallRepository = hallRepository;
             _urlHelper = urlHelper;
         }
 
 
         [HttpGet(Name = "GetSeats")]
-        public async Task<IActionResult> GetAllSeatsAsync([FromRoute] Guid hallId, [FromQuery]RequestParameters requestParameters, [FromHeader(Name = "Accept")] string mediaType)
+        [GuidCheckActionFilter(new string[] { "hallId" })]
+        public async Task<IActionResult> GetAllSeatsAsync([FromRoute] Guid hallId, [FromQuery]RequestParameters requestParameters,
+                                                          [FromHeader(Name = "Accept")] string mediaType)
         {
-
-            var hallExists = _hallRepository.GetHallAsync(hallId);
-
-            if (hallExists == null)
+            if (!await _seatRepository.HallExists(hallId))
             {
-                return BadRequest();
+                return NotFound();
             }
 
             if (!string.IsNullOrWhiteSpace(requestParameters.Fields))
@@ -86,8 +84,14 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet("{seatId}", Name = "GetSeat")]
-        public async Task<IActionResult> GetOneSeatAsync([FromRoute] Guid seatId, [FromHeader(Name = "Accept")] string mediaType)
+        [GuidCheckActionFilter(new string[] { "seatId", "hallId" })]
+        public async Task<IActionResult> GetOneSeatAsync([FromRoute] Guid hallId,[FromRoute] Guid seatId, [FromHeader(Name = "Accept")] string mediaType)
         {
+            if (!await _seatRepository.HallExists(hallId))
+            {
+                return NotFound();
+            }
+
             var foundSeat = await _seatRepository.GetSeatAsync(seatId);
 
             if (foundSeat == null)
@@ -112,18 +116,13 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPost]
+        [GuidCheckActionFilter(new string[] { "hallId" })]
         public async Task<IActionResult> CreateSeatAsync([FromRoute] Guid hallId, [FromBody] SeatToCreateDto seatToCreate, [FromHeader(Name = "Accept")] string mediaType)
         {
-            var hallExists = _hallRepository.GetHallAsync(hallId);
 
-            if (hallExists == null)
+            if (!await _seatRepository.HallExists(hallId))
             {
-                return BadRequest();
-            }
-
-            if (seatToCreate == null)
-            {
-                return BadRequest();
+                return NotFound();
             }
             
             var seatToAdd = Mapper.Map<Seat>(seatToCreate);
@@ -154,11 +153,13 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPut("{seatId}", Name = "UpdateSeat")]
+        [GuidCheckActionFilter(new string[] { "seatId", "hallId" })]
         public async Task<IActionResult> UpdateSeatByIdAsync([FromRoute] Guid hallId ,[FromRoute] Guid seatId, [FromBody] SeatToUpdateDto seatToUpdate, [FromHeader(Name = "Accept")] string mediaType)
         {
-            if (seatToUpdate == null)
+
+            if (!await _seatRepository.HallExists(hallId))
             {
-                return BadRequest();
+                return NotFound();
             }
 
             var seatFromDb = await _seatRepository.GetSeatAsync(seatId);
@@ -206,13 +207,13 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPatch("{seatId}", Name = "PartiallyUpdateSeat")]
+        [GuidCheckActionFilter(new string[] { "seatId", "hallId" })]
         public async Task<IActionResult> PartiuallyUpdateSeatByIdAsync([FromRoute] Guid hallId, [FromRoute] Guid seatId, JsonPatchDocument<SeatToUpdateDto> patchDoc, [FromHeader(Name = "Accept")] string mediaType)
         {
-            var hallExists = _hallRepository.GetHallAsync(hallId);
 
-            if (hallExists == null)
+            if (!await _seatRepository.HallExists(hallId))
             {
-                return BadRequest();
+                return NotFound();
             }
 
             if (patchDoc == null)
@@ -280,8 +281,14 @@ namespace Biob.Web.Controllers
         }
 
         [HttpDelete("{seatId}", Name = "DeleteSeat")]
-        public async Task<IActionResult> DeleteSeatByIdAsync([FromRoute]Guid seatId)
+        [GuidCheckActionFilter(new string[] { "seatId", "hallId" })]
+        public async Task<IActionResult> DeleteSeatByIdAsync([FromRoute] Guid hallId, [FromRoute]Guid seatId)
         {
+            if (!await _seatRepository.HallExists(hallId))
+            {
+                return NotFound();
+            }
+
             var seatToDelete = await _seatRepository.GetSeatAsync(seatId);
 
             if (seatToDelete == null)
