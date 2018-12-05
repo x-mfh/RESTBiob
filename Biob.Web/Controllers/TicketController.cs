@@ -400,6 +400,27 @@ namespace Biob.Web.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{ticketId}", Name = "DeleteTicket")]
+        [GuidCheckActionFilter(new string[] { "ticketId" })]
+        public async Task<IActionResult> DeleteTicketAsync([FromRoute] Guid ticketId)
+        {
+            var ticketFromDb = await _ticketRepository.GetTicketAsync(ticketId);
+
+            if (ticketFromDb == null)
+            {
+                return NotFound();
+            }
+
+            _ticketRepository.DeleteTicket(ticketFromDb);
+
+            if (!await _ticketRepository.SaveChangesAsync())
+            {
+                _logger.LogError($"Deleting movie: {ticketId} failed on save");
+            }
+
+            return NoContent();
+        }
+
         [HttpOptions]
         public IActionResult GetTicketsOptions()
         {
