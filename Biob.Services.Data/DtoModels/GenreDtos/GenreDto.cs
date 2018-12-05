@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Biob.Services.Data.DtoModels
+namespace Biob.Services.Data.DtoModels.GenreDtos
 {
     public class GenreDto
     {

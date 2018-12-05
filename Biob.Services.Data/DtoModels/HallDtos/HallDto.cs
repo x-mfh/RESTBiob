@@ -1,8 +1,10 @@
-﻿namespace Biob.Services.Data.DtoModels
+﻿using System;
+
+namespace Biob.Services.Data.DtoModels.HallDtos
 {
-    public class HallToUpdateDto
+    public class HallDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public int HallNo { get; set; }
         public int NoOfSeats { get; set; }
         public bool ThreeDee { get; set; }

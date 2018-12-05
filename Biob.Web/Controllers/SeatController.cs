@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Biob.Services.Data.Repositories;
 using AutoMapper;
-using Biob.Services.Data.DtoModels;
 using Biob.Web.Helpers;
 using Biob.Data.Models;
 using Microsoft.AspNetCore.JsonPatch;
@@ -12,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Biob.Services.Data.Helpers;
 using System.Dynamic;
 using System.Linq;
+using Biob.Services.Data.DtoModels.SeatDtos;
 
 namespace Biob.Web.Controllers
 {
@@ -36,15 +36,15 @@ namespace Biob.Web.Controllers
 
 
         [HttpGet(Name = "GetSeats")]
-        public async Task<IActionResult> GetAllSeats([FromRoute] Guid hallId, [FromQuery]RequestParameters requestParameters, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> GetAllSeatsAsync([FromRoute] Guid hallId, [FromQuery]RequestParameters requestParameters, [FromHeader(Name = "Accept")] string mediaType)
         {
 
-            //var hallExists = _hallRepository.GetHallAsync(hallId);
+            var hallExists = _hallRepository.GetHallAsync(hallId);
 
-            //if (hallExists == null)
-            //{
-            //    return BadRequest();
-            //}
+            if (hallExists == null)
+            {
+                return BadRequest();
+            }
 
             if (!string.IsNullOrWhiteSpace(requestParameters.Fields))
             {
@@ -86,7 +86,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet("{seatId}", Name = "GetSeat")]
-        public async Task<IActionResult> GetOneSeat([FromRoute] Guid seatId, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> GetOneSeatAsync([FromRoute] Guid seatId, [FromHeader(Name = "Accept")] string mediaType)
         {
             var foundSeat = await _seatRepository.GetSeatAsync(seatId);
 
@@ -112,16 +112,18 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSeat([FromRoute] Guid hallId, [FromBody] SeatToCreateDto seatToCreate, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> CreateSeatAsync([FromRoute] Guid hallId, [FromBody] SeatToCreateDto seatToCreate, [FromHeader(Name = "Accept")] string mediaType)
         {
-            if (seatToCreate == null)
+            var hallExists = _hallRepository.GetHallAsync(hallId);
+
+            if (hallExists == null)
             {
                 return BadRequest();
             }
 
-            if (!ModelState.IsValid)
+            if (seatToCreate == null)
             {
-                return new ProccessingEntityObjectResultErrors(ModelState);
+                return BadRequest();
             }
             
             var seatToAdd = Mapper.Map<Seat>(seatToCreate);
@@ -152,7 +154,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPut("{seatId}", Name = "UpdateSeat")]
-        public async Task<IActionResult> UpdateSeatById([FromRoute] Guid hallId ,[FromRoute] Guid seatId, [FromBody] SeatToUpdateDto seatToUpdate, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> UpdateSeatByIdAsync([FromRoute] Guid hallId ,[FromRoute] Guid seatId, [FromBody] SeatToUpdateDto seatToUpdate, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (seatToUpdate == null)
             {
@@ -204,8 +206,15 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPatch("{seatId}", Name = "PartiallyUpdateSeat")]
-        public async Task<IActionResult> PartiuallyUpdateSeatById([FromRoute] Guid hallId, [FromRoute] Guid seatId, JsonPatchDocument<SeatToUpdateDto> patchDoc, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> PartiuallyUpdateSeatByIdAsync([FromRoute] Guid hallId, [FromRoute] Guid seatId, JsonPatchDocument<SeatToUpdateDto> patchDoc, [FromHeader(Name = "Accept")] string mediaType)
         {
+            var hallExists = _hallRepository.GetHallAsync(hallId);
+
+            if (hallExists == null)
+            {
+                return BadRequest();
+            }
+
             if (patchDoc == null)
             {
                 return BadRequest();
@@ -271,7 +280,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpDelete("{seatId}", Name = "DeleteSeat")]
-        public async Task<IActionResult> DeleteSeatById([FromRoute]Guid seatId)
+        public async Task<IActionResult> DeleteSeatByIdAsync([FromRoute]Guid seatId)
         {
             var seatToDelete = await _seatRepository.GetSeatAsync(seatId);
 
@@ -288,6 +297,20 @@ namespace Biob.Web.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpOptions]
+        public IActionResult GetSeatsOptions()
+        {
+            Response.Headers.Add("Allow", "GET,POST,OPTIONS");
+            return Ok();
+        }
+
+        [HttpOptions("{seatId}")]
+        public IActionResult GetSeatOptions()
+        {
+            Response.Headers.Add("Allow", "GET,PATCH,PUT,OPTIONS");
+            return Ok();
         }
 
         private ExpandoObject CreateHateoasResponse(PagedList<Seat> seatsPagedList, RequestParameters requestParameters)

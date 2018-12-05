@@ -6,8 +6,8 @@ using Biob.Data.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Biob.Services.Web.PropertyMapping;
-using Biob.Services.Data.DtoModels;
 using Biob.Services.Data.Helpers;
+using Biob.Services.Data.DtoModels.ShowtimeDtos;
 
 namespace Biob.Services.Data.Repositories
 {

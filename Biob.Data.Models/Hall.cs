@@ -9,8 +9,7 @@ namespace Biob.Data.Models
     [Table("Halls")]
     public class Hall : DeleteableModelBase<Guid>
     {
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Required]
+        [Required(ErrorMessage = "Hall must have a hall number")]
         public int HallNo { get; set; }
         public int NoOfSeats { get; set; }
         public bool ThreeDee { get; set; }

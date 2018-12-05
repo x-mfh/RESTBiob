@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace Biob.Services.Data.DtoModels
+namespace Biob.Services.Data.DtoModels.MovieDtos
 {
     public class MovieDto
     {
@@ -13,7 +12,7 @@ namespace Biob.Services.Data.DtoModels
         public string Producer { get; set; }
         public string Actors { get; set; }
         public string Genre { get; set; }
-        public DateTimeOffset Released { get; set; }
+        public string Released { get; set; }
         public bool ThreeDee { get; set; }
         public int AgeRestriction { get; set; }
     }
