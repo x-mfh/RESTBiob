@@ -169,6 +169,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPost(Name = "CreateTicket")]
+        [GuidCheckActionFilter(new string[] { "movieId", "showtimeId", "ticketId" })]
         public async Task<IActionResult> CreateTicketAsync([FromBody] TicketToCreateDto ticketToCreateDto,
                                                            [FromHeader(Name = "Accept")] string mediaType,
                                                            [FromRoute] Guid movieId, [FromRoute] Guid showtimeId,
@@ -244,19 +245,24 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPut("{ticketId}", Name = "UpdateTicket")]
-        public async Task<IActionResult> UpdateTicket(  [FromRoute] Guid ticketId, 
-                                                        [FromRoute] Guid movieId, 
-                                                        [FromRoute] Guid showtimeId,
-                                                        [FromBody] TicketToUpdateDto ticketToUpdate, 
-                                                        [FromHeader(Name = "Accept")] string mediaType)
+        [GuidCheckActionFilter(new string[] { "movieId", "showtimeId", "ticketId" })]
+        public async Task<IActionResult> UpdateTicket([FromRoute] Guid ticketId, 
+                                                      [FromRoute] Guid movieId, 
+                                                      [FromRoute] Guid showtimeId,
+                                                      [FromBody] TicketToUpdateDto ticketToUpdate, 
+                                                      [FromHeader(Name = "Accept")] string mediaType)
         {
-            if (ticketToUpdate == null)
+            if (!await _showtimeRepository.MovieExists(movieId))
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            //If ticket does not exist this fails.. Should probably not do that. Perhaps this also happens in other controllers?
-            //TODO: Check the other controllers too, and make general fix
+            if (!await _ticketRepository.ShowtimeExists(showtimeId))
+            {
+                return NotFound();
+            }
+
+            
             var ticketFromDb = await _ticketRepository.GetTicketAsync(ticketId);
 
             //  upserting if ticket does not already exist
@@ -265,14 +271,10 @@ namespace Biob.Web.Controllers
                 var ticketEntity = Mapper.Map<Ticket>(ticketToUpdate);
                 ticketEntity.Id = ticketId;
                 ticketEntity.ShowtimeId = showtimeId;
-                ticketEntity.CustomerId = new Guid("64C986DF-A168-40CB-B5EA-AB2B20069A08"); //TODO: this should not be hardcoded- only temporary testpurpose. Should probably just fail if no customer is provided?
+                
                 var availableSeat = await _seatRepository.GetFirstAvailableSeatByShowtimeIdAsync(showtimeId);
                 ticketEntity.SeatId = availableSeat.Id;
 
-                if (ticketEntity.SeatId == Guid.Empty || ticketEntity.ShowtimeId == Guid.Empty || ticketEntity.CustomerId == Guid.Empty)
-                {
-                    return BadRequest();
-                }
 
                 _ticketRepository.AddTicket(ticketEntity);
 
@@ -312,8 +314,22 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPatch("{ticketId}", Name = "PartiallyUpdateTicket")]
-        public async Task<IActionResult> PartiallyUpdateTicket([FromRoute] Guid ticketId, JsonPatchDocument<TicketToUpdateDto> patchDoc, [FromHeader(Name = "Accept")] string mediaType)
+        [GuidCheckActionFilter(new string[] { "movieId", "showtimeId", "ticketId" })]
+        public async Task<IActionResult> PartiallyUpdateTicket([FromRoute] Guid ticketId, JsonPatchDocument<TicketToUpdateDto> patchDoc,
+                                                               [FromRoute] Guid movieId, [FromRoute] Guid showtimeId,
+                                                               [FromHeader(Name = "Accept")] string mediaType)
         {
+
+            if (!await _showtimeRepository.MovieExists(movieId))
+            {
+                return NotFound();
+            }
+
+            if (!await _ticketRepository.ShowtimeExists(showtimeId))
+            {
+                return NotFound();
+            }
+
             if (patchDoc == null)
             {
                 return BadRequest();
@@ -321,8 +337,7 @@ namespace Biob.Web.Controllers
 
             var ticketFromDb = await _ticketRepository.GetTicketAsync(ticketId);
 
-            //  upserting if ticket does not already exist
-            //  TODO:   research if upserting is neccesary in patching
+
             if (ticketFromDb == null)
             {
                 var ticketToCreate = new TicketToUpdateDto();
@@ -388,14 +403,14 @@ namespace Biob.Web.Controllers
         [HttpOptions]
         public IActionResult GetTicketsOptions()
         {
-            Response.Headers.Add("Allow", "GET, OPTIONS"); //Todo: update what http methods are available
+            Response.Headers.Add("Allow", "GET, POST, OPTIONS");
             return Ok();
         }
 
         [HttpOptions("{ticketId}")]
         public IActionResult GetTicketOptions()
         {
-            Response.Headers.Add("Allow", "GET, PUT, POST, PATCH, OPTIONS"); //Todo: update what http methods are available
+            Response.Headers.Add("Allow", "GET, PUT, POST, PATCH, OPTIONS");
             return Ok();
         }
 
