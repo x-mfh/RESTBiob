@@ -1,22 +1,21 @@
 ﻿using Biob.Data.Common.Models;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Biob.Data.Models
 {
     [Table("Tickets")]
     public class Ticket : DeleteableModelBase<Guid>
     {
-        [ForeignKey("Customer")] //I wonder why EF doesn't cry about this
+        [ForeignKey("Customer")]
         public Guid CustomerId { get; set; }
         [ForeignKey("Showtime")]
         public Guid ShowtimeId { get; set; }
         [ForeignKey("Seat")]
         public Guid SeatId { get; set; }
         public bool Paid { get; set; }
+        [Range(0, 1000, ErrorMessage = "Ticket price must be between 0 - 1000")]
         public decimal Price { get; set; }
 
         //Foreign key fields for EF database generation:

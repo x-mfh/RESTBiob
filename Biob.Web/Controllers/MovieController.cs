@@ -3,7 +3,6 @@ using System;
 using System.Threading.Tasks;
 using Biob.Services.Data.Repositories;
 using AutoMapper;
-using Biob.Services.Data.DtoModels;
 using Biob.Data.Models;
 using Biob.Web.Helpers;
 using Microsoft.AspNetCore.JsonPatch;
@@ -14,6 +13,7 @@ using Biob.Services.Data.Helpers;
 using System.Dynamic;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using Biob.Services.Data.DtoModels.MovieDtos;
 
 namespace Biob.Web.Controllers
 {
@@ -55,7 +55,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet(Name = "GetMovies")]
-        public async Task<IActionResult> GetAllMovies([FromQuery]RequestParameters requestParameters,
+        public async Task<IActionResult> GetAllMoviesAsync([FromQuery]RequestParameters requestParameters,
                                                       [FromHeader(Name = "Accept")] string mediaType)
         {
 
@@ -113,7 +113,7 @@ namespace Biob.Web.Controllers
 
         [HttpGet("{movieId}", Name = "GetMovie")]
         [MovieParameterValidationFilter]
-        public async Task<IActionResult> GetOneMovie([FromRoute]Guid movieId, [FromQuery] string fields, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> GetOneMovieAsync([FromRoute]Guid movieId, [FromQuery] string fields, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (!_typeHelperService.TypeHasProperties<MovieDto>(fields))
             {
@@ -144,19 +144,16 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMovie([FromBody] MovieToCreateDto movieToCreate, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> CreateMovieAsync([FromBody] MovieToCreateDto movieToCreate, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (movieToCreate == null)
             {
                 return BadRequest();
             }
 
-            if (movieToCreate.Id == Guid.Empty)
-            {
-                movieToCreate.Id = Guid.NewGuid();
-            }
-
             var movieToAdd = Mapper.Map<Movie>(movieToCreate);
+            movieToAdd.Id = Guid.NewGuid();
+
             _movieRepository.AddMovie(movieToAdd);
 
             if (!await _movieRepository.SaveChangesAsync())
@@ -203,7 +200,7 @@ namespace Biob.Web.Controllers
 
         [HttpPut("{movieId}",Name = "UpdateMovie")]
         [MovieParameterValidationFilter]
-        public async Task<IActionResult> UpdateMovie([FromRoute] Guid movieId, [FromBody] MovieToUpdateDto movieToUpdate, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> UpdateMovieAsync([FromRoute] Guid movieId, [FromBody] MovieToUpdateDto movieToUpdate, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (movieToUpdate == null)
             {
@@ -211,37 +208,6 @@ namespace Biob.Web.Controllers
             }
 
             var movieFromDb = await _movieRepository.GetMovieAsync(movieId);
-
-            // easy solution delete all moviegenres with id, add new ids
-
-            // loop on movietoupdate.genreids, check if moviegenre exists with movieid & movietoupdate.genreid, if not and its added, upsert
-            // if removed delete moviegenre with removed genreid
-
-            var moviegenresAlreadyExists = _movieGenreRepository.GetAllMovieGenresByMovieIdAsync(movieId);
-
-            if (movieToUpdate.GenreIds.Count > 0)
-            {
-                for (int i = 0; i < movieToUpdate.GenreIds.Count; i++)
-                {
-
-                }
-            }
-            else
-            {
-                // if no genreids was given delete all moviegenres with movieid
-                // only on put
-                var moviegenresExist = await _movieGenreRepository.GetAllMovieGenresByMovieIdAsync(movieId);
-
-                foreach (var moviegenre in moviegenresExist)
-                {
-                    _movieGenreRepository.DeleteMovieGenre(moviegenre);
-                }
-
-                if (!await _movieGenreRepository.SaveChangesAsync())
-                {
-                    _logger.LogError("Saving changes to database while deleting a moviegenre failed");
-                }
-            }
 
             //  upserting if movie does not already exist
             if (movieFromDb == null)
@@ -253,6 +219,24 @@ namespace Biob.Web.Controllers
                 if (!await _movieRepository.SaveChangesAsync())
                 {
                     _logger.LogError($"Upserting movie: {movieId} failed on save");
+                }
+
+                // if any genre is added to movie, create many-to-many relationship for each genre
+                if (movieToUpdate.GenreIds.Count > 0)
+                {
+                    for (int i = 0; i < movieToUpdate.GenreIds.Count; i++)
+                    {
+                        // create moviegenre object with genre id and movie id from movieToCreate object
+                        MovieGenre movieGenreToAdd = new MovieGenre { MovieId = movieId, GenreId = movieToUpdate.GenreIds[i] };
+                        movieGenreToAdd.Id = Guid.NewGuid();
+                        _movieGenreRepository.AddMovieGenre(movieGenreToAdd);
+                    }
+
+                    // save changes to database after all many-to-many relationships has been created if any exist
+                    if (!await _movieGenreRepository.SaveChangesAsync())
+                    {
+                        _logger.LogError("Saving changes to database while deleting a moviegenre failed");
+                    }
                 }
 
                 var movieToReturn = Mapper.Map<MovieDto>(movieEntity);
@@ -282,12 +266,40 @@ namespace Biob.Web.Controllers
                 _logger.LogError($"Updating movie: {movieId} failed on save");
             }
 
+            // easy solution delete all moviegenres with id, add new ids
+            var moviegenresExist = await _movieGenreRepository.GetAllMovieGenresByMovieIdAsync(movieId);
+
+            // delete all existing many-to-many genre relationships for movie
+            foreach (var moviegenre in moviegenresExist)
+            {
+                _movieGenreRepository.DeleteMovieGenre(moviegenre);
+            }
+
+            // if any genre is added to movie, create many-to-many relationship for each genre
+            if (movieToUpdate.GenreIds.Count > 0)
+            {
+                for (int i = 0; i < movieToUpdate.GenreIds.Count; i++)
+                {
+                    // create moviegenre object with genre id and movie id from movieToCreate object
+                    MovieGenre movieGenreToAdd = new MovieGenre { MovieId = movieId, GenreId = movieToUpdate.GenreIds[i] };
+                    movieGenreToAdd.Id = Guid.NewGuid();
+                    _movieGenreRepository.AddMovieGenre(movieGenreToAdd);
+                }
+            }
+
+            // save changes to database after all many-to-many relationships has been deleted and recreated if any exist
+            if (!await _movieGenreRepository.SaveChangesAsync())
+            {
+                _logger.LogError("Saving changes to database while deleting a moviegenre failed");
+            }
+
+
             return NoContent();
         }
 
         [HttpPatch("{movieId}", Name = "PartiallyUpdateMovie")]
         [MovieParameterValidationFilter]
-        public async Task<IActionResult> PartiuallyUpdateMovie([FromRoute] Guid movieId, JsonPatchDocument<MovieToUpdateDto> patchDoc,
+        public async Task<IActionResult> PartiuallyUpdateMovieAsync([FromRoute] Guid movieId, JsonPatchDocument<MovieToUpdateDto> patchDoc,
                                                                [FromHeader(Name = "Accept")] string mediaType)
         {
             if (patchDoc == null)
@@ -318,6 +330,72 @@ namespace Biob.Web.Controllers
                 if (!await _movieRepository.SaveChangesAsync())
                 {
                     _logger.LogError($"Upserting movie: {movieId} failed on save");
+                }
+
+                // loop on foreach Operations => if op.path == "GenreIds" => loop on value which contains list/array? of genreIds
+
+                foreach (var op in patchDoc.Operations)
+                {
+                    if (op.path.ToLower() == "genreids")
+                    {
+                        //movieToPatch.GenreIds = (List<Guid>)op.value;
+                        var genreIds = op.value.ToString();
+
+                        // TODO make list guid instead of string so you dont have to parse on each use. What if only one, still split?
+                        // TODO EXTENDED check if lenght is > 0 before all this, also check if valid Guids
+                        var splitGenreIds = genreIds.Split(",");
+
+                        switch (op.op)
+                        {
+                            // check if genre already exists on movie before creating
+                            case "add":
+                                {
+                                    for (int i = 0; i < splitGenreIds.Length; i++)
+                                    {
+                                        //create moviegenre object with genre id and movie id from movieToCreate object
+                                        MovieGenre movieGenreToAdd = new MovieGenre { MovieId = movieId, GenreId = Guid.Parse(splitGenreIds[i]) };
+                                        movieGenreToAdd.Id = Guid.NewGuid();
+                                        _movieGenreRepository.AddMovieGenre(movieGenreToAdd);   
+                                    }
+                                    break;
+                                }
+                            case "replace":
+                                {
+                                    // easy solution delete all moviegenres with id, add new ids
+                                    var moviegenresExist = await _movieGenreRepository.GetAllMovieGenresByMovieIdAsync(movieId);
+
+                                    // delete all existing many-to-many genre relationships for movie
+                                    foreach (var moviegenre in moviegenresExist)
+                                    {
+                                        _movieGenreRepository.DeleteMovieGenre(moviegenre);
+                                    }
+
+                                    // if any genre is added to movie, create many-to-many relationship for each genre
+
+                                    for (int i = 0; i < splitGenreIds.Length; i++)
+                                    {
+                                        // create moviegenre object with genre id and movie id from movieToCreate object
+                                        MovieGenre movieGenreToAdd = new MovieGenre { MovieId = movieId, GenreId = Guid.Parse(splitGenreIds[i]) };
+                                        movieGenreToAdd.Id = Guid.NewGuid();
+                                        _movieGenreRepository.AddMovieGenre(movieGenreToAdd);
+                                    }
+
+                                    break;
+                                }
+
+                            default:
+                                // tell user operation not allowed?
+                                break;
+                        }
+
+                    }
+                }
+
+                // save changes to database after all operations
+                // check if state is modified? this will always get run
+                if (!await _movieGenreRepository.SaveChangesAsync())
+                {
+                    _logger.LogError("Saving changes to database while dealing with a moviegenre failed");
                 }
 
                 var movieToReturn = Mapper.Map<MovieDto>(movieToAddToDb);
@@ -357,12 +435,92 @@ namespace Biob.Web.Controllers
                 _logger.LogError($"Partially updating movie: {movieId} failed on save");
             }
 
+            // loop on foreach Operations => if op.path == "GenreIds" => loop on value which contains list/array? of genreIds
+
+            foreach (var op in patchDoc.Operations)
+            {
+                if (op.path.ToLower() == "genreids")
+                {
+                    //movieToPatch.GenreIds = (List<Guid>)op.value;
+                    var genreIds = op.value.ToString();
+
+                    // TODO make list guid instead of string so you dont have to parse on each use. What if only one, still split?
+                    // TODO EXTENDED check if lenght is > 0 before all this, also check if valid Guids
+                    var splitGenreIds = genreIds.Split(",");
+
+                    switch (op.op)
+                    {
+                        case "add":
+                            {
+                                for (int i = 0; i < splitGenreIds.Length; i++)
+                                {
+                                    // checking if genre already exists on movie
+                                    // will fail if we use wrapper class IsDeleted checker, NOT USING ATM
+                                    var moviegenreToAdd = await _movieGenreRepository.GetMovieGenreByMovieIdGenreIdAsync(movieId, Guid.Parse(splitGenreIds[i]));
+                                    if (moviegenreToAdd == null)
+                                    {
+                                        //create moviegenre object with genre id and movie id from movieToCreate object
+                                        MovieGenre movieGenreToAdd = new MovieGenre { MovieId = movieId, GenreId = Guid.Parse(splitGenreIds[i]) };
+                                        movieGenreToAdd.Id = Guid.NewGuid();
+                                        _movieGenreRepository.AddMovieGenre(movieGenreToAdd);
+                                    }
+                                }
+                                break;
+                            }
+                        case "replace":
+                            {
+                                // easy solution delete all moviegenres with id, add new ids
+                                var moviegenresExist = await _movieGenreRepository.GetAllMovieGenresByMovieIdAsync(movieId);
+
+                                // delete all existing many-to-many genre relationships for movie
+                                foreach (var moviegenre in moviegenresExist)
+                                {
+                                    _movieGenreRepository.DeleteMovieGenre(moviegenre);
+                                }
+
+                                // if any genre is added to movie, create many-to-many relationship for each genre
+                                
+                                for (int i = 0; i < splitGenreIds.Length; i++)
+                                {
+                                    // create moviegenre object with genre id and movie id from movieToCreate object
+                                    MovieGenre movieGenreToAdd = new MovieGenre { MovieId = movieId, GenreId = Guid.Parse(splitGenreIds[i]) };
+                                    movieGenreToAdd.Id = Guid.NewGuid();
+                                    _movieGenreRepository.AddMovieGenre(movieGenreToAdd);
+                                }
+                                
+                                break;
+                            }
+                        case "remove":
+                            {
+                                for (int i = 0; i < splitGenreIds.Length; i++)
+                                {
+                                    var moviegenreToDelete = await _movieGenreRepository.GetMovieGenreByMovieIdGenreIdAsync(movieId, Guid.Parse(splitGenreIds[i]));
+                                    _movieGenreRepository.DeleteMovieGenre(moviegenreToDelete);
+                                }
+                                break;
+                            }
+
+                        default:
+                            // tell user operation not allowed?
+                            break;
+                    }
+
+                }
+            }
+
+            // save changes to database after all operations
+            // check if state is modified? this will always get run
+            if (!await _movieGenreRepository.SaveChangesAsync())
+            {
+                _logger.LogError("Saving changes to database while dealing with a moviegenre failed");
+            }
+
             return NoContent();
         }
 
         [HttpDelete("{movieId}", Name = "DeleteMovie")]
         [MovieParameterValidationFilter]
-        public async Task<IActionResult> DeleteMovie([FromRoute] Guid movieId)
+        public async Task<IActionResult> DeleteMovieAsync([FromRoute] Guid movieId)
         {
             var movieFromDb = await _movieRepository.GetMovieAsync(movieId);
 
@@ -377,6 +535,22 @@ namespace Biob.Web.Controllers
             {
                 _logger.LogError($"Deleting movie: {movieId} failed on save");
             }
+            // IF its a REAL delete on movie, we need to delete many-to-many relation BEFORE movie
+
+            // easy solution delete all moviegenres with id, add new ids
+            var moviegenresExist = await _movieGenreRepository.GetAllMovieGenresByMovieIdAsync(movieId);
+
+            // delete all existing many-to-many genre relationships for movie
+            foreach (var moviegenre in moviegenresExist)
+            {
+                _movieGenreRepository.DeleteMovieGenre(moviegenre);
+            }
+
+            if (!await _movieGenreRepository.SaveChangesAsync())
+            {
+                _logger.LogError("Saving changes to database while deleting a moviegenre failed");
+            }
+
 
             return NoContent();
         }

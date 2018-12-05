@@ -6,8 +6,8 @@ using Biob.Data.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Biob.Services.Web.PropertyMapping;
-using Biob.Services.Data.DtoModels;
 using Biob.Services.Data.Helpers;
+using Biob.Services.Data.DtoModels.ShowtimeDtos;
 
 namespace Biob.Services.Data.Repositories
 {
@@ -52,6 +52,16 @@ namespace Biob.Services.Data.Repositories
             var collectionBeforePaging = _context.Showtimes.Where(showtime => !showtime.IsDeleted).Applysort(orderBy, _propertyMappingService.GetPropertyMapping<ShowtimeDto, Showtime>());
             var listToPage = await collectionBeforePaging.ToListAsync();
             return PagedList<Showtime>.Create(listToPage, pageNumber, pageSize);
+        }
+
+        public async Task<Showtime> GetShowtimeAsync(Guid showtimeId)
+        {
+            var foundShowtime = await _context.Showtimes.Where(showtime => showtime.Id == showtimeId).FirstOrDefaultAsync();
+            if (foundShowtime.IsDeleted)
+            {
+                foundShowtime = null;
+            }
+            return foundShowtime;
         }
 
         public async Task<Showtime> GetShowtimeAsync( Guid showtimeId, Guid movieId)

@@ -35,8 +35,6 @@ namespace Biob.Services.Data.Repositories
         }
         public void DeleteGenre(Genre genreToDelete)
         {
-            //genreToDelete.IsDeleted = true;
-            //genreToDelete.DeletedOn = DateTimeOffset.Now;
             _context.Genres.Remove(genreToDelete);
         }
     }

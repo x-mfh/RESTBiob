@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using Biob.Data.Models;
-using Biob.Services.Data.DtoModels;
 using Biob.Web.Helpers;
 using Biob.Services.Data.Repositories;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -19,9 +18,13 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using AspNetCoreRateLimit;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Dynamic;
+using Biob.Services.Data.DtoModels.MovieDtos;
+using Biob.Services.Data.DtoModels.GenreDtos;
+using Biob.Services.Data.DtoModels.TicketDtos;
+using Biob.Services.Data.DtoModels.HallDtos;
+using Biob.Services.Data.DtoModels.SeatDtos;
+using Biob.Services.Data.DtoModels.ShowtimeDtos;
 
 namespace Biob.Web
 {
@@ -150,8 +153,8 @@ namespace Biob.Web
             Mapper.Initialize(config => 
             {
                 config.CreateMap<Movie, MovieDto>()
-                .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.LengthInSeconds.CalculateFromSeconds()));
-                //.ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.MovieGenres.Select(moviegenre => moviegenre.Genre.GenreName).ConvertIEnumerableToString()));
+                .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.LengthInSeconds.CalculateFromSeconds()))
+                .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.MovieGenres.Select(moviegenre => moviegenre.Genre.GenreName).ConvertIEnumerableToString()));
 
                 config.CreateMap<MovieToCreateDto, Movie>();
                 config.CreateMap<MovieToUpdateDto, Movie>();
@@ -161,9 +164,6 @@ namespace Biob.Web
                 config.CreateMap<GenreToCreateDto, Genre>();
                 config.CreateMap<GenreToUpdateDto, Genre>();
                 config.CreateMap<Genre, GenreToUpdateDto>();
-
-                config.CreateMap<MovieGenre, MovieGenreDto>()
-                .ForMember(dest => dest.GenreName, opt => opt.MapFrom(src => src.Genre.GenreName));
 
                 config.CreateMap<Ticket, TicketDto>();
                 config.CreateMap<TicketToCreateDto, Ticket>();

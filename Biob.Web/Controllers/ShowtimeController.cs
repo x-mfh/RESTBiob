@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Biob.Data.Models;
-using Biob.Services.Data.DtoModels;
+using Biob.Services.Data.DtoModels.ShowtimeDtos;
 using Biob.Services.Data.Helpers;
 using Biob.Services.Data.Repositories;
 using Biob.Services.Web.PropertyMapping;
@@ -46,14 +46,14 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet(Name = "GetShowtimes")]
-        public async Task<IActionResult> GetAllShowtimes([FromQuery]RequestParameters requestParameters, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> GetAllShowtimesAsync([FromQuery]RequestParameters requestParameters, [FromHeader(Name = "Accept")] string mediaType)
         {
 
             if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
             {
-                requestParameters.OrderBy = "Id"; // MovieId?
+                //  TODO: change to order by when playing
+                requestParameters.OrderBy = "Id";
             }
-
 
             if (!_propertyMappingService.ValidMappingExistsFor<ShowtimeDto, Showtime>(requestParameters.Fields))
             {
@@ -100,7 +100,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet("{showtimeId}", Name = "GetShowtime")]
-        public async Task<IActionResult> GetOneShowtime([FromRoute]Guid showtimeId, [FromRoute]Guid movieId, [FromQuery] string fields, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> GetOneShowtimeAsync([FromRoute]Guid showtimeId, [FromRoute]Guid movieId, [FromQuery] string fields, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (!_typeHelperService.TypeHasProperties<ShowtimeDto>(fields))
             {
@@ -141,31 +141,21 @@ namespace Biob.Web.Controllers
             }
             else
             {
-                //var showtimeToReturn = Mapper.Map<ShowtimeDto>(foundShowtime);
-                //return Ok(showtimeToReturn);
                 return Ok(showtime.ShapeData(fields));
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateShowtime([FromRoute]Guid movieId, [FromBody] ShowtimeToCreateDto showtimeToCreate, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> CreateShowtimeAsync([FromRoute]Guid movieId, [FromBody] ShowtimeToCreateDto showtimeToCreate, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (showtimeToCreate == null)
             {
                 return BadRequest();
             }
 
-            if (showtimeToCreate.Id == null)
-            {
-                showtimeToCreate.Id = Guid.NewGuid();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return new ProccessingEntityObjectResultErrors(ModelState);
-            }
-
             var showtimeToAdd = Mapper.Map<Showtime>(showtimeToCreate);
+            showtimeToAdd.Id = Guid.NewGuid();
+
             _showtimeRepository.AddShowtime(movieId, showtimeToAdd);
 
             if (!await _showtimeRepository.SaveChangesAsync())
@@ -192,7 +182,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPut("{showtimeId}", Name = "UpdateShowtime")]
-        public async Task<IActionResult> UpdateShowtime([FromRoute]Guid movieId, [FromRoute] Guid showtimeId, [FromBody] ShowtimeToUpdateDto showtimeToUpdate, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> UpdateShowtimeAsync([FromRoute]Guid movieId, [FromRoute] Guid showtimeId, [FromBody] ShowtimeToUpdateDto showtimeToUpdate, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (movieId == Guid.Empty)
             {
@@ -258,7 +248,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpPatch("{showtimeId}", Name = "PartiallyUpdateShowtime")]
-        public async Task<IActionResult> PartiuallyUpdateShowtime([FromRoute]Guid movieId, [FromRoute] Guid showtimeId, JsonPatchDocument<ShowtimeToUpdateDto> patchDoc, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> PartiuallyUpdateShowtimeAsync([FromRoute]Guid movieId, [FromRoute] Guid showtimeId, JsonPatchDocument<ShowtimeToUpdateDto> patchDoc, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (movieId == Guid.Empty)
             {
@@ -342,7 +332,7 @@ namespace Biob.Web.Controllers
         }
 
         [HttpDelete("{showtimeId}", Name = "DeleteShowtime")]
-        public async Task<IActionResult> DeleteShowtime([FromRoute] Guid showtimeId, [FromRoute]Guid movieId)
+        public async Task<IActionResult> DeleteShowtimeAsync([FromRoute] Guid showtimeId, [FromRoute]Guid movieId)
         {
             if (movieId == Guid.Empty)
             {
@@ -375,6 +365,20 @@ namespace Biob.Web.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpOptions]
+        public IActionResult GetShowtimesOptions()
+        {
+            Response.Headers.Add("Allow", "GET,POST,OPTIONS");
+            return Ok();
+        }
+
+        [HttpOptions("{showtimeId}")]
+        public IActionResult GetShowtimeOptions()
+        {
+            Response.Headers.Add("Allow", "GET,PATCH,PUT,OPTIONS");
+            return Ok();
         }
 
         private ExpandoObject CreateHateoasResponse(PagedList<Showtime> showtimesPagedList, RequestParameters requestParameters)

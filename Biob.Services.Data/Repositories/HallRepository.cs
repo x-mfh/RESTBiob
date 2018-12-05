@@ -16,12 +16,12 @@ namespace Biob.Services.Data.Repositories
 
         public async Task<IEnumerable<Hall>> GetAllHallsAsync()
         {
-            return await _context.Halls.Where(hall => !hall.IsDeleted).ToListAsync();
+            return await _context.Halls.ToListAsync();
         }
 
         public async Task<Hall> GetHallAsync(Guid id)
         {
-            return await _context.Halls.Where(hall => !hall.IsDeleted && hall.Id == id).FirstOrDefaultAsync();
+            return await _context.Halls.Where(hall => hall.Id == id).FirstOrDefaultAsync();
         }
 
         public void AddHall(Hall hallToAdd)
@@ -36,8 +36,7 @@ namespace Biob.Services.Data.Repositories
 
         public void DeleteHall(Hall hallToDelete)
         {
-            hallToDelete.IsDeleted = true;
-            hallToDelete.DeletedOn = DateTimeOffset.Now;
+            _context.Halls.Remove(hallToDelete);
         }
     }
 }

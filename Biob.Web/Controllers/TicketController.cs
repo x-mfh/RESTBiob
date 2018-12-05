@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Biob.Services.Data.DtoModels;
+using Biob.Services.Data.DtoModels.TicketDtos;
 using Microsoft.AspNetCore.JsonPatch;
 using AutoMapper;
 using Biob.Services.Data.Helpers;
@@ -21,20 +21,28 @@ namespace Biob.Web.Controllers
     public class TicketController : ControllerBase
     {
         private readonly ITicketRepository _ticketRepository;
+        private readonly IShowtimeRepository _showtimeRepository;
+        private readonly ISeatRepository _seatRepository;
         private readonly IPropertyMappingService _propertyMappingService;
         private readonly ITypeHelperService _typeHelperService;
         private readonly IUrlHelper _urlHelper;
         private readonly ILogger<TicketController> _logger;
 
-        public TicketController(ITicketRepository ticketRepository, IPropertyMappingService propertyMappingService, 
-                                ITypeHelperService typeHelperService, IUrlHelper urlHelper, ILogger<TicketController> logger)
+        public TicketController(ITicketRepository ticketRepository,
+                                IShowtimeRepository showtimeRepository,
+                                ISeatRepository seatRepository,
+                                IPropertyMappingService propertyMappingService,
+                                ITypeHelperService typeHelperService, 
+                                IUrlHelper urlHelper, 
+                                ILogger<TicketController> logger)
         {
             _ticketRepository = ticketRepository;
+            _showtimeRepository = showtimeRepository;
+            _seatRepository = seatRepository;
             _propertyMappingService = propertyMappingService;
             _typeHelperService = typeHelperService;
             _urlHelper = urlHelper;
             _logger = logger;
-            //Note: In TicketRepository, ApplySort is temprarily outcommented as it caused an error somehow. TODO: Could be fixed at some point
             _propertyMappingService.AddPropertyMapping<TicketDto, Ticket>(new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
             {
                 { "Id", new PropertyMappingValue(new List<string>() { "Id" })},
@@ -47,9 +55,11 @@ namespace Biob.Web.Controllers
         }
 
         [HttpGet(Name = "GetTickets")]
-        public async Task<IActionResult> GetAllTickets([FromRoute] Guid showtimeId,[FromQuery]RequestParameters requestParameters)
+        public async Task<IActionResult> GetAllTickets([FromRoute] Guid showtimeId, [FromQuery]RequestParameters requestParameters, [FromHeader(Name = "Accept")] string mediaType)
         {
-            
+            //Note: In TicketRepository, ApplySort is temprarily outcommented as it caused an error somehow. TODO: Could be fixed at some point
+            //EDIT: This was becuase it didn't like to sort on a date? now sorting on price to make it work. 
+            //TODO: Change back to CreatedOn
             if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
             {
                 requestParameters.OrderBy = "Price";
@@ -65,20 +75,20 @@ namespace Biob.Web.Controllers
                 return BadRequest();
             }
 
-            var ticketsPagedList = await _ticketRepository.GetAllTicketsAsync(showtimeId,
+            PagedList<Ticket> ticketsPagedList = await _ticketRepository.GetAllTicketsByShowtimeIdAsync(showtimeId,
                                                                     requestParameters.OrderBy,
                                                                     requestParameters.SearchQuery,
                                                                     requestParameters.PageNumber, requestParameters.PageSize);
 
             var tickets = Mapper.Map<IEnumerable<TicketDto>>(ticketsPagedList);
 
-            //if (mediaType == "application/vnd.biob.json+hateoas")
-            //{
-            //    return Ok(CreateHateoasResponse(ticketsPagedList, requestParameters));
-            //}
-            //else
-            //{
-            var previousPageLink = ticketsPagedList.HasPrevious ? CreateUrlForResource(requestParameters, PageType.PreviousPage) : null;
+            if (mediaType == "application/vnd.biob.json+hateoas")
+            {
+                return Ok(CreateHateoasResponse(ticketsPagedList, requestParameters));
+            }
+            else
+            {
+                var previousPageLink = ticketsPagedList.HasPrevious ? CreateUrlForResource(requestParameters, PageType.PreviousPage) : null;
             var nextPageLink = ticketsPagedList.HasNext ? CreateUrlForResource(requestParameters, PageType.NextPage) : null;
             var paginationMetadata = new PaginationMetadata()
             {
@@ -100,12 +110,12 @@ namespace Biob.Web.Controllers
             }
 
             return Ok(tickets.ShapeData(requestParameters.Fields));
-            //}
+            }
         }
 
 
         [HttpGet("{ticketId}", Name = "GetTicket")]
-        public async Task<IActionResult> GetOneTicket([FromRoute]Guid ticketId, [FromQuery] string fields)
+        public async Task<IActionResult> GetOneTicket([FromRoute]Guid ticketId, [FromQuery] string fields, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (ticketId == Guid.Empty)
             {
@@ -119,47 +129,101 @@ namespace Biob.Web.Controllers
                 return NotFound();
             }
 
-            return Ok(foundTicket.ShapeData(fields));
+            var ticket = Mapper.Map<TicketDto>(foundTicket);
+
+            if (mediaType == "application/vnd.biob.json+hateoas")
+            {
+                var links = CreateLinksForTickets(ticketId, fields);
+
+                var linkedTicket = ticket.ShapeData(fields) as IDictionary<string, object>;
+                linkedTicket.Add("links", links);
+                return Ok(linkedTicket);
+            }
+            else
+            {
+                return Ok(foundTicket.ShapeData(fields));
+            }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateTicket([FromBody] TicketToCreateDto ticketToCreate)
+        [HttpPost(Name = "CreateTicket")]
+        public async Task<IActionResult> CreateTicketAsync([FromBody] TicketToCreateDto ticketToCreateDto, [FromHeader(Name = "Accept")] string mediaType, [FromRoute] Guid movieId, [FromRoute] Guid showtimeId)
         {
-            if (ticketToCreate == null)
+            if (ticketToCreateDto == null)
             {
                 return BadRequest();
             }
 
-            if (ticketToCreate.Id == null)
+            if (!await _showtimeRepository.MovieExists(movieId))
             {
-                ticketToCreate.Id = Guid.NewGuid();
+                return NotFound();
             }
 
-            if (!ModelState.IsValid)
+            if (ticketToCreateDto.SeatId == Guid.Empty)
             {
-                return new ProccessingEntityObjectResultErrors(ModelState);
+                var availableSeat = await _seatRepository.GetFirstAvailableSeatByShowtimeIdAsync(showtimeId);
+                if (availableSeat == null)
+                {
+                    //Not sure if this is enough. Could be tested. 
+                    _logger.LogError("No available seats");
+                    
+                }
+                ticketToCreateDto.SeatId = availableSeat.Id;
             }
 
+            var ticket = Mapper.Map<Ticket>(ticketToCreateDto);
 
-            var ticketToAdd = Mapper.Map<Ticket>(ticketToCreate);
-            _ticketRepository.AddTicket(ticketToAdd);
+            ticket.ShowtimeId = showtimeId;
+
+            //Not sure if this empty check will work/should be here, but adding for now.
+            if (ticket.SeatId == Guid.Empty || ticket.ShowtimeId == Guid.Empty 
+                //|| ticket.CustomerId == Guid.Empty //TODO: add when it's present
+                )
+            {
+                return BadRequest(); 
+            }
+            
+            ticket.Id = Guid.NewGuid();
+
+            _ticketRepository.AddTicket(ticket);
 
             if (!await _ticketRepository.SaveChangesAsync())
             {
                 _logger.LogError("Saving changes to database while creating a showtime failed");
             }
 
-            return CreatedAtRoute("GetTicket", new { ticketId = ticketToAdd.Id }, ticketToAdd);
+            var ticketDto = Mapper.Map<TicketDto>(ticket); 
+
+            if (mediaType == "application/vnd.biob.json+hateoas")
+            {
+                var links = CreateLinksForTickets(ticketDto.Id, null);
+
+                var linkedTicket = ticketDto.ShapeData(null) as IDictionary<string, object>;
+
+                linkedTicket.Add("links", links);
+
+                return CreatedAtRoute("GetTicket", new { ticketId = ticketDto.Id }, linkedTicket);
+            }
+            else
+            {
+                //Hmm why is dto used here when it's not in the other methods?
+                return CreatedAtRoute("GetTicket", new { ticketId = ticketDto.Id }, ticketDto);
+            }
         }
 
-        [HttpPut("{ticketId}")]
-        public async Task<IActionResult> UpdateTicket([FromRoute] Guid ticketId, [FromBody] TicketToUpdateDto ticketToUpdate)
+        [HttpPut("{ticketId}", Name = "UpdateTicket")]
+        public async Task<IActionResult> UpdateTicket(  [FromRoute] Guid ticketId, 
+                                                        [FromRoute] Guid movieId, 
+                                                        [FromRoute] Guid showtimeId,
+                                                        [FromBody] TicketToUpdateDto ticketToUpdate, 
+                                                        [FromHeader(Name = "Accept")] string mediaType)
         {
             if (ticketToUpdate == null)
             {
                 return BadRequest();
             }
 
+            //If ticket does not exist this fails.. Should probably not do that. Perhaps this also happens in other controllers?
+            //TODO: Check the other controllers too, and make general fix
             var ticketFromDb = await _ticketRepository.GetTicketAsync(ticketId);
 
             //  upserting if ticket does not already exist
@@ -167,6 +231,16 @@ namespace Biob.Web.Controllers
             {
                 var ticketEntity = Mapper.Map<Ticket>(ticketToUpdate);
                 ticketEntity.Id = ticketId;
+                ticketEntity.ShowtimeId = showtimeId;
+                ticketEntity.CustomerId = new Guid("64C986DF-A168-40CB-B5EA-AB2B20069A08"); //TODO: this should not be hardcoded- only temporary testpurpose. Should probably just fail if no customer is provided?
+                var availableSeat = await _seatRepository.GetFirstAvailableSeatByShowtimeIdAsync(showtimeId);
+                ticketEntity.SeatId = availableSeat.Id;
+
+                if (ticketEntity.SeatId == Guid.Empty || ticketEntity.ShowtimeId == Guid.Empty || ticketEntity.CustomerId == Guid.Empty)
+                {
+                    return BadRequest();
+                }
+
                 _ticketRepository.AddTicket(ticketEntity);
 
                 if (!await _ticketRepository.SaveChangesAsync())
@@ -176,7 +250,20 @@ namespace Biob.Web.Controllers
 
                 var ticketToReturn = Mapper.Map<TicketDto>(ticketEntity);
 
-                return CreatedAtRoute("GetTicket", new { ticketId = ticketToReturn.Id }, ticketToReturn);
+                if (mediaType == "application/vnd.biob.json+hateoas")
+                {
+                    var links = CreateLinksForTickets(ticketToReturn.Id, null);
+
+                    var linkedTicket = ticketToReturn.ShapeData(null) as IDictionary<string, object>;
+
+                    linkedTicket.Add("links", links);
+
+                    return CreatedAtRoute("GetTicket", new { ticketId = ticketToReturn.Id }, linkedTicket);
+                }
+                else
+                {
+                    return CreatedAtRoute("GetTicket", new { ticketId = ticketToReturn.Id }, ticketToReturn);
+                }
             }
 
             Mapper.Map(ticketToUpdate, ticketFromDb);
@@ -191,8 +278,8 @@ namespace Biob.Web.Controllers
             return NoContent();
         }
 
-        [HttpPatch("{ticketId}")]
-        public async Task<IActionResult> PartiallyUpdateTicket([FromRoute] Guid ticketId, JsonPatchDocument<TicketToUpdateDto> patchDoc)
+        [HttpPatch("{ticketId}", Name = "PartiallyUpdateTicket")]
+        public async Task<IActionResult> PartiallyUpdateTicket([FromRoute] Guid ticketId, JsonPatchDocument<TicketToUpdateDto> patchDoc, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (patchDoc == null)
             {
@@ -226,7 +313,22 @@ namespace Biob.Web.Controllers
 
                 var ticketToReturn = Mapper.Map<TicketDto>(ticketToAddToDb);
 
-                return CreatedAtRoute("GetTicket", new { ticketId = ticketToReturn.Id }, ticketToReturn);
+                if (mediaType == "application/vnd.biob.json+hateoas")
+                {
+                    var links = CreateLinksForTickets(ticketToReturn.Id, null);
+
+                    var linkedTicket = ticketToReturn.ShapeData(null) as IDictionary<string, object>;
+
+                    linkedTicket.Add("links", links);
+
+                    return CreatedAtRoute("GetTicket", new { ticketId = ticketToReturn.Id }, linkedTicket);
+                }
+                else
+                {
+                    return CreatedAtRoute("GetTicket", new { ticketId = ticketToReturn.Id }, ticketToReturn);
+                }
+
+                
             }
 
             var ticketToPatch = Mapper.Map<TicketToUpdateDto>(ticketFromDb);
@@ -248,6 +350,110 @@ namespace Biob.Web.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpOptions]
+        public IActionResult GetTicketsOptions()
+        {
+            Response.Headers.Add("Allow", "GET, OPTIONS"); //Todo: update what http methods are available
+            return Ok();
+        }
+
+        [HttpOptions("{ticketId}")]
+        public IActionResult GetTicketOptions()
+        {
+            Response.Headers.Add("Allow", "GET, PUT, POST, PATCH, OPTIONS"); //Todo: update what http methods are available
+            return Ok();
+        }
+
+        private ExpandoObject CreateHateoasResponse(PagedList<Ticket> ticketsPagedList, RequestParameters requestParameters)
+        {
+
+            var tickets = Mapper.Map<IEnumerable<TicketDto>>(ticketsPagedList);
+
+            var paginationMetadataWithLinks = new
+            {
+                ticketsPagedList.TotalCount,
+                ticketsPagedList.PageSize,
+                ticketsPagedList.CurrentPage,
+                ticketsPagedList.TotalPages
+            };
+
+            Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadataWithLinks));
+
+            var links = CreateLinksForTickets(requestParameters, ticketsPagedList.HasNext, ticketsPagedList.HasPrevious);
+
+            var shapedTickets = tickets.ShapeData(requestParameters.Fields);
+
+            var shapedTicketsWithLinks = shapedTickets.Select(ticket =>
+            {
+                var ticketDictionary = ticket as IDictionary<string, object>;
+                var ticketLinks = CreateLinksForTickets((Guid)ticketDictionary["Id"], requestParameters.Fields);
+
+                ticketDictionary.Add("links", ticketLinks);
+
+                return ticketDictionary;
+            });
+            if (requestParameters.IncludeMetadata)
+            {
+                var ticketsWithMetadata = new ExpandoObject();
+                ((IDictionary<string, object>)ticketsWithMetadata).Add("Metadata", paginationMetadataWithLinks);
+                ((IDictionary<string, object>)ticketsWithMetadata).Add("tickets", shapedTicketsWithLinks);
+                ((IDictionary<string, object>)ticketsWithMetadata).Add("links", links);
+                return ticketsWithMetadata;
+            }
+            else
+            {
+                var linkedCollection = new ExpandoObject();
+                ((IDictionary<string, object>)linkedCollection).Add("tickets", shapedTicketsWithLinks);
+                ((IDictionary<string, object>)linkedCollection).Add("links", links);
+                return linkedCollection;
+            }
+
+        }
+
+        private IEnumerable<LinkDto> CreateLinksForTickets(Guid id, string fields)
+        {
+            var links = new List<LinkDto>();
+
+            if (string.IsNullOrWhiteSpace(fields))
+            {
+                links.Add(new LinkDto(_urlHelper.Link("GetTicket", new { ticketId = id }), "self", "GET"));
+            }
+            else
+            {
+                links.Add(new LinkDto(_urlHelper.Link("GetTicket", new { ticketId = id, fields }), "self", "GET"));
+            }
+            links.Add(
+                new LinkDto(_urlHelper.Link("DeleteTicket", new { ticketId = id }), "delete_ticket", "DELETE")
+                );
+            links.Add(
+                new LinkDto(_urlHelper.Link("UpdateTicket", new { ticketId = id }), "update_ticket", "PUT")
+                );
+            links.Add(
+                new LinkDto(_urlHelper.Link("PartiallyUpdateTicket", new { ticketId = id }), "partially_update_ticket", "PATCH")
+                );
+            return links;
+        }
+
+        private IEnumerable<LinkDto> CreateLinksForTickets(RequestParameters requestParameters, bool hasNext, bool hasPrevious)
+        {
+            var links = new List<LinkDto>
+            {
+                new LinkDto(CreateUrlForResource(requestParameters, PageType.Current), "self", "GET")
+            };
+
+            if (hasNext)
+            {
+                new LinkDto(CreateUrlForResource(requestParameters, PageType.NextPage), "self", "GET");
+            }
+
+            if (hasPrevious)
+            {
+                new LinkDto(CreateUrlForResource(requestParameters, PageType.PreviousPage), "self", "GET");
+            }
+
+            return links;
         }
 
         private string CreateUrlForResource(RequestParameters requestParameters, PageType pageType)

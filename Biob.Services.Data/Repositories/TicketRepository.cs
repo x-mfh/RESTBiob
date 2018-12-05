@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Biob.Data.Data;
 using Biob.Data.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Biob.Services.Data.Helpers;
-using Biob.Services.Data.DtoModels;
 using Biob.Services.Web.PropertyMapping;
+using Biob.Services.Data.DtoModels.TicketDtos;
 
 namespace Biob.Services.Data.Repositories
 {
@@ -48,7 +47,8 @@ namespace Biob.Services.Data.Repositories
         public async Task<Ticket> GetTicketAsync(Guid id)
         {
             var foundTicket =  await _context.Tickets.Where(ticket => ticket.Id == id).FirstOrDefaultAsync();
-            if (foundTicket.IsDeleted)
+            //Make sure this is added to all repos?: if ticket is not null so it won't fail when checking isDeleted on a null object
+            if (foundTicket != null && foundTicket.IsDeleted)
             {
                 foundTicket = null;
             }
@@ -57,7 +57,7 @@ namespace Biob.Services.Data.Repositories
 
         }
 
-        public async Task<PagedList<Ticket>> GetAllTicketsAsync(Guid showtimeId, string orderBy, string searchQuery, int pageNumber, int pageSize)
+        public async Task<PagedList<Ticket>> GetAllTicketsByShowtimeIdAsync(Guid showtimeId, string orderBy, string searchQuery, int pageNumber, int pageSize)
         {
                                                             
             var collectionsBeforePaging =_context.Tickets
