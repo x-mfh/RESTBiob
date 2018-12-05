@@ -143,7 +143,7 @@ namespace Biob.Web.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost(Name = "CreateMovie")]
         public async Task<IActionResult> CreateMovieAsync([FromBody] MovieToCreateDto movieToCreate, [FromHeader(Name = "Accept")] string mediaType)
         {
             var movieToAdd = Mapper.Map<Movie>(movieToCreate);

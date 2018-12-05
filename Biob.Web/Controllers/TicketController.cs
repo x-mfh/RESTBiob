@@ -88,10 +88,8 @@ namespace Biob.Web.Controllers
                 return BadRequest();
             }
 
-            PagedList<Ticket> ticketsPagedList = await _ticketRepository.GetAllTicketsByShowtimeIdAsync(showtimeId,
-                                                                    requestParameters.OrderBy,
-                                                                    requestParameters.SearchQuery,
-                                                                    requestParameters.PageNumber, requestParameters.PageSize);
+            PagedList<Ticket> ticketsPagedList = await _ticketRepository.GetAllTicketsByShowtimeIdAsync(showtimeId, requestParameters.OrderBy, requestParameters.SearchQuery,
+                                                                                                        requestParameters.PageNumber, requestParameters.PageSize);
 
             var tickets = Mapper.Map<IEnumerable<TicketDto>>(ticketsPagedList);
 
@@ -129,8 +127,7 @@ namespace Biob.Web.Controllers
 
         [HttpGet("{ticketId}", Name = "GetTicket")]
         [GuidCheckActionFilter(new string[] { "movieId", "showtimeId", "ticketId" })]
-        public async Task<IActionResult> GetOneTicket([FromRoute] Guid movieId, [FromRoute] Guid showtimeId,
-                                                      [FromRoute]Guid ticketId, [FromQuery] string fields,
+        public async Task<IActionResult> GetOneTicket([FromRoute] Guid movieId, [FromRoute] Guid showtimeId,[FromRoute]Guid ticketId, [FromQuery] string fields,
                                                       [FromHeader(Name = "Accept")] string mediaType)
         {
 
@@ -170,10 +167,8 @@ namespace Biob.Web.Controllers
 
         [HttpPost(Name = "CreateTicket")]
         [GuidCheckActionFilter(new string[] { "movieId", "showtimeId", "ticketId" })]
-        public async Task<IActionResult> CreateTicketAsync([FromBody] TicketToCreateDto ticketToCreateDto,
-                                                           [FromHeader(Name = "Accept")] string mediaType,
-                                                           [FromRoute] Guid movieId, [FromRoute] Guid showtimeId,
-                                                           [FromRoute] Guid  ticketId)
+        public async Task<IActionResult> CreateTicketAsync([FromBody] TicketToCreateDto ticketToCreateDto, [FromHeader(Name = "Accept")] string mediaType,
+                                                           [FromRoute] Guid movieId, [FromRoute] Guid showtimeId, [FromRoute] Guid  ticketId)
         {
 
             if (!await _showtimeRepository.MovieExists(movieId))
@@ -246,11 +241,8 @@ namespace Biob.Web.Controllers
 
         [HttpPut("{ticketId}", Name = "UpdateTicket")]
         [GuidCheckActionFilter(new string[] { "movieId", "showtimeId", "ticketId" })]
-        public async Task<IActionResult> UpdateTicket([FromRoute] Guid ticketId, 
-                                                      [FromRoute] Guid movieId, 
-                                                      [FromRoute] Guid showtimeId,
-                                                      [FromBody] TicketToUpdateDto ticketToUpdate, 
-                                                      [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> UpdateTicket([FromRoute] Guid ticketId, [FromRoute] Guid movieId, [FromRoute] Guid showtimeId, 
+                                                        [FromBody] TicketToUpdateDto ticketToUpdate, [FromHeader(Name = "Accept")] string mediaType)
         {
             if (!await _showtimeRepository.MovieExists(movieId))
             {
@@ -320,7 +312,7 @@ namespace Biob.Web.Controllers
                                                                [FromHeader(Name = "Accept")] string mediaType)
         {
 
-            if (!await _showtimeRepository.MovieExists(movieId))
+            if (!await _ticketRepository.MovieExists(movieId))
             {
                 return NotFound();
             }
@@ -415,7 +407,7 @@ namespace Biob.Web.Controllers
 
             if (!await _ticketRepository.SaveChangesAsync())
             {
-                _logger.LogError($"Deleting movie: {ticketId} failed on save");
+                _logger.LogError($"Deleting ticket: {ticketId} failed on save");
             }
 
             return NoContent();
@@ -431,7 +423,7 @@ namespace Biob.Web.Controllers
         [HttpOptions("{ticketId}")]
         public IActionResult GetTicketOptions()
         {
-            Response.Headers.Add("Allow", "GET, PUT, POST, PATCH, OPTIONS");
+            Response.Headers.Add("Allow", "GET, PUT, PATCH, OPTIONS");
             return Ok();
         }
 
