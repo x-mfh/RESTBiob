@@ -31,10 +31,6 @@ namespace Biob.Services.Data.Repositories
         }
         public void AddTicket(Ticket ticketToAdd)
         {
-            if (ticketToAdd.Id == Guid.Empty)
-            {
-                ticketToAdd.Id = Guid.NewGuid();
-            }
             _context.Tickets.Add(ticketToAdd);
         }
 
@@ -46,15 +42,8 @@ namespace Biob.Services.Data.Repositories
 
         public async Task<Ticket> GetTicketAsync(Guid id)
         {
-            var foundTicket =  await _context.Tickets.Where(ticket => ticket.Id == id).FirstOrDefaultAsync();
-            //Make sure this is added to all repos?: if ticket is not null so it won't fail when checking isDeleted on a null object
-            if (foundTicket != null && foundTicket.IsDeleted)
-            {
-                foundTicket = null;
-            }
-
+            var foundTicket =  await _context.Tickets.Where(ticket => ticket.Id == id && !ticket.IsDeleted).FirstOrDefaultAsync();
             return foundTicket;
-
         }
 
         public async Task<PagedList<Ticket>> GetAllTicketsByShowtimeIdAsync(Guid showtimeId, string orderBy, string searchQuery, int pageNumber, int pageSize)

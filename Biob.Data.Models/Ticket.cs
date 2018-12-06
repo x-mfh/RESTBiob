@@ -8,8 +8,8 @@ namespace Biob.Data.Models
     [Table("Tickets")]
     public class Ticket : DeleteableModelBase<Guid>
     {
-        [ForeignKey("Customer")]
-        public Guid CustomerId { get; set; }
+        //[ForeignKey("Customer")]
+        //public Guid CustomerId { get; set; }
         [ForeignKey("Showtime")]
         public Guid ShowtimeId { get; set; }
         [ForeignKey("Seat")]

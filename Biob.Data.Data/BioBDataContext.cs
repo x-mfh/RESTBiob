@@ -234,7 +234,7 @@ namespace Biob.Data.Data
                 new Ticket()
                 {
                     Id = Guid.Parse("303814CA-54F0-4FBB-955B-7FFD33B10B9D"),
-                    CustomerId = Guid.Parse("64C986DF-A168-40CB-B5EA-AB2B20069A08"),
+                    //CustomerId = Guid.Parse("64C986DF-A168-40CB-B5EA-AB2B20069A08"),
                     ShowtimeId = Guid.Parse("092CA7C5-AE83-4A52-A38B-CFC7C8E40E9A"),
                     SeatId = Guid.Parse("5FD7F7C4-D90F-4D60-8878-067AF214A0DC"),
                     Paid = false,
@@ -243,7 +243,7 @@ namespace Biob.Data.Data
                 new Ticket()
                 {
                     Id = Guid.Parse("CE442AD4-37A4-43F4-9A6D-5F7AB15DF011"),
-                    CustomerId = Guid.Parse("64C986DF-A168-40CB-B5EA-AB2B20069A08"),
+                    //CustomerId = Guid.Parse("64C986DF-A168-40CB-B5EA-AB2B20069A08"),
                     ShowtimeId = Guid.Parse("092CA7C5-AE83-4A52-A38B-CFC7C8E40E9A"),
                     SeatId = Guid.Parse("603AB124-4BE6-40FD-9A5E-49BB4A5730DB"),
                     Paid = true,
@@ -253,7 +253,7 @@ namespace Biob.Data.Data
                 new Ticket()
                 {
                     Id = Guid.Parse("7F36E8E7-B5CD-43EF-A71D-8CFA2355D8AB"),
-                    CustomerId = Guid.Parse("64C986DF-A168-40CB-B5EA-AB2B20069A08"),
+                    //CustomerId = Guid.Parse("64C986DF-A168-40CB-B5EA-AB2B20069A08"),
                     ShowtimeId = Guid.Parse("5E0D5AD3-22B0-4BDC-808C-62B8F50D0796"),
                     SeatId = Guid.Parse("173595A9-917D-4DF9-9A6D-1A5D5B46104E"),
                     Paid = false,
@@ -262,7 +262,7 @@ namespace Biob.Data.Data
                 new Ticket()
                 {
                     Id = Guid.Parse("A9AEE74E-C644-4FC3-9A27-946D7C4CD037"),
-                    CustomerId = Guid.Parse("64C986DF-A168-40CB-B5EA-AB2B20069A08"),
+                    //CustomerId = Guid.Parse("64C986DF-A168-40CB-B5EA-AB2B20069A08"),
                     ShowtimeId = Guid.Parse("5E0D5AD3-22B0-4BDC-808C-62B8F50D0796"),
                     SeatId = Guid.Parse("70FE1293-99C5-43AA-82DF-FD0BEAA8076A"),
                     Paid = false,
