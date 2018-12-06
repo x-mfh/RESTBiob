@@ -57,7 +57,6 @@ namespace Biob.Services.Data.Helpers
                     {
                         orderDescending = !orderDescending;
                     }
-
                     source = source.OrderBy(destinationProperty + (orderDescending ? " descending" : " ascending"));
                 }
             }
