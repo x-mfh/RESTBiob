@@ -60,6 +60,8 @@ namespace Biob.Web.Api
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
+            services.AddCors();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -143,6 +145,15 @@ namespace Biob.Web.Api
             {
                 app.UseHsts();
             }
+
+            app.UseCors(options =>
+            {
+                options
+                    //  consider changing in produciton
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
 
             //app.UseAuthentication();
 
