@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import LayOutTest from './Components/LayOutTest'
+
+const API = 'https://hn.algolia.com/api/v1/search?query=';
+const DEFAULT_QUERY = 'redux';
 
 class App extends Component {
   render() {
     return (
-      <hej name="test"/>
+      <LayOutTest/>
     );
   }
-}
+};
 
 export default App;
