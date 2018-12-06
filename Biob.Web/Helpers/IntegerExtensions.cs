@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Biob.Web.Helpers
+namespace Biob.Web.Api.Helpers
 {
     public static class IntegerExtensions
     {

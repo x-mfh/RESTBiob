@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Biob.Services.Data.DtoModels.MovieDtos;
 
-namespace Biob.Web.Filters
+namespace Biob.Web.Api.Filters
 {
     public class MovieResultFilterAttribute : ResultFilterAttribute
     {

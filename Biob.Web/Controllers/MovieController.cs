@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Biob.Services.Data.Repositories;
 using AutoMapper;
 using Biob.Data.Models;
-using Biob.Web.Helpers;
+using Biob.Web.Api.Helpers;
 using Microsoft.AspNetCore.JsonPatch;
-using Biob.Web.Filters;
+using Biob.Web.Api.Filters;
 using Biob.Services.Web.PropertyMapping;
 using System.Collections.Generic;
 using Biob.Services.Data.Helpers;
@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using Biob.Services.Data.DtoModels.MovieDtos;
 
-namespace Biob.Web.Controllers
+namespace Biob.Web.Api.Controllers
 {
     [Route("/api/v1/movies")]
     [ApiController]

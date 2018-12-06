@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 
-namespace Biob.Web.Helpers
+namespace Biob.Web.Api.Helpers
 {
     public class ProccessingEntityObjectResultErrors : ObjectResult
     {

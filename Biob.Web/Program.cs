@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Biob.Web
+namespace Biob.Web.Api
 {
     public class Program
     {

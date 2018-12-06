@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using Biob.Data.Models;
-using Biob.Web.Helpers;
+using Biob.Web.Api.Helpers;
 using Biob.Services.Data.Repositories;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -26,7 +26,7 @@ using Biob.Services.Data.DtoModels.HallDtos;
 using Biob.Services.Data.DtoModels.SeatDtos;
 using Biob.Services.Data.DtoModels.ShowtimeDtos;
 
-namespace Biob.Web
+namespace Biob.Web.Api
 {
     public class Startup
     {
@@ -68,7 +68,7 @@ namespace Biob.Web
             //        //  IP of the identity server
             //        options.Authority = "https://localhost:44393/";
             //        options.RequireHttpsMetadata = false;
-            //        options.ApiName = "Biob.Web";
+            //        options.ApiName = "Biob.Web.Api";
             //    });
                 //.AddJwtBearer(options => 
                 //{

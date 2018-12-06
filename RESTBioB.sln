@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{12B48A3E-DA34-415F-BCCC-393EA385B22C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Biob.Web", "Biob.Web\Biob.Web.csproj", "{D2912CC9-BE1B-43B8-BF7C-AA47DEDCB091}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Biob.Web.Api", "Biob.Web\Biob.Web.Api.csproj", "{D2912CC9-BE1B-43B8-BF7C-AA47DEDCB091}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{84A933EE-313A-41B0-833A-02137E07DA04}"
 EndProject

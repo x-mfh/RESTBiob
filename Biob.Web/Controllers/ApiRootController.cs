@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-namespace Biob.Web.Controllers
+namespace Biob.Web.Api.Controllers
 {
     [Route("api/v1")]
     [ApiController]

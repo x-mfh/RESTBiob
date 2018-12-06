@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Biob.Web": {
+    "Biob.Web.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",

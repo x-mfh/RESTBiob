@@ -1,7 +1,7 @@
 ﻿using Biob.Data.Models;
 using Biob.Services.Data.Repositories;
 using Biob.Services.Web.PropertyMapping;
-using Biob.Web.Helpers;
+using Biob.Web.Api.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,9 +13,9 @@ using AutoMapper;
 using Biob.Services.Data.Helpers;
 using System.Dynamic;
 using Microsoft.Extensions.Logging;
-using Biob.Web.Filters;
+using Biob.Web.Api.Filters;
 
-namespace Biob.Web.Controllers
+namespace Biob.Web.Api.Controllers
 {
     [Route("/api/v1/movies/{movieId}/showtimes/{showtimeId}/tickets")]
     [ApiController]

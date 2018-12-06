@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 
-namespace Biob.Web.Filters
+namespace Biob.Web.Api.Filters
 {
     public class GuidCheckActionFilter : ActionFilterAttribute
     {

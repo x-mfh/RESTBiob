@@ -3,7 +3,7 @@ using Biob.Data.Models;
 using Biob.Services.Data.DtoModels.GenreDtos;
 using Biob.Services.Data.Helpers;
 using Biob.Services.Data.Repositories;
-using Biob.Web.Filters;
+using Biob.Web.Api.Filters;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,7 +13,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Biob.Web.Controllers
+namespace Biob.Web.Api.Controllers
 {
     [Route("api/v1/genres")]
     [ApiController]

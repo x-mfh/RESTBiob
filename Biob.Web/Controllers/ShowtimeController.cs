@@ -4,8 +4,8 @@ using Biob.Services.Data.DtoModels.ShowtimeDtos;
 using Biob.Services.Data.Helpers;
 using Biob.Services.Data.Repositories;
 using Biob.Services.Web.PropertyMapping;
-using Biob.Web.Filters;
-using Biob.Web.Helpers;
+using Biob.Web.Api.Filters;
+using Biob.Web.Api.Helpers;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,7 +15,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Biob.Web.Controllers
+namespace Biob.Web.Api.Controllers
 {
     [Route("/api/v1/movies/{movieId}/showtimes")]
     [ApiController]
