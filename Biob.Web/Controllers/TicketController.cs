@@ -186,30 +186,26 @@ namespace Biob.Web.Controllers
                 return NotFound();
             }
 
+
+
+
             if (ticketToCreateDto.SeatId == Guid.Empty)
             {
-                var availableSeat = await _seatRepository.GetFirstAvailableSeatByShowtimeIdAsync(showtimeId);
-                if (availableSeat == null)
-                {
-                    //Not sure if this is enough. Could be tested. 
-                    _logger.LogError("No available seats");
+                return BadRequest();
+                //var availableSeat = await _seatRepository.GetFirstAvailableSeatByShowtimeIdAsync(showtimeId);
+                //if (availableSeat == null)
+                //{
+                //    //Not sure if this is enough. Could be tested. 
+                //    _logger.LogError("No available seats");
                     
-                }
-                ticketToCreateDto.SeatId = availableSeat.Id;
+                //}
+                //ticketToCreateDto.SeatId = availableSeat.Id;
             }
 
             var ticket = Mapper.Map<Ticket>(ticketToCreateDto);
 
 
             ticket.ShowtimeId = showtimeId;
-
-            //Not sure if this empty check will work/should be here, but adding for now.
-            if (ticket.SeatId == Guid.Empty || ticket.ShowtimeId == Guid.Empty 
-                //|| ticket.CustomerId == Guid.Empty //TODO: add when it's present
-                )
-            {
-                return BadRequest(); 
-            }
             
             ticket.Id = Guid.NewGuid();
 
@@ -393,9 +389,19 @@ namespace Biob.Web.Controllers
         }
 
         [HttpDelete("{ticketId}", Name = "DeleteTicket")]
-        [GuidCheckActionFilter(new string[] { "ticketId" })]
-        public async Task<IActionResult> DeleteTicketAsync([FromRoute] Guid ticketId)
+        [GuidCheckActionFilter(new string[] { "movieId", "showtimeId", "ticketId" })]
+        public async Task<IActionResult> DeleteTicketAsync([FromRoute] Guid movieId, [FromRoute] Guid showtimeId,[FromRoute] Guid ticketId)
         {
+            if (!await _ticketRepository.MovieExists(movieId))
+            {
+                return NotFound();
+            }
+
+            if (!await _ticketRepository.ShowtimeExists(showtimeId))
+            {
+                return NotFound();
+            }
+
             var ticketFromDb = await _ticketRepository.GetTicketAsync(ticketId);
 
             if (ticketFromDb == null)
