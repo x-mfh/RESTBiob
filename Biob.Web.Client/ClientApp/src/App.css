@@ -1,6 +1,6 @@
 * {
   font-family: Arial, Verdana, sans-serif;
-  color: #665544;
+  color: #ccc3b9;
   text-align: center;}
 body {
   width: 960px;
@@ -9,11 +9,11 @@ body {
   overflow: auto;
   height: 100%;}
 #nav, #feature, #footer {
-  background-color: #efefef;
+  background-color: #494545;
   padding: 10px;
   margin: 10px;}
 .column1, .column2, .column3 {
-  background-color: #efefef;
+  background-color: #494545;
   width: 300px;
   float: left;
   margin: 10px;}

@@ -3,9 +3,9 @@ class Footer extends Component {
   render() {
     return (
       <footer>
-		<div id="footer">
-			<p>&copy; Footer</p>
-		</div>
+		    <div id="footer">
+			    <p>&copy; Footer</p>
+		    </div>
       </footer>
     )
   }
