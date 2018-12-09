@@ -2,7 +2,7 @@ import './Home.css';
 import React, { Component } from 'react';
 import axios from 'axios';
 
-var url = 'https://localhost:44390/api/v1/movies/';
+var url = 'https://localhost:44390/api/v1/movies';
 
 class Movies extends Component {
   state = {
@@ -18,10 +18,15 @@ class Movies extends Component {
 
   render() {
     return (
-      <u>
-        {this.state.movies.map(movies => <div>{movies.id}</div>)}
-      </u>
-    );
+			<div class="wrapper">
+      {this.state.movies.map(movies =>
+        <div class="pictureContent">
+        <img src={movies.poster}></img>
+          <h1>{movies.title}</h1>
+          <p>{movies.description}</p>
+        </div>)}
+			</div>
+    )
   }
 
 }
