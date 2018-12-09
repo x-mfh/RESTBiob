@@ -1,0 +1,25 @@
+.wrapper {
+  width: 100%;
+  margin: 0 auto;
+  }
+    
+.pictureContent {
+    width: 250px;
+    margin: 20px 20px 20px 20px;
+    background-color: #333;
+    padding: 10px;
+    float: left;
+}
+
+.pictureContent h1{
+    font-size: 20px
+}
+.pictureContent p{
+    font-size: 15px;
+    text-align: left;
+}
+
+img{
+    width: 250px;
+    height: 300px;
+}

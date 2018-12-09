@@ -1,22 +1,12 @@
 * {
   font-family: Arial, Verdana, sans-serif;
   color: #ccc3b9;
-  text-align: center;}
+}
 body {
-  width: 960px;
-  margin: 0 auto;}
-#content {
-  overflow: auto;
-  height: 100%;}
-#nav, #feature, #footer {
-  background-color: #494545;
-  padding: 10px;
-  margin: 10px;}
-.column1, .column2, .column3 {
-  background-color: #494545;
-  width: 300px;
-  float: left;
-  margin: 10px;}
-li {
-  display: inline;
-  padding: 5px;}
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 300;
+}
