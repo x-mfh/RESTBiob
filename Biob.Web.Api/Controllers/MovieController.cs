@@ -14,6 +14,7 @@ using System.Dynamic;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using Biob.Services.Data.DtoModels.MovieDtos;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Biob.Web.Api.Controllers
 {
@@ -54,9 +55,18 @@ namespace Biob.Web.Api.Controllers
             });
         }
 
+
+        [SwaggerOperation(
+            Summary = "Retrieve every movie",
+            Description = "Retrieves every movie in the database",
+            Consumes = new string[] {},
+            Produces = new string[] { "application/json", "application/vnd.biob.json+hateoas" })]
+        [SwaggerResponse(200, "Successfully retrieved every movie", typeof(MovieDto[]))]
+        [SwaggerResponse(400, "Request data is invalid", null)]
         [HttpGet(Name = "GetMovies")]
-        public async Task<IActionResult> GetAllMoviesAsync([FromQuery]RequestParameters requestParameters,
-                                                      [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> GetAllMoviesAsync(
+            [FromQuery] RequestParameters requestParameters,
+            [FromHeader(Name = "Accept")] string mediaType)
         {
 
             if (string.IsNullOrWhiteSpace(requestParameters.OrderBy))
@@ -111,9 +121,19 @@ namespace Biob.Web.Api.Controllers
             }
         }
 
+        [SwaggerOperation(
+            Summary = "Retrieve one movie by ID",
+            Description = "Retrieves movie in the database by id",
+            Consumes = new string[] { },
+            Produces = new string[] { "application/json", "application/vnd.biob.json+hateoas" })]
+        [SwaggerResponse(200, "Successfully retrieved a movie", typeof(MovieDto))]
+        [SwaggerResponse(400, "Request data is invalid", null)]
         [HttpGet("{movieId}", Name = "GetMovie")]
         [GuidCheckActionFilter(new string[] { "movieId" })]
-        public async Task<IActionResult> GetOneMovieAsync([FromRoute]Guid movieId, [FromQuery] string fields, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> GetOneMovieAsync(
+            [FromRoute, SwaggerParameter(Description = "the ID to find movie by", Required = true)] Guid movieId,
+            [FromQuery, SwaggerParameter(Description = "fields requested for data shaping", Required = false)] string fields,
+            [FromHeader(Name = "Accept"), SwaggerParameter(Description = "media type to request betwen json or json+hateoas")] string mediaType)
         {
             if (!_typeHelperService.TypeHasProperties<MovieDto>(fields))
             {
@@ -143,8 +163,17 @@ namespace Biob.Web.Api.Controllers
             }
         }
 
+
+        [SwaggerOperation(
+            Summary = "Create a movie",
+            Description = "creates a movie in the database",
+            Consumes = new string[] { "application/json" },
+            Produces = new string[] { "application/json", "application/vnd.biob.json+hateoas" })]
+        [SwaggerResponse(200, "Successfully created a movie", typeof(MovieDto))]
         [HttpPost(Name = "CreateMovie")]
-        public async Task<IActionResult> CreateMovieAsync([FromBody] MovieToCreateDto movieToCreate, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> CreateMovieAsync(
+            [FromBody, SwaggerParameter(Description = "Movie to create", Required = true)] MovieToCreateDto movieToCreate,
+            [FromHeader(Name = "Accept"), SwaggerParameter(Description = "media type to request betwen json or json+hateoas")] string mediaType)
         {
             var movieToAdd = Mapper.Map<Movie>(movieToCreate);
             movieToAdd.Id = Guid.NewGuid();
@@ -193,9 +222,19 @@ namespace Biob.Web.Api.Controllers
                
         }
 
+        [SwaggerOperation(
+            Summary = "Update a movie",
+            Description = "Updates a movie in the database",
+            Consumes = new string[] { "application/json" },
+            Produces = new string[] { "application/json", "application/vnd.biob.json+hateoas" })]
+        [SwaggerResponse(200, "Successfully updated a movie", typeof(MovieDto))]
+        [SwaggerResponse(400, "Request data is invalid", null)]
         [HttpPut("{movieId}",Name = "UpdateMovie")]
         [GuidCheckActionFilter(new string[] { "movieId" })]
-        public async Task<IActionResult> UpdateMovieAsync([FromRoute] Guid movieId, [FromBody] MovieToUpdateDto movieToUpdate, [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> UpdateMovieAsync(
+            [FromRoute, SwaggerParameter(Description = "Id of movie to update", Required = true)] Guid movieId,
+            [FromBody, SwaggerParameter(Description = "Movie to update", Required = true)] MovieToUpdateDto movieToUpdate,
+            [FromHeader(Name = "Accept"), SwaggerParameter(Description = "media type to request betwen json or json+hateoas")] string mediaType)
         {
 
             var movieFromDb = await _movieRepository.GetMovieAsync(movieId);
@@ -288,10 +327,19 @@ namespace Biob.Web.Api.Controllers
             return NoContent();
         }
 
+        [SwaggerOperation(
+            Summary = "Partially update a movie",
+            Description = "Partially updates a movie in the database",
+            Consumes = new string[] { "application/json-patch+json" },
+            Produces = new string[] { "application/json", "application/vnd.biob.json+hateoas" })]
+        [SwaggerResponse(200, "Successfully partially updated a movie", typeof(MovieDto))]
+        [SwaggerResponse(400, "Request data is invalid", null)]
         [HttpPatch("{movieId}", Name = "PartiallyUpdateMovie")]
         [GuidCheckActionFilter(new string[] { "movieId" })]
-        public async Task<IActionResult> PartiuallyUpdateMovieAsync([FromRoute] Guid movieId, JsonPatchDocument<MovieToUpdateDto> patchDoc,
-                                                               [FromHeader(Name = "Accept")] string mediaType)
+        public async Task<IActionResult> PartiuallyUpdateMovieAsync(
+            [FromRoute, SwaggerParameter(Description = "Id of movie to update", Required = true)] Guid movieId,
+            [FromBody, SwaggerParameter(Description = "Jsonpatch operation document to update", Required = true)] JsonPatchDocument<MovieToUpdateDto> patchDoc,
+            [FromHeader(Name = "Accept"), SwaggerParameter(Description = "media type to request betwen json or json+hateoas")] string mediaType)
         {
             if (patchDoc == null)
             {
@@ -509,9 +557,16 @@ namespace Biob.Web.Api.Controllers
             return NoContent();
         }
 
+        [SwaggerOperation(
+            Summary = "Soft deletes a movie",
+            Description = "Soft deletes a movie in the database",
+            Consumes = new string[] { },
+            Produces = new string[] { "application/json", "application/vnd.biob.json+hateoas" })]
+        [SwaggerResponse(200, "Successfully deleted a movie", null)]
+        [SwaggerResponse(400, "Request data is invalid", null)]
         [HttpDelete("{movieId}", Name = "DeleteMovie")]
         [GuidCheckActionFilter(new string[] { "movieId" })]
-        public async Task<IActionResult> DeleteMovieAsync([FromRoute] Guid movieId)
+        public async Task<IActionResult> DeleteMovieAsync([FromRoute, SwaggerParameter(Description = "Id of movie to update", Required = true)] Guid movieId)
         {
             var movieFromDb = await _movieRepository.GetMovieAsync(movieId);
 
@@ -546,6 +601,12 @@ namespace Biob.Web.Api.Controllers
             return NoContent();
         }
 
+        [SwaggerOperation(
+            Summary = "Get option information",
+            Description = "Gets HTTP methods options for this route",
+            Consumes = new string[] { },
+            Produces = new string[] { })]
+        [SwaggerResponse(200, "Successfully returned options in http header", null)]
         [HttpOptions]
         public IActionResult GetMoviesOptions()
         {
@@ -553,6 +614,12 @@ namespace Biob.Web.Api.Controllers
             return Ok();
         }
 
+        [SwaggerOperation(
+            Summary = "Get option information",
+            Description = "Gets HTTP methods options for this route",
+            Consumes = new string[] { },
+            Produces = new string[] { })]
+        [SwaggerResponse(200, "Successfully returned options in http header", null)]
         [HttpOptions("{movieId}")]
         public IActionResult GetMovieOptions()
         {

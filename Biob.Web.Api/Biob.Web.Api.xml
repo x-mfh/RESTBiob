@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Biob.Web.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync(Biob.Web.Api.Helpers.RequestParameters,System.String)">
+            <summary>
+            Retrives all the movies
+            </summary>
+            <param name="requestParameters"></param>
+            <param name="mediaType"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

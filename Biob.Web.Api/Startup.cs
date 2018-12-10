@@ -25,6 +25,7 @@ using Biob.Services.Data.DtoModels.TicketDtos;
 using Biob.Services.Data.DtoModels.HallDtos;
 using Biob.Services.Data.DtoModels.SeatDtos;
 using Biob.Services.Data.DtoModels.ShowtimeDtos;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Biob.Web.Api
 {
@@ -58,11 +59,16 @@ namespace Biob.Web.Api
             .AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1); ;
+
+            services.AddSwaggerGen(setupAction => 
+            {
+                setupAction.EnableAnnotations();
+                setupAction.SwaggerDoc("v1", new Info { Title = "Biob RESTful api", Version = "v1" });
             });
 
             services.AddCors();
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             //    .AddIdentityServerAuthentication(options =>
@@ -201,6 +207,13 @@ namespace Biob.Web.Api
             app.UseIpRateLimiting();
             app.UseHttpCacheHeaders();
             app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.EnableDeepLinking();
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Biob RESTFUL api v1");
+            });
+
         }
     }
 }
