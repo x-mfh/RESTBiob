@@ -70,6 +70,15 @@ namespace Biob.Web.Api
 
             services.AddCors();
 
+            //services.AddAuthentication("Bearer")
+            //.AddIdentityServerAuthentication(options =>
+            //{
+            //    options.Authority = "http://localhost:5000";
+            //    options.RequireHttpsMetadata = false;
+
+            //    options.ApiName = "api1";
+            //});
+
             //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             //    .AddIdentityServerAuthentication(options =>
             //    {

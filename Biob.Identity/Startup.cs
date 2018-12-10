@@ -20,6 +20,7 @@ namespace Biob.Identity
         {
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.AddIdentityServer()
                 //  tell identityserver to use certificate
                 //.AddSigningCredential("CN=ceritficateName")
