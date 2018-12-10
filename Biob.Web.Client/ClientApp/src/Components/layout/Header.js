@@ -8,13 +8,13 @@ class NavBar extends Component {
     <header>
 			<div className="topNavContainer">
 				<nav>
-          <div class="toggle">
-            <i class ="fa fa-bars" aria-hidden="true"></i>
+          <div className="toggle">
+            <i className ="fa fa-bars" aria-hidden="true"></i>
           </div>
 					<ul>
-						<li><Link to='/' className='navLink'><a>Home</a></Link></li>
-						<li><Link to='/showtimes' className='navLink'><a>Showtimes</a></Link></li>
-						<li><Link to='/' className='navLink'><a>Movies</a></Link></li>
+						<li><Link to='/' className='navLink'>Home</Link></li>
+						<li><Link to='/showtimes' className='navLink'>Showtimes</Link></li>
+						<li><Link to='/movies' className='navLink'>Movies</Link></li>
 					</ul>
 				</nav>
 			</div>

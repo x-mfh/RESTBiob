@@ -30,7 +30,7 @@
   nav li:hover {
     background-color: rgb(141, 10, 10);
   }
-  nav li a {
+  nav li .navLink {
     color: #fff;
     text-decoration: none;
     text-transform: uppercase;

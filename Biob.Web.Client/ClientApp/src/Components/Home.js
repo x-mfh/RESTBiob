@@ -18,14 +18,16 @@ class Movies extends Component {
 
   render() {
     return (
-			<div class="wrapper">
-      {this.state.movies.map(movies =>
-        <div class="pictureContent">
-        <img src={movies.poster}></img>
-          <h1>{movies.title}</h1>
-          <p>{movies.description}</p>
-        </div>)}
-			</div>
+			<div className="wrapper">
+        {this.state.movies.map(movies =>
+        (<div key={movies.id}>
+          <div className="pictureContent">
+            <img src={movies.poster}></img>
+            <h1>{movies.title}</h1>
+            <p>{movies.description}</p>
+          </div>
+        </div>))}
+		  </div>
     )
   }
 
