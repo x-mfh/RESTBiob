@@ -623,7 +623,7 @@ namespace Biob.Web.Api.Controllers
         [HttpOptions("{movieId}")]
         public IActionResult GetMovieOptions()
         {
-            Response.Headers.Add("Allow", "GET,PATCH,PUT,OPTIONS");
+            Response.Headers.Add("Allow", "GET,PATCH,PUT,OPTIONS,DELETE");
             return Ok();
         }
 
