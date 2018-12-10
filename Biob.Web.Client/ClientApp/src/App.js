@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import Home from './Components/Pages/Showtimes/Home';
-import Showtimes from './Components/Pages/Showtimes/Showtimes';
-import Header from './Components/Layout/Header/Header';
-import Footer from './Components/Layout/Footer/Footer';
+import Home from './Components/Home/Home';
+import Showtimes from './Components/Showtimes/Showtimes';
+import Header from './Components/Layouts/Header/Header';
+import Footer from './Components/Layouts/Footer/Footer';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 
