@@ -1,28 +1,32 @@
 .wrapper {
-  width: 100%;
-  margin: 0 auto;
+  width: 1200px;
+  margin: auto;
+  
   }
     
 .pictureContent {
     width: 250px;
     height: 400px;
-    margin: 20px 20px 20px 20px;
+    margin: 20px 0px 0px 20px;
     background-color: #333;
     padding: 10px;
     float: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-.pictureContent h1{
-    font-size: 20px
+.textContent {
+  overflow:auto;
+  height: 100px;
 }
-.pictureContent p{
-    font-size: 15px;
+
+.textContent h1 {
+    font-size: 15px
+}
+.textContent p {
+    font-size: 12px;
     text-align: left;
 }
 
-img{
+img {
     width: 250px;
     height: 300px;
 }

@@ -23,8 +23,10 @@ class Movies extends Component {
         (<div key={movies.id}>
           <div className="pictureContent">
             <img src={movies.poster}></img>
-            <h1>{movies.title}</h1>
-            <p>{movies.description}</p>
+            <div className="textContent">
+              <h1>{movies.title}</h1>
+              <p>{movies.description}</p>
+            </div>
           </div>
         </div>))}
 		  </div>

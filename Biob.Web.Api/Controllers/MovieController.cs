@@ -566,7 +566,7 @@ namespace Biob.Web.Api.Controllers
         [SwaggerResponse(400, "Request data is invalid", null)]
         [HttpDelete("{movieId}", Name = "DeleteMovie")]
         [GuidCheckActionFilter(new string[] { "movieId" })]
-        public async Task<IActionResult> DeleteMovieAsync([FromRoute, SwaggerParameter(Description = "Id of movie to update", Required = true)] Guid movieId)
+        public async Task<IActionResult> DeleteMovieAsync([FromRoute, SwaggerParameter(Description = "Id of movie to delete", Required = true)] Guid movieId)
         {
             var movieFromDb = await _movieRepository.GetMovieAsync(movieId);
 
