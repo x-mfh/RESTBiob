@@ -1,27 +1,10 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import Oidc from 'oidc-client';
+import userManager from './UserManager';
 
 
 class Login extends Component
 {
-
-  constructor(props)
-  {
-    super(props)
-    this.state = {
-      config: {
-        authority: "https://localhost:44393/",
-        client_id: "js",
-        redirect_uri: "https://localhost:44393/callback.html",
-        response_type: "id_token token",
-        scope:"openid profile api1",
-        post_logout_redirect_uri : "https://localhost:44393/index.html",
-      },
-      mgr: new Oidc.UserManager(this.state.config)
-    }
-  }
-
   GetUser() {
     this.state.mgr.getUser().then(user => {
       if (user) {
@@ -36,7 +19,7 @@ class Login extends Component
 
   Api()
   {
-    this.state.mgr.getUser().then(user => {
+    userManager.getUser().then(user => {
       let url = 'http://localhost:5001/identity';
       axios.get(url, { headers: { 'Authorization': 'Bearer ' + user.access_token } })
       .then(data => {
@@ -44,16 +27,21 @@ class Login extends Component
       });
     });
   }
-  Logout()
+  Logout = (event) =>
   {
-    this.state.mgr.signoutRedirect();
+    event.preventDefault();
+    userManager.signoutRedirect();
+    userManager.removeUser();
+  }
+  login() {
+
   }
   render() {
     return (
       <div>
-        <button onClick={this.state.mgr.signinRedirect}>Login</button>
+        <button onClick={userManager.signinRedirect}>Login</button>
         <button onClick={this.Api}>Call Api</button>
-        <button onClick={this.Logout}>Logout</button>
+        <button onClick={(event) => this.Logout(event)}>Logout</button>
         <pre className="Results"></pre>
       </div>
     );
