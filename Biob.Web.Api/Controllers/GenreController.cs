@@ -122,14 +122,14 @@ namespace Biob.Web.Api.Controllers
                 return CreatedAtRoute("GetGenre", new { genreId = genreToReturn.Id }, linkedGenre);
             }
         
-                return CreatedAtRoute("GetGenre", new { genreId = genreToReturn.Id }, genreToReturn);
+            return CreatedAtRoute("GetGenre", new { genreId = genreToReturn.Id }, genreToReturn);
         }
 
         [SwaggerOperation(
             Summary = "Partially update a genre",
             Description = "Partially updates a genre in the database",
             Consumes = new string[] { "application/json-patch+json" },
-            Produces = new string[] { "application/json", "application/vnd.biob.json+hateoas" })]
+            Produces = new string[] { "application/json" })]
         [SwaggerResponse(200, "Successfully partially updated a genre", typeof(GenreDto))]
         [SwaggerResponse(400, "Request data is invalid", null)]
         [HttpPatch("{genreId}", Name = "PartiallyUpdateGenre")]
@@ -166,7 +166,7 @@ namespace Biob.Web.Api.Controllers
             Summary = "Update a genre",
             Description = "Updates a genre in the database",
             Consumes = new string[] { "application/json" },
-            Produces = new string[] { "application/json", "application/vnd.biob.json+hateoas" })]
+            Produces = new string[] { "application/json" })]
         [SwaggerResponse(200, "Successfully updated a genre", typeof(GenreDto))]
         [SwaggerResponse(400, "Request data is invalid", null)]
         [HttpPut("{genreId}", Name = "UpdateGenre")]
@@ -194,7 +194,7 @@ namespace Biob.Web.Api.Controllers
             Summary = "Hard deletes a genre",
             Description = "Hard deletes a genre in the database",
             Consumes = new string[] { },
-            Produces = new string[] { "application/json", "application/vnd.biob.json+hateoas" })]
+            Produces = new string[] { "application/json" })]
         [SwaggerResponse(200, "Successfully deleted a genre", null)]
         [SwaggerResponse(400, "Request data is invalid", null)]
         [HttpDelete("{genreId}", Name = "DeleteGenre")]

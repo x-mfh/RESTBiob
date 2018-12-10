@@ -194,7 +194,8 @@ namespace Biob.Web.Api.Controllers
         [GuidCheckActionFilter(new string[] { "hallId" })]
         public async Task<IActionResult> PartiuallyUpdateHallByIdAsync(
             [FromRoute, SwaggerParameter(Description = "Id of hall to update", Required = true)] Guid hallId,
-            [FromBody, SwaggerParameter(Description = "Jsonpatch operation document to update", Required = true)] JsonPatchDocument<HallToUpdateDto> patchDoc)
+            [FromBody, SwaggerParameter(Description = "Jsonpatch operation document to update", Required = true)] JsonPatchDocument<HallToUpdateDto> patchDoc,
+            [FromHeader(Name = "Accept"), SwaggerParameter(Description = "media type to request betwen json or json+hateoas")] string mediaType)
         {
             if (patchDoc == null)
             {
@@ -225,6 +226,17 @@ namespace Biob.Web.Api.Controllers
 
                 var hallToReturn = Mapper.Map<HallDto>(hallToAddToDb);
 
+                if (mediaType == "application/vnd.biob.json+hateoas")
+                {
+                    var links = CreateLinksForHall(hallToReturn.Id);
+
+                    var linkedHall = hallToReturn.ShapeData(null) as IDictionary<string, object>;
+
+                    linkedHall.Add("links", links);
+
+                    return CreatedAtRoute("GetHall", new { hallId = hallToReturn.Id }, linkedHall);
+                }
+
                 return CreatedAtRoute("GetHall", new { hallId = hallToReturn.Id }, hallToReturn);
             }
 
@@ -252,7 +264,7 @@ namespace Biob.Web.Api.Controllers
             Summary = "Hard deletes a hall",
             Description = "Hard deletes a hall in the database",
             Consumes = new string[] { },
-            Produces = new string[] { "application/json", "application/vnd.biob.json+hateoas" })]
+            Produces = new string[] { "application/json" })]
         [SwaggerResponse(200, "Successfully deleted a hall", null)]
         [SwaggerResponse(400, "Request data is invalid", null)]
         [HttpDelete("{hallId}", Name = "DeleteHall")]
