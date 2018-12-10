@@ -90,9 +90,8 @@ namespace Biob.Web.Api.Controllers
         }
 
         [HttpPatch("{genreId}", Name = "PartiallyUpdateGenre")]
-        //[HttpPut("{genreId}", Name = "UpdateGenre")]
         [GuidCheckActionFilter(new string[] { "genreId" })]
-        public async Task<IActionResult> UpdateGenreAsync([FromRoute] Guid genreId, JsonPatchDocument<GenreToUpdateDto> patchDoc)
+        public async Task<IActionResult> PartiallyUpdateGenreAsync([FromRoute] Guid genreId, JsonPatchDocument<GenreToUpdateDto> patchDoc)
         {
             if (patchDoc == null)
             {
@@ -100,11 +99,6 @@ namespace Biob.Web.Api.Controllers
             }
 
             var genreFromDb = await _genreRepository.GetGenreByIdAsync(genreId);
-
-            if (!await _genreRepository.SaveChangesAsync())
-            {
-                _logger.LogError("Saving changes to database while creating a genre failed");
-            }
 
             var genreToPatch = Mapper.Map<GenreToUpdateDto>(genreFromDb);
 
@@ -119,7 +113,27 @@ namespace Biob.Web.Api.Controllers
                 _logger.LogError($"Partially updating movie: {genreId} failed on save");
             }
 
-            return CreatedAtRoute("GetGenre", new { genreId }, genreToPatch);
+            return NoContent();
+
+        }
+
+
+        [HttpPut("{genreId}", Name = "UpdateGenre")]
+        [GuidCheckActionFilter(new string[] { "genreId" })]
+        public async Task<IActionResult> UpdateGenreAsync([FromRoute] Guid genreId, [FromBody] GenreToUpdateDto genreToUpdate)
+        {
+            var genreFromDb = await _genreRepository.GetGenreByIdAsync(genreId);
+
+            Mapper.Map(genreToUpdate, genreFromDb);
+
+            _genreRepository.UpdateGenre(genreFromDb);
+
+            if (!await _genreRepository.SaveChangesAsync())
+            {
+                _logger.LogError($"Partially updating movie: {genreId} failed on save");
+            }
+
+            return NoContent();
 
         }
 
