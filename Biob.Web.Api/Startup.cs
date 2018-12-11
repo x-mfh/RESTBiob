@@ -68,7 +68,24 @@ namespace Biob.Web.Api
                 setupAction.SwaggerDoc("v1", new Info { Title = "Biob RESTful api", Version = "v1" });
             });
 
-            services.AddCors();
+            services.AddCors(options => 
+            {
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins("http://localhost:3000")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
+            //services.AddAuthentication("Bearer")
+            //.AddIdentityServerAuthentication(options =>
+            //{
+            //    options.Authority = "http://localhost:5000";
+            //    options.RequireHttpsMetadata = false;
+
+            //    options.ApiName = "api1";
+            //});
 
             //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             //    .AddIdentityServerAuthentication(options =>
@@ -152,14 +169,16 @@ namespace Biob.Web.Api
                 app.UseHsts();
             }
 
-            app.UseCors(options =>
-            {
-                options
-                    //  consider changing in produciton
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            });
+            //app.UseCors(options =>
+            //{
+            //    options
+            //        //  consider changing in produciton
+            //        .AllowAnyOrigin()
+            //        .AllowAnyMethod()
+            //        .AllowAnyHeader();
+            //});
+
+            app.UseCors("default");
 
             //app.UseAuthentication();
 

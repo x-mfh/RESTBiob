@@ -97,7 +97,26 @@ namespace Biob.Identity
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientSecrets =  { new Secret("secret".ToSha256()) },
                     AllowedScopes = { "Biob.Web" }
+                },
+                new Client
+                {
+                    ClientId = "js",
+                    ClientName = "JavaScript Client",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+
+                    RedirectUris =           { "http://localhost:3000/callback" },
+                    AllowedCorsOrigins =     { "http://localhost:3000" },
+
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "api1"
+                    }
                 }
+
+
             };
         }
 
@@ -109,7 +128,8 @@ namespace Biob.Identity
                 new IdentityResources.Email(),
                 new IdentityResources.Profile(),
                 new IdentityResource(JwtClaimTypes.PhoneNumber, "Your phone number", new List<string> {  JwtClaimTypes.PhoneNumber}),
-                new IdentityResource(JwtClaimTypes.Role, "Your role(s)", new List<string>() { JwtClaimTypes.Role })
+                new IdentityResource(JwtClaimTypes.Role, "Your role(s)", new List<string>() { JwtClaimTypes.Role }),
+                new IdentityResource("api1", new List<string>() { JwtClaimTypes.Role })
             };
         }
     }
