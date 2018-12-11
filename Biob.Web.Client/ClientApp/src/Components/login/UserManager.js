@@ -2,11 +2,10 @@ import { createUserManager } from 'redux-oidc';
 
 const userManagerConfig = {
   client_id: 'js',
-  redirect_uri: 'http://localhost:5100/callback',
+  redirect_uri: 'http://localhost:3000/callback',
   response_type: 'token id_token',
   scope:"openid profile api1",
   authority: 'https://localhost:44393/',
-  silent_redirect_uri: 'http://localhost:5100/silent_renew.html',
   automaticSilentRenew: true,
   filterProtocolClaims: true,
   loadUserInfo: true,

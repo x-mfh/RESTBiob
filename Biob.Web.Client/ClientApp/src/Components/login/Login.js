@@ -5,18 +5,6 @@ import userManager from './UserManager';
 
 class Login extends Component
 {
-  GetUser() {
-    this.state.mgr.getUser().then(user => {
-      if (user) {
-        console.log('User logged in', user.profile);
-      }
-      else
-      {
-        console.log('User not logged in');
-      }
-    });
-  }
-
   Api()
   {
     userManager.getUser().then(user => {
@@ -27,21 +15,21 @@ class Login extends Component
       });
     });
   }
-  Logout = (event) =>
-  {
+  onLogoutButtonClick(event) {
     event.preventDefault();
     userManager.signoutRedirect();
     userManager.removeUser();
   }
-  login() {
-
+  onLoginButtonClick(event) {
+    event.preventDefault();
+    userManager.signinRedirect();
   }
   render() {
     return (
       <div>
-        <button onClick={userManager.signinRedirect}>Login</button>
+        <button onClick={this.onLoginButtonClick}>Login</button>
         <button onClick={this.Api}>Call Api</button>
-        <button onClick={(event) => this.Logout(event)}>Logout</button>
+        <button onClick={this.onLogoutButtonClick}>Logout</button>
         <pre className="Results"></pre>
       </div>
     );

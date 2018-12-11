@@ -105,9 +105,8 @@ namespace Biob.Identity
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
 
-                    RedirectUris =           { "http://localhost:5003/callback.html" },
-                    PostLogoutRedirectUris = { "http://localhost:5003/index.html" },
-                    AllowedCorsOrigins =     { "http://localhost:5003" },
+                    RedirectUris =           { "http://localhost:3000/callback" },
+                    AllowedCorsOrigins =     { "http://localhost:3000" },
 
                     AllowedScopes =
                     {
@@ -129,7 +128,8 @@ namespace Biob.Identity
                 new IdentityResources.Email(),
                 new IdentityResources.Profile(),
                 new IdentityResource(JwtClaimTypes.PhoneNumber, "Your phone number", new List<string> {  JwtClaimTypes.PhoneNumber}),
-                new IdentityResource(JwtClaimTypes.Role, "Your role(s)", new List<string>() { JwtClaimTypes.Role })
+                new IdentityResource(JwtClaimTypes.Role, "Your role(s)", new List<string>() { JwtClaimTypes.Role }),
+                new IdentityResource("api1", new List<string>() { JwtClaimTypes.Role })
             };
         }
     }

@@ -22,7 +22,7 @@ class Movies extends Component {
         {this.state.movies.map(movies =>
         (<div key={movies.id}>
           <div className="pictureContent">
-            <img src={movies.poster}></img>
+            <img src={movies.poster} alt="" ></img>
             <div className="textContent">
               <h1>{movies.title}</h1>
               <p>{movies.description}</p>

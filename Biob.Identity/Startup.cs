@@ -21,12 +21,13 @@ namespace Biob.Identity
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+
             services.AddIdentityServer()
                 //  tell identityserver to use certificate
                 //.AddSigningCredential("CN=ceritficateName")
                 .AddDeveloperSigningCredential()
                 //.AddTestUsers(Config.GetUsers())
-                //.AddInMemoryIdentityResources(Config.GetIdentityResources())
+                .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients());
         }
@@ -50,6 +51,8 @@ namespace Biob.Identity
             app.UseIdentityServer();
 
             app.UseMvc();
+
+            app.UseMvcWithDefaultRoute();
         }
     }
 }
