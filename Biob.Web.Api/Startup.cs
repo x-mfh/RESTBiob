@@ -70,6 +70,25 @@ namespace Biob.Web.Api
 
             services.AddCors();
 
+            //services.AddCors(options => 
+            //{
+            //    options.AddPolicy("default", policy =>
+            //    {
+            //        policy.WithOrigins("http://localhost:3000")
+            //            .AllowAnyHeader()
+            //            .AllowAnyMethod();
+            //    });
+            //});
+
+            //services.AddAuthentication("Bearer")
+            //.AddIdentityServerAuthentication(options =>
+            //{
+            //    options.Authority = "http://localhost:5000";
+            //    options.RequireHttpsMetadata = false;
+
+            //    options.ApiName = "api1";
+            //});
+
             //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             //    .AddIdentityServerAuthentication(options =>
             //    {
@@ -160,6 +179,8 @@ namespace Biob.Web.Api
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
+
+            app.UseCors("default");
 
             //app.UseAuthentication();
 
