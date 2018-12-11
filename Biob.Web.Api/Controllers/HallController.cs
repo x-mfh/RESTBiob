@@ -133,7 +133,6 @@ namespace Biob.Web.Api.Controllers
         [SwaggerResponse(200, "Successfully updated a hall", typeof(HallDto))]
         [SwaggerResponse(400, "Request data is invalid", null)]
         [HttpPut("{hallId}", Name = "UpdateHall")]
-        [HttpPut("{hallId}", Name = "UpdateHall")]
         [GuidCheckActionFilter(new string[] { "hallId" })]
         public async Task<IActionResult> UpdateHallByIdAsync(
             [FromRoute, SwaggerParameter(Description = "The id of hall to update", Required = true)] Guid hallId, 
