@@ -45,7 +45,7 @@ class PostMovie extends Component {
     axios.get('https://localhost:44390/api/v1/movies', {
       method: 'POST',
       headers: {
-        'content-type': 'application/json'
+        'content-type':'application/json'
       },
       body: JSON.stringify(post)
     })
