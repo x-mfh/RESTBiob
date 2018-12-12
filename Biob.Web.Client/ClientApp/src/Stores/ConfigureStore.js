@@ -1,17 +1,24 @@
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore, compose } from 'redux';
 import { loadUser } from "redux-oidc";
-import { createLogger } from 'redux-logger';
+import { createBrowserHistory } from "history";
+import { routerMiddleware } from 'connected-react-router'
+import { createLogger } from 'redux-logger'
 import reducer from "../reducers/Index";
 import userManager from "../Components/login/UserManager";
 
-//const defaultState = {};
+const history = createBrowserHistory()
+
+const defaultState = {};
 
 const logger = createLogger({
     collapsed: true
 });
 
+const createStoreWithMiddleware = compose(
+  applyMiddleware(logger, routerMiddleware(history))
+)(createStore);
 
-var store = createStore(reducer, applyMiddleware(logger));
+var store = createStoreWithMiddleware(reducer(history), defaultState);
 loadUser(store, userManager);
 
 export default store;

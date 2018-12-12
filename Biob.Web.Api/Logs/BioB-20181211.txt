@@ -715,3 +715,289 @@ System.NotSupportedException: HTTP method "PUT" & path "api/v1/halls/{hallId}" o
 2018-12-11T14:26:45.1159850+01:00 0HLIVDH4D3DL8:00000002 [INF] Generating Vary header. (c1174e38)
 2018-12-11T14:26:45.1213814+01:00 0HLIVDH4D3DL8:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
 2018-12-11T14:26:45.1285268+01:00 0HLIVDH4D3DL8:00000002 [INF] Request finished in 740.8264ms 200 application/json;charset=utf-8 (791a596a)
+2018-12-11T14:45:10.3017262+01:00 0HLIVDRF5R0BS:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-11T14:45:10.4315323+01:00 0HLIVDRF5R0BS:00000001 [INF] Request finished in 139.9702ms 200  (791a596a)
+2018-12-11T14:46:20.5248988+01:00 0HLIVDRF5R0BT:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies   (ca22a1cb)
+2018-12-11T14:46:20.5479847+01:00 0HLIVDRF5R0BT:00000001 [INF] Policy execution successful. (0204925d)
+2018-12-11T14:46:20.6351424+01:00 0HLIVDRF5R0BT:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-11T14:46:20.6506928+01:00 0HLIVDRF5R0BT:00000001 [INF] No saved response found in store. (98cc509c)
+2018-12-11T14:46:20.6613621+01:00 0HLIVDRF5R0BT:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-11T14:46:20.6815451+01:00 0HLIVDRF5R0BT:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-11T14:46:20.6879607+01:00 0HLIVDRF5R0BT:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-11T14:46:20.6959092+01:00 0HLIVDRF5R0BT:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-11T14:46:20.9017887+01:00 0HLIVDRF5R0BT:00000001 [INF] Route matched with "{action = \"GetAllMoviesAsync\", controller = \"Movie\"}". Executing action "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" (a44c0341)
+2018-12-11T14:46:21.4185377+01:00 0HLIVDRF5R0BT:00000001 [INF] Executing action method "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" with arguments (["Biob.Web.Api.Helpers.RequestParameters", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-11T14:46:21.6804459+01:00 0HLIVDRF5R0BT:00000001 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-12-11T14:46:21.7600121+01:00 0HLIVDRF5R0BT:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-11T14:46:27.6669625+01:00 0HLIVDRF5R0BT:00000001 [INF] Executed DbCommand ("208"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-12-11T14:46:27.7802602+01:00 0HLIVDRF5R0BT:00000001 [INF] Executed DbCommand ("20"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-12-11T14:46:27.9018247+01:00 0HLIVDRF5R0BT:00000001 [INF] Executed action method "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 6475.4787ms. (50a9e262)
+2018-12-11T14:46:27.9169013+01:00 0HLIVDRF5R0BT:00000001 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-12-11T14:46:27.9417393+01:00 0HLIVDRF5R0BT:00000001 [INF] Executed action "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" in 7032.1692ms (afa2e885)
+2018-12-11T14:46:27.9520917+01:00 0HLIVDRF5R0BT:00000001 [INF] Generating expiration headers. (97875003)
+2018-12-11T14:46:27.9570995+01:00 0HLIVDRF5R0BT:00000001 [INF] Expiration headers generated. Expires: Tue, 11 Dec 2018 13:56:27 GMT. Cache-Control: public,max-age=600,must-revalidate. (4b6c0e36)
+2018-12-11T14:46:27.9656259+01:00 0HLIVDRF5R0BT:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-12-11T14:46:27.9723913+01:00 0HLIVDRF5R0BT:00000001 [INF] Validation headers generated. ETag: Strong, "EBA09B74C43CFC04B7E2677C1E14767E". Last-Modified: Tue, 11 Dec 2018 13:46:27 GMT (16626f58)
+2018-12-11T14:46:27.9779053+01:00 0HLIVDRF5R0BT:00000001 [INF] Generating Vary header. (c1174e38)
+2018-12-11T14:46:27.9820103+01:00 0HLIVDRF5R0BT:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-11T14:46:27.9980306+01:00 0HLIVDRF5R0BT:00000001 [INF] Request finished in 7476.8058ms 200 application/json; charset=utf-8 (791a596a)
+2018-12-11T15:22:36.3008603+01:00 0HLIVEGCI4689:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-11T15:22:36.3475721+01:00 0HLIVEGCI4689:00000001 [INF] Request finished in 50.1179ms 200  (791a596a)
+2018-12-11T15:22:55.9451681+01:00 0HLIVEGCI4689:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies   (ca22a1cb)
+2018-12-11T15:22:55.9526631+01:00 0HLIVEGCI4689:00000002 [INF] Policy execution successful. (0204925d)
+2018-12-11T15:22:56.0552519+01:00 0HLIVEGCI4689:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-11T15:22:56.0682461+01:00 0HLIVEGCI4689:00000002 [INF] No saved response found in store. (98cc509c)
+2018-12-11T15:22:56.0745952+01:00 0HLIVEGCI4689:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-11T15:22:56.0846600+01:00 0HLIVEGCI4689:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-11T15:22:56.0903707+01:00 0HLIVEGCI4689:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-11T15:22:56.0953905+01:00 0HLIVEGCI4689:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-11T15:22:56.2716359+01:00 0HLIVEGCI4689:00000002 [INF] Route matched with "{action = \"GetAllMoviesAsync\", controller = \"Movie\"}". Executing action "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" (a44c0341)
+2018-12-11T15:22:56.4412380+01:00 0HLIVEGCI4689:00000002 [INF] Executing action method "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" with arguments (["Biob.Web.Api.Helpers.RequestParameters", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-11T15:22:56.6451444+01:00 0HLIVEGCI4689:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-12-11T15:22:56.6874565+01:00 0HLIVEGCI4689:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-11T15:22:59.0602699+01:00 0HLIVEGCI4689:00000002 [INF] Executed DbCommand ("27"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-12-11T15:22:59.1218771+01:00 0HLIVEGCI4689:00000002 [INF] Executed DbCommand ("5"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-12-11T15:22:59.2530527+01:00 0HLIVEGCI4689:00000002 [INF] Executed action method "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 2804.2008ms. (50a9e262)
+2018-12-11T15:22:59.2671787+01:00 0HLIVEGCI4689:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-12-11T15:22:59.2922552+01:00 0HLIVEGCI4689:00000002 [INF] Executed action "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" in 3012.1538ms (afa2e885)
+2018-12-11T15:22:59.3030527+01:00 0HLIVEGCI4689:00000002 [INF] Generating expiration headers. (97875003)
+2018-12-11T15:22:59.3158377+01:00 0HLIVEGCI4689:00000002 [INF] Expiration headers generated. Expires: Tue, 11 Dec 2018 14:32:59 GMT. Cache-Control: public,max-age=600,must-revalidate. (5d636e6f)
+2018-12-11T15:22:59.3703164+01:00 0HLIVEGCI4689:00000002 [INF] Generating Validation headers. (20c08f55)
+2018-12-11T15:22:59.5215658+01:00 0HLIVEGCI4689:00000002 [INF] Validation headers generated. ETag: Strong, "EBA09B74C43CFC04B7E2677C1E14767E". Last-Modified: Tue, 11 Dec 2018 14:22:59 GMT (0b419351)
+2018-12-11T15:22:59.5425368+01:00 0HLIVEGCI4689:00000002 [INF] Generating Vary header. (c1174e38)
+2018-12-11T15:22:59.5548160+01:00 0HLIVEGCI4689:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-11T15:22:59.5752756+01:00 0HLIVEGCI4689:00000002 [INF] Request finished in 3627.6468ms 200 application/json; charset=utf-8 (791a596a)
+2018-12-11T15:28:29.0851703+01:00 0HLIVEJLKNA1O:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-11T15:28:29.2832342+01:00 0HLIVEJLKNA1O:00000001 [INF] Request finished in 171.8568ms 200  (791a596a)
+2018-12-11T15:51:11.0123465+01:00 0HLIVF0BIEA2I:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-11T15:51:11.1281969+01:00 0HLIVF0BIEA2I:00000001 [INF] Request finished in 95.5033ms 200  (791a596a)
+2018-12-11T16:23:31.8520980+01:00 0HLIVF0BIEA2J:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies   (ca22a1cb)
+2018-12-11T16:23:31.8651820+01:00 0HLIVF0BIEA2J:00000001 [INF] Policy execution successful. (0204925d)
+2018-12-11T16:23:31.9787430+01:00 0HLIVF0BIEA2J:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-11T16:23:31.9902424+01:00 0HLIVF0BIEA2J:00000001 [INF] No saved response found in store. (98cc509c)
+2018-12-11T16:23:31.9942211+01:00 0HLIVF0BIEA2J:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-11T16:23:32.0038845+01:00 0HLIVF0BIEA2J:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-11T16:23:32.0074845+01:00 0HLIVF0BIEA2J:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-11T16:23:32.0114490+01:00 0HLIVF0BIEA2J:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-11T16:23:32.2259581+01:00 0HLIVF0BIEA2J:00000001 [INF] Route matched with "{action = \"GetAllMoviesAsync\", controller = \"Movie\"}". Executing action "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" (a44c0341)
+2018-12-11T16:23:32.4515061+01:00 0HLIVF0BIEA2J:00000001 [INF] Executing action method "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" with arguments (["Biob.Web.Api.Helpers.RequestParameters", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-11T16:23:32.6856607+01:00 0HLIVF0BIEA2J:00000001 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-12-11T16:23:32.7342201+01:00 0HLIVF0BIEA2J:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-11T16:23:35.2668350+01:00 0HLIVF0BIEA2J:00000001 [INF] Executed DbCommand ("105"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-12-11T16:23:35.4083704+01:00 0HLIVF0BIEA2J:00000001 [INF] Executed DbCommand ("80"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-12-11T16:23:35.5622323+01:00 0HLIVF0BIEA2J:00000001 [INF] Executed action method "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 3103.2625ms. (50a9e262)
+2018-12-11T16:23:35.5776682+01:00 0HLIVF0BIEA2J:00000001 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-12-11T16:23:35.6048695+01:00 0HLIVF0BIEA2J:00000001 [INF] Executed action "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" in 3371.1305ms (afa2e885)
+2018-12-11T16:23:35.6182523+01:00 0HLIVF0BIEA2J:00000001 [INF] Generating expiration headers. (97875003)
+2018-12-11T16:23:35.6237983+01:00 0HLIVF0BIEA2J:00000001 [INF] Expiration headers generated. Expires: Tue, 11 Dec 2018 15:33:35 GMT. Cache-Control: public,max-age=600,must-revalidate. (93382fab)
+2018-12-11T16:23:35.6345173+01:00 0HLIVF0BIEA2J:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-12-11T16:23:35.6468291+01:00 0HLIVF0BIEA2J:00000001 [INF] Validation headers generated. ETag: Strong, "EBA09B74C43CFC04B7E2677C1E14767E". Last-Modified: Tue, 11 Dec 2018 15:23:35 GMT (55290c3a)
+2018-12-11T16:23:35.6523934+01:00 0HLIVF0BIEA2J:00000001 [INF] Generating Vary header. (c1174e38)
+2018-12-11T16:23:35.6563068+01:00 0HLIVF0BIEA2J:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-11T16:23:35.6838581+01:00 0HLIVF0BIEA2J:00000001 [INF] Request finished in 3823.7268ms 200 application/json; charset=utf-8 (791a596a)
+2018-12-11T16:36:32.0275315+01:00 0HLIVFPMGS7KK:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies   (ca22a1cb)
+2018-12-11T16:36:32.0449769+01:00 0HLIVFPMGS7KK:00000001 [INF] Policy execution successful. (0204925d)
+2018-12-11T16:36:32.1051761+01:00 0HLIVFPMGS7KK:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-11T16:36:32.1115892+01:00 0HLIVFPMGS7KK:00000001 [INF] No saved response found in store. (98cc509c)
+2018-12-11T16:36:32.1117029+01:00 0HLIVFPMGS7KK:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-11T16:36:32.1180357+01:00 0HLIVFPMGS7KK:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-11T16:36:32.1180956+01:00 0HLIVFPMGS7KK:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-11T16:36:32.1181300+01:00 0HLIVFPMGS7KK:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-11T16:36:32.2654805+01:00 0HLIVFPMGS7KK:00000001 [INF] Route matched with "{action = \"GetAllMoviesAsync\", controller = \"Movie\"}". Executing action "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" (a44c0341)
+2018-12-11T16:36:32.3490855+01:00 0HLIVFPMGS7KK:00000001 [INF] Executing action method "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" with arguments (["Biob.Web.Api.Helpers.RequestParameters", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-11T16:36:32.5360538+01:00 0HLIVFPMGS7KK:00000001 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-12-11T16:36:32.5635019+01:00 0HLIVFPMGS7KK:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-11T16:36:34.6677442+01:00 0HLIVFPMGS7KK:00000001 [INF] Executed DbCommand ("62"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-12-11T16:36:34.7561511+01:00 0HLIVFPMGS7KK:00000001 [INF] Executed DbCommand ("26"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-12-11T16:36:34.8855502+01:00 0HLIVFPMGS7KK:00000001 [INF] Executed action method "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 2533.4495ms. (50a9e262)
+2018-12-11T16:36:34.8941880+01:00 0HLIVFPMGS7KK:00000001 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-12-11T16:36:34.9136752+01:00 0HLIVFPMGS7KK:00000001 [INF] Executed action "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" in 2644.275ms (afa2e885)
+2018-12-11T16:36:34.9194752+01:00 0HLIVFPMGS7KK:00000001 [INF] Generating expiration headers. (97875003)
+2018-12-11T16:36:34.9203628+01:00 0HLIVFPMGS7KK:00000001 [INF] Expiration headers generated. Expires: Tue, 11 Dec 2018 15:46:34 GMT. Cache-Control: public,max-age=600,must-revalidate. (bb545169)
+2018-12-11T16:36:34.9250826+01:00 0HLIVFPMGS7KK:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-12-11T16:36:34.9288818+01:00 0HLIVFPMGS7KK:00000001 [INF] Validation headers generated. ETag: Strong, "EBA09B74C43CFC04B7E2677C1E14767E". Last-Modified: Tue, 11 Dec 2018 15:36:34 GMT (9a168601)
+2018-12-11T16:36:34.9304494+01:00 0HLIVFPMGS7KK:00000001 [INF] Generating Vary header. (c1174e38)
+2018-12-11T16:36:34.9305038+01:00 0HLIVFPMGS7KK:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-11T16:36:34.9472070+01:00 0HLIVFPMGS7KK:00000001 [INF] Request finished in 2924.5114ms 200 application/json; charset=utf-8 (791a596a)
+2018-12-11T16:57:10.5861255+01:00 0HLIVFPMGS7KL:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies   (ca22a1cb)
+2018-12-11T16:57:10.5864518+01:00 0HLIVFPMGS7KL:00000001 [INF] Policy execution successful. (0204925d)
+2018-12-11T16:57:10.5872100+01:00 0HLIVFPMGS7KL:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-11T16:57:10.5895400+01:00 0HLIVFPMGS7KL:00000001 [INF] Checking If-None-Match. (79f00d32)
+2018-12-11T16:57:10.5895858+01:00 0HLIVFPMGS7KL:00000001 [INF] Checking If-None-Match: "EBA09B74C43CFC04B7E2677C1E14767E". (052252ec)
+2018-12-11T16:57:10.5901984+01:00 0HLIVFPMGS7KL:00000001 [INF] ETag valid: "EBA09B74C43CFC04B7E2677C1E14767E". (ac9c89c3)
+2018-12-11T16:57:10.5929326+01:00 0HLIVFPMGS7KL:00000001 [INF] Checking If-Modified-Since: Tue, 11 Dec 2018 15:36:34 GMT (dd9c3170)
+2018-12-11T16:57:10.5959357+01:00 0HLIVFPMGS7KL:00000001 [INF] Generating 304 - Not Modified. (e88b5280)
+2018-12-11T16:57:10.6009459+01:00 0HLIVFPMGS7KL:00000001 [INF] Generation done. ETag: Strong, "EBA09B74C43CFC04B7E2677C1E14767E", Last-Modified: Tue, 11 Dec 2018 15:57:10 GMT. (0f2d7ec8)
+2018-12-11T16:57:10.6023673+01:00 0HLIVFPMGS7KL:00000001 [INF] Request finished in 16.1978ms 304  (791a596a)
+2018-12-11T18:57:03.2381209+01:00 0HLIVFPMGS7KM:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies   (ca22a1cb)
+2018-12-11T18:57:03.2386930+01:00 0HLIVFPMGS7KM:00000001 [INF] Policy execution successful. (0204925d)
+2018-12-11T18:57:03.2395007+01:00 0HLIVFPMGS7KM:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-11T18:57:03.2400133+01:00 0HLIVFPMGS7KM:00000001 [INF] Checking If-None-Match. (79f00d32)
+2018-12-11T18:57:03.2400338+01:00 0HLIVFPMGS7KM:00000001 [INF] Checking If-None-Match: "EBA09B74C43CFC04B7E2677C1E14767E". (052252ec)
+2018-12-11T18:57:03.2400569+01:00 0HLIVFPMGS7KM:00000001 [INF] ETag valid: "EBA09B74C43CFC04B7E2677C1E14767E". (ac9c89c3)
+2018-12-11T18:57:03.2443522+01:00 0HLIVFPMGS7KM:00000001 [INF] Checking If-Modified-Since: Tue, 11 Dec 2018 15:57:10 GMT (eb34ec0f)
+2018-12-11T18:57:03.2444666+01:00 0HLIVFPMGS7KM:00000001 [INF] Generating 304 - Not Modified. (e88b5280)
+2018-12-11T18:57:03.2445725+01:00 0HLIVFPMGS7KM:00000001 [INF] Generation done. ETag: Strong, "EBA09B74C43CFC04B7E2677C1E14767E", Last-Modified: Tue, 11 Dec 2018 17:57:03 GMT. (82ca0b6a)
+2018-12-11T18:57:03.2446613+01:00 0HLIVFPMGS7KM:00000001 [INF] Request finished in 6.8426ms 304  (791a596a)
+2018-12-11T19:28:34.8034760+01:00 0HLIVFPMGS7KN:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies   (ca22a1cb)
+2018-12-11T19:28:34.8102879+01:00 0HLIVFPMGS7KN:00000001 [INF] Policy execution successful. (0204925d)
+2018-12-11T19:28:34.8591790+01:00 0HLIVFPMGS7KN:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-11T19:28:34.8659251+01:00 0HLIVFPMGS7KN:00000001 [INF] Checking If-None-Match. (79f00d32)
+2018-12-11T19:28:34.8729014+01:00 0HLIVFPMGS7KN:00000001 [INF] Checking If-None-Match: "EBA09B74C43CFC04B7E2677C1E14767E". (052252ec)
+2018-12-11T19:28:34.8832733+01:00 0HLIVFPMGS7KN:00000001 [INF] ETag valid: "EBA09B74C43CFC04B7E2677C1E14767E". (ac9c89c3)
+2018-12-11T19:28:34.8881592+01:00 0HLIVFPMGS7KN:00000001 [INF] Checking If-Modified-Since: Tue, 11 Dec 2018 17:57:03 GMT (120d5c1e)
+2018-12-11T19:28:34.8933738+01:00 0HLIVFPMGS7KN:00000001 [INF] Generating 304 - Not Modified. (e88b5280)
+2018-12-11T19:28:34.8979950+01:00 0HLIVFPMGS7KN:00000001 [INF] Generation done. ETag: Strong, "EBA09B74C43CFC04B7E2677C1E14767E", Last-Modified: Tue, 11 Dec 2018 18:28:34 GMT. (ef50821d)
+2018-12-11T19:28:34.9133494+01:00 0HLIVFPMGS7KN:00000001 [INF] Request finished in 106.3116ms 304  (791a596a)
+2018-12-11T20:57:09.7720183+01:00 0HLIVKBATR6EP:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies   (ca22a1cb)
+2018-12-11T20:57:09.7916906+01:00 0HLIVKBATR6EP:00000001 [INF] Policy execution successful. (0204925d)
+2018-12-11T20:57:09.8670680+01:00 0HLIVKBATR6EP:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-11T20:57:09.8767196+01:00 0HLIVKBATR6EP:00000001 [INF] No saved response found in store. (98cc509c)
+2018-12-11T20:57:09.8767792+01:00 0HLIVKBATR6EP:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-11T20:57:09.8825862+01:00 0HLIVKBATR6EP:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-11T20:57:09.8827346+01:00 0HLIVKBATR6EP:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-11T20:57:09.8827568+01:00 0HLIVKBATR6EP:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-11T20:57:10.0299863+01:00 0HLIVKBATR6EP:00000001 [INF] Route matched with "{action = \"GetAllMoviesAsync\", controller = \"Movie\"}". Executing action "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" (a44c0341)
+2018-12-11T20:57:10.1907435+01:00 0HLIVKBATR6EP:00000001 [INF] Executing action method "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" with arguments (["Biob.Web.Api.Helpers.RequestParameters", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-11T20:57:10.4009059+01:00 0HLIVKBATR6EP:00000001 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-12-11T20:57:10.4307607+01:00 0HLIVKBATR6EP:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-11T20:57:12.8370686+01:00 0HLIVKBATR6EP:00000001 [INF] Executed DbCommand ("14"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-12-11T20:57:12.8958552+01:00 0HLIVKBATR6EP:00000001 [INF] Executed DbCommand ("6"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-12-11T20:57:13.0027920+01:00 0HLIVKBATR6EP:00000001 [INF] Executed action method "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 2809.3741ms. (50a9e262)
+2018-12-11T20:57:13.0125545+01:00 0HLIVKBATR6EP:00000001 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-12-11T20:57:13.0329241+01:00 0HLIVKBATR6EP:00000001 [INF] Executed action "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" in 2999.7763ms (afa2e885)
+2018-12-11T20:57:13.0396337+01:00 0HLIVKBATR6EP:00000001 [INF] Generating expiration headers. (97875003)
+2018-12-11T20:57:13.0403448+01:00 0HLIVKBATR6EP:00000001 [INF] Expiration headers generated. Expires: Tue, 11 Dec 2018 20:07:13 GMT. Cache-Control: public,max-age=600,must-revalidate. (d576e5ab)
+2018-12-11T20:57:13.0447873+01:00 0HLIVKBATR6EP:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-12-11T20:57:13.0473144+01:00 0HLIVKBATR6EP:00000001 [INF] Validation headers generated. ETag: Strong, "EBA09B74C43CFC04B7E2677C1E14767E". Last-Modified: Tue, 11 Dec 2018 19:57:13 GMT (a7caab1b)
+2018-12-11T20:57:13.0485158+01:00 0HLIVKBATR6EP:00000001 [INF] Generating Vary header. (c1174e38)
+2018-12-11T20:57:13.0485772+01:00 0HLIVKBATR6EP:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-11T20:57:13.0645799+01:00 0HLIVKBATR6EP:00000001 [INF] Request finished in 3297.0898ms 200 application/json; charset=utf-8 (791a596a)
+2018-12-11T21:12:36.2065521+01:00 0HLIVKJV0M9CI:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-11T21:12:36.2556515+01:00 0HLIVKJV0M9CI:00000001 [INF] Request finished in 51.6323ms 200  (791a596a)
+2018-12-11T22:29:43.1624776+01:00 0HLIVLV1UG6D1:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-11T22:29:43.2206986+01:00 0HLIVLV1UG6D1:00000001 [INF] Request finished in 65.0657ms 200  (791a596a)
+2018-12-11T22:30:38.2165186+01:00 0HLIVLV1UG6D1:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies   (ca22a1cb)
+2018-12-11T22:30:38.2236700+01:00 0HLIVLV1UG6D1:00000002 [INF] Policy execution successful. (0204925d)
+2018-12-11T22:30:38.3337298+01:00 0HLIVLV1UG6D1:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-11T22:30:38.3460817+01:00 0HLIVLV1UG6D1:00000002 [INF] No saved response found in store. (98cc509c)
+2018-12-11T22:30:38.3496926+01:00 0HLIVLV1UG6D1:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-11T22:30:38.3584568+01:00 0HLIVLV1UG6D1:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-11T22:30:38.3620550+01:00 0HLIVLV1UG6D1:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-11T22:30:38.3656375+01:00 0HLIVLV1UG6D1:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-11T22:30:38.5351968+01:00 0HLIVLV1UG6D1:00000002 [INF] Route matched with "{action = \"GetAllMoviesAsync\", controller = \"Movie\"}". Executing action "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" (a44c0341)
+2018-12-11T22:31:58.1496406+01:00 0HLIVM0A62D34:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-11T22:31:58.2370902+01:00 0HLIVM0A62D34:00000001 [INF] Request finished in 66.7194ms 200  (791a596a)
+2018-12-11T22:34:30.1496084+01:00 0HLIVM0A62D35:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies   (ca22a1cb)
+2018-12-11T22:34:30.1872299+01:00 0HLIVM0A62D35:00000001 [INF] Policy execution successful. (0204925d)
+2018-12-11T22:34:30.3217587+01:00 0HLIVM0A62D35:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-11T22:34:30.3313040+01:00 0HLIVM0A62D35:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-11T22:34:30.3374710+01:00 0HLIVM0A62D35:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-11T22:34:30.3530373+01:00 0HLIVM0A62D35:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-11T22:34:30.3574171+01:00 0HLIVM0A62D35:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-11T22:34:30.3618099+01:00 0HLIVM0A62D35:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-11T22:34:30.5466238+01:00 0HLIVM0A62D35:00000001 [INF] Route matched with "{action = \"GetAllMoviesAsync\", controller = \"Movie\"}". Executing action "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" (a44c0341)
+2018-12-11T22:35:32.0093756+01:00 0HLIVM29TMUMV:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:44390/  0 (ca22a1cb)
+2018-12-11T22:35:32.0508316+01:00 0HLIVM29TMUMV:00000001 [INF] Request finished in 44.2583ms 200  (791a596a)
+2018-12-11T22:35:43.1590273+01:00 0HLIVM29TMUMV:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies   (ca22a1cb)
+2018-12-11T22:35:43.1878509+01:00 0HLIVM29TMUMV:00000002 [INF] Policy execution successful. (0204925d)
+2018-12-11T22:35:43.3580279+01:00 0HLIVM29TMUMV:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-11T22:35:43.3624373+01:00 0HLIVM29TMUMV:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-11T22:35:43.3700710+01:00 0HLIVM29TMUMV:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-11T22:35:43.3795739+01:00 0HLIVM29TMUMV:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-11T22:35:43.3846677+01:00 0HLIVM29TMUMV:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-11T22:35:43.3893079+01:00 0HLIVM29TMUMV:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-11T22:35:43.5915047+01:00 0HLIVM29TMUMV:00000002 [INF] Route matched with "{action = \"GetAllMoviesAsync\", controller = \"Movie\"}". Executing action "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" (a44c0341)
+2018-12-11T22:35:43.7496566+01:00 0HLIVM29TMUMV:00000002 [INF] Executing action method "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" with arguments (["Biob.Web.Api.Helpers.RequestParameters", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-11T22:35:43.9869115+01:00 0HLIVM29TMUMV:00000002 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-12-11T22:35:44.0313718+01:00 0HLIVM29TMUMV:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-11T22:35:44.5302572+01:00 0HLIVM29TMUMV:00000002 [INF] Executed DbCommand ("48"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-12-11T22:35:44.6152784+01:00 0HLIVM29TMUMV:00000002 [INF] Executed DbCommand ("17"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-12-11T22:35:44.7405336+01:00 0HLIVM29TMUMV:00000002 [INF] Executed action method "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 983.022ms. (50a9e262)
+2018-12-11T22:35:44.7576154+01:00 0HLIVM29TMUMV:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-12-11T22:35:44.7842806+01:00 0HLIVM29TMUMV:00000002 [INF] Executed action "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" in 1185.249ms (afa2e885)
+2018-12-11T22:35:44.8085731+01:00 0HLIVM29TMUMV:00000002 [INF] Generating expiration headers. (97875003)
+2018-12-11T22:35:44.8180538+01:00 0HLIVM29TMUMV:00000002 [INF] Expiration headers generated. Expires: Tue, 11 Dec 2018 21:45:44 GMT. Cache-Control: public,max-age=600,must-revalidate. (4f3f6732)
+2018-12-11T22:35:44.8311161+01:00 0HLIVM29TMUMV:00000002 [INF] Generating Validation headers. (20c08f55)
+2018-12-11T22:35:44.8446981+01:00 0HLIVM29TMUMV:00000002 [INF] Validation headers generated. ETag: Strong, "EBA09B74C43CFC04B7E2677C1E14767E". Last-Modified: Tue, 11 Dec 2018 21:35:44 GMT (fd21ffda)
+2018-12-11T22:35:44.8502905+01:00 0HLIVM29TMUMV:00000002 [INF] Generating Vary header. (c1174e38)
+2018-12-11T22:35:44.8544792+01:00 0HLIVM29TMUMV:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-11T22:35:44.8750383+01:00 0HLIVM29TMUMV:00000002 [INF] Request finished in 1719.1001ms 200 application/json; charset=utf-8 (791a596a)
