@@ -80,7 +80,7 @@ namespace Biob.Web.Api.Controllers
                 return BadRequest();
             }
 
-            var showtimesPagedList = await _showtimeRepository.GetAllShowtimesAsync(requestParameters.OrderBy, requestParameters.PageNumber, requestParameters.PageSize);
+            var showtimesPagedList = await _showtimeRepository.GetAllShowtimesAsync(movieId, requestParameters.OrderBy, requestParameters.PageNumber, requestParameters.PageSize);
 
             var showtimes = Mapper.Map<IEnumerable<ShowtimeDto>>(showtimesPagedList);
 
