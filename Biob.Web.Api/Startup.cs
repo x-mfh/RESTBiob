@@ -80,14 +80,16 @@ namespace Biob.Web.Api
             //    });
             //});
 
-            //services.AddAuthentication("Bearer")
-            //.AddIdentityServerAuthentication(options =>
-            //{
-            //    options.Authority = "http://localhost:5000";
-            //    options.RequireHttpsMetadata = false;
+            //services.AddAuthorization();
 
-            //    options.ApiName = "api1";
-            //});
+            services.AddAuthentication("Bearer")
+            .AddIdentityServerAuthentication(options =>
+            {
+                options.Authority = "https://localhost:44393/";
+                options.RequireHttpsMetadata = false;
+
+                options.ApiName = "BiobApi";
+            });
 
             //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             //    .AddIdentityServerAuthentication(options =>
@@ -180,9 +182,9 @@ namespace Biob.Web.Api
                     .AllowAnyHeader();
             });
 
-            app.UseCors("default");
+            //app.UseCors("default");
 
-            //app.UseAuthentication();
+            app.UseAuthentication();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
