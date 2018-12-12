@@ -1,3 +1,4 @@
+import "./Login.css";
 import React, {Component} from 'react';
 import axios from 'axios';
 import userManager from './UserManager';
@@ -26,10 +27,10 @@ class Login extends Component
   }
   render() {
     return (
-      <div>
-        <button onClick={this.onLoginButtonClick}>Login</button>
-        <button onClick={this.Api}>Call Api</button>
-        <button onClick={this.onLogoutButtonClick}>Logout</button>
+      <div className="loginBar">
+        <button className="loginBarButton" onClick={this.onLoginButtonClick}>Login</button>
+        <button className="loginBarButton" onClick={this.Api}>Call Api</button>
+        <button className="loginBarButton" onClick={this.onLogoutButtonClick}>Logout</button>
         <pre className="Results"></pre>
       </div>
     );

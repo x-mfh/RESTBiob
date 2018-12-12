@@ -8,17 +8,21 @@ class NavBar extends Component {
     return (
     <header>
 			<div className="topNavContainer">
+				<div className="topLogo">BIOB</div>
 				<nav>
-          <div className="toggle">
+          {/* <div className="toggle">
             <i className ="fa fa-bars" aria-hidden="true"></i>
-          </div>
+          </div> */}
 					<ul>
 						<li><Link to='/' className='navLink'>Home</Link></li>
 						<li><Link to='/showtimes' className='navLink'>Showtimes</Link></li>
 						<li><Link to='/movies' className='navLink'>Movies</Link></li>
+						<Login />
 					</ul>
-          <Login />
 				</nav>
+				<div className="toggle"> 
+					<i className ="fa fa-bars" aria-hidden="true"></i>
+				</div>
 			</div>
 		</header>
     )
