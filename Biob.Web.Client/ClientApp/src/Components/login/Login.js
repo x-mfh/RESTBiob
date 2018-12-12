@@ -8,7 +8,7 @@ class Login extends Component
   Api()
   {
     userManager.getUser().then(user => {
-      let url = 'http://localhost:5001/identity';
+      let url = 'https://localhost:44393/identity';
       axios.get(url, { headers: { 'Authorization': 'Bearer ' + user.access_token } })
       .then(data => {
         console.log(data.status, JSON.parse(data.data));
