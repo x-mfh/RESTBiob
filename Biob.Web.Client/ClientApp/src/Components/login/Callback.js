@@ -1,22 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
 import { CallbackComponent } from "redux-oidc";
-import createHistory from 'history/createBrowserHistory'
 import userManager from "../login/UserManager";
-
-const { push } = createHistory()
+import { push } from 'connected-react-router'
 
 class CallbackPage extends React.Component {
   render() {
-    // just redirect to '/' in both cases
+    const successfullCallback = (user) => {
+      this.props.dispatch(push('/home'));
+    }
+    const errorCallback= (error) => {
+      this.props.dispatch(push("/home"));
+      console.error(error);
+    }
     return (
       <CallbackComponent
         userManager={userManager}
-        successCallback={() => this.props.dispatch(push("/"))}
-        errorCallback={error => {
-          this.props.dispatch(push("/"));
-          console.error(error);
-        }}
+        successCallback={successfullCallback}
+        errorCallback={errorCallback}
         >
         <div>Redirecting...</div>
       </CallbackComponent>

@@ -4,7 +4,7 @@ const userManagerConfig = {
   client_id: 'js',
   redirect_uri: 'http://localhost:3000/callback',
   response_type: 'token id_token',
-  scope:"openid profile api1",
+  scope:"openid profile",
   authority: 'https://localhost:44393/',
   automaticSilentRenew: true,
   filterProtocolClaims: true,
