@@ -1,11 +1,11 @@
-import './Home.css';
+import './Movies.css';
 import {Link} from 'react-router-dom';
 import React, { Component } from 'react';
 import axios from 'axios';
-
+import Movie from '../Movie/Movie'
 var url = 'https://localhost:44390/api/v1/movies';
 
-class Home extends Component {
+class Movies extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -42,4 +42,4 @@ class Home extends Component {
     )
   }
 }
-export default Home;
+export default Movies;
