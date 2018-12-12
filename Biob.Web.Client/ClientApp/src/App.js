@@ -16,19 +16,19 @@ class App extends Component {
   render() {
     return (
       <Provider store={store} >
-      <Router>
-        <div>
-          <Header/>
-          <OidcProvider store={store} userManager={userManager}>
-            <Switch>
-              <Route path='/' component ={Home} exact/>
-              <Route path='/showtimes' component ={Showtimes} exact/>
-              <Route path="/callback" component={Callback} />
-            </Switch>
-            </OidcProvider>
-          <Footer/>
-        </div>
-      </Router>
+        <Router>
+          <div>
+            <Header/>
+            <OidcProvider store={store} userManager={userManager}>
+              <Switch>
+                <Route path='/' component ={Home} exact/>
+                <Route path='/showtimes' component ={Showtimes} exact/>
+                <Route path="/callback" component={Callback} />
+              </Switch>
+              </OidcProvider>
+            <Footer/>
+          </div>
+        </Router>
       </Provider>
     );
   }
