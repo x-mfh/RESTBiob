@@ -2,6 +2,7 @@ import "./Login.css";
 import React, {Component} from 'react';
 import axios from 'axios';
 import userManager from './UserManager';
+import {Link} from 'react-router-dom';
 
 
 class Login extends Component
@@ -27,12 +28,14 @@ class Login extends Component
   }
   render() {
     return (
-      <div className="loginBar">
-        <button className="loginBarButton" onClick={this.onLoginButtonClick}>Login</button>
-        <button className="loginBarButton" onClick={this.Api}>Call Api</button>
-        <button className="loginBarButton" onClick={this.onLogoutButtonClick}>Logout</button>
+      <ul className="loginBar">
+        <li classname="loginBarButton toolbarItem"><Link to='/Admin'>Admin</Link></li>
+        {/* </li>/<li><Link to='/movies' className='navLink toolbarItem'>Movies</Link></li> */}
+        <li className="loginBarButton toolbarItem" onClick={this.Api}>Call Api</li>
+        <li className="loginBarButton toolbarItem" onClick={this.onLoginButtonClick}>Login</li>
+        <li className="loginBarButton toolbarItem" onClick={this.onLogoutButtonClick}>Logout</li>
         <pre className="Results"></pre>
-      </div>
+      </ul>
     );
   }
 }

@@ -5,6 +5,7 @@ import Showtimes from './Components/Showtimes/Showtimes';
 import Header from './Components/Layouts/Header/Header';
 import Footer from './Components/Layouts/Footer/Footer';
 import Callback from './Components/login/Callback';
+import Admin from './Components/Admin/Admin';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
@@ -25,6 +26,7 @@ class App extends Component {
               <Route path='/' component ={Home} exact/>
               <Route path='/showtimes' component ={Showtimes} exact/>
               <Route path="/callback" component={Callback} />
+              <Route path="/admin" component={Admin} />
             </Switch>
             </ConnectedRouter>
           <Footer/>

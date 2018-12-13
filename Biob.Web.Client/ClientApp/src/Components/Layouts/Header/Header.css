@@ -17,19 +17,23 @@
   nav {
     width: 100%;
     background-color: #333;
-    position: absolute;
+    position: relative;
   }
   
   nav ul {
-    width: 80%;
+    /* width: 80%; */
     /* margin: 0 auto; */
-    padding: 0;
+    /* padding: 0; */
+    margin: 20px;
+    position: relative;
+    float: left;
   }
   
   nav li {
     list-style: none;
     display: inline-block;
-    padding: 20px;
+    margin: 9px;
+    /* padding: 20px; */
   }
   
   nav li:hover {
@@ -43,31 +47,59 @@
     font-size: 15px;
   }
   .topLogo{
-    width: 10%;
-    height: 85px;
-    position: absolute;
+    width: 57px; 
+    height: 57px;
+    /* height: 8px; */
+    /* height: 85px; */
+    position: relative;
+    float: left;
+    margin: 10px;
+  }
+
+  .toolbarItem {
+    display: inline-block;
+  }
+
+  .menuDropdown {
+     display: none; 
+  }
+  
+  /*hidden is not used anyways*/
+  .hidden {
+    display: none;
   }
 
   .toggle
   {
-    width: 100%;
-    padding: 10px 20px;
+    /* width: 100%; */
+    /* padding: 10px 20px; */
+    margin: 20px;
+    
+
     background: #333;
-    text-align: right;
-    box-sizing: border-box;
+    /* text-align: right; */
+    /* box-sizing: border-box; */
     color: #fff;
     font-size: 30px;
     display: none;
-    position:absolute;
-    float:right;
+    position: relative;
+    float: right;
   }
 
 @media (max-width: 768px){
   .toggle {
-    display: block;
+    display: inline-block;
+  }
+
+  .toolbarItem {
+    display: none;
+  }
+
+  .loginBar {
+    display: none;
   }
   ul {
-    width: 100%;
+    /* width: 100%; */
   }
   ul li {
     display: none;
