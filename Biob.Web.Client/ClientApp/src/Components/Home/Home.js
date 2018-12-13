@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import React, { Component } from 'react';
 import axios from 'axios';
 
+
 var url = 'https://localhost:44390/api/v1/movies';
 
 class Home extends Component {
@@ -30,7 +31,7 @@ class Home extends Component {
                 {/* <Movie movies={movies}/> */}
                 <h1>{movies.title}</h1>
               </Link>
-            <p>{movies.description}</p>
+            <p className="movieDesc">{movies.description}</p>
           </div>
         </div>
       </div>
