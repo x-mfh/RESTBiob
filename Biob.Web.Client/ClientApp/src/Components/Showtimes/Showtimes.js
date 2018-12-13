@@ -2,17 +2,6 @@ import './Showtimes.css';
 import React, { Component } from 'react';
 import axios from 'axios';
 
-// function Showtime(props) {
-//     return (
-//       // decide how to wrap showtime, keep it SEPERATED FROM MOVIE
-//       <div onClick={() => alert('Redirecting to order tickets...')}>
-//         <h1>{props.showtime.hallId}</h1>
-//         <h1>{props.showtime.timeOfPlaying}</h1>
-//         <h1>{props.showtime.threeDee = true ? '3D' : ''}</h1>
-//       </div>
-//     )
-// }
-
 class Showtime extends Component {
   constructor(props) {
     super(props)
@@ -33,10 +22,13 @@ class Showtime extends Component {
   render() {
     return (
       // decide how to wrap showtime, keep it SEPERATED FROM MOVIE
-      <div onClick={() => alert('Redirecting to order tickets...')}>
-        <h1>Hall: {this.state.hall.hallNo}</h1>
-        <h1>{this.props.showtime.timeOfPlaying}</h1>
-        <h1>{this.props.showtime.threeDee = true ? '3D' : ''}</h1>
+      <div 
+        onClick={() => alert('Redirecting to order tickets for movie in hall '+this.state.hall.hallNo+'...')}
+        className="showtime"
+      >
+        <p>Hall: {this.state.hall.hallNo}</p>
+        <p>{this.props.showtime.timeOfPlaying}</p>
+        <p>{this.props.showtime.threeDee = true ? '3D' : ''}</p>
       </div>
     )
   }
@@ -56,25 +48,19 @@ class Movie extends Component {
     .then(res => {
       this.setState({showtimes: res.data})
     })
-
-    // Get hallNo with axios call and pass on to showtime?
   }
         
   render() {
     return (
-			<div className="wrapper">
-        <div className="pictureContent">
-          <img src={this.props.movie.poster} alt="" ></img>
-          <div className="textContent">
+      <div className="content">
+			  <div className="movie">
+          {/* <img src={this.props.movie.poster} alt="" ></img> */}
             <h1>{this.props.movie.title}</h1>
-          </div>
           {this.state.showtimes.map(showtime => (
-            //<div key={showtime.id}>
               <Showtime
                 key={showtime.id}
                 showtime={showtime}
               />
-            //</div> 
           ))}
         </div>
       </div>
@@ -100,14 +86,14 @@ class Body extends React.Component {
   
   render() {
     return (
-			<div className="wrapper">
+      <main className="flex-main">
         {this.state.movies.map(movie => (
               <Movie
                 key={movie.id}
                 movie={movie}
               />
           ))}
-		  </div>
+      </main>
     )
   }
 }

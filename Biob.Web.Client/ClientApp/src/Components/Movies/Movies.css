@@ -14,8 +14,10 @@
 }
 
 .textContent {
-  overflow:auto;
+    /* overflow auto to get scrollbar back */
+  overflow:hidden;
   height: 100px;
+
 }
 
 .textContent h1 {
