@@ -1,8 +1,42 @@
 .menuDropdown{
-    height: 100px;
-    width: 100px;
-    background-color: blue;
-    position: relative;
-    float: right;
+    height: 400px;
+    width:230px;
+    background-color: rgb(100,100,100);
+    position: absolute;
+    display:none;
+    opacity: 0.9;
     
 }
+.menuDropdown:hover {
+    display:block;
+}
+
+.menuDropdown nav {
+    background-color: #333;
+    position: relative;
+  }
+  
+.menuDropdown  ul {
+    position: relative;
+    float: left;
+    
+  }
+  
+ .menuDropdown li {
+    list-style: none;
+    display: block;    
+    
+    background-color: rbg(30,30,30);  
+    padding: 20px;
+}
+
+
+
+  .menuDropdown li {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 15px;
+    text-align: center;
+    padding: 20px;
+  }
