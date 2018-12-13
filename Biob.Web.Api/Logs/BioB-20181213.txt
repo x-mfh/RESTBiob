@@ -1369,3 +1369,325 @@ ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
 2018-12-13T11:36:51.7875485+01:00 0HLJ0RFHF4I35:00000002 [INF] Generating Vary header. (c1174e38)
 2018-12-13T11:36:51.7950064+01:00 0HLJ0RFHF4I35:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
 2018-12-13T11:36:51.8093435+01:00 0HLJ0RFHF4I35:00000002 [INF] Request finished in 431.2276ms 200 application/json; charset=utf-8 (791a596a)
+2018-12-13T11:51:41.5694255+01:00 0HLJ0T3RHQDVT:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies   (ca22a1cb)
+2018-12-13T11:51:41.6187523+01:00 0HLJ0T3RHQDVT:00000001 [INF] Policy execution successful. (0204925d)
+2018-12-13T11:51:41.7494838+01:00 0HLJ0T3RHQDVT:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-13T11:51:41.7518478+01:00 0HLJ0T3RHQDVT:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-13T11:51:41.7519295+01:00 0HLJ0T3RHQDVT:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-13T11:51:41.7638773+01:00 0HLJ0T3RHQDVT:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-13T11:51:41.7647706+01:00 0HLJ0T3RHQDVT:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-13T11:51:41.7648942+01:00 0HLJ0T3RHQDVT:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-13T11:51:42.0203994+01:00 0HLJ0T3RHQDVT:00000001 [INF] Route matched with "{action = \"GetAllMoviesAsync\", controller = \"Movie\"}". Executing action "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" (a44c0341)
+2018-12-13T11:51:42.4088730+01:00 0HLJ0T3RHQDVT:00000001 [INF] Executing action method "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" with arguments (["Biob.Web.Api.Helpers.RequestParameters", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-13T11:51:42.7104134+01:00 0HLJ0T3RHQDVT:00000001 [WRN] No type was specified for the decimal column '"Price"' on entity type '"Ticket"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'ForHasColumnType()'. (b5b4253a)
+2018-12-13T11:51:42.7707099+01:00 0HLJ0T3RHQDVT:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-13T11:51:44.0930867+01:00 0HLJ0T3RHQDVT:00000001 [INF] Executed DbCommand ("82"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[IsDeleted] = 0
+ORDER BY [movie].[Title], [movie].[Id]" (0723d8ff)
+2018-12-13T11:51:44.2844726+01:00 0HLJ0T3RHQDVT:00000001 [INF] Executed DbCommand ("67"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [movie.MovieGenres].[MovieId], [movie.MovieGenres].[GenreId], [movie.MovieGenres].[CreatedOn], [movie.MovieGenres].[DeletedOn], [movie.MovieGenres].[Id], [movie.MovieGenres].[IsDeleted], [movie.MovieGenres].[ModifiedOn], [m.Genre].[Id], [m.Genre].[CreatedOn], [m.Genre].[DeletedOn], [m.Genre].[GenreName], [m.Genre].[IsDeleted], [m.Genre].[ModifiedOn]
+FROM [MovieGenres] AS [movie.MovieGenres]
+INNER JOIN [Genres] AS [m.Genre] ON [movie.MovieGenres].[GenreId] = [m.Genre].[Id]
+INNER JOIN (
+    SELECT [movie0].[Id], [movie0].[Title]
+    FROM [Movies] AS [movie0]
+    WHERE [movie0].[IsDeleted] = 0
+) AS [t] ON [movie.MovieGenres].[MovieId] = [t].[Id]
+ORDER BY [t].[Title], [t].[Id]" (0723d8ff)
+2018-12-13T11:51:44.5019804+01:00 0HLJ0T3RHQDVT:00000001 [INF] Executed action method "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 2087.461ms. (50a9e262)
+2018-12-13T11:51:44.5155900+01:00 0HLJ0T3RHQDVT:00000001 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[System.Dynamic.ExpandoObject, System.Linq.Expressions, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]"'. (8a1b66c8)
+2018-12-13T11:51:44.5459547+01:00 0HLJ0T3RHQDVT:00000001 [INF] Executed action "Biob.Web.Api.Controllers.MovieController.GetAllMoviesAsync (Biob.Web.Api)" in 2520.0753ms (afa2e885)
+2018-12-13T11:51:44.5552147+01:00 0HLJ0T3RHQDVT:00000001 [INF] Generating expiration headers. (97875003)
+2018-12-13T11:51:44.5563585+01:00 0HLJ0T3RHQDVT:00000001 [INF] Expiration headers generated. Expires: Thu, 13 Dec 2018 11:01:44 GMT. Cache-Control: public,max-age=600,must-revalidate. (05f77492)
+2018-12-13T11:51:44.5640537+01:00 0HLJ0T3RHQDVT:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-12-13T11:51:44.5794548+01:00 0HLJ0T3RHQDVT:00000001 [INF] Validation headers generated. ETag: Strong, "983E064CCA9C1948CCC11F2147DA06D6". Last-Modified: Thu, 13 Dec 2018 10:51:44 GMT (fcdbe3c8)
+2018-12-13T11:51:44.5816517+01:00 0HLJ0T3RHQDVT:00000001 [INF] Generating Vary header. (c1174e38)
+2018-12-13T11:51:44.5818523+01:00 0HLJ0T3RHQDVT:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-13T11:51:44.6119513+01:00 0HLJ0T3RHQDVT:00000001 [INF] Request finished in 3051.0386ms 200 application/json; charset=utf-8 (791a596a)
+2018-12-13T11:51:44.6490854+01:00 0HLJ0T3RHQDVT:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/6272b673-62f0-45dc-bb78-c92f7521cf50/showtimes   (ca22a1cb)
+2018-12-13T11:51:44.6490854+01:00 0HLJ0T3RHQDVV:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/163c03b3-a057-426d-afa3-1a2631a693e2/showtimes   (ca22a1cb)
+2018-12-13T11:51:44.6496292+01:00 0HLJ0T3RHQDVT:00000002 [INF] Policy execution successful. (0204925d)
+2018-12-13T11:51:44.6497498+01:00 0HLJ0T3RHQDVV:00000001 [INF] Policy execution successful. (0204925d)
+2018-12-13T11:51:44.6504328+01:00 0HLJ0T3RHQDVU:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/195c5a46-96f9-446b-b4f7-864ab2dc49de/showtimes   (ca22a1cb)
+2018-12-13T11:51:44.6505692+01:00 0HLJ0T3RHQDVU:00000001 [INF] Policy execution successful. (0204925d)
+2018-12-13T11:51:44.6509781+01:00 0HLJ0T3RHQDVV:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-13T11:51:44.6509832+01:00 0HLJ0T3RHQDVT:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-13T11:51:44.6510183+01:00 0HLJ0T3RHQDVU:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-13T11:51:44.6510388+01:00 0HLJ0T3RHQDVT:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-13T11:51:44.6510388+01:00 0HLJ0T3RHQDVV:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-13T11:51:44.6510687+01:00 0HLJ0T3RHQDVU:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-13T11:51:44.6510679+01:00 0HLJ0T3RHQDVT:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-13T11:51:44.6510905+01:00 0HLJ0T3RHQDVV:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-13T11:51:44.6511119+01:00 0HLJ0T3RHQDVU:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-13T11:51:44.6511282+01:00 0HLJ0T3RHQDVT:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-13T11:51:44.6511333+01:00 0HLJ0T3RHQDVV:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-13T11:51:44.6511389+01:00 0HLJ0T3RHQDVU:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-13T11:51:44.6511577+01:00 0HLJ0T3RHQDVV:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-13T11:51:44.6511568+01:00 0HLJ0T3RHQDVT:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-13T11:51:44.6511679+01:00 0HLJ0T3RHQDVU:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-13T11:51:44.6511825+01:00 0HLJ0T3RHQDVV:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-13T11:51:44.6512034+01:00 0HLJ0T3RHQDVU:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-13T11:51:44.6511825+01:00 0HLJ0T3RHQDVT:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-13T11:51:44.6778997+01:00 0HLJ0T3RHQE02:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/45c0c223-de18-4e6e-99ea-aed94e7469f1/showtimes   (ca22a1cb)
+2018-12-13T11:51:44.6780344+01:00 0HLJ0T3RHQE02:00000001 [INF] Policy execution successful. (0204925d)
+2018-12-13T11:51:44.6783256+01:00 0HLJ0T3RHQE02:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-13T11:51:44.6783735+01:00 0HLJ0T3RHQE02:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-13T11:51:44.6783983+01:00 0HLJ0T3RHQE02:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-13T11:51:44.6784236+01:00 0HLJ0T3RHQE02:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-13T11:51:44.6784612+01:00 0HLJ0T3RHQE02:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-13T11:51:44.6784834+01:00 0HLJ0T3RHQE02:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-13T11:51:44.6866303+01:00 0HLJ0T3RHQE01:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/174fd8d4-f72b-4059-a7ea-05e687026b0d/showtimes   (ca22a1cb)
+2018-12-13T11:51:44.6867706+01:00 0HLJ0T3RHQE01:00000001 [INF] Policy execution successful. (0204925d)
+2018-12-13T11:51:44.6871627+01:00 0HLJ0T3RHQE01:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-13T11:51:44.6872277+01:00 0HLJ0T3RHQE01:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-13T11:51:44.6872581+01:00 0HLJ0T3RHQE01:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-13T11:51:44.6872876+01:00 0HLJ0T3RHQE01:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-13T11:51:44.6873128+01:00 0HLJ0T3RHQE01:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-13T11:51:44.6873385+01:00 0HLJ0T3RHQE01:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-13T11:51:44.6888198+01:00 0HLJ0T3RHQDVU:00000001 [INF] Route matched with "{action = \"GetAllShowtimesAsync\", controller = \"Showtime\"}". Executing action "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" (a44c0341)
+2018-12-13T11:51:44.6888198+01:00 0HLJ0T3RHQDVV:00000001 [INF] Route matched with "{action = \"GetAllShowtimesAsync\", controller = \"Showtime\"}". Executing action "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" (a44c0341)
+2018-12-13T11:51:44.6888651+01:00 0HLJ0T3RHQE02:00000001 [INF] Route matched with "{action = \"GetAllShowtimesAsync\", controller = \"Showtime\"}". Executing action "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" (a44c0341)
+2018-12-13T11:51:44.6997613+01:00 0HLJ0T3RHQE02:00000001 [INF] Executing action method "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" with arguments (["45c0c223-de18-4e6e-99ea-aed94e7469f1", "Biob.Web.Api.Helpers.RequestParameters", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-13T11:51:44.6997613+01:00 0HLJ0T3RHQDVU:00000001 [INF] Executing action method "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" with arguments (["195c5a46-96f9-446b-b4f7-864ab2dc49de", "Biob.Web.Api.Helpers.RequestParameters", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-13T11:51:44.6997622+01:00 0HLJ0T3RHQDVV:00000001 [INF] Executing action method "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" with arguments (["163c03b3-a057-426d-afa3-1a2631a693e2", "Biob.Web.Api.Helpers.RequestParameters", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-13T11:51:44.7025843+01:00 0HLJ0T3RHQE01:00000001 [INF] Route matched with "{action = \"GetAllShowtimesAsync\", controller = \"Showtime\"}". Executing action "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" (a44c0341)
+2018-12-13T11:51:44.7031698+01:00 0HLJ0T3RHQDVT:00000002 [INF] Route matched with "{action = \"GetAllShowtimesAsync\", controller = \"Showtime\"}". Executing action "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" (a44c0341)
+2018-12-13T11:51:44.7032724+01:00 0HLJ0T3RHQE01:00000001 [INF] Executing action method "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" with arguments (["174fd8d4-f72b-4059-a7ea-05e687026b0d", "Biob.Web.Api.Helpers.RequestParameters", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-13T11:51:44.7039040+01:00 0HLJ0T3RHQDVT:00000002 [INF] Executing action method "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" with arguments (["6272b673-62f0-45dc-bb78-c92f7521cf50", "Biob.Web.Api.Helpers.RequestParameters", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-13T11:51:44.7112464+01:00 0HLJ0T3RHQE01:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-13T11:51:44.7112460+01:00 0HLJ0T3RHQDVT:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-13T11:51:44.7112473+01:00 0HLJ0T3RHQE02:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-13T11:51:44.7115282+01:00 0HLJ0T3RHQDVV:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-13T11:51:44.7123510+01:00 0HLJ0T3RHQDVU:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-13T11:51:44.8059835+01:00 0HLJ0T3RHQE03:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/de9b842d-531a-4f17-ad69-0d3e11cb911d/showtimes   (ca22a1cb)
+2018-12-13T11:51:44.8059964+01:00 0HLJ0T3RHQE00:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/movies/9d90a452-9547-4d04-98ed-7d617e64ae1e/showtimes   (ca22a1cb)
+2018-12-13T11:51:44.8061140+01:00 0HLJ0T3RHQE00:00000001 [INF] Policy execution successful. (0204925d)
+2018-12-13T11:51:44.8061140+01:00 0HLJ0T3RHQE03:00000001 [INF] Policy execution successful. (0204925d)
+2018-12-13T11:51:44.8064120+01:00 0HLJ0T3RHQE03:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-13T11:51:44.8064681+01:00 0HLJ0T3RHQE03:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-13T11:51:44.8065326+01:00 0HLJ0T3RHQE03:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-13T11:51:44.8065617+01:00 0HLJ0T3RHQE03:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-13T11:51:44.8066066+01:00 0HLJ0T3RHQE03:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-13T11:51:44.8066340+01:00 0HLJ0T3RHQE03:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-13T11:51:44.8068243+01:00 0HLJ0T3RHQE03:00000001 [INF] Route matched with "{action = \"GetAllShowtimesAsync\", controller = \"Showtime\"}". Executing action "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" (a44c0341)
+2018-12-13T11:51:44.8072767+01:00 0HLJ0T3RHQE03:00000001 [INF] Executing action method "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" with arguments (["de9b842d-531a-4f17-ad69-0d3e11cb911d", "Biob.Web.Api.Helpers.RequestParameters", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-13T11:51:44.8079892+01:00 0HLJ0T3RHQE03:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-13T11:51:44.8089258+01:00 0HLJ0T3RHQDVT:00000002 [INF] Executed DbCommand ("30"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[Id] = @__id_0" (0723d8ff)
+2018-12-13T11:51:44.8235738+01:00 0HLJ0T3RHQE00:00000001 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-13T11:51:44.8236871+01:00 0HLJ0T3RHQE00:00000001 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-13T11:51:44.8237234+01:00 0HLJ0T3RHQE00:00000001 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-13T11:51:44.8237530+01:00 0HLJ0T3RHQE00:00000001 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-13T11:51:44.8237799+01:00 0HLJ0T3RHQE00:00000001 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-13T11:51:44.8238064+01:00 0HLJ0T3RHQE00:00000001 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-13T11:51:44.8239805+01:00 0HLJ0T3RHQE00:00000001 [INF] Route matched with "{action = \"GetAllShowtimesAsync\", controller = \"Showtime\"}". Executing action "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" (a44c0341)
+2018-12-13T11:51:44.8244188+01:00 0HLJ0T3RHQE00:00000001 [INF] Executing action method "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" with arguments (["9d90a452-9547-4d04-98ed-7d617e64ae1e", "Biob.Web.Api.Helpers.RequestParameters", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-13T11:51:44.8249302+01:00 0HLJ0T3RHQE00:00000001 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-13T11:51:44.8548438+01:00 0HLJ0T3RHQE00:00000001 [INF] Executed DbCommand ("29"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[Id] = @__id_0" (0723d8ff)
+2018-12-13T11:51:44.8709637+01:00 0HLJ0T3RHQDVU:00000001 [INF] Executed DbCommand ("8"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[Id] = @__id_0" (0723d8ff)
+2018-12-13T11:51:44.9038143+01:00 0HLJ0T3RHQE00:00000001 [INF] Executed DbCommand ("47"ms) [Parameters=["@__movieId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [showtime].[Id], [showtime].[CreatedOn], [showtime].[DeletedOn], [showtime].[HallId], [showtime].[IsDeleted], [showtime].[ModifiedOn], [showtime].[MovieId], [showtime].[ThreeDee], [showtime].[TimeOfPlaying]
+FROM [Showtimes] AS [showtime]
+WHERE [showtime].[MovieId] = @__movieId_0
+ORDER BY [showtime].[Id]" (0723d8ff)
+2018-12-13T11:51:44.9156881+01:00 0HLJ0T3RHQDVU:00000001 [INF] Executed DbCommand ("43"ms) [Parameters=["@__movieId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [showtime].[Id], [showtime].[CreatedOn], [showtime].[DeletedOn], [showtime].[HallId], [showtime].[IsDeleted], [showtime].[ModifiedOn], [showtime].[MovieId], [showtime].[ThreeDee], [showtime].[TimeOfPlaying]
+FROM [Showtimes] AS [showtime]
+WHERE [showtime].[MovieId] = @__movieId_0
+ORDER BY [showtime].[Id]" (0723d8ff)
+2018-12-13T11:51:44.9287926+01:00 0HLJ0T3RHQDVU:00000001 [INF] Executed action method "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 228.8649ms. (50a9e262)
+2018-12-13T11:51:44.9321091+01:00 0HLJ0T3RHQE00:00000001 [INF] Executed action method "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 107.553ms. (50a9e262)
+2018-12-13T11:51:44.9402252+01:00 0HLJ0T3RHQDVU:00000001 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Services.Data.DtoModels.ShowtimeDtos.ShowtimeDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-12-13T11:51:44.9404257+01:00 0HLJ0T3RHQE00:00000001 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Services.Data.DtoModels.ShowtimeDtos.ShowtimeDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-12-13T11:51:44.9520031+01:00 0HLJ0T3RHQDVU:00000001 [INF] Executed action "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" in 262.966ms (afa2e885)
+2018-12-13T11:51:44.9521361+01:00 0HLJ0T3RHQDVU:00000001 [INF] Generating expiration headers. (97875003)
+2018-12-13T11:51:44.9522481+01:00 0HLJ0T3RHQDVU:00000001 [INF] Expiration headers generated. Expires: Thu, 13 Dec 2018 11:01:44 GMT. Cache-Control: public,max-age=600,must-revalidate. (05f77492)
+2018-12-13T11:51:44.9523114+01:00 0HLJ0T3RHQDVU:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-12-13T11:51:44.9527934+01:00 0HLJ0T3RHQDVU:00000001 [INF] Validation headers generated. ETag: Strong, "4320495AD35661E42E907B8D29EA3851". Last-Modified: Thu, 13 Dec 2018 10:51:44 GMT (ace79d3c)
+2018-12-13T11:51:44.9528704+01:00 0HLJ0T3RHQDVU:00000001 [INF] Generating Vary header. (c1174e38)
+2018-12-13T11:51:44.9529388+01:00 0HLJ0T3RHQDVU:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-13T11:51:44.9535884+01:00 0HLJ0T3RHQDVU:00000001 [INF] Request finished in 303.1179ms 200 application/json; charset=utf-8 (791a596a)
+2018-12-13T11:51:44.9575088+01:00 0HLJ0T3RHQE00:00000001 [INF] Executed action "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" in 133.414ms (afa2e885)
+2018-12-13T11:51:44.9575986+01:00 0HLJ0T3RHQE00:00000001 [INF] Generating expiration headers. (97875003)
+2018-12-13T11:51:44.9577012+01:00 0HLJ0T3RHQE00:00000001 [INF] Expiration headers generated. Expires: Thu, 13 Dec 2018 11:01:44 GMT. Cache-Control: public,max-age=600,must-revalidate. (05f77492)
+2018-12-13T11:51:44.9577397+01:00 0HLJ0T3RHQE00:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-12-13T11:51:44.9578812+01:00 0HLJ0T3RHQE00:00000001 [INF] Validation headers generated. ETag: Strong, "FF45AC88624C4BC6024DB4E506ED076A". Last-Modified: Thu, 13 Dec 2018 10:51:44 GMT (328a2e1b)
+2018-12-13T11:51:44.9579236+01:00 0HLJ0T3RHQE00:00000001 [INF] Generating Vary header. (c1174e38)
+2018-12-13T11:51:44.9579548+01:00 0HLJ0T3RHQE00:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-13T11:51:44.9582037+01:00 0HLJ0T3RHQE00:00000001 [INF] Request finished in 152.2791ms 200 application/json; charset=utf-8 (791a596a)
+2018-12-13T11:51:44.9685841+01:00 0HLJ0T3RHQE01:00000001 [INF] Executed DbCommand ("61"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[Id] = @__id_0" (0723d8ff)
+2018-12-13T11:51:44.9814073+01:00 0HLJ0T3RHQE01:00000001 [INF] Executed DbCommand ("11"ms) [Parameters=["@__movieId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [showtime].[Id], [showtime].[CreatedOn], [showtime].[DeletedOn], [showtime].[HallId], [showtime].[IsDeleted], [showtime].[ModifiedOn], [showtime].[MovieId], [showtime].[ThreeDee], [showtime].[TimeOfPlaying]
+FROM [Showtimes] AS [showtime]
+WHERE [showtime].[MovieId] = @__movieId_0
+ORDER BY [showtime].[Id]" (0723d8ff)
+2018-12-13T11:51:44.9819474+01:00 0HLJ0T3RHQE01:00000001 [INF] Executed action method "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 278.568ms. (50a9e262)
+2018-12-13T11:51:44.9822955+01:00 0HLJ0T3RHQE01:00000001 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Services.Data.DtoModels.ShowtimeDtos.ShowtimeDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-12-13T11:51:44.9824713+01:00 0HLJ0T3RHQE01:00000001 [INF] Executed action "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" in 279.7732ms (afa2e885)
+2018-12-13T11:51:44.9825243+01:00 0HLJ0T3RHQE01:00000001 [INF] Generating expiration headers. (97875003)
+2018-12-13T11:51:44.9825722+01:00 0HLJ0T3RHQE01:00000001 [INF] Expiration headers generated. Expires: Thu, 13 Dec 2018 11:01:44 GMT. Cache-Control: public,max-age=600,must-revalidate. (05f77492)
+2018-12-13T11:51:44.9826052+01:00 0HLJ0T3RHQE01:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-12-13T11:51:44.9827668+01:00 0HLJ0T3RHQE01:00000001 [INF] Validation headers generated. ETag: Strong, "596E6EC93787BA22A129208482531517". Last-Modified: Thu, 13 Dec 2018 10:51:44 GMT (fca76961)
+2018-12-13T11:51:44.9828027+01:00 0HLJ0T3RHQE01:00000001 [INF] Generating Vary header. (c1174e38)
+2018-12-13T11:51:44.9828361+01:00 0HLJ0T3RHQE01:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-13T11:51:44.9830251+01:00 0HLJ0T3RHQE01:00000001 [INF] Request finished in 296.4371ms 200 application/json; charset=utf-8 (791a596a)
+2018-12-13T11:51:45.0865145+01:00 0HLJ0T3RHQDVU:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e   (ca22a1cb)
+2018-12-13T11:51:45.0865256+01:00 0HLJ0T3RHQE00:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/288aad6a-f042-4b36-a5ae-f950aea18b46   (ca22a1cb)
+2018-12-13T11:51:45.0866689+01:00 0HLJ0T3RHQDVU:00000002 [INF] Policy execution successful. (0204925d)
+2018-12-13T11:51:45.0866869+01:00 0HLJ0T3RHQE00:00000002 [INF] Policy execution successful. (0204925d)
+2018-12-13T11:51:45.0869841+01:00 0HLJ0T3RHQE01:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44390/api/v1/halls/d90ac9e4-32ba-4b5c-80ea-6eda60c0131b   (ca22a1cb)
+2018-12-13T11:51:45.0869982+01:00 0HLJ0T3RHQDVU:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-13T11:51:45.0870649+01:00 0HLJ0T3RHQE01:00000002 [INF] Policy execution successful. (0204925d)
+2018-12-13T11:51:45.0870889+01:00 0HLJ0T3RHQDVU:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-13T11:51:45.0871252+01:00 0HLJ0T3RHQDVU:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-13T11:51:45.0871295+01:00 0HLJ0T3RHQE00:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-13T11:51:45.0871517+01:00 0HLJ0T3RHQDVU:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-13T11:51:45.0871727+01:00 0HLJ0T3RHQE00:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-13T11:51:45.0871774+01:00 0HLJ0T3RHQDVU:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-13T11:51:45.0872065+01:00 0HLJ0T3RHQDVU:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-13T11:51:45.0872326+01:00 0HLJ0T3RHQE01:00000002 [INF] Checking for conditional GET/HEAD. (7e2efcb6)
+2018-12-13T11:51:45.0872031+01:00 0HLJ0T3RHQE00:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-13T11:51:45.0872869+01:00 0HLJ0T3RHQE00:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-13T11:51:45.0872924+01:00 0HLJ0T3RHQE01:00000002 [INF] Not valid - no If-None-Match or If-Modified-Since headers. (00e43d04)
+2018-12-13T11:51:45.0873138+01:00 0HLJ0T3RHQE01:00000002 [INF] Don't generate 304 - Not Modified.  Continue. (b6a7d473)
+2018-12-13T11:51:45.0873121+01:00 0HLJ0T3RHQE00:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-13T11:51:45.0873331+01:00 0HLJ0T3RHQE01:00000002 [INF] Checking for conditional PUT/PATCH. (bf3cf9be)
+2018-12-13T11:51:45.0873369+01:00 0HLJ0T3RHQE00:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-13T11:51:45.0873536+01:00 0HLJ0T3RHQE01:00000002 [INF] Not valid - method isn't PUT or PATCH. (671cb4f2)
+2018-12-13T11:51:45.0873741+01:00 0HLJ0T3RHQE01:00000002 [INF] Don't generate 412 - Precondition Failed.  Continue. (08bc4a18)
+2018-12-13T11:51:45.0957056+01:00 0HLJ0T3RHQE00:00000002 [INF] Route matched with "{action = \"GetOneHallAsync\", controller = \"Hall\"}". Executing action "Biob.Web.Api.Controllers.HallController.GetOneHallAsync (Biob.Web.Api)" (a44c0341)
+2018-12-13T11:51:45.0959494+01:00 0HLJ0T3RHQDVU:00000002 [INF] Route matched with "{action = \"GetOneHallAsync\", controller = \"Hall\"}". Executing action "Biob.Web.Api.Controllers.HallController.GetOneHallAsync (Biob.Web.Api)" (a44c0341)
+2018-12-13T11:51:45.0959494+01:00 0HLJ0T3RHQE01:00000002 [INF] Route matched with "{action = \"GetOneHallAsync\", controller = \"Hall\"}". Executing action "Biob.Web.Api.Controllers.HallController.GetOneHallAsync (Biob.Web.Api)" (a44c0341)
+2018-12-13T11:51:45.0972871+01:00 0HLJ0T3RHQE01:00000002 [INF] Executing action method "Biob.Web.Api.Controllers.HallController.GetOneHallAsync (Biob.Web.Api)" with arguments (["d90ac9e4-32ba-4b5c-80ea-6eda60c0131b", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-13T11:51:45.0972858+01:00 0HLJ0T3RHQDVU:00000002 [INF] Executing action method "Biob.Web.Api.Controllers.HallController.GetOneHallAsync (Biob.Web.Api)" with arguments (["7e9a2751-f1c0-4eb6-a7ec-1319c6dae31e", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-13T11:51:45.0972858+01:00 0HLJ0T3RHQE00:00000002 [INF] Executing action method "Biob.Web.Api.Controllers.HallController.GetOneHallAsync (Biob.Web.Api)" with arguments (["288aad6a-f042-4b36-a5ae-f950aea18b46", "application/json, text/plain, */*"]) - Validation state: Valid (4e3479ed)
+2018-12-13T11:51:45.0991598+01:00 0HLJ0T3RHQDVV:00000001 [INF] Executed DbCommand ("14"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[Id] = @__id_0" (0723d8ff)
+2018-12-13T11:51:45.1008726+01:00 0HLJ0T3RHQE02:00000001 [INF] Executed DbCommand ("16"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[Id] = @__id_0" (0723d8ff)
+2018-12-13T11:51:45.1024353+01:00 0HLJ0T3RHQDVT:00000002 [INF] Executed DbCommand ("17"ms) [Parameters=["@__movieId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [showtime].[Id], [showtime].[CreatedOn], [showtime].[DeletedOn], [showtime].[HallId], [showtime].[IsDeleted], [showtime].[ModifiedOn], [showtime].[MovieId], [showtime].[ThreeDee], [showtime].[TimeOfPlaying]
+FROM [Showtimes] AS [showtime]
+WHERE [showtime].[MovieId] = @__movieId_0
+ORDER BY [showtime].[Id]" (0723d8ff)
+2018-12-13T11:51:45.1027128+01:00 0HLJ0T3RHQDVT:00000002 [INF] Executed action method "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 398.7103ms. (50a9e262)
+2018-12-13T11:51:45.1028603+01:00 0HLJ0T3RHQDVT:00000002 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Services.Data.DtoModels.ShowtimeDtos.ShowtimeDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-12-13T11:51:45.1029758+01:00 0HLJ0T3RHQDVT:00000002 [INF] Executed action "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" in 399.726ms (afa2e885)
+2018-12-13T11:51:45.1030288+01:00 0HLJ0T3RHQDVT:00000002 [INF] Generating expiration headers. (97875003)
+2018-12-13T11:51:45.1031169+01:00 0HLJ0T3RHQDVT:00000002 [INF] Expiration headers generated. Expires: Thu, 13 Dec 2018 11:01:45 GMT. Cache-Control: public,max-age=600,must-revalidate. (6f6f5e69)
+2018-12-13T11:51:45.1031537+01:00 0HLJ0T3RHQDVT:00000002 [INF] Generating Validation headers. (20c08f55)
+2018-12-13T11:51:45.1035258+01:00 0HLJ0T3RHQDVT:00000002 [INF] Validation headers generated. ETag: Strong, "D5EF14174D692F201EFECE6125AAF34D". Last-Modified: Thu, 13 Dec 2018 10:51:45 GMT (33c04a60)
+2018-12-13T11:51:45.1036827+01:00 0HLJ0T3RHQDVT:00000002 [INF] Generating Vary header. (c1174e38)
+2018-12-13T11:51:45.1045188+01:00 0HLJ0T3RHQDVT:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-13T11:51:45.1047275+01:00 0HLJ0T3RHQDVT:00000002 [INF] Request finished in 455.7336ms 200 application/json; charset=utf-8 (791a596a)
+2018-12-13T11:51:45.1048382+01:00 0HLJ0T3RHQE01:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-13T11:51:45.1048382+01:00 0HLJ0T3RHQDVU:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-13T11:51:45.1048733+01:00 0HLJ0T3RHQE00:00000002 [INF] Entity Framework Core "2.1.4-rtm-31024" initialized '"BiobDataContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2018-12-13T11:51:45.1234612+01:00 0HLJ0T3RHQE03:00000001 [INF] Executed DbCommand ("38"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [movie].[Id], [movie].[Actors], [movie].[AgeRestriction], [movie].[CreatedOn], [movie].[DeletedOn], [movie].[Description], [movie].[IsDeleted], [movie].[LengthInSeconds], [movie].[ModifiedOn], [movie].[Poster], [movie].[Producer], [movie].[Released], [movie].[ThreeDee], [movie].[Title]
+FROM [Movies] AS [movie]
+WHERE [movie].[Id] = @__id_0" (0723d8ff)
+2018-12-13T11:51:45.1271955+01:00 0HLJ0T3RHQE02:00000001 [INF] Executed DbCommand ("25"ms) [Parameters=["@__movieId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [showtime].[Id], [showtime].[CreatedOn], [showtime].[DeletedOn], [showtime].[HallId], [showtime].[IsDeleted], [showtime].[ModifiedOn], [showtime].[MovieId], [showtime].[ThreeDee], [showtime].[TimeOfPlaying]
+FROM [Showtimes] AS [showtime]
+WHERE [showtime].[MovieId] = @__movieId_0
+ORDER BY [showtime].[Id]" (0723d8ff)
+2018-12-13T11:51:45.1275855+01:00 0HLJ0T3RHQE02:00000001 [INF] Executed action method "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 427.6629ms. (50a9e262)
+2018-12-13T11:51:45.1278293+01:00 0HLJ0T3RHQE02:00000001 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Services.Data.DtoModels.ShowtimeDtos.ShowtimeDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-12-13T11:51:45.1280012+01:00 0HLJ0T3RHQE02:00000001 [INF] Executed action "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" in 439.0017ms (afa2e885)
+2018-12-13T11:51:45.1280731+01:00 0HLJ0T3RHQE02:00000001 [INF] Generating expiration headers. (97875003)
+2018-12-13T11:51:45.1281299+01:00 0HLJ0T3RHQE02:00000001 [INF] Expiration headers generated. Expires: Thu, 13 Dec 2018 11:01:45 GMT. Cache-Control: public,max-age=600,must-revalidate. (6f6f5e69)
+2018-12-13T11:51:45.1281612+01:00 0HLJ0T3RHQE02:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-12-13T11:51:45.1282967+01:00 0HLJ0T3RHQE02:00000001 [INF] Validation headers generated. ETag: Strong, "BC05CC713F1497F36B6760310661162A". Last-Modified: Thu, 13 Dec 2018 10:51:45 GMT (a5720a94)
+2018-12-13T11:51:45.1283262+01:00 0HLJ0T3RHQE02:00000001 [INF] Generating Vary header. (c1174e38)
+2018-12-13T11:51:45.1283553+01:00 0HLJ0T3RHQE02:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-13T11:51:45.1287124+01:00 0HLJ0T3RHQE02:00000001 [INF] Request finished in 450.8579ms 200 application/json; charset=utf-8 (791a596a)
+2018-12-13T11:51:45.1290041+01:00 0HLJ0T3RHQDVV:00000001 [INF] Executed DbCommand ("28"ms) [Parameters=["@__movieId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [showtime].[Id], [showtime].[CreatedOn], [showtime].[DeletedOn], [showtime].[HallId], [showtime].[IsDeleted], [showtime].[ModifiedOn], [showtime].[MovieId], [showtime].[ThreeDee], [showtime].[TimeOfPlaying]
+FROM [Showtimes] AS [showtime]
+WHERE [showtime].[MovieId] = @__movieId_0
+ORDER BY [showtime].[Id]" (0723d8ff)
+2018-12-13T11:51:45.1292931+01:00 0HLJ0T3RHQDVV:00000001 [INF] Executed action method "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 429.409ms. (50a9e262)
+2018-12-13T11:51:45.1294997+01:00 0HLJ0T3RHQDVV:00000001 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Services.Data.DtoModels.ShowtimeDtos.ShowtimeDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-12-13T11:51:45.1296827+01:00 0HLJ0T3RHQDVV:00000001 [INF] Executed action "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" in 440.7452ms (afa2e885)
+2018-12-13T11:51:45.1297614+01:00 0HLJ0T3RHQDVV:00000001 [INF] Generating expiration headers. (97875003)
+2018-12-13T11:51:45.1298418+01:00 0HLJ0T3RHQDVV:00000001 [INF] Expiration headers generated. Expires: Thu, 13 Dec 2018 11:01:45 GMT. Cache-Control: public,max-age=600,must-revalidate. (6f6f5e69)
+2018-12-13T11:51:45.1298927+01:00 0HLJ0T3RHQDVV:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-12-13T11:51:45.1300638+01:00 0HLJ0T3RHQDVV:00000001 [INF] Validation headers generated. ETag: Strong, "B71543624E342FEF9F6F42157D85EE0A". Last-Modified: Thu, 13 Dec 2018 10:51:45 GMT (f3eaa1eb)
+2018-12-13T11:51:45.1301036+01:00 0HLJ0T3RHQDVV:00000001 [INF] Generating Vary header. (c1174e38)
+2018-12-13T11:51:45.1301630+01:00 0HLJ0T3RHQDVV:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-13T11:51:45.1303503+01:00 0HLJ0T3RHQDVV:00000001 [INF] Request finished in 481.3898ms 200 application/json; charset=utf-8 (791a596a)
+2018-12-13T11:51:45.1377299+01:00 0HLJ0T3RHQE01:00000002 [INF] Executed DbCommand ("12"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE [hall].[Id] = @__id_0" (0723d8ff)
+2018-12-13T11:51:45.1507861+01:00 0HLJ0T3RHQE00:00000002 [INF] Executed DbCommand ("17"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE [hall].[Id] = @__id_0" (0723d8ff)
+2018-12-13T11:51:45.1508147+01:00 0HLJ0T3RHQE03:00000001 [INF] Executed DbCommand ("16"ms) [Parameters=["@__movieId_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT [showtime].[Id], [showtime].[CreatedOn], [showtime].[DeletedOn], [showtime].[HallId], [showtime].[IsDeleted], [showtime].[ModifiedOn], [showtime].[MovieId], [showtime].[ThreeDee], [showtime].[TimeOfPlaying]
+FROM [Showtimes] AS [showtime]
+WHERE [showtime].[MovieId] = @__movieId_0
+ORDER BY [showtime].[Id]" (0723d8ff)
+2018-12-13T11:51:45.1513143+01:00 0HLJ0T3RHQE03:00000001 [INF] Executed action method "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 343.6983ms. (50a9e262)
+2018-12-13T11:51:45.1514840+01:00 0HLJ0T3RHQE03:00000001 [INF] Executing ObjectResult, writing value of type '"System.Collections.Generic.List`1[[Biob.Services.Data.DtoModels.ShowtimeDtos.ShowtimeDto, Biob.Services.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"'. (8a1b66c8)
+2018-12-13T11:51:45.1516312+01:00 0HLJ0T3RHQE03:00000001 [INF] Executed action "Biob.Web.Api.Controllers.ShowtimeController.GetAllShowtimesAsync (Biob.Web.Api)" in 344.7247ms (afa2e885)
+2018-12-13T11:51:45.1516833+01:00 0HLJ0T3RHQE03:00000001 [INF] Generating expiration headers. (97875003)
+2018-12-13T11:51:45.1517338+01:00 0HLJ0T3RHQE03:00000001 [INF] Expiration headers generated. Expires: Thu, 13 Dec 2018 11:01:45 GMT. Cache-Control: public,max-age=600,must-revalidate. (6f6f5e69)
+2018-12-13T11:51:45.1517629+01:00 0HLJ0T3RHQE03:00000001 [INF] Generating Validation headers. (20c08f55)
+2018-12-13T11:51:45.1518830+01:00 0HLJ0T3RHQE03:00000001 [INF] Validation headers generated. ETag: Strong, "69C0E2F320DB5C15BD13400B64CE442F". Last-Modified: Thu, 13 Dec 2018 10:51:45 GMT (8b845cfd)
+2018-12-13T11:51:45.1519297+01:00 0HLJ0T3RHQE03:00000001 [INF] Generating Vary header. (c1174e38)
+2018-12-13T11:51:45.1519609+01:00 0HLJ0T3RHQE03:00000001 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-13T11:51:45.1521366+01:00 0HLJ0T3RHQE03:00000001 [INF] Request finished in 346.2253ms 200 application/json; charset=utf-8 (791a596a)
+2018-12-13T11:51:45.1580404+01:00 0HLJ0T3RHQDVU:00000002 [INF] Executed DbCommand ("13"ms) [Parameters=["@__id_0='?' (DbType = Guid)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [hall].[Id], [hall].[CreatedOn], [hall].[DeletedOn], [hall].[HallNo], [hall].[IsDeleted], [hall].[ModifiedOn], [hall].[NoOfSeats], [hall].[ThreeDee]
+FROM [Halls] AS [hall]
+WHERE [hall].[Id] = @__id_0" (0723d8ff)
+2018-12-13T11:51:45.1661820+01:00 0HLJ0T3RHQE00:00000002 [INF] Executed action method "Biob.Web.Api.Controllers.HallController.GetOneHallAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 68.6853ms. (50a9e262)
+2018-12-13T11:51:45.1664365+01:00 0HLJ0T3RHQE00:00000002 [INF] Executing ObjectResult, writing value of type '"Biob.Services.Data.DtoModels.HallDtos.HallDto"'. (8a1b66c8)
+2018-12-13T11:51:45.1673530+01:00 0HLJ0T3RHQE01:00000002 [INF] Executed action method "Biob.Web.Api.Controllers.HallController.GetOneHallAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 69.9315ms. (50a9e262)
+2018-12-13T11:51:45.1675377+01:00 0HLJ0T3RHQE01:00000002 [INF] Executing ObjectResult, writing value of type '"Biob.Services.Data.DtoModels.HallDtos.HallDto"'. (8a1b66c8)
+2018-12-13T11:51:45.1679962+01:00 0HLJ0T3RHQDVU:00000002 [INF] Executed action method "Biob.Web.Api.Controllers.HallController.GetOneHallAsync (Biob.Web.Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 70.5576ms. (50a9e262)
+2018-12-13T11:51:45.1681437+01:00 0HLJ0T3RHQDVU:00000002 [INF] Executing ObjectResult, writing value of type '"Biob.Services.Data.DtoModels.HallDtos.HallDto"'. (8a1b66c8)
+2018-12-13T11:51:45.1711783+01:00 0HLJ0T3RHQE01:00000002 [INF] Executed action "Biob.Web.Api.Controllers.HallController.GetOneHallAsync (Biob.Web.Api)" in 75.0984ms (afa2e885)
+2018-12-13T11:51:45.1711783+01:00 0HLJ0T3RHQE00:00000002 [INF] Executed action "Biob.Web.Api.Controllers.HallController.GetOneHallAsync (Biob.Web.Api)" in 75.328ms (afa2e885)
+2018-12-13T11:51:45.1712574+01:00 0HLJ0T3RHQE01:00000002 [INF] Generating expiration headers. (97875003)
+2018-12-13T11:51:45.1712574+01:00 0HLJ0T3RHQE00:00000002 [INF] Generating expiration headers. (97875003)
+2018-12-13T11:51:45.1713121+01:00 0HLJ0T3RHQE00:00000002 [INF] Expiration headers generated. Expires: Thu, 13 Dec 2018 11:01:45 GMT. Cache-Control: public,max-age=600,must-revalidate. (6f6f5e69)
+2018-12-13T11:51:45.1713121+01:00 0HLJ0T3RHQE01:00000002 [INF] Expiration headers generated. Expires: Thu, 13 Dec 2018 11:01:45 GMT. Cache-Control: public,max-age=600,must-revalidate. (6f6f5e69)
+2018-12-13T11:51:45.1713070+01:00 0HLJ0T3RHQDVU:00000002 [INF] Executed action "Biob.Web.Api.Controllers.HallController.GetOneHallAsync (Biob.Web.Api)" in 75.2588ms (afa2e885)
+2018-12-13T11:51:45.1713438+01:00 0HLJ0T3RHQE00:00000002 [INF] Generating Validation headers. (20c08f55)
+2018-12-13T11:51:45.1713438+01:00 0HLJ0T3RHQE01:00000002 [INF] Generating Validation headers. (20c08f55)
+2018-12-13T11:51:45.1713677+01:00 0HLJ0T3RHQDVU:00000002 [INF] Generating expiration headers. (97875003)
+2018-12-13T11:51:45.1714370+01:00 0HLJ0T3RHQDVU:00000002 [INF] Expiration headers generated. Expires: Thu, 13 Dec 2018 11:01:45 GMT. Cache-Control: public,max-age=600,must-revalidate. (6f6f5e69)
+2018-12-13T11:51:45.1714691+01:00 0HLJ0T3RHQE00:00000002 [INF] Validation headers generated. ETag: Strong, "8561014868CFE0A2AA7C684A22DCFC93". Last-Modified: Thu, 13 Dec 2018 10:51:45 GMT (558d178a)
+2018-12-13T11:51:45.1714806+01:00 0HLJ0T3RHQDVU:00000002 [INF] Generating Validation headers. (20c08f55)
+2018-12-13T11:51:45.1715204+01:00 0HLJ0T3RHQE00:00000002 [INF] Generating Vary header. (c1174e38)
+2018-12-13T11:51:45.1715662+01:00 0HLJ0T3RHQE00:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-13T11:51:45.1715948+01:00 0HLJ0T3RHQDVU:00000002 [INF] Validation headers generated. ETag: Strong, "C185D060A2935AE8085B5314A6914C62". Last-Modified: Thu, 13 Dec 2018 10:51:45 GMT (a88656aa)
+2018-12-13T11:51:45.1716256+01:00 0HLJ0T3RHQDVU:00000002 [INF] Generating Vary header. (c1174e38)
+2018-12-13T11:51:45.1716513+01:00 0HLJ0T3RHQDVU:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-13T11:51:45.1717496+01:00 0HLJ0T3RHQE00:00000002 [INF] Request finished in 85.2996ms 200 application/json; charset=utf-8 (791a596a)
+2018-12-13T11:51:45.1717834+01:00 0HLJ0T3RHQDVU:00000002 [INF] Request finished in 85.3304ms 200 application/json; charset=utf-8 (791a596a)
+2018-12-13T11:51:45.1750311+01:00 0HLJ0T3RHQE01:00000002 [INF] Validation headers generated. ETag: Strong, "B00BB15E9A01D5D53A0F0F6D096AFA31". Last-Modified: Thu, 13 Dec 2018 10:51:45 GMT (e0021307)
+2018-12-13T11:51:45.1751423+01:00 0HLJ0T3RHQE01:00000002 [INF] Generating Vary header. (c1174e38)
+2018-12-13T11:51:45.1752055+01:00 0HLJ0T3RHQE01:00000002 [INF] Vary header generated: Accept-Encoding. (669dea28)
+2018-12-13T11:51:45.1757110+01:00 0HLJ0T3RHQE01:00000002 [INF] Request finished in 88.705ms 200 application/json; charset=utf-8 (791a596a)
