@@ -15,6 +15,14 @@ h1 {
     cursor: pointer;
 }
 
+.flex-main{
+	background-color:white;
+}
+
+.content{
+	background-color: #333;
+}
+
 
 @media screen and (min-width: 1015px) {
     .flex-main{
@@ -22,13 +30,13 @@ h1 {
 		justify-content:space-around;
 		align-content: center;
 		flex-wrap: wrap;
-		background-color:darkslategrey;
+		background-color:white;
 	}
 	
 	.content{
 		width: 350px;
 		margin: 20px 20px 20px 20px;
-		background-color: black;
+		background-color: #333;
 		font-family: Cambria, Hoefler Text, Liberation Serif, Times, Times New Roman, serif;
 		font-size: 10px;
 		padding: 0px;

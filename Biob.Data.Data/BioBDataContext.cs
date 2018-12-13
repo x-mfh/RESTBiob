@@ -271,7 +271,8 @@ namespace Biob.Data.Data
                 );
 
             //  get all the deleteable entity types
-            var deleteableEntityTypes = modelBuilder.Model.GetEntityTypes().Where(x => x.ClrType != null && typeof(IDeleteable).IsAssignableFrom(x.ClrType));
+            var deleteableEntityTypes = modelBuilder.Model.GetEntityTypes()
+                .Where(x => x.ClrType != null && typeof(IDeleteable).IsAssignableFrom(x.ClrType));
 
             foreach (var deletedentityType in deleteableEntityTypes)
             {
