@@ -31,7 +31,7 @@ class Home extends Component {
                 {/* <Movie movies={movies}/> */}
                 <h1>{movies.title}</h1>
               </Link>
-            <p>{movies.description}</p>
+            <p className="movieDesc">{movies.description}</p>
           </div>
         </div>
       </div>

@@ -77,18 +77,8 @@ class NavBar extends Component {
 							null
 						)
 					} */}
-					
 				</nav>
-				
 			</div>
-
-						<li><Link to="/" className="navLink">Home</Link></li>
-						<li><Link to="/showtimes" className="navLink">Showtimes</Link></li>
-						<li><Link to="/movies" className="navLink">Movies</Link></li>
-            <li><Login className="navLink"/></li>
-					</ul>
-				</nav>
-
 		</header>
     )
   }
