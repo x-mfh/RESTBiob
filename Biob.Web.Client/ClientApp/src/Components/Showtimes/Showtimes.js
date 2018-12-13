@@ -1,93 +1,112 @@
+import './Showtimes.css';
 import React, { Component } from 'react';
 import axios from 'axios';
-import './Showtimes.css';
-
-var url = 'https://localhost:44390/api/v1/movies';
 
 // function Showtime(props) {
 //     return (
-//       <div>{props.showtime}</div>
+//       // decide how to wrap showtime, keep it SEPERATED FROM MOVIE
+//       <div onClick={() => alert('Redirecting to order tickets...')}>
+//         <h1>{props.showtime.hallId}</h1>
+//         <h1>{props.showtime.timeOfPlaying}</h1>
+//         <h1>{props.showtime.threeDee = true ? '3D' : ''}</h1>
+//       </div>
 //     )
 // }
 
 class Showtime extends Component {
-  state = {
-    movieId: this.props.movieId,
-    showtimes: []
+  constructor(props) {
+    super(props)
+    this.state = {
+      hall: []
+    }
   }
+
 
   componentWillMount() {
-    var url2 = 'https://localhost:44390/api/v1/movies/'+ this.state.movieId +'/showtimes/';
-    axios.get(url2)
+    const hallForShowtimeApiCall = 'https://localhost:44390/api/v1/halls/'+this.props.showtime.hallId;
+    axios.get(hallForShowtimeApiCall)
     .then(res => {
-      this.setState({showtimes: res.data})
+      this.setState({hall: res.data})
     })
   }
-
-  render(){
+  
+  render() {
     return (
-      <div>
-        <div>{this.props.showtime}</div>
-        <div>{this.state.showtimes.movieId}</div>
-        <div>{this.state.showtimes.timeOfPlaying}</div>
+      // decide how to wrap showtime, keep it SEPERATED FROM MOVIE
+      <div onClick={() => alert('Redirecting to order tickets...')}>
+        <h1>Hall: {this.state.hall.hallNo}</h1>
+        <h1>{this.props.showtime.timeOfPlaying}</h1>
+        <h1>{this.props.showtime.threeDee = true ? '3D' : ''}</h1>
       </div>
     )
   }
 }
 
-function Movie(props) {
+class Movie extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      showtimes: [],
+    };
+  }
+  
+  componentWillMount() {
+    const showtimesForMovieApiCall = 'https://localhost:44390/api/v1/movies/'+this.props.movie.id+'/showtimes';
+    axios.get(showtimesForMovieApiCall)
+    .then(res => {
+      this.setState({showtimes: res.data})
+    })
+
+    // Get hallNo with axios call and pass on to showtime?
+  }
+        
+  render() {
     return (
-      <div className="pictureContent">
-          <img src={props.movie.poster} alt="" ></img>
+			<div className="wrapper">
+        <div className="pictureContent">
+          <img src={this.props.movie.poster} alt="" ></img>
           <div className="textContent">
-            <h1>{props.movie.title}</h1>
-            <Showtime
-              movieId = {props.movie.id}
-              showtime='test showtime'
-            />
+            <h1>{this.props.movie.title}</h1>
           </div>
+          {this.state.showtimes.map(showtime => (
+            //<div key={showtime.id}>
+              <Showtime
+                key={showtime.id}
+                showtime={showtime}
+              />
+            //</div> 
+          ))}
         </div>
+      </div>
     )
+  }
 }
 
-
-// class Movies extends Component {
-//     render() {
-//       return (
-//         <div className="pictureContent">
-//             <img src={this.props.movie.poster} alt="" ></img>
-//             <div className="textContent">
-//               <h1>{this.props.movie.title}</h1>
-//               <Showtime
-//                 showtime='test showtime'
-//               />
-//             </div>
-//           </div>
-//       )
-//     }
-// }
-
-class Body extends Component {
-  state = {
-    movies: [],
-  };
+class Body extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      movies: [],
+    };
+  }
 
   componentWillMount() {
-    axios.get(url)
+    const moviesApiCall = 'https://localhost:44390/api/v1/movies';
+    axios.get(moviesApiCall)
     .then(res => {
       this.setState({movies: res.data})
     })
   }
-
+  
   render() {
     return (
 			<div className="wrapper">
-        {this.state.movies.map(movie =>
-        (<div key={movie.id}>
-          <Movie
-            movie={movie}
-          />
-        </div>))}
+        {this.state.movies.map(movie => (
+              <Movie
+                key={movie.id}
+                movie={movie}
+              />
+          ))}
 		  </div>
     )
   }
