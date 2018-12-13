@@ -24,7 +24,7 @@
     /* width: 80%; */
     /* margin: 0 auto; */
     /* padding: 0; */
-    margin: 20px;
+    
     position: relative;
     float: left;
   }
@@ -32,36 +32,45 @@
   nav li {
     list-style: none;
     display: inline-block;
-    margin: 9px;
+    
     /* padding: 20px; */
   }
-  
-  nav li:hover {
+
+  /* now using another effect */
+  /* nav li:hover {
     background-color: rgb(141, 10, 10);
-  }
+  } */
 
   nav li .navLink {
     color: #fff;
     text-decoration: none;
     text-transform: uppercase;
     font-size: 15px;
+    
   }
   .topLogo{
-    width: 57px; 
-    height: 57px;
+    width: 50px; 
+    height: 50px;
     /* height: 8px; */
     /* height: 85px; */
     position: relative;
-    float: left;
-    margin: 10px;
+    float:left;
+    
+    padding: 20px;
+    
+    
   }
 
   .toolbarItem {
     display: inline-block;
+    padding: 20px;
+    
   }
 
   .menuDropdown {
-     display: none; 
+    right:0;
+    top: 90px;
+     
   }
   
   /*hidden is not used anyways*/
@@ -69,11 +78,64 @@
     display: none;
   }
 
+
+/* Shutter Out Horizontal */
+.niceHeaderButtonEffect {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  
+  -webkit-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+.niceHeaderButtonEffect:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: gray;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: 50%;
+  transform-origin: 50%;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.niceHeaderButtonEffect:hover, .niceHeaderButtonEffect:focus, .niceHeaderButtonEffect:active {
+  color: white;
+}
+
+
+#testHover:hover~.menuDropdown {
+  display: block;
+}
+
+.dropdownItem {
+  padding: 20px;
+}
+
+.niceHeaderButtonEffect:hover:before, .niceHeaderButtonEffect:focus:before, .niceHeaderButtonEffect:active:before {
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+}
+
   .toggle
   {
     /* width: 100%; */
     /* padding: 10px 20px; */
-    margin: 20px;
+    padding: 28px;
     
 
     background: #333;
@@ -86,7 +148,7 @@
     float: right;
   }
 
-@media (max-width: 768px){
+@media (max-width: 1080px){
   .toggle {
     display: inline-block;
   }

@@ -1,4 +1,5 @@
 import "./Login.css";
+
 import React, {Component} from 'react';
 import axios from 'axios';
 import userManager from './UserManager';
@@ -26,14 +27,20 @@ class Login extends Component
     event.preventDefault();
     userManager.signinRedirect();
   }
+  // goToAdmin(event) {
+  //   event.preventDefault();
+  //   <Route component={Admin} path='./../Admin/Admin' />
+  // }
+
   render() {
     return (
       <ul className="loginBar">
-        <li classname="loginBarButton toolbarItem"><Link to='/Admin'>Admin</Link></li>
+      {/* <li><Link to='/' className='navLink toolbarItem niceHeaderButtonEffect'>Home</Link></li> */}
+        <li><Link to='/Admin' className="loginBarButton toolbarItem niceHeaderButtonEffect">Admin</Link></li>
         {/* </li>/<li><Link to='/movies' className='navLink toolbarItem'>Movies</Link></li> */}
-        <li className="loginBarButton toolbarItem" onClick={this.Api}>Call Api</li>
-        <li className="loginBarButton toolbarItem" onClick={this.onLoginButtonClick}>Login</li>
-        <li className="loginBarButton toolbarItem" onClick={this.onLogoutButtonClick}>Logout</li>
+        <li className="loginBarButton toolbarItem niceHeaderButtonEffect" onClick={this.Api}>Call Api</li>
+        <li className="loginBarButton toolbarItem niceHeaderButtonEffect" onClick={this.onLoginButtonClick}>Login</li>
+        <li className="loginBarButton toolbarItem niceHeaderButtonEffect" onClick={this.onLogoutButtonClick}>Logout</li>
         <pre className="Results"></pre>
       </ul>
     );

@@ -42,7 +42,7 @@ class NavBar extends Component {
 
 			<div className="topNavContainer">
 				{/* <div className="topLogo"> */}
-					<img className="topLogo" src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX6980911.jpg" alt="BIOB"/>
+					<img className="topLogo niceHeaderButtonEffect" src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX6980911.jpg" alt="BIOB" />
 				{/* </div> */}
 
 				<nav>
@@ -51,12 +51,12 @@ class NavBar extends Component {
           </div> */}
 					<ul>
 
-						<li><Link to='/' className='navLink toolbarItem'>Home</Link></li>
-						<li><Link to='/showtimes' className='navLink toolbarItem'>Showtimes</Link></li>
-						<li><Link to='/movies' className='navLink toolbarItem'>Movies</Link></li>
+						<li><Link to='/' className='navLink toolbarItem niceHeaderButtonEffect'>Home</Link></li>
+						<li><Link to='/showtimes' className='navLink toolbarItem niceHeaderButtonEffect'>Showtimes</Link></li>
+						<li><Link to='/movies' className='navLink toolbarItem niceHeaderButtonEffect'>Movies</Link></li>
 					</ul>
 					<Login />
-					<div className="toggle"> 
+					<div id="testHover" className="toggle niceHeaderButtonEffect"> 
 						<i className ="fa fa-bars" aria-hidden="true" 
 						onClick={this.onBurgerMenuClick}
 						// index={0}
