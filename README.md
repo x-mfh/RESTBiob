@@ -34,6 +34,7 @@ if you want to run the api you will also need to
 4. run the command
 
 ```powershell
+# Update local db to match migrations
 PM> update-database
 ```
 
@@ -43,8 +44,9 @@ in order to run the react (without the asp.net core server rendering)
 2,5. and from here on you can open that folder in VS code
 3. in order to start run the command
 
-```powershell
-PM> npm start
+```bash
+# Start the frontend client
+$ npm start
 ```
 
 NOTE: remember to start the API and Oauth2 server at once in order for everything to work
