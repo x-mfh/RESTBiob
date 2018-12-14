@@ -7,7 +7,6 @@
 <p align="center">
   <a href="#about">About</a> •
   <a href="#getting-started">Getting Started</a> •
-  <a href="#api-endpoints">API Endpoints</a> •
   <a href="#authors">Authors</a>
 </p>
 
@@ -28,61 +27,27 @@ From your command line:
 $ git clone https://github.com/BalenD/Restbiob
 ```
 
-If you however want the API, you will need your own local DB
-// MANGLER
+if you want to run the api you will also need to
+1. open the solution
+2. open the package manager console
+3. set "Default Project" on PMC to Biob.data.data
+4. run the command
 
-## API endpoints
-Example on URL startpoint
-https://localhost:PORT/api/v1/movies/{movieId}/
-#### Movie Resources
-| Request | Resources                       |
-|:--------|:--------------------------------|
-| `GET`   | /movies |
-| `POST`  | /movies |
-| `GET`   | /movies/{movieId} |
-| `PATCH` | /movies/{movieId} |
-| `DELETE`| /movies/{movieId} |
-#### Genre sources
-| Request | Resources                       |
-|:--------|:--------------------------------|
-| `GET`   | /movies/{movieId}/genres |
-| `POST`  | /movies/{movieId}/genres |
-| `GET`   | /movies/{movieId}/genres/{genreId} |
-| `PATCH` | /movies/{movieId}/genres/{genreId} |
-| `DELETE`| /movies/{movieId}/genres/{genreId} |
-#### Showtime Resources
-| Request | Resources                       |
-|:--------|:--------------------------------|
-| `GET`   | /movies/{movieId}/showtimes |
-| `POST`  | /movies/{movieId}/showtimes |
-| `GET`   | /movies/{movieId}/showtimes/{showtimeId} |
-| `PATCH` | /movies/{movieId}/showtimes/{showtimeId} |
-| `DELETE`| /movies/{movieId}/showtimes/{showtimeId} |
-#### Ticket sources
-| Request | Resources                       |
-|:--------|:--------------------------------|
-| `GET`   | /movies/{movieId}/showtimes/{showtimeId}/tickets |
-| `POST`  | /movies/{movieId}/showtimes/{showtimeId}/tickets |
-| `GET`   | /movies/{movieId}/showtimes/{showtimeId}/tickets/{ticketId} |
-| `PATCH` | /movies/{movieId}/showtimes/{showtimeId}/tickets/{ticketId} |
-| `DELETE`| /movies/{movieId}/showtimes/{showtimeId}/tickets/{ticketId} |
-#### Hall sources
-| Request | Resources                       |
-|:--------|:--------------------------------|
-| `GET`   | /halls |
-| `POST`  | /halls |
-| `GET`   | /halls/{hallId} |
-| `PATCH` | /halls/{hallId} |
-| `DELETE`| /halls/{hallId} |
-#### Seat sources
-| Request | Resources                       |
-|:--------|:--------------------------------|
-| `GET`   | /halls/{hallId}/seats |
-| `POST`  | /halls/{hallId}/seats |
-| `GET`   | /halls/{hallId}/seats/{seatId} |
-| `PATCH` | /halls/{hallId}/seats/{seatId} |
-| `DELETE`| /halls/{hallId}/seats/{seatId} |
-## API string queries
+```powershell
+PM> update-database
+```
+
+in order to run the react (without the asp.net core server rendering)
+1. navigate to Biob.Web.Client project
+2. navigate to ClientApp
+2,5. and from here on you can open that folder in VS code
+3. in order to start run the command
+
+```powershell
+PM> npm start
+```
+
+NOTE: remember to start the API and Oauth2 server at once in order for everything to work
 
 ## Authors
 - BalenD - [BalenD](https://github.com/BalenD)
