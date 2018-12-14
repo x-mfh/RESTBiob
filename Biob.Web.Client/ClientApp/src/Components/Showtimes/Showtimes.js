@@ -1,94 +1,99 @@
+import './Showtimes.css';
 import React, { Component } from 'react';
 import axios from 'axios';
-import './Showtimes.css';
-
-var url = 'https://localhost:44390/api/v1/movies';
-
-// function Showtime(props) {
-//     return (
-//       <div>{props.showtime}</div>
-//     )
-// }
 
 class Showtime extends Component {
-  state = {
-    movieId: this.props.movieId,
-    showtimes: []
+  constructor(props) {
+    super(props)
+    this.state = {
+      hall: []
+    }
   }
+
 
   componentWillMount() {
-    var url2 = 'https://localhost:44390/api/v1/movies/'+ this.state.movieId +'/showtimes/';
-    axios.get(url2)
+    const hallForShowtimeApiCall = 'https://localhost:44390/api/v1/halls/'+this.props.showtime.hallId;
+    axios.get(hallForShowtimeApiCall)
     .then(res => {
-      this.setState({showtimes: res.data})
+      this.setState({hall: res.data})
     })
   }
-
-  render(){
+  
+  render() {
     return (
-      <div>
-        <div>{this.props.showtime}</div>
-        <div>{this.state.showtimes.movieId}</div>
-        <div>{this.state.showtimes.timeOfPlaying}</div>
+      // decide how to wrap showtime, keep it SEPERATED FROM MOVIE
+      <div 
+        onClick={() => alert('Redirecting to order tickets for movie in hall '+this.state.hall.hallNo+'...')}
+        className="showtime"
+      >
+        <p>Hall: {this.state.hall.hallNo}</p>
+        <p>{this.props.showtime.timeOfPlaying}</p>
+        <p>{this.props.showtime.threeDee = true ? '3D' : ''}</p>
       </div>
     )
   }
 }
 
-function Movie(props) {
+class Movie extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      showtimes: [],
+    };
+  }
+  
+  componentWillMount() {
+    const showtimesForMovieApiCall = 'https://localhost:44390/api/v1/movies/'+this.props.movie.id+'/showtimes';
+    axios.get(showtimesForMovieApiCall)
+    .then(res => {
+      this.setState({showtimes: res.data})
+    })
+  }
+        
+  render() {
     return (
-      <div className="pictureContent">
-          <img src={props.movie.poster} alt="" ></img>
-          <div className="textContent">
-            <h1>{props.movie.title}</h1>
-            <Showtime
-              movieId = {props.movie.id}
-              showtime='test showtime'
-            />
-          </div>
+      <div className="content">
+			  <div className="movie">
+          {/* <img src={this.props.movie.poster} alt="" ></img> */}
+            <h1>{this.props.movie.title}</h1>
+          {this.state.showtimes.map(showtime => (
+              <Showtime
+                key={showtime.id}
+                showtime={showtime}
+              />
+          ))}
         </div>
+      </div>
     )
+  }
 }
 
-
-// class Movies extends Component {
-//     render() {
-//       return (
-//         <div className="pictureContent">
-//             <img src={this.props.movie.poster} alt="" ></img>
-//             <div className="textContent">
-//               <h1>{this.props.movie.title}</h1>
-//               <Showtime
-//                 showtime='test showtime'
-//               />
-//             </div>
-//           </div>
-//       )
-//     }
-// }
-
-class Body extends Component {
-  state = {
-    movies: [],
-  };
+class Body extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      movies: [],
+    };
+  }
 
   componentWillMount() {
-    axios.get(url)
+    const moviesApiCall = 'https://localhost:44390/api/v1/movies';
+    axios.get(moviesApiCall)
     .then(res => {
       this.setState({movies: res.data})
     })
   }
-
+  
   render() {
     return (
-			<div className="wrapper">
-        {this.state.movies.map(movie =>
-        (<div key={movie.id}>
-          <Movie
-            movie={movie}
-          />
-        </div>))}
-		  </div>
+      <main className="flex-main">
+        {this.state.movies.map(movie => (
+              <Movie
+                key={movie.id}
+                movie={movie}
+              />
+          ))}
+      </main>
     )
   }
 }
